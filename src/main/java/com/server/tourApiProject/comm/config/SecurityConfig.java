@@ -21,6 +21,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/webjars/**" ,
                         /*Probably not needed*/ "/swagger.json")
                 .permitAll();
+        http.cors().and();
+        http.csrf().disable();
 
     }
 
