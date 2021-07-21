@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserParam {
+public class UserParams {
 
     @ApiModelProperty(value = "사용자 ID", required = true)
     private Long userId;

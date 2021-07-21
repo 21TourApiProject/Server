@@ -25,7 +25,7 @@ public class UserService {
         return user;
     }
 
-    public User createUser(UserParam userParam){
+    public User createUser(UserParams userParam){
         User user = new User();
         user.setUserId(userParam.getUserId());
         user.setEmail(userParam.getEmail());
@@ -36,7 +36,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User updateUser(Long userId, UserParam userParam) {
+    public User updateUser(Long userId, UserParams userParam) {
         User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
         if (!userParam.getEmail().isEmpty())
             user.setEmail(userParam.getEmail());

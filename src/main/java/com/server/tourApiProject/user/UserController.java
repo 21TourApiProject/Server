@@ -20,13 +20,13 @@ public class UserController {
 
     @ApiOperation(value = "사용자정보 입력", notes = "사용자 정보를 입력한다")
     @PostMapping(value = "user/")
-    public void createUser(@RequestBody UserParam userParam){
+    public void createUser(@RequestBody UserParams userParam){
         userService.createUser(userParam);
     }
 
     @ApiOperation(value = "사용자정보 수정", notes = "사용자 정보를 수정한다")
     @PutMapping(value = "user/{userId}")
-    public void updateUser(@PathVariable("userId") Long userId, @RequestBody UserParam userParam){
+    public void updateUser(@PathVariable("userId") Long userId, @RequestBody UserParams userParam){
         userService.updateUser(userId, userParam);
     }
 
