@@ -1,6 +1,5 @@
 package com.server.tourApiProject.user;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 @Builder
