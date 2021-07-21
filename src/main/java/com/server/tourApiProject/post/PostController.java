@@ -20,7 +20,7 @@ public class PostController {
 
     @ApiOperation(value = "게시물정보 입력", notes = "게시물 정보를 입력한다")
     @PostMapping(value = "post/")
-    public void createUser(@RequestBody PostParams postParam){
+    public void createPost(@RequestBody PostParams postParam){
         postService.createPost(postParam);
     }
 }
