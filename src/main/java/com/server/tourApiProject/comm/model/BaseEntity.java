@@ -18,9 +18,9 @@ import java.util.Date;
 public abstract class BaseEntity {
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(updatable = true)
     private Date systemRegisterDt; // 등록일시
     @LastModifiedDate
-    @Column(insertable = false)
+    @Column(insertable = true)
     private Date systemChangeDt; // 변경일시
 }
