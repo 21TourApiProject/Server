@@ -1,7 +1,6 @@
 package com.server.tourApiProject.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.server.tourApiProject.comm.model.BaseEntity;
 import com.server.tourApiProject.post.Post;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
