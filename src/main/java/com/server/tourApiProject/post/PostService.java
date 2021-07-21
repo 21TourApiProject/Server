@@ -13,16 +13,17 @@ import java.time.LocalDateTime;
 @Transactional
 @RequiredArgsConstructor
 public class PostService {
+
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-    public void createPost(PostParams postParam) {
+    public void createPost(PostParams postParams) {
         Post post = new Post();
-        post.setPostId(postParam.getPostId());
-        post.setContent(postParam.getContent());
+        post.setPostId(postParams.getPostId());
         post.setRegisterDt(LocalDateTime.now());
-        post.setUser(userRepository.getOne(postParam.getUserId()));
-        post.setUserId(postParam.getUserId());
+        post.setContent(postParams.getContent());
+        post.setUser(userRepository.getOne(postParams.getUserId()));
+        post.setUserId(postParams.getUserId());
         postRepository.save(post);
     }
 }

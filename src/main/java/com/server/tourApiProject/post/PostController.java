@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@Api(tags = {"2.1 게시물"})
+@Api(tags = {"2.2 게시물"})
 @RestController
 @RequestMapping(value = "/v1")
 @RequiredArgsConstructor
@@ -20,7 +20,7 @@ public class PostController {
 
     @ApiOperation(value = "게시물정보 입력", notes = "게시물 정보를 입력한다")
     @PostMapping(value = "post/")
-    public void createPost(@RequestBody PostParams postParam){
-        postService.createPost(postParam);
+    public void createPost(@RequestBody PostParams postParams){
+        postService.createPost(postParams);
     }
 }
