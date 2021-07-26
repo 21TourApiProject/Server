@@ -27,10 +27,16 @@ public class UserService {
 
     public User createUser(UserParams userParam){
         User user = new User();
-        user.setUserId(userParam.getUserId());
-        user.setEmail(userParam.getEmail());
+        user.setRealName(userParam.getRealName());
+        user.setSex(userParam.getSex());
+        user.setBirthDay(userParam.getBirthDay());
         user.setMobilePhoneNumber(userParam.getMobilePhoneNumber());
+        user.setEmail(userParam.getEmail());
+        user.setId(userParam.getId());
+        user.setPassword(userParam.getPassword());
         user.setNickName(userParam.getNickName());
+        //user.setUserHashTags(userParam.getUserHashTags());
+
         user.setSignUpDt(LocalDateTime.now());
 
         return userRepository.save(user);

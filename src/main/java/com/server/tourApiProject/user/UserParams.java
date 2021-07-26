@@ -2,6 +2,9 @@ package com.server.tourApiProject.user;
 
 import lombok.*;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Builder
 @Getter
 @Setter
@@ -9,11 +12,23 @@ import lombok.*;
 @AllArgsConstructor
 public class UserParams {
 
-    private Long userId;
+    private String realName;
+
+    private Boolean sex;
+
+    private LocalDate birthDay;
+
+    private String mobilePhoneNumber;
 
     private String email;
 
+    private String id;
+
+    private String password;
+
     private String nickName;
 
-    private String mobilePhoneNumber;
+    //private List<String> userHashTags;
+
+
 }
