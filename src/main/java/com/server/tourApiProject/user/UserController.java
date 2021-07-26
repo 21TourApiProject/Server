@@ -32,6 +32,6 @@ public class UserController {
 
     @ApiOperation(value = "중복 아이디 조회", notes = "중복된 아이디가 있는지 조회한다")
     @GetMapping(value = "user/duplicate/{loginId}")
-    public Boolean checkDuplicateLoginId(@PathVariable("loginId") Long loginId){ return userService.checkDuplicateLoginId(loginId); }
+    public Boolean checkDuplicateLoginId(@PathVariable("loginId") String loginId){ return userService.checkDuplicateLoginId(loginId); }
 
 }

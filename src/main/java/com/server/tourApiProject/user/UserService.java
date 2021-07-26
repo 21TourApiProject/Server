@@ -53,7 +53,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Boolean checkDuplicateLoginId(Long loginId) {
+    public Boolean checkDuplicateLoginId(String loginId) {
         User user = userRepository.findByLoginId(loginId);
         return user == null;
     }
