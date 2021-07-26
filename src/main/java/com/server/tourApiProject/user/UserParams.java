@@ -22,11 +22,9 @@ public class UserParams {
 
     private String email;
 
-    private String id;
+    private String loginId;
 
     private String password;
-
-    private String nickName;
 
     //private List<String> userHashTags;
 
