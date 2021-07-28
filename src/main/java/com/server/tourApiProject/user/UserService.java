@@ -27,21 +27,20 @@ public class UserService {
 
 
 
-    public User createUser(UserParams userParam){
+    public void createUser(UserParams userParam){
         User user = new User();
         user.setRealName(userParam.getRealName());
         user.setSex(userParam.getSex());
         user.setBirthDay(userParam.getBirthDay());
-        user.setMobilePhoneNumber(userParam.getMobilePhoneNumber());
+        //user.setMobilePhoneNumber(userParam.getMobilePhoneNumber());
         user.setEmail(userParam.getEmail());
         user.setLoginId(userParam.getLoginId());
         user.setPassword(userParam.getPassword());
         user.setNickName(userParam.getLoginId());
         //user.setUserHashTags(userParam.getUserHashTags());
-
         user.setSignUpDt(LocalDateTime.now());
 
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     public User updateUser(Long userId, UserParams userParam) {

@@ -16,9 +16,9 @@ public class UserParams {
 
     private Boolean sex;
 
-    private LocalDate birthDay;
+    private String birthDay;
 
-    private String mobilePhoneNumber;
+    //private String mobilePhoneNumber;
 
     private String email;
 

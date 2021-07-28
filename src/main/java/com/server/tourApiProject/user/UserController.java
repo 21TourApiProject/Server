@@ -19,7 +19,7 @@ public class UserController {
     public User getUser(@PathVariable("userId") Long userId){ return userService.getUser(userId); }
 
     @ApiOperation(value = "사용자정보 입력", notes = "사용자 정보를 입력한다")
-    @PostMapping(value = "user/")
+    @PostMapping(value = "user")
     public void createUser(@RequestBody UserParams userParam){
         userService.createUser(userParam);
     }

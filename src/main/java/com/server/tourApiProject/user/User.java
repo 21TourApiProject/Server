@@ -31,11 +31,10 @@ public class User{
     private Boolean sex; //남자 0, 여자 1
 
     @Column(nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birthDay;
+    private String birthDay;
 
-    @Column(nullable = false, unique = true, length = 16)
-    private String mobilePhoneNumber;
+//    @Column(nullable = false, unique = true, length = 16)
+//    private String mobilePhoneNumber;
 
     @Column(nullable = false, unique = true)
     private String email;
