@@ -19,7 +19,7 @@ public class UserController {
     public User getUser(@PathVariable("userId") Long userId){ return userService.getUser(userId); }
 
     @ApiOperation(value = "사용자정보 입력", notes = "사용자 정보를 입력한다")
-    @PostMapping(value = "user/")
+    @PostMapping(value = "user")
     public void createUser(@RequestBody UserParams userParam){
         userService.createUser(userParam);
     }
@@ -29,5 +29,9 @@ public class UserController {
     public void updateUser(@PathVariable("userId") Long userId, @RequestBody UserParams userParam){
         userService.updateUser(userId, userParam);
     }
+
+    @ApiOperation(value = "중복 아이디 조회", notes = "중복된 아이디가 있는지 조회한다")
+    @GetMapping(value = "user/duplicate/{loginId}")
+    public Boolean checkDuplicateLoginId(@PathVariable("loginId") String loginId){ return userService.checkDuplicateLoginId(loginId); }
 
 }

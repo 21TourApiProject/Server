@@ -25,25 +25,35 @@ public class UserService {
         return user;
     }
 
-    public User createUser(UserParams userParam){
+
+
+    public void createUser(UserParams userParam){
         User user = new User();
-        user.setUserId(userParam.getUserId());
+        user.setRealName(userParam.getRealName());
+        user.setSex(userParam.getSex());
+        user.setBirthDay(userParam.getBirthDay());
+        //user.setMobilePhoneNumber(userParam.getMobilePhoneNumber());
         user.setEmail(userParam.getEmail());
-        user.setMobilePhoneNumber(userParam.getMobilePhoneNumber());
-        user.setNickName(userParam.getNickName());
+        user.setLoginId(userParam.getLoginId());
+        user.setPassword(userParam.getPassword());
+        user.setNickName(userParam.getLoginId());
+        //user.setUserHashTags(userParam.getUserHashTags());
         user.setSignUpDt(LocalDateTime.now());
 
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     public User updateUser(Long userId, UserParams userParam) {
         User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
-        if (!userParam.getEmail().isEmpty())
-            user.setEmail(userParam.getEmail());
-        if (!userParam.getMobilePhoneNumber().isEmpty())
-            user.setMobilePhoneNumber(userParam.getMobilePhoneNumber());
-        if (!userParam.getNickName().isEmpty())
-            user.setNickName(userParam.getNickName());
+//        if (!userParam.getEmail().isEmpty())
+//            user.setEmail(userParam.getEmail());
+//        쓸일이 있을지 모르겠음
+
         return userRepository.save(user);
+    }
+
+    public Boolean checkDuplicateLoginId(String loginId) {
+        User user = userRepository.findByLoginId(loginId);
+        return user == null;
     }
 }
