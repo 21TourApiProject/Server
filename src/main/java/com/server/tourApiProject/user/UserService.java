@@ -32,7 +32,7 @@ public class UserService {
         user.setRealName(userParam.getRealName());
         user.setSex(userParam.getSex());
         user.setBirthDay(userParam.getBirthDay());
-        //user.setMobilePhoneNumber(userParam.getMobilePhoneNumber());
+        user.setMobilePhoneNumber(userParam.getMobilePhoneNumber());
         user.setEmail(userParam.getEmail());
         user.setLoginId(userParam.getLoginId());
         user.setPassword(userParam.getPassword());
