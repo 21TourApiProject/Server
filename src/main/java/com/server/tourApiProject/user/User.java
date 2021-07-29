@@ -1,12 +1,11 @@
 package com.server.tourApiProject.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.server.tourApiProject.post.Post;
+import com.server.tourApiProject.myHashTag.MyHashTag;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +32,8 @@ public class User{
     @Column(nullable = false)
     private String birthDay;
 
-//    @Column(nullable = false, unique = true, length = 16)
-//    private String mobilePhoneNumber;
+    @Column(nullable = false, unique = true, length = 16)
+    private String mobilePhoneNumber;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -59,8 +58,7 @@ public class User{
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime signUpDt;
 
-//    @ElementCollection
-//    @Column(nullable = false)
-//    private List<String> userHashTags = new ArrayList<String>();
+    @OneToMany(mappedBy = "user")
+    private List<MyHashTag> userHashTags = new ArrayList<>();
 
 }
