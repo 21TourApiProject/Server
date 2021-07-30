@@ -17,4 +17,8 @@ public class HashTagService {
     public List<HashTag> getAllHashTag() {
         return hashTagRepository.findAll();
     }
+
+    public void createHashTag(HashTag hashTag) {
+        hashTagRepository.save(hashTag);
+    }
 }
