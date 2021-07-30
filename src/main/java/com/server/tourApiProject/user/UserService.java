@@ -37,7 +37,6 @@ public class UserService {
         user.setLoginId(userParam.getLoginId());
         user.setPassword(userParam.getPassword());
         user.setNickName(userParam.getLoginId());
-        //user.setUserHashTags(userParam.getUserHashTags());
         user.setSignUpDt(LocalDateTime.now());
 
         userRepository.save(user);

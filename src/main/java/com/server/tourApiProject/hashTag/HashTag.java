@@ -15,7 +15,7 @@ public class HashTag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long hashTagId;
+    private int hashTagId;
 
     @Column(nullable = false, unique = true)
     private String hashTagName;

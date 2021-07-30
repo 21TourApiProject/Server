@@ -23,7 +23,4 @@ public class UserParams {
 
     private String password;
 
-    //private List<String> userHashTags;
-
-
 }
