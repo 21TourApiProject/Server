@@ -38,13 +38,10 @@ public class User{
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
-    private String loginId;
-
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String nickName;
 
     private String profileImage;
@@ -59,6 +56,6 @@ public class User{
     private LocalDateTime signUpDt;
 
     @OneToMany(mappedBy = "user")
-    private List<MyHashTag> userHashTags = new ArrayList<>();
+    private List<MyHashTag> myHashTags = new ArrayList<>();
 
 }

@@ -1,6 +1,28 @@
     -- 초기화 스크립트, 매번 db구동시 변하지 않는 값을 등록
-    -- db랑 어떻게 연결해야 하는 지 아직 못찾음
 
---    insert into user(user_id,email,nick_name,mobile_phone_number)values(1, 'test1@gmail.com', 'sein1', '010-1111-1111');
---    insert into user(user_id,email,nick_name,mobile_phone_number)values(2, 'test2@gmail.com', 'sein2', '010-2222-2222');
---    insert into user(user_id,email,nick_name,mobile_phone_number)values(3, 'test3@gmail.com', 'sein3', '010-3333-3333');
+-- 사용자
+   INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, MOBILE_PHONE_NUMBER, EMAIL, PASSWORD, NICK_NAME, SIGN_UP_DT) VALUES(1, '이세인', false, '2000-02-11', '01094069717', 'test1@gmail.com', 'dltpdls00*', '23in', '2021-08-01T15:41:20');
+
+-- 해시태그
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(1, '공기 좋은');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(2, '분위기 있는');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(3, '깔끔한');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(4, '감성적인');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(5, '이색적인');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(6, '인생샷');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(7, '전문적인');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(8, '캠핑');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(9, '차박');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(10, '뚜벅이');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(11, '드라이브');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(12, '자전거');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(13, '한적한');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(14, '근교');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(15, '도심 속');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(16, '연인');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(17, '가족');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(18, '친구');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(19, '혼자');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(20, '가성비');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(21, '소확행');
+    INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(22, '럭셔리한');

@@ -30,8 +30,12 @@ public class UserController {
         userService.updateUser(userId, userParam);
     }
 
-    @ApiOperation(value = "중복 아이디 조회", notes = "중복된 아이디가 있는지 조회한다")
-    @GetMapping(value = "user/duplicate/{loginId}")
-    public Boolean checkDuplicateLoginId(@PathVariable("loginId") String loginId){ return userService.checkDuplicateLoginId(loginId); }
+    @ApiOperation(value = "중복 이메일 조회", notes = "중복된 이메일이 있는지 조회한다")
+    @GetMapping(value = "user/duplicate/email/{email}")
+    public Boolean checkDuplicateLoginId(@PathVariable("email") String email){ return userService.checkDuplicateEmail(email); }
+
+    @ApiOperation(value = "중복 전화번호 조회", notes = "중복된 전화번호가 있는지 조회한다")
+    @GetMapping(value = "user/duplicate/mobilePhoneNumber/{mobilePhoneNumber}")
+    public Boolean checkDuplicateMobilePhoneNumber(@PathVariable("mobilePhoneNumber") String mobilePhoneNumber){ return userService.checkDuplicateMobilePhoneNumber(mobilePhoneNumber); }
 
 }
