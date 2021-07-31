@@ -1,10 +1,14 @@
 package com.server.tourApiProject.user;
 
+import com.server.tourApiProject.myHashTag.MyHashTag;
+import com.server.tourApiProject.myHashTag.MyHashTagService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @Api(tags = {"1.1 사용자"})
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final MyHashTagService myHashTagService;
 
     @ApiOperation(value = "사용자 조회", notes = "사용자 id로 사용자를 조회한다")
     @GetMapping(value = "user/{userId}")
@@ -37,5 +42,9 @@ public class UserController {
     @ApiOperation(value = "중복 전화번호 조회", notes = "중복된 전화번호가 있는지 조회한다")
     @GetMapping(value = "user/duplicate/mobilePhoneNumber/{mobilePhoneNumber}")
     public Boolean checkDuplicateMobilePhoneNumber(@PathVariable("mobilePhoneNumber") String mobilePhoneNumber){ return userService.checkDuplicateMobilePhoneNumber(mobilePhoneNumber); }
+
+    @ApiOperation(value = "선호 해시태그 조회", notes = "사용자 id로 해당 사용자의 선호 해시태그를 조회한다")
+    @GetMapping(value = "user/{userId}/myHashTag")
+    public List<MyHashTag> getMyHashTag(@PathVariable("userId") Long userId){ return myHashTagService.getMyHashTag(userId); }
 
 }

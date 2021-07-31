@@ -1,5 +1,6 @@
 package com.server.tourApiProject.myHashTag;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.tourApiProject.user.User;
 import lombok.*;
 
@@ -17,10 +18,12 @@ public class MyHashTag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long myHashTagListId;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", insertable = false, updatable=false)
     private User user;
 
+    @Column(nullable = false)
     private Long userId;
 
     @Column(nullable = false)
