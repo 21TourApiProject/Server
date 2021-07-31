@@ -34,9 +34,8 @@ public class UserService {
         user.setBirthDay(userParam.getBirthDay());
         user.setMobilePhoneNumber(userParam.getMobilePhoneNumber());
         user.setEmail(userParam.getEmail());
-        user.setLoginId(userParam.getLoginId());
         user.setPassword(userParam.getPassword());
-        user.setNickName(userParam.getLoginId());
+        user.setNickName(userParam.getEmail());
         user.setSignUpDt(LocalDateTime.now());
 
         userRepository.save(user);
@@ -51,8 +50,13 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Boolean checkDuplicateLoginId(String loginId) {
-        User user = userRepository.findByLoginId(loginId);
+    public Boolean checkDuplicateEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        return user == null;
+    }
+
+    public Boolean checkDuplicateMobilePhoneNumber(String mobilePhoneNumber) {
+        User user = userRepository.findByMobilePhoneNumber(mobilePhoneNumber);
         return user == null;
     }
 }

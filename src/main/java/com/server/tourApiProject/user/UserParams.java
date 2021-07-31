@@ -19,8 +19,6 @@ public class UserParams {
 
     private String email;
 
-    private String loginId;
-
     private String password;
 
 }
