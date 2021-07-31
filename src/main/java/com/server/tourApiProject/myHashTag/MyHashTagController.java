@@ -16,9 +16,9 @@ import java.util.List;
 public class MyHashTagController {
     private final MyHashTagService myHashTagService;
 
-    @ApiOperation(value = "선호 해시태그 입력", notes = "선호 해시태그 정보를 입력한다")
+    @ApiOperation(value = "선호 해시태그 리스트 입력", notes = "선호 해시태그 정보를 입력한다")
     @PostMapping(value = "myHashTag")
-    public void createMyHashTag(@RequestBody MyHashTagParams myHashTagParam){
-        myHashTagService.createMyHashTag(myHashTagParam);
+    public void createMyHashTags(@RequestBody List<MyHashTagParams> myHashTagParams){
+        myHashTagService.createMyHashTags(myHashTagParams);
     }
 }
