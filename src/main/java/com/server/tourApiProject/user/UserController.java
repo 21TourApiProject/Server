@@ -44,7 +44,7 @@ public class UserController {
     public Boolean checkDuplicateMobilePhoneNumber(@PathVariable("mobilePhoneNumber") String mobilePhoneNumber){ return userService.checkDuplicateMobilePhoneNumber(mobilePhoneNumber); }
 
     @ApiOperation(value = "선호 해시태그 조회", notes = "사용자 id로 해당 사용자의 선호 해시태그를 조회한다")
-    @GetMapping(value = "user/{userId}/myHashTags")
-    public List<MyHashTag> getMyHashTags(@PathVariable("userId") Long userId){ return myHashTagService.getMyHashTags(userId); }
+    @GetMapping(value = "user/{userId}/myHashTag")
+    public List<MyHashTag> getMyHashTag(@PathVariable("userId") Long userId){ return myHashTagService.getMyHashTag(userId); }
 
 }

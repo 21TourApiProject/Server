@@ -32,7 +32,7 @@ public class MyHashTagService {
         myHashTagRepository.save(myHashTag);
     }
 
-    public List<MyHashTag> getMyHashTags(Long userId) {
+    public List<MyHashTag> getMyHashTag(Long userId) {
         return myHashTagRepository.findByUserId(userId);
     }
 }

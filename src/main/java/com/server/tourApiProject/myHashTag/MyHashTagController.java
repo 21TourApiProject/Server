@@ -21,8 +21,4 @@ public class MyHashTagController {
     public void createMyHashTag(@RequestBody MyHashTagParams myHashTagParam){
         myHashTagService.createMyHashTag(myHashTagParam);
     }
-
-    @ApiOperation(value = "선호 해시태그 조회", notes = "사용자의 선호 해시태그를 조회한다")
-    @GetMapping(value = "myHashTag/{userId}/myHashTags")
-    public List<MyHashTag> getMyHashTags(@PathVariable("userId") Long userId){ return myHashTagService.getMyHashTags(userId); }
 }
