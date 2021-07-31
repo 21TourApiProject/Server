@@ -1,5 +1,7 @@
 package com.server.tourApiProject.myHashTag;
 
+import com.server.tourApiProject.hashTag.HashTag;
+import com.server.tourApiProject.hashTag.HashTagRepository;
 import com.server.tourApiProject.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,10 +16,15 @@ import javax.transaction.Transactional;
 public class MyHashTagService {
     private final MyHashTagRepository myHashTagRepository;
     private final UserRepository userRepository;
+    private final HashTagRepository hashTagRepository;
 
     public void createMyHashTag(MyHashTagParams myHashTagParam) {
         MyHashTag myHashTag = new MyHashTag();
-        myHashTag.setHashTagId(myHashTagParam.getHashTagId());
+        myHashTag.setHashTagName(myHashTagParam.getHashTagName());
+
+        HashTag hashTag = hashTagRepository.findByHashTagName(myHashTagParam.getHashTagName());
+        myHashTag.setHashTagId(hashTag.getHashTagId());
+
         myHashTag.setUserId(myHashTagParam.getUserId());
         myHashTag.setUser(userRepository.findById(myHashTagParam.getUserId()).orElseThrow(IllegalAccessError::new));
 

@@ -24,5 +24,8 @@ public class MyHashTag {
     private Long userId;
 
     @Column(nullable = false)
-    private int hashTagId;
+    private Long hashTagId;
+
+    @Column(nullable = false)
+    private String hashTagName;
 }

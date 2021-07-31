@@ -8,7 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MyHashTagParams {
+
     private Long userId;
 
-    private int hashTagId;
+    private String hashTagName;
 }
