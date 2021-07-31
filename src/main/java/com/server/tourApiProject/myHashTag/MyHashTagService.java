@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -29,5 +30,9 @@ public class MyHashTagService {
         myHashTag.setUser(userRepository.findById(myHashTagParam.getUserId()).orElseThrow(IllegalAccessError::new));
 
         myHashTagRepository.save(myHashTag);
+    }
+
+    public List<MyHashTag> getMyHashTags(Long userId) {
+        return myHashTagRepository.findByUserId(userId);
     }
 }

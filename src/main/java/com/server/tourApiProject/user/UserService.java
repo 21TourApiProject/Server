@@ -1,5 +1,7 @@
 package com.server.tourApiProject.user;
 
+import com.server.tourApiProject.myHashTag.MyHashTag;
+import com.server.tourApiProject.myHashTag.MyHashTagRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
