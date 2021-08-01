@@ -29,11 +29,11 @@ public class UserController {
 
     @ApiOperation(value = "사용자 이메일 조회", notes = "사용자의 이름, 전화번호로 이메일을 조회한다")
     @GetMapping(value = "user/login/email/{realName}/{mobilePhoneNumber}")
-    public Boolean getEmail(@PathVariable("realName") String realName, @PathVariable("mobilePhoneNumber") String mobilePhoneNumber){ return userService.getEmail(realName, mobilePhoneNumber); }
+    public String getEmail(@PathVariable("realName") String realName, @PathVariable("mobilePhoneNumber") String mobilePhoneNumber){ return userService.getEmail(realName, mobilePhoneNumber); }
 
     @ApiOperation(value = "사용자 비밀번호 조회", notes = "사용자의 이메일, 이름, 전화번호로 비밀번호를 조회한다")
     @GetMapping(value = "user/login/password/{email}/{realName}/{mobilePhoneNumber}")
-    public Boolean getPassword(@PathVariable("email") String email, @PathVariable("realName") String realName, @PathVariable("mobilePhoneNumber") String mobilePhoneNumber){ return userService.getPassword(email, realName, mobilePhoneNumber); }
+    public String getPassword(@PathVariable("email") String email, @PathVariable("realName") String realName, @PathVariable("mobilePhoneNumber") String mobilePhoneNumber){ return userService.getPassword(email, realName, mobilePhoneNumber); }
 
     @ApiOperation(value = "사용자정보 입력", notes = "사용자 정보를 입력한다")
     @PostMapping(value = "user")
