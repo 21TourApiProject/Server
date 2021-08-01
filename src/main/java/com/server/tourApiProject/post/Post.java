@@ -2,6 +2,7 @@ package com.server.tourApiProject.post;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.server.tourApiProject.hashTag.HashTag;
+import com.server.tourApiProject.postHashTag.PostHashTag;
 import com.server.tourApiProject.user.User;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,17 +35,25 @@ public class Post {
 
     @Column(length = 1000,nullable = false)
     private String postContent;
+
     @Column(nullable = false)
     private String postImage;
+
     @Column(nullable = false)
     private String observeFit;
+
     @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime yearDate;
+
     @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime time;
 
     @OneToMany(mappedBy = "post")
-    private List<HashTag> postHashTag=new ArrayList<>();
+    private List<PostHashTag> postHashTags=new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", insertable = false, updatable=false)
