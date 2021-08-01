@@ -1,12 +1,16 @@
 package com.server.tourApiProject.post;
 
+import com.server.tourApiProject.user.User;
 import com.server.tourApiProject.user.UserRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+
+import javax.transaction.Transactional;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -17,11 +21,20 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
+    public Post getPost(Long postId){
+        Post post=  postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
+        return post;
+    }
+
     public void createPost(PostParams postParams) {
         Post post = new Post();
         post.setPostId(postParams.getPostId());
         post.setRegisterDt(LocalDateTime.now());
-        post.setContent(postParams.getContent());
+        post.setPostContent(postParams.getPostContent());
+        post.setPostImage(postParams.getPostImage());
+        post.setObserveFit(postParams.getObserveFit());
+        post.setYearDate(postParams.getYearDate());
+        post.setTime(postParams.getTime());
         post.setUser(userRepository.getOne(postParams.getUserId()));
         post.setUserId(postParams.getUserId());
         postRepository.save(post);
