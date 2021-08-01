@@ -1,13 +1,23 @@
 package com.server.tourApiProject.post;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.server.tourApiProject.hashTag.HashTag;
 import com.server.tourApiProject.user.User;
-import lombok.*;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import java.awt.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Builder
 @Getter
@@ -22,8 +32,19 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
-    @Column(length = 1000)
-    private String content;
+    @Column(length = 1000,nullable = false)
+    private String postContent;
+    @Column(nullable = false)
+    private String postImage;
+    @Column(nullable = false)
+    private String observeFit;
+    @Column(nullable = false)
+    private LocalDateTime yearDate;
+    @Column(nullable = false)
+    private LocalDateTime time;
+
+    @OneToMany(mappedBy = "post")
+    private List<HashTag> postHashTag=new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", insertable = false, updatable=false)
