@@ -61,4 +61,33 @@ public class UserService {
         User user = userRepository.findByMobilePhoneNumber(mobilePhoneNumber);
         return user == null;
     }
+
+    public Boolean logIn(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if (user == null){
+            return false;
+        }
+        return user.getPassword().equals(password);
+    }
+
+    public String getEmail(String realName, String mobilePhoneNumber) {
+        User user = userRepository.findByMobilePhoneNumber(mobilePhoneNumber);
+        if (user == null){
+            return "";
+        }
+        if (user.getRealName().equals(realName)){
+            return user.getEmail();
+        }return "";
+    }
+
+    public String getPassword(String email, String realName, String mobilePhoneNumber) {
+        User user = userRepository.findByEmail(email);
+        if (user == null){
+            return "";
+        }
+        if (user.getRealName().equals(realName) && user.getMobilePhoneNumber().equals(mobilePhoneNumber)){
+            return user.getPassword();
+        }
+        return "";
+    }
 }
