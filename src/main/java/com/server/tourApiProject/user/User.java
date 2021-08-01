@@ -58,4 +58,6 @@ public class User{
     @OneToMany(mappedBy = "user")
     private List<MyHashTag> myHashTags = new ArrayList<>();
 
+    //왜 push가 안되지
+
 }
