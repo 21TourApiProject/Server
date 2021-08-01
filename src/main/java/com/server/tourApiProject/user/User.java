@@ -59,5 +59,7 @@ public class User{
     private List<MyHashTag> myHashTags = new ArrayList<>();
 
     //왜 push가 안되지
+    //이상하네
+    //???
 
 }
