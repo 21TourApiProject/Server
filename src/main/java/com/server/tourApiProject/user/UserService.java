@@ -62,12 +62,15 @@ public class UserService {
         return user == null;
     }
 
-    public Boolean logIn(String email, String password) {
+    public Long logIn(String email, String password) {
         User user = userRepository.findByEmail(email);
-        if (user == null){
-            return false;
+        if (user == null) {
+            return -1L;
         }
-        return user.getPassword().equals(password);
+        if (user.getPassword().equals(password)) {
+            return user.getUserId();
+        }
+        return -1L;
     }
 
     public String getEmail(String realName, String mobilePhoneNumber) {
