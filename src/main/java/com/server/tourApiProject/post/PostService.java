@@ -28,7 +28,6 @@ public class PostService {
 
     public void createPost(PostParams postParams) {
         Post post = new Post();
-        post.setPostId(postParams.getPostId());
         post.setRegisterDt(LocalDateTime.now());
         post.setPostContent(postParams.getPostContent());
         post.setPostImage(postParams.getPostImage());
