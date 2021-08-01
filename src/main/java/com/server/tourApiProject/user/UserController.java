@@ -25,7 +25,7 @@ public class UserController {
 
     @ApiOperation(value = "사용자 로그인", notes = "사용자의 이메일과 비밀번호로 계정 여부를 확인한다")
     @GetMapping(value = "user/login/{email}/{password}")
-    public Boolean logIn(@PathVariable("email") String email, @PathVariable("password") String password){ return userService.logIn(email, password); }
+    public Long logIn(@PathVariable("email") String email, @PathVariable("password") String password){ return userService.logIn(email, password); }
 
     @ApiOperation(value = "사용자 이메일 조회", notes = "사용자의 이름, 전화번호로 이메일을 조회한다")
     @GetMapping(value = "user/login/email/{realName}/{mobilePhoneNumber}")
