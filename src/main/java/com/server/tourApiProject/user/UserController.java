@@ -41,12 +41,6 @@ public class UserController {
         userService.createUser(userParam);
     }
 
-    @ApiOperation(value = "사용자정보 수정", notes = "사용자 정보를 수정한다")
-    @PutMapping(value = "user/{userId}")
-    public void updateUser(@PathVariable("userId") Long userId, @RequestBody UserParams userParam){
-        userService.updateUser(userId, userParam);
-    }
-
     @ApiOperation(value = "중복 이메일 조회", notes = "중복된 이메일이 있는지 조회한다")
     @GetMapping(value = "user/duplicate/email/{email}")
     public Boolean checkDuplicateLoginId(@PathVariable("email") String email){ return userService.checkDuplicateEmail(email); }
@@ -54,6 +48,22 @@ public class UserController {
     @ApiOperation(value = "중복 전화번호 조회", notes = "중복된 전화번호가 있는지 조회한다")
     @GetMapping(value = "user/duplicate/mobilePhoneNumber/{mobilePhoneNumber}")
     public Boolean checkDuplicateMobilePhoneNumber(@PathVariable("mobilePhoneNumber") String mobilePhoneNumber){ return userService.checkDuplicateMobilePhoneNumber(mobilePhoneNumber); }
+
+    @ApiOperation(value = "중복 닉네임 조회", notes = "중복된 닉네임이 있는지 조회한다")
+    @GetMapping(value = "user/duplicate/nickName/{nickName}")
+    public Boolean checkDuplicateNickName(@PathVariable("nickName") String nickName){ return userService.checkDuplicateNickName(nickName); }
+
+    @ApiOperation(value = "사용자 닉네임 수정", notes = "해당 사용자의 닉네임을 수정한다")
+    @PutMapping(value = "user/{userId}/nickName/{nickName}")
+    public void updateNickName(@PathVariable("userId") Long userId, @PathVariable("nickName") String nickName){
+        userService.changeNickName(userId, nickName);
+    }
+
+    @ApiOperation(value = "사용자 프로필 사진 수정", notes = "해당 사용자의 프로필 사진을 수정한다")
+    @PutMapping(value = "user/{userId}/profileImage")
+    public void updateProfileImage(@PathVariable("userId") Long userId, @RequestBody User3 profileImage){
+        userService.changeProfileImage(userId, profileImage);
+    }
 
     @ApiOperation(value = "선호 해시태그 조회", notes = "사용자 id로 해당 사용자의 선호 해시태그를 조회한다")
     @GetMapping(value = "user/{userId}/myHashTag")

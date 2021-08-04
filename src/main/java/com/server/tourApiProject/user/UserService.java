@@ -62,6 +62,11 @@ public class UserService {
         return user == null;
     }
 
+    public Boolean checkDuplicateNickName(String nickName) {
+        User user = userRepository.findByNickName(nickName);
+        return user == null;
+    }
+
     public Long logIn(String email, String password) {
         User user = userRepository.findByEmail(email);
         if (user == null) {
@@ -92,5 +97,17 @@ public class UserService {
             return user.getPassword();
         }
         return "none";
+    }
+
+    public void changeNickName(Long userId, String nickName) {
+        User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
+        user.setNickName(nickName);
+        userRepository.save(user);
+    }
+
+    public void changeProfileImage(Long userId, User3 profileImage) {
+        User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
+        user.setProfileImage(profileImage.getProfileImage());
+        userRepository.save(user);
     }
 }
