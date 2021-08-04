@@ -17,8 +17,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PostParams {
 
-    private Long postId;
-
     private String postContent;
 
     private String postImage;
