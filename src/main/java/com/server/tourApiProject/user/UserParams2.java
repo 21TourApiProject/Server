@@ -7,6 +7,6 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User3 {
+public class UserParams2 {
     private String profileImage;
 }

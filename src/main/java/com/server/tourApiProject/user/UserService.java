@@ -1,7 +1,5 @@
 package com.server.tourApiProject.user;
 
-import com.server.tourApiProject.myHashTag.MyHashTag;
-import com.server.tourApiProject.myHashTag.MyHashTagRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -105,7 +103,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void changeProfileImage(Long userId, User3 profileImage) {
+    public void changeProfileImage(Long userId, UserParams2 profileImage) {
         User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
         user.setProfileImage(profileImage.getProfileImage());
         userRepository.save(user);
