@@ -65,6 +65,12 @@ public class UserController {
         userService.changeProfileImage(userId, profileImage);
     }
 
+    @ApiOperation(value = "사용자 비밀번호 수정", notes = "해당 사용자의 비밀번호를 수정한다")
+    @PutMapping(value = "user/{userId}/password/{password}")
+    public void updatePassword(@PathVariable("userId") Long userId, @PathVariable("password") String password){
+        userService.changePassword(userId, password);
+    }
+
     @ApiOperation(value = "선호 해시태그 조회", notes = "사용자 id로 해당 사용자의 선호 해시태그를 조회한다")
     @GetMapping(value = "user/{userId}/myHashTag")
     public List<MyHashTag> getMyHashTag(@PathVariable("userId") Long userId){ return myHashTagService.getMyHashTag(userId); }

@@ -108,4 +108,10 @@ public class UserService {
         user.setProfileImage(profileImage.getProfileImage());
         userRepository.save(user);
     }
+
+    public void changePassword(Long userId, String password) {
+        User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
+        user.setPassword(password);
+        userRepository.save(user);
+    }
 }
