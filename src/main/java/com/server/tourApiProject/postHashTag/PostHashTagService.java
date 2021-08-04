@@ -7,6 +7,7 @@ import com.server.tourApiProject.myHashTag.MyHashTagParams;
 import com.server.tourApiProject.myHashTag.MyHashTagRepository;
 import com.server.tourApiProject.post.Post;
 import com.server.tourApiProject.post.PostRepository;
+import com.server.tourApiProject.user.User;
 import com.server.tourApiProject.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,10 @@ public class PostHashTagService {
 
             HashTag hashTag = hashTagRepository.findByHashTagName(p.getHashTagName());
             postHashTag.setHashTagId(hashTag.getHashTagId());
+
+            Post post = postRepository.findByUserId(p.getUserId());
+            postHashTag.setPost(post);
+            postHashTag.setPostId(post.getUserId());
 
             postHashTagRepository.save(postHashTag);
         }
