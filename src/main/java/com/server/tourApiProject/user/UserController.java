@@ -77,6 +77,6 @@ public class UserController {
 
     @ApiOperation(value = "선호 해시태그 조회", notes = "사용자 id로 해당 사용자의 선호 해시태그를 조회한다")
     @GetMapping(value = "user/{userId}/myHashTag")
-    public List<MyHashTag> getMyHashTag(@PathVariable("userId") Long userId){ return myHashTagService.getMyHashTag(userId); }
+    public List<String> getMyHashTag(@PathVariable("userId") Long userId){ return myHashTagService.getMyHashTag(userId); }
 
 }

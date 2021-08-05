@@ -2,6 +2,8 @@ package com.server.tourApiProject.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.server.tourApiProject.myHashTag.MyHashTag;
+import com.server.tourApiProject.myWishPost.MyWishPost;
+import com.server.tourApiProject.post.Post;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -50,7 +52,8 @@ public class User{
 
     //private List<Review> myReviews = new ArrayList<>();
 
-    //private List<Post> myPosts = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<Post> myPosts = new ArrayList<>();
 
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -59,5 +62,8 @@ public class User{
 
     @OneToMany(mappedBy = "user")
     private List<MyHashTag> myHashTags = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<MyWishPost> myWishPosts = new ArrayList<>();
 
 }

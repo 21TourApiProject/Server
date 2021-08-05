@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -20,9 +21,13 @@ public class MyHashTagService {
     private final UserRepository userRepository;
     private final HashTagRepository hashTagRepository;
 
-
-    public List<MyHashTag> getMyHashTag(Long userId) {
-        return myHashTagRepository.findByUserId(userId);
+    public List<String> getMyHashTag(Long userId) {
+        List<String> myHashTagNameList = new ArrayList<>();
+        List<MyHashTag> myHashTagList = myHashTagRepository.findByUserId(userId);
+        for(MyHashTag p : myHashTagList) {
+            myHashTagNameList.add(p.getHashTagName());
+        }
+        return myHashTagNameList;
     }
 
     public Long createMyHashTags(String mobilePhoneNumber, List<MyHashTagParams> myHashTagParams) {
