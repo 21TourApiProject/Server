@@ -10,4 +10,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     // 중복 전화번호가 있는지 조회
     User findByMobilePhoneNumber(@Param("mobilePhoneNumber") String mobilePhoneNumber);
+
+    // 중복 닉네임이 있는지 조회
+    User findByNickName(@Param("nickName") String nickName);
 }
