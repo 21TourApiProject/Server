@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostImageParams {
-    private Long userId;
+    private Long postId;
 
-    private String ImageName;
+    private String imageName;
 }
