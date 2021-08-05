@@ -3,6 +3,7 @@ package com.server.tourApiProject.post;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.server.tourApiProject.hashTag.HashTag;
 import com.server.tourApiProject.postHashTag.PostHashTag;
+import com.server.tourApiProject.postImage.PostImage;
 import com.server.tourApiProject.user.User;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -54,6 +55,9 @@ public class Post {
 
     @OneToMany(mappedBy = "post")
     private List<PostHashTag> postHashTags=new ArrayList<>();
+
+    @OneToMany(mappedBy = "post")
+    private List<PostImage> postImages=new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", insertable = false, updatable=false)

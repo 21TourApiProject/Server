@@ -26,9 +26,9 @@ public class PostImageService {
             PostImage postImage = new PostImage();
             postImage.setImageName(p.getImageName());
 
-            Post post = postRepository.findByUserId(p.getUserId());
+            Post post = postRepository.findByUserId(p.getPostId());
             postImage.setPost(post);
-            postImage.setPostId(post.getUserId());
+            postImage.setPostId(post.getPostId());
 
             postImageRepository.save(postImage);
         }

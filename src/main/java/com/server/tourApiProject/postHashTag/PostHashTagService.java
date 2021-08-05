@@ -37,9 +37,9 @@ public class PostHashTagService {
             HashTag hashTag = hashTagRepository.findByHashTagName(p.getHashTagName());
             postHashTag.setHashTagId(hashTag.getHashTagId());
 
-            Post post = postRepository.findByUserId(p.getUserId());
+            Post post = postRepository.findByUserId(p.getPostId());
             postHashTag.setPost(post);
-            postHashTag.setPostId(post.getUserId());
+            postHashTag.setPostId(post.getPostId());
 
             postHashTagRepository.save(postHashTag);
         }

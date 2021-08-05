@@ -26,8 +26,8 @@ public class PostImage {
     private Long postId;
 
     @Column(nullable = false)
-    private Long ImageId;
+    private Long imageId;
 
     @Column(nullable = false)
-    private String ImageName;
+    private String imageName;
 }
