@@ -25,19 +25,20 @@ public class MyHashTagService {
         return myHashTagRepository.findByUserId(userId);
     }
 
-    public void createMyHashTags(List<MyHashTagParams> myHashTagParams) {
-        for(MyHashTagParams p : myHashTagParams){
+    public Long createMyHashTags(String mobilePhoneNumber, List<MyHashTagParams> myHashTagParams) {
+        User user = userRepository.findByMobilePhoneNumber(mobilePhoneNumber);
+        Long userId = user.getUserId();
+
+        for(MyHashTagParams p : myHashTagParams) {
             MyHashTag myHashTag = new MyHashTag();
             myHashTag.setHashTagName(p.getHashTagName());
-
+            myHashTag.setUser(user);
+            myHashTag.setUserId(userId);
             HashTag hashTag = hashTagRepository.findByHashTagName(p.getHashTagName());
             myHashTag.setHashTagId(hashTag.getHashTagId());
 
-            User user = userRepository.findByMobilePhoneNumber(p.getMobilePhoneNumber());
-            myHashTag.setUser(user);
-            myHashTag.setUserId(user.getUserId());
-
             myHashTagRepository.save(myHashTag);
         }
+        return userId;
     }
 }
