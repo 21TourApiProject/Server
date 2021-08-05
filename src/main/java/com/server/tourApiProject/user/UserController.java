@@ -23,6 +23,10 @@ public class UserController {
     @GetMapping(value = "user/{userId}")
     public User getUser(@PathVariable("userId") Long userId){ return userService.getUser(userId); }
 
+    @ApiOperation(value = "사용자 조회2", notes = "사용자 id로 사용자의 닉네임, 프로필 사진을 조회한다")
+    @GetMapping(value = "user2/{userId}")
+    public UserParams2 getUser2(@PathVariable("userId") Long userId){ return userService.getUser2(userId); }
+
     @ApiOperation(value = "사용자 로그인", notes = "사용자의 이메일과 비밀번호로 계정 여부를 확인한다")
     @GetMapping(value = "user/login/{email}/{password}")
     public Long logIn(@PathVariable("email") String email, @PathVariable("password") String password){ return userService.logIn(email, password); }

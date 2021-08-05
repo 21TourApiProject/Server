@@ -8,5 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserParams2 {
+    private String nickName;
     private String profileImage;
 }

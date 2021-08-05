@@ -25,7 +25,14 @@ public class UserService {
         return user;
     }
 
+    public UserParams2 getUser2(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
+        UserParams2 userParams2 = new UserParams2();
+        userParams2.setNickName(user.getNickName());
+        userParams2.setProfileImage(user.getProfileImage());
 
+        return userParams2;
+    }
 
     public void createUser(UserParams userParam){
         User user = new User();
@@ -114,4 +121,5 @@ public class UserService {
         user.setPassword(password);
         userRepository.save(user);
     }
+
 }
