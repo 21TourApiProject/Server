@@ -1,5 +1,6 @@
 package com.server.tourApiProject.user;
 
+import com.server.tourApiProject.post.Post;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -122,4 +123,9 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public List<Post> getMyPosts(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
+        List<Post> myPosts = user.getMyPosts();
+        return myPosts;
+    }
 }

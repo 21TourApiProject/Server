@@ -1,6 +1,7 @@
 package com.server.tourApiProject.post;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.tourApiProject.hashTag.HashTag;
 import com.server.tourApiProject.postHashTag.PostHashTag;
 import com.server.tourApiProject.postImage.PostImage;
@@ -59,6 +60,7 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private List<PostImage> postImages=new ArrayList<>();
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", insertable = false, updatable=false)
     private User user;

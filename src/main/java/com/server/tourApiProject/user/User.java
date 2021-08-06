@@ -50,20 +50,18 @@ public class User{
 
     private String profileImage;
 
-    //private List<Review> myReviews = new ArrayList<>();
-
     @OneToMany(mappedBy = "user")
     private List<Post> myPosts = new ArrayList<>();
-
-    @Column(nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime signUpDt;
 
     @OneToMany(mappedBy = "user")
     private List<MyHashTag> myHashTags = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<MyWishPost> myWishPosts = new ArrayList<>();
+
+    @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime signUpDt;
 
 }
