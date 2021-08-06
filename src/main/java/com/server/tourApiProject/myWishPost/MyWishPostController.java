@@ -6,10 +6,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.List;
 
 @Slf4j
-@Api(tags = {"1.3 내 게시물 찜"})
+@Api(tags = {"1.3 내 찜 - 게시물"})
 @RestController
 @RequestMapping(value = "/v1")
 @RequiredArgsConstructor
@@ -22,9 +22,9 @@ public class MyWishPostController {
         myWishPostService.createMyWishPost(userId, postId);
     }
 
-//    @ApiOperation(value = "내 찜 목록 조회", notes = "해당 사용자의 찜한 게시물 목록을 조회한다")
-//    @GetMapping(value = "myWishPost/{userId}")
-//    public Map<String, String> getMyWishPosts(@PathVariable("userId") Long userId){
-//        return myWishPostService.getMyWishPosts(userId);
-//    }
+    @ApiOperation(value = "내 찜 목록 조회", notes = "해당 사용자가 찜한 게시물 목록을 조회한다")
+    @GetMapping(value = "myWishPost/{userId}")
+    public List<MyWishPostParams> getMyWishPosts(@PathVariable("userId") Long userId){
+        return myWishPostService.getMyWishPosts(userId);
+    }
 }

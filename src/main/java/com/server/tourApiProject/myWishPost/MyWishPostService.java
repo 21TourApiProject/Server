@@ -1,5 +1,6 @@
 package com.server.tourApiProject.myWishPost;
 
+import com.server.tourApiProject.post.Post;
 import com.server.tourApiProject.post.PostRepository;
 import com.server.tourApiProject.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,9 +32,19 @@ public class MyWishPostService {
         myWishPostRepository.save(myWishPost);
     }
 
-//    public Map<String, String> getMyWishPosts(Long userId) {
-//        List<MyWishPost> myWishPosts = myWishPostRepository.findByUserId(userId);
-//
-//
-//    }
+    public List<MyWishPostParams> getMyWishPosts(Long userId) {
+        List<MyWishPostParams> myWishPostParams= new ArrayList<>();
+
+        List<MyWishPost> list = myWishPostRepository.findByUserId(userId);
+        for (MyWishPost wp : list){
+            Post post = postRepository.findById(wp.getPostId()).orElseThrow(IllegalAccessError::new);
+
+            MyWishPostParams params = new MyWishPostParams();
+            params.setPostId(post.getPostId());
+            params.setThumbnail(post.getPostImage());
+            params.setTitle(post.getPostContent()); //추후 제목으로 수정
+            myWishPostParams.add(params);
+        }
+        return myWishPostParams;
+    }
 }
