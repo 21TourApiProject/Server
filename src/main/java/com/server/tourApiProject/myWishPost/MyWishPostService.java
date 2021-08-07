@@ -8,10 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -33,7 +31,7 @@ public class MyWishPostService {
     }
 
     public List<MyWishPostParams> getMyWishPosts(Long userId) {
-        List<MyWishPostParams> myWishPostParams= new ArrayList<>();
+        List<MyWishPostParams> result= new ArrayList<>();
 
         List<MyWishPost> list = myWishPostRepository.findByUserId(userId);
         for (MyWishPost wp : list){
@@ -41,10 +39,10 @@ public class MyWishPostService {
 
             MyWishPostParams params = new MyWishPostParams();
             params.setPostId(post.getPostId());
-            params.setThumbnail(post.getPostImage());
+            params.setThumbnail(""); //추후 첫번째 이미지로 수정
             params.setTitle(post.getPostContent()); //추후 제목으로 수정
-            myWishPostParams.add(params);
+            result.add(params);
         }
-        return myWishPostParams;
+        return result;
     }
 }

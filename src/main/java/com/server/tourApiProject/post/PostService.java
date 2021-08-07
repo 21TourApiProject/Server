@@ -1,16 +1,13 @@
 package com.server.tourApiProject.post;
 
-import com.server.tourApiProject.user.User;
 import com.server.tourApiProject.user.UserRepository;
-
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-
-import javax.transaction.Transactional;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -22,7 +19,7 @@ public class PostService {
     private final UserRepository userRepository;
 
     public Post getPost(Long postId){
-        Post post=  postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
+        Post post = postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
         return post;
     }
 
@@ -35,5 +32,19 @@ public class PostService {
         post.setUser(userRepository.getOne(postParams.getUserId()));
         post.setUserId(postParams.getUserId());
         postRepository.save(post);
+    }
+
+
+    public List<PostParams2> getMyPosts(Long userId) {
+        List<PostParams2> result = new ArrayList<>();
+        List<Post> posts = postRepository.findUserById(userId);
+        for (Post post : posts){
+            PostParams2 postParams2 = new PostParams2();
+            postParams2.setPostId(post.getPostId());
+            postParams2.setThumbnail(""); //추후 첫번째 이미지로 수정
+            postParams2.setTitle(post.getPostContent()); //추후 제목으로 수정
+            result.add(postParams2);
+        }
+        return result;
     }
 }
