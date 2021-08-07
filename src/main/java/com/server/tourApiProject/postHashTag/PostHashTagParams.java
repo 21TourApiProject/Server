@@ -8,8 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostHashTagParams {
-
-    private String mobilePhoneNumber;
+    private Long postId;
 
     private String hashTagName;
 }
