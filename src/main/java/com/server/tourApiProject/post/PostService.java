@@ -29,7 +29,7 @@ public class PostService {
         post.setObserveFit(postParams.getObserveFit());
         post.setYearDate(postParams.getYearDate());
         post.setTime(postParams.getTime());
-        post.setUser(userRepository.getOne(postParams.getUserId()));
+        post.setUser(userRepository.findById(postParams.getUserId()).orElseThrow(IllegalAccessError::new));
         post.setUserId(postParams.getUserId());
         postRepository.save(post);
     }
