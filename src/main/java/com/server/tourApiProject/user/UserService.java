@@ -117,15 +117,23 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void changePassword(Long userId, String password) {
+    public Boolean changePassword(Long userId, String originPwd, String newPwd) {
         User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
-        user.setPassword(password);
+        if (!user.getPassword().equals(originPwd)){
+            return false;
+        }
+        user.setPassword(newPwd);
         userRepository.save(user);
+        return true;
     }
 
     public List<Post> getMyPosts(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
         List<Post> myPosts = user.getMyPosts();
         return myPosts;
+    }
+
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
     }
 }
