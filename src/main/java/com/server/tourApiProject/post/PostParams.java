@@ -1,6 +1,8 @@
 package com.server.tourApiProject.post;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import com.server.tourApiProject.hashTag.HashTag;
@@ -19,13 +21,11 @@ public class PostParams {
 
     private String postContent;
 
-    private String postImage;
-
     private String observeFit;
 
-    private LocalDateTime yearDate;
+    private LocalDate yearDate;
 
-    private LocalDateTime time;
+    private LocalTime time;
 
     private Long userId;
 }

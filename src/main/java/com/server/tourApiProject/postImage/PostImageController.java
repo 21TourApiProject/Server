@@ -19,7 +19,7 @@ import java.util.List;
 public class PostImageController {
     private final PostImageService postImageService;
 
-    @ApiOperation(value = "게시물 해시태그 이미지 추ㅏ", notes = "게시물 해시태그 이미지를 추가한다")
+    @ApiOperation(value = "게시물 해시태그 이미지 추가", notes = "게시물 해시태그 이미지를 추가한다")
     @PostMapping(value = "postImage")
     public void createPostImage(@RequestBody List<PostImageParams> postImageParams){
         postImageService.createPostImage(postImageParams);
