@@ -1,27 +1,18 @@
 package com.server.tourApiProject.post;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.server.tourApiProject.hashTag.HashTag;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.tourApiProject.postHashTag.PostHashTag;
 import com.server.tourApiProject.postImage.PostImage;
 import com.server.tourApiProject.user.User;
-
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.awt.*;
+import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.*;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Builder
 @Getter
@@ -58,6 +49,7 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private List<PostImage> postImages=new ArrayList<>();
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", insertable = false, updatable=false)
     private User user;

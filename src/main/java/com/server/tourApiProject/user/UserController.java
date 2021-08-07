@@ -1,7 +1,7 @@
 package com.server.tourApiProject.user;
 
-import com.server.tourApiProject.myHashTag.MyHashTag;
 import com.server.tourApiProject.myHashTag.MyHashTagService;
+import com.server.tourApiProject.post.Post;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +19,25 @@ public class UserController {
     private final UserService userService;
     private final MyHashTagService myHashTagService;
 
-    @ApiOperation(value = "사용자 조회", notes = "사용자 id로 사용자를 조회한다")
+    @ApiOperation(value = "사용자정보 입력", notes = "사용자 정보를 입력한다")
+    @PostMapping(value = "user")
+    public void createUser(@RequestBody UserParams userParam){
+        userService.createUser(userParam);
+    }
+
+    @ApiOperation(value = "사용자정보 삭제", notes = "사용자 정보를 삭제한다")
+    @DeleteMapping(value = "user/{userId}")
+    public void deleteUser(@PathVariable("userId") Long userId){
+        userService.deleteUser(userId);
+    }
+
+    @ApiOperation(value = "사용자 조회", notes = "사용자 id로 사용자의 모든 정보를 조회한다")
     @GetMapping(value = "user/{userId}")
     public User getUser(@PathVariable("userId") Long userId){ return userService.getUser(userId); }
+
+    @ApiOperation(value = "사용자 조회2", notes = "사용자 id로 사용자의 닉네임, 프로필 사진을 조회한다")
+    @GetMapping(value = "user2/{userId}")
+    public UserParams2 getUser2(@PathVariable("userId") Long userId){ return userService.getUser2(userId); }
 
     @ApiOperation(value = "사용자 로그인", notes = "사용자의 이메일과 비밀번호로 계정 여부를 확인한다")
     @GetMapping(value = "user/login/{email}/{password}")
@@ -34,12 +50,6 @@ public class UserController {
     @ApiOperation(value = "사용자 비밀번호 조회", notes = "사용자의 이메일, 이름, 전화번호로 비밀번호를 조회한다")
     @GetMapping(value = "user/login/password/{email}/{realName}/{mobilePhoneNumber}")
     public String getPassword(@PathVariable("email") String email, @PathVariable("realName") String realName, @PathVariable("mobilePhoneNumber") String mobilePhoneNumber){ return userService.getPassword(email, realName, mobilePhoneNumber); }
-
-    @ApiOperation(value = "사용자정보 입력", notes = "사용자 정보를 입력한다")
-    @PostMapping(value = "user")
-    public void createUser(@RequestBody UserParams userParam){
-        userService.createUser(userParam);
-    }
 
     @ApiOperation(value = "중복 이메일 조회", notes = "중복된 이메일이 있는지 조회한다")
     @GetMapping(value = "user/duplicate/email/{email}")
@@ -66,13 +76,17 @@ public class UserController {
     }
 
     @ApiOperation(value = "사용자 비밀번호 수정", notes = "해당 사용자의 비밀번호를 수정한다")
-    @PutMapping(value = "user/{userId}/password/{password}")
-    public void updatePassword(@PathVariable("userId") Long userId, @PathVariable("password") String password){
-        userService.changePassword(userId, password);
+    @PutMapping(value = "user/{userId}/password/{originPwd}/{newPwd}")
+    public Boolean updatePassword(@PathVariable("userId") Long userId, @PathVariable("originPwd") String originPwd, @PathVariable("newPwd") String newPwd){
+        return userService.changePassword(userId, originPwd, newPwd);
     }
 
     @ApiOperation(value = "선호 해시태그 조회", notes = "사용자 id로 해당 사용자의 선호 해시태그를 조회한다")
     @GetMapping(value = "user/{userId}/myHashTag")
-    public List<MyHashTag> getMyHashTag(@PathVariable("userId") Long userId){ return myHashTagService.getMyHashTag(userId); }
+    public List<String> getMyHashTag(@PathVariable("userId") Long userId){ return myHashTagService.getMyHashTag(userId); }
+
+    @ApiOperation(value = "사용자 게시물 조회", notes = "사용자가 작성한 모든 게시물을 조회한다")
+    @GetMapping(value = "user/{userId}/posts")
+    public List<Post> getMyPosts(@PathVariable("userId") Long userId){ return userService.getMyPosts(userId); }
 
 }

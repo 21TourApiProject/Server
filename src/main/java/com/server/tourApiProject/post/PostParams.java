@@ -1,16 +1,10 @@
 package com.server.tourApiProject.post;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 
-import com.server.tourApiProject.hashTag.HashTag;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Builder
 @Getter
@@ -23,8 +17,10 @@ public class PostParams {
 
     private String observeFit;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate yearDate;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Asia/Seoul")
     private LocalTime time;
 
     private Long userId;

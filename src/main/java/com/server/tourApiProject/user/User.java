@@ -2,6 +2,8 @@ package com.server.tourApiProject.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.server.tourApiProject.myHashTag.MyHashTag;
+import com.server.tourApiProject.myWishPost.MyWishPost;
+import com.server.tourApiProject.post.Post;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -48,16 +50,18 @@ public class User{
 
     private String profileImage;
 
-    //private List<Review> myReviews = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> myPosts = new ArrayList<>();
 
-    //private List<Post> myPosts = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MyHashTag> myHashTags = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MyWishPost> myWishPosts = new ArrayList<>();
 
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime signUpDt;
-
-    @OneToMany(mappedBy = "user")
-    private List<MyHashTag> myHashTags = new ArrayList<>();
 
 }
