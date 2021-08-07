@@ -37,7 +37,7 @@ public class PostService {
 
     public List<PostParams2> getMyPosts(Long userId) {
         List<PostParams2> result = new ArrayList<>();
-        List<Post> posts = postRepository.findUserById(userId);
+        List<Post> posts = postRepository.findByUserId(userId);
         for (Post post : posts){
             PostParams2 postParams2 = new PostParams2();
             postParams2.setPostId(post.getPostId());

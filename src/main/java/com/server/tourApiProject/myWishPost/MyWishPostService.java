@@ -2,9 +2,11 @@ package com.server.tourApiProject.myWishPost;
 
 import com.server.tourApiProject.post.Post;
 import com.server.tourApiProject.post.PostRepository;
+import com.server.tourApiProject.user.User;
 import com.server.tourApiProject.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
