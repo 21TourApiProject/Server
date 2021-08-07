@@ -9,7 +9,9 @@ import com.server.tourApiProject.user.User;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.awt.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,20 +40,17 @@ public class Post {
     private String postContent;
 
     @Column(nullable = false)
-    private String postImage;
-
-    @Column(nullable = false)
     private String observeFit;
 
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDateTime yearDate;
+    private LocalDate yearDate;
 
     @Column(nullable = false)
-    @DateTimeFormat(pattern = "'T'HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "'T'HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime time;
+    @DateTimeFormat(pattern = "HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalTime time;
 
     @OneToMany(mappedBy = "post")
     private List<PostHashTag> postHashTags=new ArrayList<>();
@@ -65,8 +64,4 @@ public class Post {
 
     private Long userId;
 
-    @Column(nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime registerDt;
 }

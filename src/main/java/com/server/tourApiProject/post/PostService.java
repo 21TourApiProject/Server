@@ -28,9 +28,7 @@ public class PostService {
 
     public void createPost(PostParams postParams) {
         Post post = new Post();
-        post.setRegisterDt(LocalDateTime.now());
         post.setPostContent(postParams.getPostContent());
-        post.setPostImage(postParams.getPostImage());
         post.setObserveFit(postParams.getObserveFit());
         post.setYearDate(postParams.getYearDate());
         post.setTime(postParams.getTime());
