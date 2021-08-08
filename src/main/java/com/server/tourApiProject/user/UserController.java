@@ -25,6 +25,12 @@ public class UserController {
         userService.createUser(userParam);
     }
 
+    @ApiOperation(value = "카카오 사용자정보 입력", notes = "사용자 정보를 입력한다")
+    @PostMapping(value = "user/kakao")
+    public void createKakaoUser(@RequestBody KakaoUserParams userParam){
+        userService.createKakaoUser(userParam);
+    }
+
     @ApiOperation(value = "사용자정보 삭제", notes = "사용자 정보를 삭제한다")
     @DeleteMapping(value = "user/{userId}")
     public void deleteUser(@PathVariable("userId") Long userId){
