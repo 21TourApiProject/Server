@@ -27,22 +27,22 @@ public class User{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(nullable = false)
+    @Column
     private String realName;
 
-    @Column(nullable = false)
+    @Column
     private Boolean sex; //남자 0, 여자 1
 
-    @Column(nullable = false)
+    @Column
     private String birthDay;
 
-    @Column(nullable = false, unique = true, length = 16)
+    @Column(unique = true, length = 16)
     private String mobilePhoneNumber;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column
     private String password;
 
     @Column(nullable = false, unique = true, length = 20)
