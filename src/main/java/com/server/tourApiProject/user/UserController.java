@@ -37,6 +37,12 @@ public class UserController {
         userService.deleteUser(userId);
     }
 
+    @ApiOperation(value = "사용자정보 삭제", notes = "이메일로 사용자를 찾아서 사용자 정보를 삭제한다")
+    @DeleteMapping(value = "user/email/{email}")
+    public void deleteUser2(@PathVariable("email") String email){
+        userService.deleteUser2(email);
+    }
+
     @ApiOperation(value = "사용자 조회", notes = "사용자 id로 사용자의 모든 정보를 조회한다")
     @GetMapping(value = "user/{userId}")
     public User getUser(@PathVariable("userId") Long userId){ return userService.getUser(userId); }

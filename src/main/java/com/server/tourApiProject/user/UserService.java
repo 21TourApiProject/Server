@@ -154,4 +154,9 @@ public class UserService {
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
     }
+
+    public void deleteUser2(String email) {
+        User user = userRepository.findByEmail(email);
+        userRepository.delete(user);
+    }
 }
