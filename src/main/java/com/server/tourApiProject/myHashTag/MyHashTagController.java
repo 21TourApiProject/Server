@@ -17,8 +17,8 @@ public class MyHashTagController {
     private final MyHashTagService myHashTagService;
 
     @ApiOperation(value = "선호 해시태그 리스트 입력", notes = "선호 해시태그 정보를 입력한다")
-    @PostMapping(value = "myHashTag/{mobilePhoneNumber}")
-    public Long createMyHashTags(@PathVariable("mobilePhoneNumber") String mobilePhoneNumber, @RequestBody List<MyHashTagParams> myHashTagParams){
-        return myHashTagService.createMyHashTags(mobilePhoneNumber, myHashTagParams);
+    @PostMapping(value = "myHashTag/{email}")
+    public Long createMyHashTags(@PathVariable("email") String email, @RequestBody List<MyHashTagParams> myHashTagParams){
+        return myHashTagService.createMyHashTags(email, myHashTagParams);
     }
 }

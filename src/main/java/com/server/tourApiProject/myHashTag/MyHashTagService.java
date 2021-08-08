@@ -30,8 +30,8 @@ public class MyHashTagService {
         return myHashTagNameList;
     }
 
-    public Long createMyHashTags(String mobilePhoneNumber, List<MyHashTagParams> myHashTagParams) {
-        User user = userRepository.findByMobilePhoneNumber(mobilePhoneNumber);
+    public Long createMyHashTags(String email, List<MyHashTagParams> myHashTagParams) {
+        User user = userRepository.findByEmail(email);
         Long userId = user.getUserId();
 
         for(MyHashTagParams p : myHashTagParams) {
