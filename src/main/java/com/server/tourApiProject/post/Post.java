@@ -4,23 +4,15 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.tourApiProject.postHashTag.PostHashTag;
 import com.server.tourApiProject.postImage.PostImage;
-import com.server.tourApiProject.postObservePoint.PostObservePoint;
 import com.server.tourApiProject.user.User;
-
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.*;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Builder
 @Getter
@@ -35,8 +27,11 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
-    @Column(nullable = false)
+    @Column(length = 1000,nullable = false)
     private String postContent;
+
+    @Column(nullable = false)
+    private String observeFit;
 
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -54,16 +49,10 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private List<PostImage> postImages=new ArrayList<>();
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", insertable = false, updatable=false)
     private User user;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "postObservePointId",insertable = false,updatable = false)
-    private PostObservePoint postObservePoint;
-
-    private Long postObservePointId;
 
     private Long userId;
 

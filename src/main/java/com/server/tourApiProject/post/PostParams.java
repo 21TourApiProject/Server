@@ -1,5 +1,6 @@
 package com.server.tourApiProject.post;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -14,11 +15,13 @@ public class PostParams {
 
     private String postContent;
 
+    private String observeFit;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate yearDate;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Asia/Seoul")
     private LocalTime time;
 
     private Long userId;
-
-    private Long postObservePointId;
 }

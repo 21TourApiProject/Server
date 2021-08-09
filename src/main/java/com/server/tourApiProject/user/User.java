@@ -2,12 +2,12 @@ package com.server.tourApiProject.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.server.tourApiProject.myHashTag.MyHashTag;
+import com.server.tourApiProject.myWishPost.MyWishPost;
+import com.server.tourApiProject.post.Post;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.io.File;
-import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,39 +25,45 @@ public class User{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(nullable = false)
+    @Column
     private String realName;
 
-    @Column(nullable = false)
+    @Column
     private Boolean sex; //남자 0, 여자 1
 
-    @Column(nullable = false)
+    @Column
     private String birthDay;
 
-    @Column(nullable = false, unique = true, length = 16)
+    @Column(unique = true, length = 16)
     private String mobilePhoneNumber;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column
     private String password;
 
     @Column(nullable = false, unique = true, length = 20)
     private String nickName;
 
+    @Column
     private String profileImage;
 
-    //private List<Review> myReviews = new ArrayList<>();
+    @Column
+    private String ageRange; //연령대
 
-    //private List<Post> myPosts = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Post> myPosts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<MyHashTag> myHashTags = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<MyWishPost> myWishPosts = new ArrayList<>();
 
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime signUpDt;
-
-    @OneToMany(mappedBy = "user")
-    private List<MyHashTag> myHashTags = new ArrayList<>();
 
 }

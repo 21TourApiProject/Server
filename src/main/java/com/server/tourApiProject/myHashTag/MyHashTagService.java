@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -20,24 +21,29 @@ public class MyHashTagService {
     private final UserRepository userRepository;
     private final HashTagRepository hashTagRepository;
 
-
-    public List<MyHashTag> getMyHashTag(Long userId) {
-        return myHashTagRepository.findByUserId(userId);
+    public List<String> getMyHashTag(Long userId) {
+        List<String> myHashTagNameList = new ArrayList<>();
+        List<MyHashTag> myHashTagList = myHashTagRepository.findByUserId(userId);
+        for(MyHashTag p : myHashTagList) {
+            myHashTagNameList.add(p.getHashTagName());
+        }
+        return myHashTagNameList;
     }
 
-    public void createMyHashTags(List<MyHashTagParams> myHashTagParams) {
-        for(MyHashTagParams p : myHashTagParams){
+    public Long createMyHashTags(String email, List<MyHashTagParams> myHashTagParams) {
+        User user = userRepository.findByEmail(email);
+        Long userId = user.getUserId();
+
+        for(MyHashTagParams p : myHashTagParams) {
             MyHashTag myHashTag = new MyHashTag();
             myHashTag.setHashTagName(p.getHashTagName());
-
+            myHashTag.setUser(user);
+            myHashTag.setUserId(userId);
             HashTag hashTag = hashTagRepository.findByHashTagName(p.getHashTagName());
             myHashTag.setHashTagId(hashTag.getHashTagId());
 
-            User user = userRepository.findByMobilePhoneNumber(p.getMobilePhoneNumber());
-            myHashTag.setUser(user);
-            myHashTag.setUserId(user.getUserId());
-
             myHashTagRepository.save(myHashTag);
         }
+        return userId;
     }
 }

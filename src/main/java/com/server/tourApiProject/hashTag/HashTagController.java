@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
-@Api(tags = {"1.2 해시태그"})
+@Api(tags = {"3.1 해시태그"})
 @RestController
 @RequestMapping(value = "/v1")
 @RequiredArgsConstructor

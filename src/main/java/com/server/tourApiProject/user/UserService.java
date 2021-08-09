@@ -1,5 +1,6 @@
 package com.server.tourApiProject.user;
 
+import com.server.tourApiProject.post.Post;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,14 @@ public class UserService {
         return user;
     }
 
+    public UserParams2 getUser2(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
+        UserParams2 userParams2 = new UserParams2();
+        userParams2.setNickName(user.getNickName());
+        userParams2.setProfileImage(user.getProfileImage());
 
+        return userParams2;
+    }
 
     public void createUser(UserParams userParam){
         User user = new User();
@@ -37,6 +45,24 @@ public class UserService {
         user.setPassword(userParam.getPassword());
         user.setNickName(userParam.getEmail());
         user.setSignUpDt(LocalDateTime.now());
+
+        userRepository.save(user);
+    }
+
+    public void createKakaoUser(KakaoUserParams userParam){
+        User user = new User();
+        user.setEmail(userParam.getEmail());
+        user.setNickName(userParam.getEmail());
+        user.setProfileImage(userParam.getProfileImage());
+        user.setSignUpDt(LocalDateTime.now());
+        if(!userParam.getMobilePhoneNumber().isEmpty())
+            user.setMobilePhoneNumber(userParam.getMobilePhoneNumber());
+        if(userParam.getSex()!=null)
+            user.setSex(userParam.getSex());
+        if(!userParam.getBirthDay().isEmpty())
+            user.setBirthDay(userParam.getBirthDay());
+        if(!userParam.getAgeRange().isEmpty())
+            user.setAgeRange(userParam.getAgeRange());
 
         userRepository.save(user);
     }
@@ -109,9 +135,28 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void changePassword(Long userId, String password) {
+    public Boolean changePassword(Long userId, String originPwd, String newPwd) {
         User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
-        user.setPassword(password);
+        if (!user.getPassword().equals(originPwd)){
+            return false;
+        }
+        user.setPassword(newPwd);
         userRepository.save(user);
+        return true;
+    }
+
+    public List<Post> getMyPosts(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
+        List<Post> myPosts = user.getMyPosts();
+        return myPosts;
+    }
+
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
+
+    public void deleteUser2(String email) {
+        User user = userRepository.findByEmail(email);
+        userRepository.delete(user);
     }
 }

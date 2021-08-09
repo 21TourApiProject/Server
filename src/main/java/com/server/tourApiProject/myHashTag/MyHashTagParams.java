@@ -9,7 +9,5 @@ import lombok.*;
 @AllArgsConstructor
 public class MyHashTagParams {
 
-    private String mobilePhoneNumber;
-
     private String hashTagName;
 }
