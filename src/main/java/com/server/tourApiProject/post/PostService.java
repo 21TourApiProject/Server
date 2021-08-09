@@ -1,11 +1,9 @@
 package com.server.tourApiProject.post;
 
-import com.server.tourApiProject.user.User;
+import com.server.tourApiProject.postObservePoint.PostObservePointRepository;
 import com.server.tourApiProject.user.UserRepository;
 
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 import javax.transaction.Transactional;
 
@@ -20,6 +18,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final PostObservePointRepository postObservePointRepository;
 
     public Post getPost(Long postId){
         Post post=  postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
@@ -29,11 +28,12 @@ public class PostService {
     public void createPost(PostParams postParams) {
         Post post = new Post();
         post.setPostContent(postParams.getPostContent());
-        post.setObserveFit(postParams.getObserveFit());
         post.setYearDate(postParams.getYearDate());
         post.setTime(postParams.getTime());
         post.setUser(userRepository.getOne(postParams.getUserId()));
         post.setUserId(postParams.getUserId());
+        post.setPostObservePoint(postObservePointRepository.getOne(postParams.getPostObservePointId()));
+        post.setPostObservePointId(postParams.getPostObservePointId());
         postRepository.save(post);
     }
 }

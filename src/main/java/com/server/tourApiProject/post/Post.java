@@ -1,16 +1,15 @@
 package com.server.tourApiProject.post;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.server.tourApiProject.hashTag.HashTag;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.tourApiProject.postHashTag.PostHashTag;
 import com.server.tourApiProject.postImage.PostImage;
+import com.server.tourApiProject.postObservePoint.PostObservePoint;
 import com.server.tourApiProject.user.User;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.awt.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +35,8 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
-    @Column(length = 1000,nullable = false)
-    private String postContent;
-
     @Column(nullable = false)
-    private String observeFit;
+    private String postContent;
 
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -61,6 +57,13 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", insertable = false, updatable=false)
     private User user;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "postObservePointId",insertable = false,updatable = false)
+    private PostObservePoint postObservePoint;
+
+    private Long postObservePointId;
 
     private Long userId;
 

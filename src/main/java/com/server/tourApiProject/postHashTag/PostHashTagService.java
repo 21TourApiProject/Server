@@ -25,6 +25,7 @@ public class PostHashTagService {
     private final PostRepository postRepository;
     private final HashTagRepository hashTagRepository;
 
+
     public List<PostHashTag> getPostHashTag(Long postId) {
         return postHashTagRepository.findByPostId(postId);
     }
