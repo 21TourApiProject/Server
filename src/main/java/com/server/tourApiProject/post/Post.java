@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.tourApiProject.postHashTag.PostHashTag;
 import com.server.tourApiProject.postImage.PostImage;
+import com.server.tourApiProject.postObservePoint.PostObservePoint;
 import com.server.tourApiProject.user.User;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,11 +28,8 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
-    @Column(length = 1000,nullable = false)
+    @Column(length = 1000,nullable = false, unique = true)
     private String postContent;
-
-    @Column(nullable = false)
-    private String observeFit;
 
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -54,6 +52,15 @@ public class Post {
     @JoinColumn(name = "userId", insertable = false, updatable=false)
     private User user;
 
+    @Column(nullable = false)
     private Long userId;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "postObservePointId", insertable = false, updatable=false)
+    private PostObservePoint postObservePoint;
+
+    @Column(nullable = false)
+    private Long postObservePointId;
 
 }

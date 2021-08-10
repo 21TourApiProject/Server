@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="observeFit")
+@Table(name="observePoint")
 public class ObservePoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
