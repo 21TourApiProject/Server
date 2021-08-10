@@ -1,5 +1,8 @@
 package com.server.tourApiProject.post;
 
+import com.server.tourApiProject.postObservePoint.PostObservePoint;
+import com.server.tourApiProject.postObservePoint.PostObservePointRepository;
+import com.server.tourApiProject.user.User;
 import com.server.tourApiProject.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,20 +20,24 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final PostObservePointRepository postObservePointRepository;
 
     public Post getPost(Long postId){
         Post post = postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
         return post;
     }
 
-    public void createPost(PostParams postParams) {
+    public void createPost(String observePointName, PostParams postParams) {
         Post post = new Post();
+        PostObservePoint postObservePoint = postObservePointRepository.findByObservePointName(observePointName);
+        Long postObservePointId = postObservePoint.getPostObservePointId();
         post.setPostContent(postParams.getPostContent());
-        post.setObserveFit(postParams.getObserveFit());
         post.setYearDate(postParams.getYearDate());
         post.setTime(postParams.getTime());
         post.setUser(userRepository.findById(postParams.getUserId()).orElseThrow(IllegalAccessError::new));
         post.setUserId(postParams.getUserId());
+        post.setPostObservePoint(postObservePoint);
+        post.setPostObservePointId(postObservePointId);
         postRepository.save(post);
     }
 

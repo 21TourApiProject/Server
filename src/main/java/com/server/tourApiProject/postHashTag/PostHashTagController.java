@@ -6,10 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,8 +19,8 @@ public class PostHashTagController {
     private final PostHashTagService postHashTagService;
 
     @ApiOperation(value = "게시물 해시태그 리스트 입력", notes = "게시물 해시태그 정보를 입력한다")
-    @PostMapping(value = "postHashTag")
-    public void createPostHashTags(@RequestBody List<PostHashTagParams> postHashTagParams){
-        postHashTagService.createPostHashTags(postHashTagParams);
+    @PostMapping(value = "postHashTag/{postContent}")
+    public void createPostHashTags(@PathVariable("postContent")  String postContent, @RequestBody List<PostHashTagParams> postHashTagParams){
+        postHashTagService.createPostHashTags(postContent,postHashTagParams);
     }
 }

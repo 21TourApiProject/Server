@@ -49,6 +49,24 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void createKakaoUser(KakaoUserParams userParam){
+        User user = new User();
+        user.setEmail(userParam.getEmail());
+        user.setNickName(userParam.getNickName());
+        user.setProfileImage(userParam.getProfileImage());
+        user.setSignUpDt(LocalDateTime.now());
+        if(userParam.getMobilePhoneNumber()!=null)
+            user.setMobilePhoneNumber(userParam.getMobilePhoneNumber());
+        if(userParam.getSex()!=null)
+            user.setSex(userParam.getSex());
+        if(userParam.getBirthDay()!=null)
+            user.setBirthDay(userParam.getBirthDay());
+        if(userParam.getAgeRange()!=null)
+            user.setAgeRange(userParam.getAgeRange());
+
+        userRepository.save(user);
+    }
+
     public User updateUser(Long userId, UserParams userParam) {
         User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
 //        if (!userParam.getEmail().isEmpty())

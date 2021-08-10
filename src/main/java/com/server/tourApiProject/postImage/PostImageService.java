@@ -17,7 +17,7 @@ public class PostImageService {
     private final PostImageRepository postImageRepository;
     private final PostRepository postRepository;
 
-    public List<PostImage> getImage(Long postId) {
+    public List<PostImage> getPostImage(Long postId) {
         return postImageRepository.findByPostId(postId);
     }
 

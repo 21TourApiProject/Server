@@ -15,8 +15,6 @@ public class PostParams {
 
     private String postContent;
 
-    private String observeFit;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate yearDate;
 
@@ -24,4 +22,6 @@ public class PostParams {
     private LocalTime time;
 
     private Long userId;
+
+    private Long postObservePointId;
 }
