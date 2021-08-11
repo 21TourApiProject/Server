@@ -1,8 +1,8 @@
-package com.server.tourApiProject.postObservePoint;
+package com.server.tourApiProject.bigPost.postObservePoint;
 
 import com.server.tourApiProject.observePoint.ObservePoint;
 import com.server.tourApiProject.observePoint.ObservePointRepository;
-import com.server.tourApiProject.post.PostRepository;
+import com.server.tourApiProject.bigPost.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

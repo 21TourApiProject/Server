@@ -1,7 +1,7 @@
 package com.server.tourApiProject.user;
 
 import com.server.tourApiProject.myHashTag.MyHashTagService;
-import com.server.tourApiProject.post.Post;
+import com.server.tourApiProject.bigPost.post.Post;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

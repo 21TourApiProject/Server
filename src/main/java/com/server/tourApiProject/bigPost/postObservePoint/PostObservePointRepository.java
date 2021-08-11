@@ -1,4 +1,4 @@
-package com.server.tourApiProject.postObservePoint;
+package com.server.tourApiProject.bigPost.postObservePoint;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,14 +1,9 @@
-package com.server.tourApiProject.postHashTag;
+package com.server.tourApiProject.bigPost.postHashTag;
 
 import com.server.tourApiProject.hashTag.HashTag;
 import com.server.tourApiProject.hashTag.HashTagRepository;
-import com.server.tourApiProject.myHashTag.MyHashTag;
-import com.server.tourApiProject.myHashTag.MyHashTagParams;
-import com.server.tourApiProject.myHashTag.MyHashTagRepository;
-import com.server.tourApiProject.post.Post;
-import com.server.tourApiProject.post.PostRepository;
-import com.server.tourApiProject.user.User;
-import com.server.tourApiProject.user.UserRepository;
+import com.server.tourApiProject.bigPost.post.Post;
+import com.server.tourApiProject.bigPost.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,7 +25,7 @@ public class PostHashTagService {
         return postHashTagRepository.findByPostId(postId);
     }
 
-    public void createPostHashTags(String postContent,List<PostHashTagParams> postHashTagParams) {
+    public Long createPostHashTags(String postContent,List<PostHashTagParams> postHashTagParams) {
         Post post =postRepository.findByPostContent(postContent);
         Long postId =post.getPostId();
         for (PostHashTagParams p : postHashTagParams) {
@@ -42,5 +37,6 @@ public class PostHashTagService {
             postHashTag.setHashTagId(hashTag.getHashTagId());
             postHashTagRepository.save(postHashTag);
         }
+        return postId;
     }
 }

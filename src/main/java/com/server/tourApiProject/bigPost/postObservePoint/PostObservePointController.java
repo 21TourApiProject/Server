@@ -1,4 +1,4 @@
-package com.server.tourApiProject.postObservePoint;
+package com.server.tourApiProject.bigPost.postObservePoint;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

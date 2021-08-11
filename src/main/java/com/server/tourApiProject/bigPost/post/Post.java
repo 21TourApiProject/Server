@@ -1,10 +1,10 @@
-package com.server.tourApiProject.post;
+package com.server.tourApiProject.bigPost.post;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.server.tourApiProject.postHashTag.PostHashTag;
-import com.server.tourApiProject.postImage.PostImage;
-import com.server.tourApiProject.postObservePoint.PostObservePoint;
+import com.server.tourApiProject.bigPost.postHashTag.PostHashTag;
+import com.server.tourApiProject.bigPost.postImage.PostImage;
+import com.server.tourApiProject.bigPost.postObservePoint.PostObservePoint;
 import com.server.tourApiProject.user.User;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;

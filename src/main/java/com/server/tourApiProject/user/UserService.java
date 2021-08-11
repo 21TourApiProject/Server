@@ -1,6 +1,6 @@
 package com.server.tourApiProject.user;
 
-import com.server.tourApiProject.post.Post;
+import com.server.tourApiProject.bigPost.post.Post;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

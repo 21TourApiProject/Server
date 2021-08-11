@@ -1,8 +1,7 @@
-package com.server.tourApiProject.post;
+package com.server.tourApiProject.bigPost.post;
 
-import com.server.tourApiProject.postObservePoint.PostObservePoint;
-import com.server.tourApiProject.postObservePoint.PostObservePointRepository;
-import com.server.tourApiProject.user.User;
+import com.server.tourApiProject.bigPost.postObservePoint.PostObservePoint;
+import com.server.tourApiProject.bigPost.postObservePoint.PostObservePointRepository;
 import com.server.tourApiProject.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

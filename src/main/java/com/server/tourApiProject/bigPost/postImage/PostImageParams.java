@@ -1,4 +1,4 @@
-package com.server.tourApiProject.postImage;
+package com.server.tourApiProject.bigPost.postImage;
 
 import lombok.*;
 
@@ -8,7 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostImageParams {
-    private Long postId;
 
     private String imageName;
 }
