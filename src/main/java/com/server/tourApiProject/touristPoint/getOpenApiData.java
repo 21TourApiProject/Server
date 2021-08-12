@@ -1,9 +1,9 @@
 package com.server.tourApiProject.touristPoint;
 
 import com.server.tourApiProject.touristPoint.area.AreaController;
-import com.server.tourApiProject.touristPoint.area.AreaParams2;
+import com.server.tourApiProject.touristPoint.area.AreaParams;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeController;
-import com.server.tourApiProject.touristPoint.contentType.ContentTypeParams2;
+import com.server.tourApiProject.touristPoint.contentType.ContentTypeParams;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -40,8 +40,8 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
                 Long code2 = (Long) item2.get("code");
                 String name2 = (String) item2.get("name");
 
-                AreaParams2 areaParams2 = new AreaParams2(code1, name1, code2, name2);
-                areaController.createArea(areaParams2);
+                AreaParams areaParams = new AreaParams(code1, name1, code2, name2);
+                areaController.createArea(areaParams);
             }
         }
 
@@ -65,8 +65,8 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
                     String code3 = (String) item3.get("code");
                     String name3 = (String) item3.get("name");
 
-                    ContentTypeParams2 contentTypeParams2 = new ContentTypeParams2(code1, name1, code2, name2, code3, name3);
-                    contentTypeController.createContentType1(contentTypeParams2);
+                    ContentTypeParams contentTypeParams = new ContentTypeParams(code1, name1, code2, name2, code3, name3);
+                    contentTypeController.createContentType1(contentTypeParams);
                 }
             }
         }
@@ -90,8 +90,8 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
                     String code3 = (String) item3.get("code");
                     String name3 = (String) item3.get("name");
 
-                    ContentTypeParams2 contentTypeParams2 = new ContentTypeParams2(code1, name1, code2, name2, code3, name3);
-                    contentTypeController.createContentType2(contentTypeParams2);
+                    ContentTypeParams contentTypeParams = new ContentTypeParams(code1, name1, code2, name2, code3, name3);
+                    contentTypeController.createContentType2(contentTypeParams);
                 }
             }
         }

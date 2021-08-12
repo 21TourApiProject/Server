@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AreaParams2 {
+public class AreaParams {
     Long code1;
     String name1;
     Long code2;

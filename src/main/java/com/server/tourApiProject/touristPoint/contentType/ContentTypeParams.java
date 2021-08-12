@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContentTypeParams2 {
+public class ContentTypeParams {
     String code1;
     String name1;
     String code2;
