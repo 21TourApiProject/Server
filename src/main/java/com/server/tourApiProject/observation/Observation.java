@@ -21,7 +21,7 @@ public class Observation {
     private Long observationId;
 
     @Column(nullable = false, unique = true)
-    private String Name;
+    private String observationName;
 
     @Column
     private String Link;
