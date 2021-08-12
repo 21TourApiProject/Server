@@ -1,4 +1,4 @@
-package com.server.tourApiProject.touristPoint;
+package com.server.tourApiProject.touristPoint.area;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/v1")
 @RequiredArgsConstructor
-public class TouristPointController {
+public class AreaController {
     private final AreaService areaService;
 
     @ApiOperation(value = "지역 입력", notes = "지역 정보를 입력한다")
@@ -28,10 +28,10 @@ public class TouristPointController {
         return areaService.getAreaCode();
     }
 
-    @ApiOperation(value = "시군구 입력", notes = "해당 지역코드의 시군구 정보를 입력한다")
-    @PostMapping(value = "sigungu/{areaCode}")
-    public void createSigungu(@PathVariable("areaCode") Long areaCode, @RequestBody List<SigunguParams> sigunguParams){
-        areaService.createSigungu(areaCode, sigunguParams);
+    @ApiOperation(value = "시군구 입력", notes = "해당 지역의 시군구 정보를 입력한다")
+    @PostMapping(value = "sigungu/{areaCode}/{areaName}")
+    public void createSigungu(@PathVariable("areaCode") Long areaCode, @PathVariable("areaName") String areaName, @RequestBody List<SigunguParams> sigunguParams){
+        areaService.createSigungu(areaCode, areaName, sigunguParams);
     }
 
 }

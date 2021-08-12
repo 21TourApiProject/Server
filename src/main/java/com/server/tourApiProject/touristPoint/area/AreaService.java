@@ -1,4 +1,4 @@
-package com.server.tourApiProject.touristPoint;
+package com.server.tourApiProject.touristPoint.area;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AreaService {
 
-    private final TouristPointRepository touristPointRepository;
+    private final AreaRepository touristPointRepository;
 
     public void createArea(List<AreaParams> areaParams) {
         for (AreaParams areaParam : areaParams){
@@ -34,13 +34,11 @@ public class AreaService {
         return result;
     }
 
-    public void createSigungu(Long areaCode, List<SigunguParams> sigunguParams) {
-        Area a = touristPointRepository.findByAreaCode(areaCode);
-
+    public void createSigungu(Long areaCode, String areaName, List<SigunguParams> sigunguParams) {
         for (SigunguParams sigunguParam : sigunguParams){
             Area area = new Area();
             area.setAreaCode(areaCode);
-            area.setAreaName(a.getAreaName());
+            area.setAreaName(areaName);
             area.setSigunguCode(sigunguParam.getCode());
             area.setSigunguName(sigunguParam.getName());
             touristPointRepository.save(area);

@@ -1,4 +1,4 @@
-package com.server.tourApiProject.touristPoint;
+package com.server.tourApiProject.touristPoint.area;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SigunguParams {
+public class AreaParams {
     Long code;
     String name;
 }

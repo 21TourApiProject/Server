@@ -1,5 +1,8 @@
 package com.server.tourApiProject.touristPoint;
 
+import com.server.tourApiProject.touristPoint.area.AreaController;
+import com.server.tourApiProject.touristPoint.area.AreaParams;
+import com.server.tourApiProject.touristPoint.area.SigunguParams;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -13,12 +16,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-//서버가 초기화된후 바로 실행되는 코드입니다
+//서버가 초기화된후 바로 실행되는 코드
 @Component
-public class getApiData implements org.springframework.boot.ApplicationRunner {
+public class getOpenApiData implements org.springframework.boot.ApplicationRunner {
 
     @Autowired
-    private TouristPointController touristPointController;
+    private AreaController areaController;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -34,13 +37,11 @@ public class getApiData implements org.springframework.boot.ApplicationRunner {
             AreaParams areaParam = new AreaParams(code, name);
             areaParams.add(areaParam);
         }
-        touristPointController.createArea(areaParams);
 
         //시군구
-        List<Long> allAreaCode = touristPointController.getAllAreaCode();
-        for(Long areaCode: allAreaCode){
-            String url2 = "&areaCode=" + areaCode;
-            System.out.println(areaCode);
+        for(AreaParams areaParam: areaParams){
+            String url2 = "&areaCode=" + areaParam.getCode();
+            System.out.println(areaParam.getCode());
 
             JSONArray sigungu_list = getJson("/areaCode", url2);
             List<SigunguParams> sigunguParams = new ArrayList();
@@ -52,7 +53,7 @@ public class getApiData implements org.springframework.boot.ApplicationRunner {
                 SigunguParams sigunguParam = new SigunguParams(code, name);
                 sigunguParams.add(sigunguParam);
             }
-            touristPointController.createSigungu(areaCode, sigunguParams);
+            areaController.createSigungu(areaParam.getCode(), areaParam.getName(), sigunguParams);
         }
 
 
@@ -79,15 +80,20 @@ public class getApiData implements org.springframework.boot.ApplicationRunner {
             JSONObject body = (JSONObject)response.get("body");
             JSONObject items = (JSONObject)body.get("items");
             Long count = (Long)body.get("totalCount");
+
             if (count == 1){
                 JSONObject item = (JSONObject)items.get("item");
                 bf.close();
-                //return item;
-            }else {
-                JSONArray item_list = (JSONArray) items.get("item");
+                JSONArray item_list = new JSONArray();
+                item_list.add(item);
                 return item_list;
             }
-            System.out.println("api 불러오기 성공");
+            else {
+                JSONArray item_list = (JSONArray) items.get("item");
+                bf.close();
+                return item_list;
+            }
+
         }catch(Exception e){
             e.printStackTrace();
         }

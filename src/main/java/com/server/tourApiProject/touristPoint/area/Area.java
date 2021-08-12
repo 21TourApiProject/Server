@@ -1,4 +1,4 @@
-package com.server.tourApiProject.touristPoint;
+package com.server.tourApiProject.touristPoint.area;
 
 import lombok.*;
 

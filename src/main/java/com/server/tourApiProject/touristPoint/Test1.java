@@ -1,5 +1,6 @@
 package com.server.tourApiProject.touristPoint;
 
+import com.server.tourApiProject.touristPoint.area.AreaParams;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
