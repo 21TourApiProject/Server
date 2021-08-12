@@ -1,4 +1,4 @@
-package com.server.tourApiProject.observation;
+package com.server.tourApiProject.touristPoint;
 
 import lombok.*;
 
@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="observation")
-public class Observation {
+public class TouristPoint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

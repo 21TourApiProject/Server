@@ -1,4 +1,4 @@
-package com.server.tourApiProject.observation;
+package com.server.tourApiProject.touristPoint;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,19 +14,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AreaService {
 
-    private final ObservationRepository observationRepository;
+    private final TouristPointRepository touristPointRepository;
 
     public void createArea(List<AreaParams> areaParams) {
         for (AreaParams areaParam : areaParams){
             Area area = new Area();
             area.setAreaCode(areaParam.getCode());
             area.setAreaName(areaParam.getName());
-            observationRepository.save(area);
+            touristPointRepository.save(area);
         }
     }
 
     public List<Long> getAreaCode() {
-        List<Area> all = observationRepository.findAll();
+        List<Area> all = touristPointRepository.findAll();
         List<Long> result = new ArrayList<>();
         for(Area a : all){
             result.add(a.getAreaCode());
@@ -35,7 +35,7 @@ public class AreaService {
     }
 
     public void createSigungu(Long areaCode, List<SigunguParams> sigunguParams) {
-        Area a = observationRepository.findByAreaCode(areaCode);
+        Area a = touristPointRepository.findByAreaCode(areaCode);
 
         for (SigunguParams sigunguParam : sigunguParams){
             Area area = new Area();
@@ -43,7 +43,7 @@ public class AreaService {
             area.setAreaName(a.getAreaName());
             area.setSigunguCode(sigunguParam.getCode());
             area.setSigunguName(sigunguParam.getName());
-            observationRepository.save(area);
+            touristPointRepository.save(area);
         }
     }
 }

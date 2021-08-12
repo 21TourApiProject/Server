@@ -1,4 +1,4 @@
-package com.server.tourApiProject.observation;
+package com.server.tourApiProject.touristPoint;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,7 +18,7 @@ import java.util.List;
 public class getApiData implements org.springframework.boot.ApplicationRunner {
 
     @Autowired
-    private ObservationController observationController;
+    private TouristPointController touristPointController;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -34,10 +34,10 @@ public class getApiData implements org.springframework.boot.ApplicationRunner {
             AreaParams areaParam = new AreaParams(code, name);
             areaParams.add(areaParam);
         }
-        observationController.createArea(areaParams);
+        touristPointController.createArea(areaParams);
 
         //시군구
-        List<Long> allAreaCode = observationController.getAllAreaCode();
+        List<Long> allAreaCode = touristPointController.getAllAreaCode();
         for(Long areaCode: allAreaCode){
             String url2 = "&areaCode=" + areaCode;
             System.out.println(areaCode);
@@ -52,7 +52,7 @@ public class getApiData implements org.springframework.boot.ApplicationRunner {
                 SigunguParams sigunguParam = new SigunguParams(code, name);
                 sigunguParams.add(sigunguParam);
             }
-            observationController.createSigungu(areaCode, sigunguParams);
+            touristPointController.createSigungu(areaCode, sigunguParams);
         }
 
 
@@ -82,7 +82,7 @@ public class getApiData implements org.springframework.boot.ApplicationRunner {
             if (count == 1){
                 JSONObject item = (JSONObject)items.get("item");
                 bf.close();
-                return item;
+                //return item;
             }else {
                 JSONArray item_list = (JSONArray) items.get("item");
                 return item_list;

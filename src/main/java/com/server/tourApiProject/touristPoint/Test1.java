@@ -1,4 +1,4 @@
-package com.server.tourApiProject.observation;
+package com.server.tourApiProject.touristPoint;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

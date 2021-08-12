@@ -1,4 +1,4 @@
-package com.server.tourApiProject.observation;
+package com.server.tourApiProject.touristPoint;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/v1")
 @RequiredArgsConstructor
-public class ObservationController {
+public class TouristPointController {
     private final AreaService areaService;
 
     @ApiOperation(value = "지역 입력", notes = "지역 정보를 입력한다")
