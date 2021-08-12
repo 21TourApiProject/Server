@@ -1,7 +1,5 @@
-package com.server.tourApiProject.postHashTag;
+package com.server.tourApiProject.bigPost.postHashTag;
 
-import com.server.tourApiProject.myHashTag.MyHashTagParams;
-import com.server.tourApiProject.myHashTag.MyHashTagService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +18,7 @@ public class PostHashTagController {
 
     @ApiOperation(value = "게시물 해시태그 리스트 입력", notes = "게시물 해시태그 정보를 입력한다")
     @PostMapping(value = "postHashTag/{postContent}")
-    public void createPostHashTags(@PathVariable("postContent")  String postContent, @RequestBody List<PostHashTagParams> postHashTagParams){
-        postHashTagService.createPostHashTags(postContent,postHashTagParams);
+    public Long createPostHashTags(@PathVariable("postContent")  String postContent, @RequestBody List<PostHashTagParams> postHashTagParams){
+        return postHashTagService.createPostHashTags(postContent,postHashTagParams);
     }
 }

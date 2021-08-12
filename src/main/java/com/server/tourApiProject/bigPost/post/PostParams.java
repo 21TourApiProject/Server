@@ -1,4 +1,4 @@
-package com.server.tourApiProject.post;
+package com.server.tourApiProject.bigPost.post;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;

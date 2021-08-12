@@ -1,4 +1,4 @@
-package com.server.tourApiProject.post;
+package com.server.tourApiProject.bigPost.post;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.JpaRepository;

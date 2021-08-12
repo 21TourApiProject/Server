@@ -1,4 +1,4 @@
-package com.server.tourApiProject.postHashTag;
+package com.server.tourApiProject.bigPost.postHashTag;
 
 import lombok.*;
 

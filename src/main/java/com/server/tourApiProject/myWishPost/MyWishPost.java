@@ -1,7 +1,6 @@
 package com.server.tourApiProject.myWishPost;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.server.tourApiProject.post.Post;
 import com.server.tourApiProject.user.User;
 import lombok.*;
 

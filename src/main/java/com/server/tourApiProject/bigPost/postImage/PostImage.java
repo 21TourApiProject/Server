@@ -1,23 +1,21 @@
-package com.server.tourApiProject.postHashTag;
+package com.server.tourApiProject.bigPost.postImage;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.server.tourApiProject.post.Post;
-import com.server.tourApiProject.user.User;
+import com.server.tourApiProject.bigPost.post.Post;
 import lombok.*;
 
 import javax.persistence.*;
-
 @Builder
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "postHashTag")
-public class PostHashTag {
+@Table(name = "postImage")
+public class PostImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postHashTagListId;
+    private Long postImageListId;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,8 +26,5 @@ public class PostHashTag {
     private Long postId;
 
     @Column(nullable = false)
-    private Long hashTagId;
-
-    @Column(nullable = false)
-    private String hashTagName;
+    private String imageName;
 }

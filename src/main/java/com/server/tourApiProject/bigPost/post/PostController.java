@@ -1,9 +1,10 @@
-package com.server.tourApiProject.post;
+package com.server.tourApiProject.bigPost.post;
 
-import com.server.tourApiProject.postHashTag.PostHashTag;
-import com.server.tourApiProject.postHashTag.PostHashTagService;
-import com.server.tourApiProject.postObservePoint.PostObservePoint;
-import com.server.tourApiProject.postObservePoint.PostObservePointService;
+import com.server.tourApiProject.bigPost.postHashTag.PostHashTag;
+import com.server.tourApiProject.bigPost.postHashTag.PostHashTagService;
+import com.server.tourApiProject.bigPost.postImage.PostImageService;
+import com.server.tourApiProject.bigPost.postObservePoint.PostObservePoint;
+import com.server.tourApiProject.bigPost.postObservePoint.PostObservePointService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class PostController {
     private final PostService postService;
     private final PostHashTagService postHashTagService;
     private final PostObservePointService postObservePointService;
+    private final PostImageService postImageService;
 
     @ApiOperation(value = "게시물 정보 조회", notes = "게시물 아이디로 게시물을 조회한다")
     @GetMapping(value = "post/{postId}")
@@ -44,6 +46,11 @@ public class PostController {
     @GetMapping(value = "post/{postId}/postObservePoint")
     public PostObservePoint getPostObservePoint(@PathVariable("postId") Long postId) {
         return postObservePointService.getPostObservePoint(postId);
+    }
+    @ApiOperation(value = "게시물 이미지 조회", notes = "게시물 id로 해당 게시물의 게시물 이미지를 조회한다")
+    @GetMapping(value = "post/{postId}/postImage")
+    public List<String> getPostImage(@PathVariable("postId") Long postId) {
+        return postImageService.getPostImage(postId);
     }
 
 
