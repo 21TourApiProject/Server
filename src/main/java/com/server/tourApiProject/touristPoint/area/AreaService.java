@@ -5,8 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -14,34 +12,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AreaService {
 
-    private final AreaRepository touristPointRepository;
+    private final AreaRepository areaRepository;
 
-    public void createArea(List<AreaParams> areaParams) {
-        for (AreaParams areaParam : areaParams){
-            Area area = new Area();
-            area.setAreaCode(areaParam.getCode());
-            area.setAreaName(areaParam.getName());
-            touristPointRepository.save(area);
-        }
-    }
-
-    public List<Long> getAreaCode() {
-        List<Area> all = touristPointRepository.findAll();
-        List<Long> result = new ArrayList<>();
-        for(Area a : all){
-            result.add(a.getAreaCode());
-        }
-        return result;
-    }
-
-    public void createSigungu(Long areaCode, String areaName, List<AreaParams> sigunguParams) {
-        for (AreaParams sigunguParam : sigunguParams){
-            Area area = new Area();
-            area.setAreaCode(areaCode);
-            area.setAreaName(areaName);
-            area.setSigunguCode(sigunguParam.getCode());
-            area.setSigunguName(sigunguParam.getName());
-            touristPointRepository.save(area);
-        }
+    public void createArea(AreaParams2 areaParams2) {
+        Area area = new Area();
+        area.setAreaCode(areaParams2.getCode1());
+        area.setAreaName(areaParams2.getName1());
+        area.setSigunguCode(areaParams2.getCode2());
+        area.setSigunguName(areaParams2.getName2());
+        areaRepository.save(area);
     }
 }

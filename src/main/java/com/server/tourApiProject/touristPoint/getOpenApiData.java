@@ -1,9 +1,8 @@
 package com.server.tourApiProject.touristPoint;
 
 import com.server.tourApiProject.touristPoint.area.AreaController;
-import com.server.tourApiProject.touristPoint.area.AreaParams;
+import com.server.tourApiProject.touristPoint.area.AreaParams2;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeController;
-import com.server.tourApiProject.touristPoint.contentType.ContentTypeParams;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeParams2;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -15,8 +14,6 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 //서버가 초기화된후 바로 실행되는 코드
 @Component
@@ -32,37 +29,25 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
 
         //지역
         JSONArray area_list = getJson("/areaCode", "");
-        List<AreaParams> areaParams = new ArrayList();
-        for (Object o : area_list) {
-            JSONObject item = (JSONObject) o;
-            Long code = (Long) item.get("code");
-            String name = (String) item.get("name");
+        for (Object o1 : area_list) {
+            JSONObject item1 = (JSONObject) o1;
+            Long code1 = (Long) item1.get("code");
+            String name1 = (String) item1.get("name");
 
-            AreaParams areaParam = new AreaParams(code, name);
-            areaParams.add(areaParam);
-        }
+            JSONArray sigungu_list = getJson("/areaCode", "&areaCode=" + code1);
+            for (Object o2 : sigungu_list) {
+                JSONObject item2 = (JSONObject) o2;
+                Long code2 = (Long) item2.get("code");
+                String name2 = (String) item2.get("name");
 
-        //시군구
-        for(AreaParams areaParam: areaParams){
-            String part2 = "&areaCode=" + areaParam.getCode();
-            System.out.println(areaParam.getCode());
-
-            JSONArray sigungu_list = getJson("/areaCode", part2);
-            List<AreaParams> sigunguParams = new ArrayList();
-            for (Object o : sigungu_list) {
-                JSONObject item = (JSONObject) o;
-                Long code = (Long) item.get("code");
-                String name = (String) item.get("name");
-
-                AreaParams sigunguParam = new AreaParams(code, name);
-                sigunguParams.add(sigunguParam);
+                AreaParams2 areaParams2 = new AreaParams2(code1, name1, code2, name2);
+                areaController.createArea(areaParams2);
             }
-            areaController.createSigungu(areaParam.getCode(), areaParam.getName(), sigunguParams);
         }
 
-        //서비스 분류 -관광지
+
+        //서비스 분류 - 관광지
         JSONArray cat1_list1 = getJson("/categoryCode", "&contentTypeId=12");
-        List<ContentTypeParams> cat1Params = new ArrayList();
         for (Object o1 : cat1_list1) {
             JSONObject item1 = (JSONObject) o1;
             String code1 = (String) item1.get("code");
@@ -86,9 +71,8 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
             }
         }
 
-        //서비스 분류 -음식
+        //서비스 분류 - 음식
         JSONArray cat1_list2 = getJson("/categoryCode", "&contentTypeId=39");
-        List<ContentTypeParams> cat1Params2 = new ArrayList();
         for (Object o1 : cat1_list2) {
             JSONObject item1 = (JSONObject) o1;
             String code1 = (String) item1.get("code");
