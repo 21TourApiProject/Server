@@ -24,19 +24,19 @@ public class TouristData {
     private String addr2; //상세주소
 
     @Column
-    private Long areacode; //지역 코드
+    private Long areaCode; //지역 코드
 
     @Column
     private Long sigunguCode; //시군구 코드
 
     @Column
-    private Long cat1; //대분류 코드
+    private String cat1; //대분류 코드
 
     @Column
-    private Long cat2; //중분류 코드
+    private String cat2; //중분류 코드
 
     @Column
-    private Long cat3; //소분류 코드
+    private String cat3; //소분류 코드
 
     @Column(nullable = false, unique = true)
     private Long contentId; //콘텐츠 ID
@@ -51,10 +51,10 @@ public class TouristData {
     private String firstImage2; //대표이미지 화질낮은
 
     @Column
-    private Float mapX; //GPS X좌표
+    private Double mapX; //GPS X좌표
 
     @Column
-    private Float mapY; //GPS Y좌표
+    private Double mapY; //GPS Y좌표
 
     @Column
     private Long readCount; //조회수
@@ -66,6 +66,6 @@ public class TouristData {
     private String title; //제목
 
     @Column
-    private String zipcode; //우편번호
+    private Long zipcode; //우편번호
 
 }

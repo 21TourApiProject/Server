@@ -11,4 +11,9 @@ import javax.transaction.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class TouristDataService {
+
+    private final TouristDataRepository touristDataRepository;
+    public void createTouristData(TouristData touristData) {
+        touristDataRepository.save(touristData);
+    }
 }
