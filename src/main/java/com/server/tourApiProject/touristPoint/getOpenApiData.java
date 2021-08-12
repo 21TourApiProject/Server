@@ -4,6 +4,8 @@ import com.server.tourApiProject.touristPoint.area.AreaController;
 import com.server.tourApiProject.touristPoint.area.AreaParams;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeController;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeParams;
+import com.server.tourApiProject.touristPoint.touristData.TouristData;
+import com.server.tourApiProject.touristPoint.touristData.TouristDataController;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -23,6 +25,8 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
     private AreaController areaController;
     @Autowired
     private ContentTypeController contentTypeController;
+    @Autowired
+    private TouristDataController touristDataController;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -97,8 +101,97 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
         }
 
 
+        //관광 정보 - 관광지
+        JSONArray tour_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=12");
+        for (Object o : tour_list) {
+            JSONObject item = (JSONObject) o;
 
-    };
+            TouristData touristData = getTouristData(item);
+
+            touristDataController.createTouristData(touristData);
+        }
+
+        //관광 정보 - 음식
+        JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=39");
+        for (Object o : food_list) {
+            JSONObject item = (JSONObject) o;
+
+            TouristData touristData = getTouristData(item);
+
+            touristDataController.createTouristData(touristData);
+        }
+
+
+    }
+
+    private TouristData getTouristData(JSONObject item) {
+        TouristData touristData = new TouristData();
+        if (item.get("addr1") != null)
+            touristData.setAddr1((String) item.get("addr1"));
+
+        if (item.get("addr2") != null) {
+            if (item.get("addr2").getClass().getName().equals("String")){
+                touristData.setAddr2((String) item.get("addr2"));
+            }
+            else if (item.get("addr2").getClass().getName().equals("Long")){
+                touristData.setAddr2(String.valueOf((Long) item.get("addr2")));
+            }
+        }
+
+        if (item.get("areacode") != null)
+            touristData.setAreaCode((Long) item.get("areacode"));
+        if (item.get("readcount") != null)
+            touristData.setReadCount((Long) item.get("readcount"));
+        if (item.get("cat1") != null)
+            touristData.setCat1((String) item.get("cat1"));
+        if (item.get("cat2") != null)
+            touristData.setCat2((String) item.get("cat2"));
+        if (item.get("cat1") != null)
+            touristData.setCat3((String) item.get("cat3"));
+        if (item.get("contentid") != null)
+            touristData.setContentId((Long) item.get("contentid"));
+        if (item.get("contenttypeid") != null)
+            touristData.setContentTypeId((Long) item.get("contenttypeid"));
+        if (item.get("firstimage") != null)
+            touristData.setFirstImage((String) item.get("firstimage"));
+        if (item.get("firstimage2") != null)
+            touristData.setFirstImage2((String) item.get("firstimage2"));
+
+        if (item.get("mapx") != null) {
+            if (item.get("mapx").getClass().getName().equals("Double")){
+                touristData.setMapX((Double) item.get("mapx"));
+            }
+            else if (item.get("mapx").getClass().getName().equals("String")){
+                touristData.setMapX(Double.valueOf((String) item.get("mapx")));
+            }
+        }
+
+        if (item.get("mapy") != null) {
+            if (item.get("mapy").getClass().getName().equals("Double")){
+                touristData.setMapX((Double) item.get("mapy"));
+            }
+            else if (item.get("mapy").getClass().getName().equals("String")){
+                touristData.setMapX(Double.valueOf((String) item.get("mapy")));
+            }
+        }
+
+        if (item.get("sigungucode") != null)
+            touristData.setSigunguCode((Long) item.get("sigungucode"));
+        if (item.get("tel") != null)
+            touristData.setTel((String) item.get("tel"));
+        if (item.get("title") != null)
+            touristData.setTitle((String) item.get("title"));
+
+        if (item.get("zipcode") != null) {
+            if (item.get("zipcode").getClass().getName().equals("Long")){
+                touristData.setZipcode((Long) item.get("zipcode"));
+            }
+            else if (item.get("zipcode").getClass().getName().equals("String")){
+                touristData.setZipcode(Long.valueOf((String) item.get("zipcode")));
+            }
+        }
+        return touristData;
+    }
 
 
     //open api 호출해서 결과 리턴하는 함수

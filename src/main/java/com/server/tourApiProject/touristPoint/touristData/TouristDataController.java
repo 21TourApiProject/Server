@@ -1,4 +1,4 @@
-package com.server.tourApiProject.touristPoint.area;
+package com.server.tourApiProject.touristPoint.touristData;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,17 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@Api(tags = {"5.1 관광지-지역"})
+@Api(tags = {"5.3 관광지-관광 정보"})
 @RestController
 @RequestMapping(value = "/v1")
 @RequiredArgsConstructor
-public class AreaController {
-    private final AreaService areaService;
+public class TouristDataController {
 
-    @ApiOperation(value = "시군구 입력", notes = "해당 지역의 시군구 정보를 입력한다")
-    @PostMapping(value = "area")
-    public void createArea(@RequestBody AreaParams areaParams){
-        areaService.createArea(areaParams);
+    private final TouristDataService touristDataService;
+
+    @ApiOperation(value = "관광 정보 입력", notes = "관광 정보를 입력한다")
+    @PostMapping(value = "touristData/touristSpot")
+    public void createTouristData(@RequestBody TouristData touristData){
+        touristDataService.createTouristData(touristData);
     }
 
 }

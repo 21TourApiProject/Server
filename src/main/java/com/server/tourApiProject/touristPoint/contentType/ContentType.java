@@ -16,7 +16,7 @@ public class ContentType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String contentTypeId;
+    private Long contentTypeId;
 
     @Column(nullable = false)
     private Integer contentType; //12, 39
