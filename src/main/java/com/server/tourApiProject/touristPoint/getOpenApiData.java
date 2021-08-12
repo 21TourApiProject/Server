@@ -128,8 +128,16 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
         TouristData touristData = new TouristData();
         if (item.get("addr1") != null)
             touristData.setAddr1((String) item.get("addr1"));
-        if (item.get("addr2") != null)
-            touristData.setAddr2((String) item.get("addr2"));
+
+        if (item.get("addr2") != null) {
+            if (item.get("addr2").getClass().getName().equals("String")){
+                touristData.setAddr2((String) item.get("addr2"));
+            }
+            else if (item.get("addr2").getClass().getName().equals("Long")){
+                touristData.setAddr2(String.valueOf((Long) item.get("addr2")));
+            }
+        }
+
         if (item.get("areacode") != null)
             touristData.setAreaCode((Long) item.get("areacode"));
         if (item.get("readcount") != null)
@@ -148,18 +156,40 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
             touristData.setFirstImage((String) item.get("firstimage"));
         if (item.get("firstimage2") != null)
             touristData.setFirstImage2((String) item.get("firstimage2"));
-        if (item.get("mapx") != null)
-            touristData.setMapX(Double.valueOf((String)item.get("mapx")));
-        if (item.get("mapy") != null)
-            touristData.setMapX(Double.valueOf((String)item.get("mapy")));
+
+        if (item.get("mapx") != null) {
+            if (item.get("mapx").getClass().getName().equals("Double")){
+                touristData.setMapX((Double) item.get("mapx"));
+            }
+            else if (item.get("mapx").getClass().getName().equals("String")){
+                touristData.setMapX(Double.valueOf((String) item.get("mapx")));
+            }
+        }
+
+        if (item.get("mapy") != null) {
+            if (item.get("mapy").getClass().getName().equals("Double")){
+                touristData.setMapX((Double) item.get("mapy"));
+            }
+            else if (item.get("mapy").getClass().getName().equals("String")){
+                touristData.setMapX(Double.valueOf((String) item.get("mapy")));
+            }
+        }
+
         if (item.get("sigungucode") != null)
             touristData.setSigunguCode((Long) item.get("sigungucode"));
         if (item.get("tel") != null)
             touristData.setTel((String) item.get("tel"));
         if (item.get("title") != null)
             touristData.setTitle((String) item.get("title"));
-        if (item.get("zipcode") != null)
-            touristData.setZipcode((Long) item.get("zipcode"));
+
+        if (item.get("zipcode") != null) {
+            if (item.get("zipcode").getClass().getName().equals("Long")){
+                touristData.setZipcode((Long) item.get("zipcode"));
+            }
+            else if (item.get("zipcode").getClass().getName().equals("String")){
+                touristData.setZipcode(Long.valueOf((String) item.get("zipcode")));
+            }
+        }
         return touristData;
     }
 
