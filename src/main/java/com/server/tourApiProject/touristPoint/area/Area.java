@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Area {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long areaId;
 
     @Column(nullable = false)
     private Long areaCode; //지역코드
@@ -22,9 +22,9 @@ public class Area {
     @Column(nullable = false)
     private String areaName; //지역이름
 
-    @Column
+    @Column(nullable = false)
     private Long sigunguCode; //시군구코드
 
-    @Column
+    @Column(nullable = false)
     private String sigunguName; //시군구이름
 }

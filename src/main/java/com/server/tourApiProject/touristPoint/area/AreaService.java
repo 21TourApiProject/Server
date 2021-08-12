@@ -34,8 +34,8 @@ public class AreaService {
         return result;
     }
 
-    public void createSigungu(Long areaCode, String areaName, List<SigunguParams> sigunguParams) {
-        for (SigunguParams sigunguParam : sigunguParams){
+    public void createSigungu(Long areaCode, String areaName, List<AreaParams> sigunguParams) {
+        for (AreaParams sigunguParam : sigunguParams){
             Area area = new Area();
             area.setAreaCode(areaCode);
             area.setAreaName(areaName);

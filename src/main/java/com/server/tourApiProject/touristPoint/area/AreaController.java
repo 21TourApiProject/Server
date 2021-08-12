@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
-@Api(tags = {"3.1 관광지"})
+@Api(tags = {"3.1 관광지-지역분류"})
 @RestController
 @RequestMapping(value = "/v1")
 @RequiredArgsConstructor
@@ -30,7 +30,7 @@ public class AreaController {
 
     @ApiOperation(value = "시군구 입력", notes = "해당 지역의 시군구 정보를 입력한다")
     @PostMapping(value = "sigungu/{areaCode}/{areaName}")
-    public void createSigungu(@PathVariable("areaCode") Long areaCode, @PathVariable("areaName") String areaName, @RequestBody List<SigunguParams> sigunguParams){
+    public void createSigungu(@PathVariable("areaCode") Long areaCode, @PathVariable("areaName") String areaName, @RequestBody List<AreaParams> sigunguParams){
         areaService.createSigungu(areaCode, areaName, sigunguParams);
     }
 
