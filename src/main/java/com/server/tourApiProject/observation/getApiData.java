@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+//서버가 초기화된후 바로 실행되는 코드입니다
 @Component
 public class getApiData implements org.springframework.boot.ApplicationRunner {
 
@@ -22,10 +23,10 @@ public class getApiData implements org.springframework.boot.ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        JSONArray item_list = getJson("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=",
-                "&MobileOS=AND&MobileApp=tourApiProject&_type=json");
+        //지역
+        JSONArray area_list = getJson("/areaCode", "");
         List<AreaParams> areaParams = new ArrayList();
-        for (Object o : item_list) {
+        for (Object o : area_list) {
             JSONObject item = (JSONObject) o;
             Long code = (Long) item.get("code");
             String name = (String) item.get("name");
@@ -35,53 +36,39 @@ public class getApiData implements org.springframework.boot.ApplicationRunner {
         }
         observationController.createArea(areaParams);
 
-//        String key = "BdxNGWQJQFutFYE6DkjePTmerMbwG2fzioTf6sr69ecOAdLGMH4iiukF8Ex93YotSgkDOHe1VxKNOr8USSN6EQ%3D%3D"; //인증키
-//        String result = "";
-//        List<AreaParams> areaParams = new ArrayList();
-//
-//        try{
-//            URL url = new URL("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=" + key +
-//                    "&MobileOS=AND&MobileApp=tourApiProject&_type=json");
-//
-//            BufferedReader bf; //빠른 속도로 데이터를 처리하기 위해
-//            bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
-//            result = bf.readLine(); //api로 받아온 결과
-//            //System.out.println("result = " + result);
-//
-//            JSONParser jsonParser = new JSONParser();
-//            JSONObject jsonObject = (JSONObject)jsonParser.parse(result);
-//            JSONObject response = (JSONObject)jsonObject.get("response");
-//            JSONObject body = (JSONObject)response.get("body");
-//            JSONObject items = (JSONObject)body.get("items");
-//            JSONArray item_list = (JSONArray)items.get("item");
-//
-//            //System.out.println("body = " + body);
-//            //System.out.println("items = " + items);
-//            System.out.println("결과 개수 : " + body.get("numOfRows"));
-//
-//            for (Object o : item_list) {
-//                JSONObject item = (JSONObject) o;
-//                Long code = (Long) item.get("code");
-//                String name = (String) item.get("name");
-//
-//                AreaParams areaParam = new AreaParams(code, name);
-//                areaParams.add(areaParam);
-//            }
-//            bf.close();
-//            observationController.createArea(areaParams);
-//
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
+        //시군구
+        List<Long> allAreaCode = observationController.getAllAreaCode();
+        for(Long areaCode: allAreaCode){
+            String url2 = "&areaCode=" + areaCode;
+            System.out.println(areaCode);
+
+            JSONArray sigungu_list = getJson("/areaCode", url2);
+            List<SigunguParams> sigunguParams = new ArrayList();
+            for (Object o : sigungu_list) {
+                JSONObject item = (JSONObject) o;
+                Long code = (Long) item.get("code");
+                String name = (String) item.get("name");
+
+                SigunguParams sigunguParam = new SigunguParams(code, name);
+                sigunguParams.add(sigunguParam);
+            }
+            observationController.createSigungu(areaCode, sigunguParams);
+        }
+
+
+
+
     };
-    
+
+
+    //open api 호출해서 결과 리턴하는 함수
     public JSONArray getJson(String url1, String url2){
 
-        String key = "BdxNGWQJQFutFYE6DkjePTmerMbwG2fzioTf6sr69ecOAdLGMH4iiukF8Ex93YotSgkDOHe1VxKNOr8USSN6EQ%3D%3D"; //인증키
+        String key = "?ServiceKey=BdxNGWQJQFutFYE6DkjePTmerMbwG2fzioTf6sr69ecOAdLGMH4iiukF8Ex93YotSgkDOHe1VxKNOr8USSN6EQ%3D%3D"; //인증키
         String result = "";
 
         try{
-            URL url = new URL(url1 + key + url2);
+            URL url = new URL("http://api.visitkorea.or.kr/openapi/service/rest/KorService" + url1 + key + url2 + "&MobileOS=AND&MobileApp=tourApiProject&_type=json");
             BufferedReader bf; //빠른 속도로 데이터를 처리하기 위해
             bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
             result = bf.readLine(); //api로 받아온 결과
@@ -91,12 +78,16 @@ public class getApiData implements org.springframework.boot.ApplicationRunner {
             JSONObject response = (JSONObject)jsonObject.get("response");
             JSONObject body = (JSONObject)response.get("body");
             JSONObject items = (JSONObject)body.get("items");
-            JSONArray item_list = (JSONArray)items.get("item");
-            bf.close();
-
+            Long count = (Long)body.get("totalCount");
+            if (count == 1){
+                JSONObject item = (JSONObject)items.get("item");
+                bf.close();
+                return item;
+            }else {
+                JSONArray item_list = (JSONArray) items.get("item");
+                return item_list;
+            }
             System.out.println("api 불러오기 성공");
-            return item_list;
-
         }catch(Exception e){
             e.printStackTrace();
         }
