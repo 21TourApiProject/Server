@@ -56,11 +56,11 @@ public class Observation {
     @Column
     private String outline; //개요
 
-    @OneToMany(mappedBy = "observePoint")
-    private List<PostHashTag> postHashTags=new ArrayList<>();
-
-    @OneToMany(mappedBy = "post")
-    private List<PostImage> postImages=new ArrayList<>();
+//    @OneToMany(mappedBy = "observePoint")
+//    private List<PostHashTag> postHashTags=new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "post")
+//    private List<PostImage> postImages=new ArrayList<>();
 
     //코스 추가 필요함함
 
