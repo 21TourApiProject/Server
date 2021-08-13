@@ -1,8 +1,12 @@
 package com.server.tourApiProject.observation;
 
+import com.server.tourApiProject.bigPost.postHashTag.PostHashTag;
+import com.server.tourApiProject.bigPost.postImage.PostImage;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @Getter
@@ -12,47 +16,52 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name="observation")
 public class Observation {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long observationId;
 
-    @Column(nullable = false)
-    private String address; //주소(공통)
-
-    @Column(nullable = false)
-    private String phone; //문의(공통)
+    @Column(nullable = false, unique = true)
+    private String observationName;
 
     @Column
-    private String operatingHour; //운영시간
+    private String Link;
 
     @Column(nullable = false)
-    private String park; //주차(공통?)
+    private float PointCrdX;    //지도를 위한 x좌표
+
+    @Column(nullable = false)
+    private float PointCrdY;    //지도를 위한 y좌표
+
+    @Column(nullable = false)
+    private String Address;
 
     @Column
-    private String animal; //반려동물
+    private String PhoneNumber;
 
     @Column
-    private String homePage; //홈페이지
+    private String operatingHour;
 
     @Column
-    private String congestion; //혼잡도
+    private String entranceFee;
 
     @Column
-
-
-    private String operatingHour2; //영업시간
+    private String parking;
 
     @Column
-    private String mainMenu; //대표메뉴
+    private String intro;   //한줄소개
 
     @Column
-    private String reservation; //예약안내
+    private String type;    //관측지 타입(천문대,등등), 추후 enum으로 수정가능?
 
     @Column
-    private String takeOut; //포장
+    private String outline; //개요
 
+//    @OneToMany(mappedBy = "observePoint")
+//    private List<PostHashTag> postHashTags=new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "post")
+//    private List<PostImage> postImages=new ArrayList<>();
 
-
+    //코스 추가 필요함함
 
 }

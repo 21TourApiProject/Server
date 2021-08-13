@@ -4,25 +4,25 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Slf4j
-@Api(tags = {"3.1 관광지"})
+@Api(tags = {"2.5 관측지"})
 @RestController
 @RequestMapping(value = "/v1")
 @RequiredArgsConstructor
 public class ObservationController {
-    private final AreaService areaService;
+    private final ObservationService observationService;
 
-    @ApiOperation(value = "지역코드 입력", notes = "지역코드 정보를 입력한다")
-    @PostMapping(value = "area")
-    public void createArea(@RequestBody List<AreaParams> areaParams){
-        areaService.createArea(areaParams);
+    @ApiOperation(value = "모든 관측지 조회", notes = "모든 관측지를 조회한다")
+    @GetMapping(value = "observePoints")
+    public List<Observation> getObservePoint(){ return observationService.getAllObservePoint(); }
+
+    @ApiOperation(value = "관측지 입력", notes = "관측지 정보를 입력한다")
+    @PostMapping(value = "observePoint")
+    public void createObserveFit(@RequestBody Observation observation){
+        observationService.createObservePoint(observation);
     }
-
 }
