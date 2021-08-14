@@ -17,8 +17,8 @@ public class PostHashTagController {
     private final PostHashTagService postHashTagService;
 
     @ApiOperation(value = "게시물 해시태그 리스트 입력", notes = "게시물 해시태그 정보를 입력한다")
-    @PostMapping(value = "postHashTag/{postContent}")
-    public Long createPostHashTags(@PathVariable("postContent")  String postContent, @RequestBody List<PostHashTagParams> postHashTagParams){
-        return postHashTagService.createPostHashTags(postContent,postHashTagParams);
+    @PostMapping(value = "postHashTag/{postId}")
+    public void createPostHashTags(@PathVariable("postId")  Long postId, @RequestBody List<PostHashTagParams> postHashTagParams){
+        postHashTagService.createPostHashTags(postId,postHashTagParams);
     }
 }
