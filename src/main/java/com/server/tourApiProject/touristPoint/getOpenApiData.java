@@ -100,29 +100,34 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
 //            }
 //        }
 
+        int num = 0;
 
-//        //관광지
-//        JSONArray tour_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=12"); //관광 정보
-//        for (Object o : tour_list) {
-//            JSONObject item = (JSONObject) o;
-//            TouristData touristData = getTouristData(item);
-//            Long contentId = (Long) item.get("contentid"); //컨텐츠ID
-//
-//            JSONArray comm_list = getJson("/detailCommon", "&defaultYN=Y&overviewYN=Y&contentId=" + contentId); //공통 정보
-//            JSONObject comm = (JSONObject) comm_list.get(0);
-//            touristData.setHomePage((String) comm.get("homepage"));
-//            touristData.setOverview((String) comm.get("overview"));
-//
-//            JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=12&contentId=" + contentId); //소개 정보
-//            JSONObject intro = (JSONObject) intro_list.get(0);
-//            touristData.setUseTime((String) intro.get("usetime"));
-//            touristData.setRestDate((String) intro.get("restdate"));
-//            touristData.setExpGuide((String) intro.get("expguide"));
-//            touristData.setParking((String) intro.get("parking"));
-//            touristData.setChkPet((String) intro.get("chkpet"));
-//
-//            touristDataController.createTouristData(touristData);
-//        }
+        //관광지
+        JSONArray tour_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=12"); //관광 정보
+        for (Object o : tour_list) {
+            if (num > 1){
+                break;
+            }
+            num += 1;
+            JSONObject item = (JSONObject) o;
+            TouristData touristData = getTouristData(item);
+            Long contentId = (Long) item.get("contentid"); //컨텐츠ID
+
+            JSONArray comm_list = getJson("/detailCommon", "&defaultYN=Y&overviewYN=Y&contentId=" + contentId); //공통 정보
+            JSONObject comm = (JSONObject) comm_list.get(0);
+            touristData.setHomePage((String) comm.get("homepage"));
+            touristData.setOverview((String) comm.get("overview"));
+
+            JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=12&contentId=" + contentId); //소개 정보
+            JSONObject intro = (JSONObject) intro_list.get(0);
+            touristData.setUseTime((String) intro.get("usetime"));
+            touristData.setRestDate((String) intro.get("restdate"));
+            touristData.setExpGuide((String) intro.get("expguide"));
+            touristData.setParking((String) intro.get("parking"));
+            touristData.setChkPet((String) intro.get("chkpet"));
+
+            touristDataController.createTouristData(touristData);
+        }
 
 //        //음식
 //        JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=39"); //관광 정보
@@ -155,11 +160,11 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
             touristData.setAddr1((String) item.get("addr1"));
 
         if (item.get("addr2") != null) {
-            if (item.get("addr2").getClass().getName().equals("String")){
+            if (item.get("addr2").getClass().getName().equals("java.lang.String")){
                 touristData.setAddr2((String) item.get("addr2"));
             }
-            else if (item.get("addr2").getClass().getName().equals("Long")){
-                touristData.setAddr2(String.valueOf((Long) item.get("addr2")));
+            else if (item.get("addr2").getClass().getName().equals("java.lang.Long")){
+                touristData.setAddr2(String.valueOf(item.get("addr2")));
             }
         }
 
@@ -183,20 +188,20 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
             touristData.setFirstImage2((String) item.get("firstimage2"));
 
         if (item.get("mapx") != null) {
-            if (item.get("mapx").getClass().getName().equals("Double")){
+            if (item.get("mapx").getClass().getName().equals("java.lang.Double")){
                 touristData.setMapX((Double) item.get("mapx"));
             }
-            else if (item.get("mapx").getClass().getName().equals("String")){
+            else if (item.get("mapx").getClass().getName().equals("java.lang.String")){
                 touristData.setMapX(Double.valueOf((String) item.get("mapx")));
             }
         }
 
         if (item.get("mapy") != null) {
-            if (item.get("mapy").getClass().getName().equals("Double")){
-                touristData.setMapX((Double) item.get("mapy"));
+            if (item.get("mapy").getClass().getName().equals("java.lang.Double")){
+                touristData.setMapY((Double) item.get("mapy"));
             }
-            else if (item.get("mapy").getClass().getName().equals("String")){
-                touristData.setMapX(Double.valueOf((String) item.get("mapy")));
+            else if (item.get("mapy").getClass().getName().equals("java.lang.String")){
+                touristData.setMapY(Double.valueOf((String) item.get("mapy")));
             }
         }
 
@@ -208,13 +213,14 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
             touristData.setTitle((String) item.get("title"));
 
         if (item.get("zipcode") != null) {
-            if (item.get("zipcode").getClass().getName().equals("Long")){
+            if (item.get("zipcode").getClass().getName().equals("java.lang.Long")){
                 touristData.setZipcode((Long) item.get("zipcode"));
             }
-            else if (item.get("zipcode").getClass().getName().equals("String")){
+            else if (item.get("zipcode").getClass().getName().equals("java.lang.String")){
                 touristData.setZipcode(Long.valueOf((String) item.get("zipcode")));
             }
         }
+
         return touristData;
     }
 
