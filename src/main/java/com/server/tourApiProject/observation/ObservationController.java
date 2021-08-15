@@ -17,12 +17,18 @@ public class ObservationController {
     private final ObservationService observationService;
 
     @ApiOperation(value = "모든 관측지 조회", notes = "모든 관측지를 조회한다")
-    @GetMapping(value = "observePoints")
-    public List<Observation> getObservePoint(){ return observationService.getAllObservePoint(); }
+    @GetMapping(value = "observations")
+    public List<Observation> getAllObservation(){ return observationService.getAllObservation(); }
 
     @ApiOperation(value = "관측지 입력", notes = "관측지 정보를 입력한다")
-    @PostMapping(value = "observePoint")
-    public void createObserveFit(@RequestBody Observation observation){
-        observationService.createObservePoint(observation);
+    @PostMapping(value = "observation")
+    public void createObservation(@RequestBody ObservationParams observationParams){
+        observationService.createObservation(observationParams);
     }
+
+    @ApiOperation(value = "관측지 조회", notes = "관측지 id로 관측지를 조회한다")
+    @GetMapping(value = "observation/{observationId}")
+    public Observation getObservation(@PathVariable("observationId") Long observationId){ return observationService.getObservation(observationId); }
+
+
 }

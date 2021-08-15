@@ -2,6 +2,8 @@ package com.server.tourApiProject.observation;
 
 import com.server.tourApiProject.bigPost.postHashTag.PostHashTag;
 import com.server.tourApiProject.bigPost.postImage.PostImage;
+import com.server.tourApiProject.observation.ObserveHashTag.ObserveHashTag;
+import com.server.tourApiProject.observation.ObserveImage.ObserveImage;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,16 +29,16 @@ public class Observation {
     private String Link;
 
     @Column(nullable = false)
-    private float PointCrdX;    //지도를 위한 x좌표
+    private float pointCrdX;    //지도를 위한 x좌표
 
     @Column(nullable = false)
-    private float PointCrdY;    //지도를 위한 y좌표
+    private float pointCrdY;    //지도를 위한 y좌표
 
     @Column(nullable = false)
-    private String Address;
+    private String address;
 
     @Column
-    private String PhoneNumber;
+    private String phoneNumber;
 
     @Column
     private String operatingHour;
@@ -45,7 +47,10 @@ public class Observation {
     private String entranceFee;
 
     @Column
-    private String parking;
+    private String parking; //주차안내
+
+    @Column
+    private String parkingImg;  //주차안내 사진진
 
     @Column
     private String intro;   //한줄소개
@@ -56,11 +61,11 @@ public class Observation {
     @Column
     private String outline; //개요
 
-//    @OneToMany(mappedBy = "observePoint")
-//    private List<PostHashTag> postHashTags=new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "post")
-//    private List<PostImage> postImages=new ArrayList<>();
+    @OneToMany(mappedBy = "observation")
+    private List<ObserveHashTag> observeHashTags=new ArrayList<>();
+
+    @OneToMany(mappedBy = "observation")
+    private List<ObserveImage> observeImages = new ArrayList<>();
 
     //코스 추가 필요함함
 
