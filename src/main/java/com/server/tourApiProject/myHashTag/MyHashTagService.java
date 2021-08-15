@@ -41,7 +41,6 @@ public class MyHashTagService {
             myHashTag.setUserId(userId);
             HashTag hashTag = hashTagRepository.findByHashTagName(p.getHashTagName());
             myHashTag.setHashTagId(hashTag.getHashTagId());
-
             myHashTagRepository.save(myHashTag);
         }
         return userId;
