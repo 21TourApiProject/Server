@@ -25,18 +25,16 @@ public class PostHashTagService {
         return postHashTagRepository.findByPostId(postId);
     }
 
-    public Long createPostHashTags(String postContent,List<PostHashTagParams> postHashTagParams) {
-        Post post =postRepository.findByPostContent(postContent);
-        Long postId =post.getPostId();
+    public void createPostHashTags(Long postId,List<PostHashTagParams> postHashTagParams) {
         for (PostHashTagParams p : postHashTagParams) {
+            Post post =postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
             PostHashTag postHashTag = new PostHashTag();
             postHashTag.setHashTagName(p.getHashTagName());
             postHashTag.setPost(post);
-            postHashTag.setPostId(postId);
+            postHashTag.setPostId(post.getPostId());
             HashTag hashTag = hashTagRepository.findByHashTagName(p.getHashTagName());
             postHashTag.setHashTagId(hashTag.getHashTagId());
             postHashTagRepository.save(postHashTag);
         }
-        return postId;
     }
 }

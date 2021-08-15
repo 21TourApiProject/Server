@@ -32,14 +32,13 @@ public class PostImageService {
         return postImage.getImageName();
     }
 
-    public void createPostImage(String postContent,List<PostImageParams> postImageParams) {
-        Post post = postRepository.findByPostContent(postContent);
-        Long postId = post.getPostId();
+    public void createPostImage(Long postId,List<PostImageParams> postImageParams) {
         for (PostImageParams p : postImageParams) {
+            Post post = postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
             PostImage postImage = new PostImage();
             postImage.setImageName(p.getImageName());
             postImage.setPost(post);
-            postImage.setPostId(postId);
+            postImage.setPostId(post.getPostId());
 
             postImageRepository.save(postImage);
         }
