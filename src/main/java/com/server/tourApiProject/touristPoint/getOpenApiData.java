@@ -50,30 +50,30 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
 //        }
 //
 //
-//        //서비스 분류 - 관광지
-//        JSONArray cat1_list1 = getJson("/categoryCode", "&contentTypeId=12");
-//        for (Object o1 : cat1_list1) {
-//            JSONObject item1 = (JSONObject) o1;
-//            String code1 = (String) item1.get("code");
-//            String name1 = (String) item1.get("name");
-//
-//            JSONArray cat2_list1 = getJson("/categoryCode", "&cat1=" + code1 + "&contentTypeId=12");
-//            for (Object o2 : cat2_list1) {
-//                JSONObject item2 = (JSONObject) o2;
-//                String code2 = (String) item2.get("code");
-//                String name2 = (String) item2.get("name");
-//
-//                JSONArray cat3_list1 = getJson("/categoryCode", "&cat1=" + code1 + "&cat2=" + code2 + "&contentTypeId=12");
-//                for (Object o3 : cat3_list1) {
-//                    JSONObject item3 = (JSONObject) o3;
-//                    String code3 = (String) item3.get("code");
-//                    String name3 = (String) item3.get("name");
-//
-//                    ContentTypeParams contentTypeParams = new ContentTypeParams(code1, name1, code2, name2, code3, name3);
-//                    contentTypeController.createContentType1(contentTypeParams);
-//                }
-//            }
-//        }
+        //서비스 분류 - 관광지
+        JSONArray cat1_list1 = getJson("/categoryCode", "&contentTypeId=12");
+        for (Object o1 : cat1_list1) {
+            JSONObject item1 = (JSONObject) o1;
+            String code1 = (String) item1.get("code");
+            String name1 = (String) item1.get("name");
+
+            JSONArray cat2_list1 = getJson("/categoryCode", "&cat1=" + code1 + "&contentTypeId=12");
+            for (Object o2 : cat2_list1) {
+                JSONObject item2 = (JSONObject) o2;
+                String code2 = (String) item2.get("code");
+                String name2 = (String) item2.get("name");
+
+                JSONArray cat3_list1 = getJson("/categoryCode", "&cat1=" + code1 + "&cat2=" + code2 + "&contentTypeId=12");
+                for (Object o3 : cat3_list1) {
+                    JSONObject item3 = (JSONObject) o3;
+                    String code3 = (String) item3.get("code");
+                    String name3 = (String) item3.get("name");
+
+                    ContentTypeParams contentTypeParams = new ContentTypeParams(code1, name1, code2, name2, code3, name3);
+                    contentTypeController.createContentType1(contentTypeParams);
+                }
+            }
+        }
 //
 //        //서비스 분류 - 음식
 //        JSONArray cat1_list2 = getJson("/categoryCode", "&contentTypeId=39");
@@ -128,29 +128,34 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
 
             touristDataController.createTouristData(touristData);
         }
+        int num2 = 0;
 
-//        //음식
-//        JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=39"); //관광 정보
-//        for (Object o : food_list) {
-//            JSONObject item = (JSONObject) o;
-//            TouristData touristData = getTouristData(item);
-//            Long contentId = (Long) item.get("contentid"); //컨텐츠ID
-//
-//            JSONArray comm_list = getJson("/detailCommon", "&overviewYN=Y&contentId=" + contentId); //공통 정보
-//            JSONObject comm = (JSONObject) comm_list.get(0);
-//            touristData.setOverview((String) comm.get("overview"));
-//
-//            JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=39&contentId=" + contentId); //소개 정보
-//            JSONObject intro = (JSONObject) intro_list.get(0);
-//            touristData.setOpenTimeFood((String) intro.get("opentimefood"));
-//            touristData.setRestDateFood((String) intro.get("restdatefood"));
-//            touristData.setFirstMenu((String) intro.get("firstmenu"));
-//            touristData.setTreatMenu((String) intro.get("treatmenu"));
-//            touristData.setPacking((String) intro.get("packing"));
-//            touristData.setParkingFood((String) intro.get("parkingfood"));
-//
-//            touristDataController.createTouristData(touristData);
-//        }
+        //음식
+        JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=39"); //관광 정보
+        for (Object o : food_list) {
+            if (num2 > 1){
+                break;
+            }
+            num2 += 1;
+            JSONObject item = (JSONObject) o;
+            TouristData touristData = getTouristData(item);
+            Long contentId = (Long) item.get("contentid"); //컨텐츠ID
+
+            JSONArray comm_list = getJson("/detailCommon", "&overviewYN=Y&contentId=" + contentId); //공통 정보
+            JSONObject comm = (JSONObject) comm_list.get(0);
+            touristData.setOverview((String) comm.get("overview"));
+
+            JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=39&contentId=" + contentId); //소개 정보
+            JSONObject intro = (JSONObject) intro_list.get(0);
+            touristData.setOpenTimeFood((String) intro.get("opentimefood"));
+            touristData.setRestDateFood((String) intro.get("restdatefood"));
+            touristData.setFirstMenu((String) intro.get("firstmenu"));
+            touristData.setTreatMenu((String) intro.get("treatmenu"));
+            touristData.setPacking((String) intro.get("packing"));
+            touristData.setParkingFood((String) intro.get("parkingfood"));
+
+            touristDataController.createTouristData(touristData);
+        }
 
     }
 
@@ -228,7 +233,7 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
     //open api 호출해서 결과 리턴하는 함수
     public JSONArray getJson(String part1, String part2){
 
-        String key = "?ServiceKey=BdxNGWQJQFutFYE6DkjePTmerMbwG2fzioTf6sr69ecOAdLGMH4iiukF8Ex93YotSgkDOHe1VxKNOr8USSN6EQ%3D%3D"; //인증키
+        String key = "?ServiceKey=VQ0keALnEea3BkQdEGgwgCD8XNDNR%2Fg98L9D4GzWryl4UYHnGfUUUI%2BHDA6DdzYjjzJmuHT1UmuJZ7wJHoGfuA%3D%3D"; //인증키
         String result = "";
 
         try{
