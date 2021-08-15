@@ -1,5 +1,6 @@
 package com.server.tourApiProject.touristPoint.touristData;
 
+import com.server.tourApiProject.touristPoint.contentType.ContentTypeController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,12 @@ public class TouristDataController {
     @PostMapping(value = "touristData/touristSpot")
     public void createTouristData(@RequestBody TouristData touristData){
         touristDataService.createTouristData(touristData);
+    }
+
+    @ApiOperation(value = "관광지 타입 조회", notes = "관광지 타입를 조회한다")
+    @GetMapping(value = "touristData/contentType/{contentId}")
+    public Long getContentType(@PathVariable("contentId") Long contentId){
+        return touristDataService.getContentType(contentId);
     }
 
     @ApiOperation(value = "관광지 정보 조회", notes = "관광지 정보를 조회한다")

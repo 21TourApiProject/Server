@@ -20,9 +20,16 @@ public class TouristDataService {
         touristDataRepository.save(touristData);
     }
 
+    public Long getContentType(Long contentId) {
+        TouristData touristData = touristDataRepository.findByContentId(contentId);
+        return touristData.getContentTypeId();
+    }
+
     public TouristDataParams getTouristPointData(Long contentId) {
         TouristData touristData = touristDataRepository.findByContentId(contentId);
         TouristDataParams result = new TouristDataParams();
+
+        result.setContentTypeId(touristData.getContentTypeId()); //12
         result.setFirstImage(touristData.getFirstImage());
         result.setTitle(touristData.getTitle());
         result.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
@@ -41,6 +48,8 @@ public class TouristDataService {
     public TouristDataParams2 getFoodData(Long contentId) {
         TouristData touristData = touristDataRepository.findByContentId(contentId);
         TouristDataParams2 result = new TouristDataParams2();
+
+        result.setContentTypeId(touristData.getContentTypeId()); //39
         result.setTitle(touristData.getTitle());
         result.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
         result.setOverview(touristData.getOverview());
@@ -54,4 +63,5 @@ public class TouristDataService {
         result.setParkingFood(touristData.getParkingFood());
         return result;
     }
+
 }

@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 public class TouristDataParams {
 
+    private Long contentTypeId; //12
     private String firstImage; //대표이미지 원본
     private String title; //제목
     //private String overviewSimple; //개요 1줄
