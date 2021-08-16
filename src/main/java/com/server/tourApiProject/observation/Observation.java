@@ -1,7 +1,5 @@
 package com.server.tourApiProject.observation;
 
-import com.server.tourApiProject.bigPost.postHashTag.PostHashTag;
-import com.server.tourApiProject.bigPost.postImage.PostImage;
 import com.server.tourApiProject.observation.ObserveHashTag.ObserveHashTag;
 import com.server.tourApiProject.observation.ObserveImage.ObserveImage;
 import lombok.*;
@@ -29,10 +27,10 @@ public class Observation {
     private String Link;
 
     @Column(nullable = false)
-    private float pointCrdX;    //지도를 위한 x좌표
+    private double latitude;    //지도를 위한 위도
 
     @Column(nullable = false)
-    private float pointCrdY;    //지도를 위한 y좌표
+    private double longitude;    //지도를 위한 경도
 
     @Column(nullable = false)
     private String address;
@@ -56,7 +54,7 @@ public class Observation {
     private String intro;   //한줄소개
 
     @Column
-    private String type;    //관측지 타입(천문대,등등), 추후 enum으로 수정가능?
+    private String observeType;    //관측지 타입(천문대,등등), 추후 enum으로 수정가능?
 
     @Column
     private String outline; //개요

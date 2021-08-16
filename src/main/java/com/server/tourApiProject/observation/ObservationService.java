@@ -29,15 +29,15 @@ public class ObservationService {
         Observation observation = new Observation();
         observation.setObservationName(observationParams.getObservationName());
         observation.setLink(observationParams.getLink());
-        observation.setPointCrdX(observationParams.getPointCrdX());
-        observation.setPointCrdY(observationParams.getPointCrdY());
+        observation.setLatitude(observationParams.getLatitude());
+        observation.setLongitude(observationParams.getLongitude());
         observation.setAddress(observationParams.getAddress());
         observation.setPhoneNumber(observationParams.getPhoneNumber());
         observation.setOperatingHour(observationParams.getOperatingHour());
         observation.setParking(observationParams.getParking());
         observation.setParkingImg(observationParams.getParkingImg());
         observation.setIntro(observationParams.getIntro());
-        observation.setType(observationParams.getType());
+        observation.setObserveType(observationParams.getObserveType());
         observation.setOutline(observationParams.getOutline());
         observationRepository.save(observation);
     }

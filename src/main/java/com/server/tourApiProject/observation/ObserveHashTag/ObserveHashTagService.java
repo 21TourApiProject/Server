@@ -32,19 +32,4 @@ public class ObserveHashTagService {
         return observeHashTagNameList;
     }
 
-//    public Long createObserveHashTags(Long observationId, List<ObserveHashTagParams> observeHashTagParams) {
-//        Observation observation = observationRepository.findById(observationId).orElseThrow(IllegalAccessError::new);
-//
-//        for(ObserveHashTagParams p : observeHashTagParams) {
-//            ObserveHashTag observeHashTag = new ObserveHashTag();
-//            observeHashTag.setHashTagName(p.getHashTagName());
-//            observeHashTag.setUser(user);
-//            observeHashTag.setUserId(userId);
-//            HashTag hashTag = hashTagRepository.findByHashTagName(p.getHashTagName());
-//            observeHashTag.setHashTagId(hashTag.getHashTagId());
-//
-//            observeHashTagRepository.save(observeHashTag);
-//        }
-//        return userId;
-//    }
 }

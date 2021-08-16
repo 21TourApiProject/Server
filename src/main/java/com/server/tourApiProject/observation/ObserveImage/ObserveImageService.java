@@ -1,7 +1,7 @@
 package com.server.tourApiProject.observation.ObserveImage;
 
-import com.server.tourApiProject.bigPost.post.Post;
-import com.server.tourApiProject.bigPost.post.PostRepository;
+import com.server.tourApiProject.observation.Observation;
+import com.server.tourApiProject.observation.ObservationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,32 +16,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ObserveImageService {
     private final ObserveImageRepository observeImageRepository;
-    private final PostRepository postRepository;
+    private final ObservationRepository observationRepository;
 
-
-    public List<String> getPostImage(Long postId) {
-        List<String> postImageNameList =new ArrayList<>();
-        List<ObserveImage> observeImageList = observeImageRepository.findByPostId(postId);
+    public List<String> getObserveImage(Long observationId) {
+        List<String> observeImagePathList =new ArrayList<>();
+        List<ObserveImage> observeImageList = observeImageRepository.findByObservationId(observationId);
         for(ObserveImage p : observeImageList) {
-            postImageNameList.add(p.getImageName());
+            observeImagePathList.add(p.getImage());
         }
-        return postImageNameList;
-    }
-    public String getPostImageName(Long postImageListId){
-        ObserveImage observeImage = observeImageRepository.findByPostImageListId(postImageListId);
-        return observeImage.getImageName();
+        return observeImagePathList;
     }
 
-    public void createPostImage(String postContent,List<ObserveImageParams> observeImageParams) {
-        Post post = postRepository.findByPostContent(postContent);
-        Long postId = post.getPostId();
-        for (ObserveImageParams p : observeImageParams) {
-            ObserveImage observeImage = new ObserveImage();
-            observeImage.setImageName(p.getImageName());
-            observeImage.setPost(post);
-            observeImage.setPostId(postId);
 
-            observeImageRepository.save(observeImage);
-        }
-    }
+
 }

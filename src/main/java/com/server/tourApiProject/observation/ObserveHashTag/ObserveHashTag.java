@@ -2,7 +2,6 @@ package com.server.tourApiProject.observation.ObserveHashTag;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.tourApiProject.observation.Observation;
-import com.server.tourApiProject.user.User;
 import lombok.*;
 
 import javax.persistence.*;
