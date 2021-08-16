@@ -1,5 +1,7 @@
 package com.server.tourApiProject.observation;
 
+import com.server.tourApiProject.observation.ObserveHashTag.ObserveHashTagService;
+import com.server.tourApiProject.observation.ObserveImage.ObserveImageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -9,20 +11,40 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
-@Api(tags = {"2.5 관측지"})
+@Api(tags = {"4.1 관측지"})
 @RestController
 @RequestMapping(value = "/v1")
 @RequiredArgsConstructor
 public class ObservationController {
     private final ObservationService observationService;
+    private final ObserveHashTagService observeHashTagService;
+    private final ObserveImageService observeImageService;
 
     @ApiOperation(value = "모든 관측지 조회", notes = "모든 관측지를 조회한다")
-    @GetMapping(value = "observePoints")
-    public List<Observation> getObservePoint(){ return observationService.getAllObservePoint(); }
+    @GetMapping(value = "observations")
+    public List<Observation> getAllObservation(){ return observationService.getAllObservation(); }
 
     @ApiOperation(value = "관측지 입력", notes = "관측지 정보를 입력한다")
-    @PostMapping(value = "observePoint")
-    public void createObserveFit(@RequestBody Observation observation){
-        observationService.createObservePoint(observation);
+    @PostMapping(value = "observation")
+    public void createObservation(@RequestBody ObservationParams observationParams){
+        observationService.createObservation(observationParams);
     }
+
+    @ApiOperation(value = "관측지 조회", notes = "관측지 id로 관측지를 조회한다")
+    @GetMapping(value = "observation/{observationId}")
+    public Observation getObservation(@PathVariable("observationId") Long observationId){ return observationService.getObservation(observationId); }
+
+    @ApiOperation(value = "관측지 이미지 경로", notes = "관측지 이미지경로를 id로 조회한다")
+    @GetMapping(value = "observation/{observationId}/observeImage")
+    public List<String> getObserveImagePath(@PathVariable("observationId") Long observationId){
+        return observeImageService.getObserveImage(observationId);
+    }
+
+    @ApiOperation(value = "관측지 해쉬태그 조회 ", notes = "관측지id로 해쉬태그를 조회한다")
+    @GetMapping(value = "observeHashTag/{observationId}/observeHashTag")
+    public List<String> getObserveHashTags(@PathVariable("observationId") Long observationId){
+        return observeHashTagService.getObserveHashTag(observationId);
+    }
+
+
 }
