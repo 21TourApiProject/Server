@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -16,8 +18,13 @@ public class TouristDataService {
     private final TouristDataRepository touristDataRepository;
     private final ContentTypeRepository contentTypeRepository;
 
-    public void createTouristData(TouristData touristData) {
+    public List<Double> createTouristData(TouristData touristData) {
         touristDataRepository.save(touristData);
+
+        List<Double> result = new ArrayList<>();
+        result.add(touristData.getMapX());
+        result.add(touristData.getMapY());
+        return result;
     }
 
     public Long getContentType(Long contentId) {

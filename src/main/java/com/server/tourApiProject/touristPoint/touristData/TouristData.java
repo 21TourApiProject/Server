@@ -1,8 +1,13 @@
 package com.server.tourApiProject.touristPoint.touristData;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.server.tourApiProject.bigPost.post.Post;
+import com.server.tourApiProject.touristPoint.nearTouristData.NearTouristData;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @Getter
@@ -106,5 +111,9 @@ public class TouristData {
 
     @Column
     private String parkingFood; //주차시설(음식)
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "touristData", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<NearTouristData> myNearTouristData = new ArrayList<>();
 
 }
