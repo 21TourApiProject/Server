@@ -1,6 +1,5 @@
-package com.server.tourApiProject.observation.ObserveImage;
+package com.server.tourApiProject.observation.observeImage;
 
-import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.ObservationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

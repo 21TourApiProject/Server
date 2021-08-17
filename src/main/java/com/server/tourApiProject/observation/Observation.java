@@ -1,7 +1,7 @@
 package com.server.tourApiProject.observation;
 
-import com.server.tourApiProject.observation.ObserveHashTag.ObserveHashTag;
-import com.server.tourApiProject.observation.ObserveImage.ObserveImage;
+import com.server.tourApiProject.observation.observeHashTag.ObserveHashTag;
+import com.server.tourApiProject.observation.observeImage.ObserveImage;
 import lombok.*;
 
 import javax.persistence.*;
@@ -36,7 +36,7 @@ public class Observation {
     private String address;
 
     @Column
-    private String phoneNumber;
+    private String phoneNumber; //문의
 
     @Column
     private String operatingHour;
@@ -58,6 +58,12 @@ public class Observation {
 
     @Column
     private String outline; //개요
+
+    @Column
+    private String guide;   //이용안내
+
+    @Column
+    private String closedDay;   //휴무일
 
     @OneToMany(mappedBy = "observation")
     private List<ObserveHashTag> observeHashTags=new ArrayList<>();
