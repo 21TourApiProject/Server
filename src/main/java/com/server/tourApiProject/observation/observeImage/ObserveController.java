@@ -1,4 +1,4 @@
-package com.server.tourApiProject.observation.ObserveHashTag;
+package com.server.tourApiProject.observation.observeImage;
 
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@Api(tags = {"4.2 관측지 해시태그"})
+@Api(tags = {"4.3 관측지 이미지"})
 @RestController
 @RequestMapping(value = "/v1")
 @RequiredArgsConstructor
-public class ObserveHashTagController {
-    private final ObserveHashTagService observeHashTagService;
+public class ObserveController {
+    private final ObserveImageService observeImageService;
 
 
 }
