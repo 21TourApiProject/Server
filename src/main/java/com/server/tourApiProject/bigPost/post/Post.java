@@ -28,8 +28,11 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
-    @Column(length = 1000,nullable = false, unique = true)
+    @Column(length = 1000,nullable = false)
     private String postContent;
+
+    @Column(length = 1000,nullable = false)
+    private String postTitle;
 
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")

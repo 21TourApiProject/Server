@@ -26,11 +26,12 @@ public class PostService {
         return post;
     }
 
-    public void createPost(String observePointName, PostParams postParams) {
+    public Long createPost(String observePointName, PostParams postParams) {
         Post post = new Post();
         PostObservePoint postObservePoint = postObservePointRepository.findByObservePointName(observePointName);
         Long postObservePointId = postObservePoint.getPostObservePointId();
         post.setPostContent(postParams.getPostContent());
+        post.setPostTitle(postParams.getPostTitle());
         post.setYearDate(postParams.getYearDate());
         post.setTime(postParams.getTime());
         post.setUser(userRepository.findById(postParams.getUserId()).orElseThrow(IllegalAccessError::new));
@@ -38,6 +39,8 @@ public class PostService {
         post.setPostObservePoint(postObservePoint);
         post.setPostObservePointId(postObservePointId);
         postRepository.save(post);
+        Long postId = post.getPostId();
+        return postId;
     }
 
 

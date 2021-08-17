@@ -17,8 +17,5 @@ public class PostObservePoint {
     private Long postObservePointId;
 
     @Column(nullable = false)
-    private Long observePointId;
-
-    @Column(nullable = false)
     private String observePointName;
 }
