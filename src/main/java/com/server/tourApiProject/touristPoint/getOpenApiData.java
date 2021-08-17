@@ -1,7 +1,6 @@
 package com.server.tourApiProject.touristPoint;
 
 import com.server.tourApiProject.touristPoint.area.AreaController;
-import com.server.tourApiProject.touristPoint.area.AreaParams;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeController;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeParams;
 import com.server.tourApiProject.touristPoint.touristData.TouristData;
