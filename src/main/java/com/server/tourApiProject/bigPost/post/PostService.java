@@ -39,8 +39,7 @@ public class PostService {
         post.setPostObservePoint(postObservePoint);
         post.setPostObservePointId(postObservePointId);
         postRepository.save(post);
-        Long postId = post.getPostId();
-        return postId;
+        return post.getPostId();
     }
 
 
