@@ -1,6 +1,8 @@
 package com.server.tourApiProject.touristPoint;
 
+import com.server.tourApiProject.DynamicScheduledConfig;
 import com.server.tourApiProject.touristPoint.area.AreaController;
+import com.server.tourApiProject.touristPoint.area.AreaParams;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeController;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeParams;
 import com.server.tourApiProject.touristPoint.nearTouristData.NearTouristDataController;
@@ -11,6 +13,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.scheduling.Trigger;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -19,6 +24,7 @@ import java.net.URL;
 import java.util.List;
 
 //서버가 초기화된후 바로 실행되는 코드
+
 @Component
 public class getOpenApiData implements org.springframework.boot.ApplicationRunner {
 
@@ -31,52 +37,59 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
     @Autowired
     private NearTouristDataController nearTouristDataController;
 
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        DynamicScheduledConfig scheduledConfig = new DynamicScheduledConfig() {
+            @Override
+            public void runner() {
+                System.out.println("2분 마다 실행");
+                contentTypeController.deleteContentType();
+                touristDataController.deleteTouristData();
 
-//        //지역
-//        JSONArray area_list = getJson("/areaCode", "");
-//        for (Object o1 : area_list) {
-//            JSONObject item1 = (JSONObject) o1;
-//            Long code1 = (Long) item1.get("code");
-//            String name1 = (String) item1.get("name");
+//                //지역
+//                JSONArray area_list = getJson("/areaCode", "", true);
+//                for (Object o1 : area_list) {
+//                    JSONObject item1 = (JSONObject) o1;
+//                    Long code1 = (Long) item1.get("code");
+//                    String name1 = (String) item1.get("name");
 //
-//            JSONArray sigungu_list = getJson("/areaCode", "&areaCode=" + code1);
-//            for (Object o2 : sigungu_list) {
-//                JSONObject item2 = (JSONObject) o2;
-//                Long code2 = (Long) item2.get("code");
-//                String name2 = (String) item2.get("name");
+//                    JSONArray sigungu_list = getJson("/areaCode", "&areaCode=" + code1, true);
+//                    for (Object o2 : sigungu_list) {
+//                        JSONObject item2 = (JSONObject) o2;
+//                        Long code2 = (Long) item2.get("code");
+//                        String name2 = (String) item2.get("name");
 //
-//                AreaParams areaParams = new AreaParams(code1, name1, code2, name2);
-//                areaController.createArea(areaParams);
-//            }
-//        }
-//
-//
-        //서비스 분류 - 관광지
-        JSONArray cat1_list1 = getJson("/categoryCode", "&contentTypeId=12", true);
-        for (Object o1 : cat1_list1) {
-            JSONObject item1 = (JSONObject) o1;
-            String code1 = (String) item1.get("code");
-            String name1 = (String) item1.get("name");
+//                        AreaParams areaParams = new AreaParams(code1, name1, code2, name2);
+//                        areaController.createArea(areaParams);
+//                    }
+//                }
 
-            JSONArray cat2_list1 = getJson("/categoryCode", "&cat1=" + code1 + "&contentTypeId=12", true);
-            for (Object o2 : cat2_list1) {
-                JSONObject item2 = (JSONObject) o2;
-                String code2 = (String) item2.get("code");
-                String name2 = (String) item2.get("name");
 
-                JSONArray cat3_list1 = getJson("/categoryCode", "&cat1=" + code1 + "&cat2=" + code2 + "&contentTypeId=12", true);
-                for (Object o3 : cat3_list1) {
-                    JSONObject item3 = (JSONObject) o3;
-                    String code3 = (String) item3.get("code");
-                    String name3 = (String) item3.get("name");
+                //서비스 분류 - 관광지
+                JSONArray cat1_list1 = getJson("/categoryCode", "&contentTypeId=12", true);
+                for (Object o1 : cat1_list1) {
+                    JSONObject item1 = (JSONObject) o1;
+                    String code1 = (String) item1.get("code");
+                    String name1 = (String) item1.get("name");
 
-                    ContentTypeParams contentTypeParams = new ContentTypeParams(code1, name1, code2, name2, code3, name3);
-                    contentTypeController.createContentType1(contentTypeParams);
+                    JSONArray cat2_list1 = getJson("/categoryCode", "&cat1=" + code1 + "&contentTypeId=12", true);
+                    for (Object o2 : cat2_list1) {
+                        JSONObject item2 = (JSONObject) o2;
+                        String code2 = (String) item2.get("code");
+                        String name2 = (String) item2.get("name");
+
+                        JSONArray cat3_list1 = getJson("/categoryCode", "&cat1=" + code1 + "&cat2=" + code2 + "&contentTypeId=12", true);
+                        for (Object o3 : cat3_list1) {
+                            JSONObject item3 = (JSONObject) o3;
+                            String code3 = (String) item3.get("code");
+                            String name3 = (String) item3.get("name");
+
+                            ContentTypeParams contentTypeParams = new ContentTypeParams(code1, name1, code2, name2, code3, name3);
+                            contentTypeController.createContentType1(contentTypeParams);
+                        }
+                    }
                 }
-            }
-        }
 //
 //        //서비스 분류 - 음식
 //        JSONArray cat1_list2 = getJson("/categoryCode", "&contentTypeId=39", true);
@@ -103,74 +116,83 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
 //            }
 //        }
 
-        int num = 0;
+                int num = 0;
 
-        //관광지
-        JSONArray tour_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=12", true); //관광 정보
-        for (Object o : tour_list) {
-            if (num > 1){
-                break;
+                //관광지
+                JSONArray tour_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=12", true); //관광 정보
+                for (Object o : tour_list) {
+                    if (num > 1) {
+                        break;
+                    }
+                    num += 1;
+                    JSONObject item = (JSONObject) o;
+                    TouristData touristData = getTouristData(item);
+                    Long contentId = (Long) item.get("contentid"); //컨텐츠ID
+
+                    JSONArray comm_list = getJson("/detailCommon", "&defaultYN=Y&overviewYN=Y&contentId=" + contentId, true); //공통 정보
+                    JSONObject comm = (JSONObject) comm_list.get(0);
+                    touristData.setHomePage((String) comm.get("homepage"));
+                    touristData.setOverview((String) comm.get("overview"));
+
+                    JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=12&contentId=" + contentId, true); //소개 정보
+                    JSONObject intro = (JSONObject) intro_list.get(0);
+                    touristData.setUseTime((String) intro.get("usetime"));
+                    touristData.setRestDate((String) intro.get("restdate"));
+                    touristData.setExpGuide((String) intro.get("expguide"));
+                    touristData.setParking((String) intro.get("parking"));
+                    touristData.setChkPet((String) intro.get("chkpet"));
+
+                    List<Double> xny = touristDataController.createTouristData(touristData);
+
+//                    String part2 = "&mapX=" + Double.toString(xny.get(0)) + "&mapY=" + Double.toString(xny.get(1)) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=12";
+//                    JSONArray near_list = getJson("/locationBasedList", part2, false); //주변 정보
+//                    for (int i = 1; i < 4; i++) {
+//                        JSONObject near = (JSONObject) near_list.get(i);
+//                        nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
+//                    }
+
+                }
+                int num2 = 0;
+
+                //음식
+                JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=39", true); //관광 정보
+                for (Object o : food_list) {
+                    if (num2 > 1) {
+                        break;
+                    }
+                    num2 += 1;
+                    JSONObject item = (JSONObject) o;
+                    TouristData touristData = getTouristData(item);
+                    Long contentId = (Long) item.get("contentid"); //컨텐츠ID
+
+                    JSONArray comm_list = getJson("/detailCommon", "&overviewYN=Y&contentId=" + contentId, true); //공통 정보
+                    JSONObject comm = (JSONObject) comm_list.get(0);
+                    touristData.setOverview((String) comm.get("overview"));
+
+                    JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=39&contentId=" + contentId, true); //소개 정보
+                    JSONObject intro = (JSONObject) intro_list.get(0);
+                    touristData.setOpenTimeFood((String) intro.get("opentimefood"));
+                    touristData.setRestDateFood((String) intro.get("restdatefood"));
+                    touristData.setFirstMenu((String) intro.get("firstmenu"));
+                    touristData.setTreatMenu((String) intro.get("treatmenu"));
+                    touristData.setPacking((String) intro.get("packing"));
+                    touristData.setParkingFood((String) intro.get("parkingfood"));
+
+                    touristDataController.createTouristData(touristData);
+                }
+
             }
-            num += 1;
-            JSONObject item = (JSONObject) o;
-            TouristData touristData = getTouristData(item);
-            Long contentId = (Long) item.get("contentid"); //컨텐츠ID
 
-            JSONArray comm_list = getJson("/detailCommon", "&defaultYN=Y&overviewYN=Y&contentId=" + contentId, true); //공통 정보
-            JSONObject comm = (JSONObject) comm_list.get(0);
-            touristData.setHomePage((String) comm.get("homepage"));
-            touristData.setOverview((String) comm.get("overview"));
-
-            JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=12&contentId=" + contentId, true); //소개 정보
-            JSONObject intro = (JSONObject) intro_list.get(0);
-            touristData.setUseTime((String) intro.get("usetime"));
-            touristData.setRestDate((String) intro.get("restdate"));
-            touristData.setExpGuide((String) intro.get("expguide"));
-            touristData.setParking((String) intro.get("parking"));
-            touristData.setChkPet((String) intro.get("chkpet"));
-
-            List<Double> xny = touristDataController.createTouristData(touristData);
-
-            String part2 = "&mapX=" + Double.toString(xny.get(0)) + "&mapY=" + Double.toString(xny.get(1)) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=12";
-            JSONArray near_list = getJson("/locationBasedList", part2, false); //주변 정보
-            for(int i=1; i<4; i++){
-                JSONObject near = (JSONObject)near_list.get(i);
-                nearTouristDataController.createNearTouristData(contentId, (Long)near.get("contentid"));
+            @Override
+            public Trigger getTrigger() {
+                return new CronTrigger("0 0 17 * * ?");
             }
-
-        }
-        int num2 = 0;
-
-        //음식
-        JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=39", true); //관광 정보
-        for (Object o : food_list) {
-            if (num2 > 1){
-                break;
-            }
-            num2 += 1;
-            JSONObject item = (JSONObject) o;
-            TouristData touristData = getTouristData(item);
-            Long contentId = (Long) item.get("contentid"); //컨텐츠ID
-
-            JSONArray comm_list = getJson("/detailCommon", "&overviewYN=Y&contentId=" + contentId, true); //공통 정보
-            JSONObject comm = (JSONObject) comm_list.get(0);
-            touristData.setOverview((String) comm.get("overview"));
-
-            JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=39&contentId=" + contentId, true); //소개 정보
-            JSONObject intro = (JSONObject) intro_list.get(0);
-            touristData.setOpenTimeFood((String) intro.get("opentimefood"));
-            touristData.setRestDateFood((String) intro.get("restdatefood"));
-            touristData.setFirstMenu((String) intro.get("firstmenu"));
-            touristData.setTreatMenu((String) intro.get("treatmenu"));
-            touristData.setPacking((String) intro.get("packing"));
-            touristData.setParkingFood((String) intro.get("parkingfood"));
-
-            touristDataController.createTouristData(touristData);
-        }
+        };
+        scheduledConfig.startScheduler();
 
     }
 
-    private TouristData getTouristData(JSONObject item) {
+    public TouristData getTouristData(JSONObject item) {
         TouristData touristData = new TouristData();
 
         touristData.setAddr1((String) item.get("addr1"));

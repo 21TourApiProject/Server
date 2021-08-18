@@ -71,4 +71,7 @@ public class TouristDataService {
         return result;
     }
 
+    public void deleteTouristData() {
+        touristDataRepository.deleteAll();
+    }
 }

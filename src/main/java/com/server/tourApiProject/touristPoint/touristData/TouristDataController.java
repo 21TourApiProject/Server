@@ -24,6 +24,12 @@ public class TouristDataController {
         return touristDataService.createTouristData(touristData);
     }
 
+    @ApiOperation(value = "관광 정보 삭제", notes = "모든 관광 정보를 삭제한다")
+    @DeleteMapping(value = "touristData/")
+    public void deleteTouristData(){
+        touristDataService.deleteTouristData();
+    }
+
     @ApiOperation(value = "관광지 타입 조회", notes = "관광지 타입를 조회한다")
     @GetMapping(value = "touristData/contentType/{contentId}")
     public Long getContentType(@PathVariable("contentId") Long contentId){
