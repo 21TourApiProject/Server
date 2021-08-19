@@ -106,7 +106,7 @@ public class getOpenApiData2 implements org.springframework.boot.ApplicationRunn
 
             @Override
             public Trigger getTrigger() {
-                return new CronTrigger("0 0 3 * * ?");
+                return new CronTrigger("0 28 14 * * ?");
             }
         };
         scheduledConfig.startScheduler();

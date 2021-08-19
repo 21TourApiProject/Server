@@ -21,7 +21,7 @@ public class NearTouristDataController {
 
     @ApiOperation(value = "주변 관광지 정보 입력", notes = "주변 관광지 정보를 입력한다")
     @PostMapping(value = "nearTouristData/{contentId1}/{contentId2}")
-    public void createNearTouristData(@PathVariable("contentId") Long contentId1, @PathVariable("contentId") Long contentId2){
+    public void createNearTouristData(@PathVariable("contentId1") Long contentId1, @PathVariable("contentId2") Long contentId2){
         nearTouristDataService.createNearTouristData(contentId1, contentId2);
     }
 

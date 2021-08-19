@@ -21,7 +21,7 @@ public class NearTouristData {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "touristDataId", insertable = false, updatable=false)
+    @JoinColumn(name = "contentId", insertable = false, updatable=false)
     private TouristData touristData;
 
     @Column(nullable = false)
@@ -36,10 +36,15 @@ public class NearTouristData {
     @Column
     private String title; //제목
 
-    @Column(length = 50000)
-    private String overviewSimple; //개요 한줄
+    @Column
+    private String addr1; //주소
 
     @Column
     private String cat3Name; //소분류 이름
+
+    @Column(length = 50000)
+    private String overviewSimple; //개요 한줄
+
+
 
 }

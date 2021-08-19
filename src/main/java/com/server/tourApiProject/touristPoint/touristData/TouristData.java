@@ -1,7 +1,6 @@
 package com.server.tourApiProject.touristPoint.touristData;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.server.tourApiProject.bigPost.post.Post;
 import com.server.tourApiProject.touristPoint.nearTouristData.NearTouristData;
 import lombok.*;
 
@@ -18,9 +17,9 @@ import java.util.List;
 @Table(name="touristData")
 public class TouristData {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long touristDataId;
+
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long touristDataId;
 
     @Column
     private String addr1; //주소
@@ -43,7 +42,7 @@ public class TouristData {
     @Column
     private String cat3; //소분류 코드
 
-    @Column(nullable = false, unique = true)
+    @Id
     private Long contentId; //콘텐츠 ID
 
     @Column(nullable = false)
