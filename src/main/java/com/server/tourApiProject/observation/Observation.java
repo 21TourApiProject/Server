@@ -24,7 +24,7 @@ public class Observation {
     private String observationName;
 
     @Column
-    private String Link;
+    private String link;
 
     @Column(nullable = false)
     private double latitude;    //지도를 위한 위도
