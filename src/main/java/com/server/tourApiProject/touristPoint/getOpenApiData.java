@@ -14,7 +14,6 @@ import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.scheduling.Trigger;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
 
@@ -22,8 +21,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
-
-//서버가 초기화된후 바로 실행되는 코드
 
 @Component
 public class getOpenApiData implements org.springframework.boot.ApplicationRunner {
@@ -43,7 +40,7 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
         DynamicScheduledConfig scheduledConfig = new DynamicScheduledConfig() {
             @Override
             public void runner() {
-                System.out.println("2분 마다 실행");
+                System.out.println("매일 03시마다 실행");
                 contentTypeController.deleteContentType();
                 touristDataController.deleteTouristData();
 
@@ -185,7 +182,7 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
 
             @Override
             public Trigger getTrigger() {
-                return new CronTrigger("0 0 17 * * ?");
+                return new CronTrigger("0 0 3 * * ?");
             }
         };
         scheduledConfig.startScheduler();
