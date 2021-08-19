@@ -1,10 +1,6 @@
 package com.server.tourApiProject.touristPoint;
 
 import com.server.tourApiProject.DynamicScheduledConfig;
-import com.server.tourApiProject.touristPoint.area.AreaController;
-import com.server.tourApiProject.touristPoint.area.AreaParams;
-import com.server.tourApiProject.touristPoint.contentType.ContentTypeController;
-import com.server.tourApiProject.touristPoint.contentType.ContentTypeParams;
 import com.server.tourApiProject.touristPoint.nearTouristData.NearTouristDataController;
 import com.server.tourApiProject.touristPoint.touristData.TouristData;
 import com.server.tourApiProject.touristPoint.touristData.TouristDataController;
@@ -13,6 +9,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
@@ -22,13 +19,10 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 
+@Order(2)
 @Component
-public class getOpenApiData implements org.springframework.boot.ApplicationRunner {
+public class getOpenApiData2 implements org.springframework.boot.ApplicationRunner {
 
-    @Autowired
-    private AreaController areaController;
-    @Autowired
-    private ContentTypeController contentTypeController;
     @Autowired
     private TouristDataController touristDataController;
     @Autowired
@@ -41,77 +35,7 @@ public class getOpenApiData implements org.springframework.boot.ApplicationRunne
             @Override
             public void runner() {
                 System.out.println("매일 03시마다 실행");
-                contentTypeController.deleteContentType();
                 touristDataController.deleteTouristData();
-
-//                //지역
-//                JSONArray area_list = getJson("/areaCode", "", true);
-//                for (Object o1 : area_list) {
-//                    JSONObject item1 = (JSONObject) o1;
-//                    Long code1 = (Long) item1.get("code");
-//                    String name1 = (String) item1.get("name");
-//
-//                    JSONArray sigungu_list = getJson("/areaCode", "&areaCode=" + code1, true);
-//                    for (Object o2 : sigungu_list) {
-//                        JSONObject item2 = (JSONObject) o2;
-//                        Long code2 = (Long) item2.get("code");
-//                        String name2 = (String) item2.get("name");
-//
-//                        AreaParams areaParams = new AreaParams(code1, name1, code2, name2);
-//                        areaController.createArea(areaParams);
-//                    }
-//                }
-
-
-                //서비스 분류 - 관광지
-                JSONArray cat1_list1 = getJson("/categoryCode", "&contentTypeId=12", true);
-                for (Object o1 : cat1_list1) {
-                    JSONObject item1 = (JSONObject) o1;
-                    String code1 = (String) item1.get("code");
-                    String name1 = (String) item1.get("name");
-
-                    JSONArray cat2_list1 = getJson("/categoryCode", "&cat1=" + code1 + "&contentTypeId=12", true);
-                    for (Object o2 : cat2_list1) {
-                        JSONObject item2 = (JSONObject) o2;
-                        String code2 = (String) item2.get("code");
-                        String name2 = (String) item2.get("name");
-
-                        JSONArray cat3_list1 = getJson("/categoryCode", "&cat1=" + code1 + "&cat2=" + code2 + "&contentTypeId=12", true);
-                        for (Object o3 : cat3_list1) {
-                            JSONObject item3 = (JSONObject) o3;
-                            String code3 = (String) item3.get("code");
-                            String name3 = (String) item3.get("name");
-
-                            ContentTypeParams contentTypeParams = new ContentTypeParams(code1, name1, code2, name2, code3, name3);
-                            contentTypeController.createContentType1(contentTypeParams);
-                        }
-                    }
-                }
-//
-//        //서비스 분류 - 음식
-//        JSONArray cat1_list2 = getJson("/categoryCode", "&contentTypeId=39", true);
-//        for (Object o1 : cat1_list2) {
-//            JSONObject item1 = (JSONObject) o1;
-//            String code1 = (String) item1.get("code");
-//            String name1 = (String) item1.get("name");
-//
-//            JSONArray cat2_list2 = getJson("/categoryCode", "&cat1=" + code1 + "&contentTypeId=39", true);
-//            for (Object o2 : cat2_list2) {
-//                JSONObject item2 = (JSONObject) o2;
-//                String code2 = (String) item2.get("code");
-//                String name2 = (String) item2.get("name");
-//
-//                JSONArray cat3_list2 = getJson("/categoryCode", "&cat1=" + code1 + "&cat2=" + code2 + "&contentTypeId=39", true);
-//                for (Object o3 : cat3_list2) {
-//                    JSONObject item3 = (JSONObject) o3;
-//                    String code3 = (String) item3.get("code");
-//                    String name3 = (String) item3.get("name");
-//
-//                    ContentTypeParams contentTypeParams = new ContentTypeParams(code1, name1, code2, name2, code3, name3);
-//                    contentTypeController.createContentType2(contentTypeParams);
-//                }
-//            }
-//        }
 
                 int num = 0;
 
