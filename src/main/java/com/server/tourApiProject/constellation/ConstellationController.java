@@ -32,7 +32,7 @@ public class ConstellationController {
 
     @ApiOperation(value = "당일 날짜에 보이는 별자리 조회", notes = "당일 날짜에 보이는 별자리를 조회한다")
     @GetMapping(value = "constellation/todayConst")
-    public List<Constellation> getTodayConst(){
+    public List<ConstellationParams> getTodayConst(){
         return constellationService.getTodayConst();
     }
 

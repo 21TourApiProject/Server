@@ -29,10 +29,21 @@ public class ConstellationService {
         constellationRepository.save(constellation);
     }
 
-    public List<Constellation> getTodayConst() {
+    public List<ConstellationParams> getTodayConst() {
+        List<ConstellationParams> result= new ArrayList<>();
         LocalDate currentDate = LocalDate.now();
         List<Constellation> list = constellationRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqual(currentDate, currentDate);
-        return list;
+
+        for(Constellation cl : list){
+            Constellation constellation = constellationRepository.findById(cl.getConstId()).orElseThrow(IllegalAccessError::new);
+
+            ConstellationParams params = new ConstellationParams();
+            params.setConstId(constellation.getConstId());
+            params.setConstImage(constellation.getConstImage());
+            params.setConstName(constellation.getConstName());
+            result.add(params);
+        }
+        return result;
     }
 }
 
