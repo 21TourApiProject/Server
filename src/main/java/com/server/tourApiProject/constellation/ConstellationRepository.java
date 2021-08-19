@@ -8,7 +8,8 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface ConstellationRepository extends JpaRepository<Constellation, LocalDate> {
+public interface ConstellationRepository extends JpaRepository<Constellation, Long> {
     List<Constellation> findByStartDateLessThanEqualAndEndDateGreaterThanEqual(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    List<Constellation> findByConstId(@Param("constId") Long constId);
 }
 
