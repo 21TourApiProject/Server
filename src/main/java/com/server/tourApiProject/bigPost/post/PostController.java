@@ -33,8 +33,8 @@ public class PostController {
 
     @ApiOperation(value = "게시물정보 입력", notes = "게시물 정보를 입력한다")
     @PostMapping(value = "post/{observePointName}")
-    public void createPost(@PathVariable("observePointName") String observePointName,@RequestBody PostParams postParams) {
-        postService.createPost(observePointName,postParams);
+    public Long createPost(@PathVariable("observePointName") String observePointName,@RequestBody PostParams postParams) {
+        return postService.createPost(observePointName,postParams);
     }
 
     @ApiOperation(value = "게시물 해시태그 조회", notes = "게시물 id로 해당 게시물의 게시물 해시태그를 조회한다")

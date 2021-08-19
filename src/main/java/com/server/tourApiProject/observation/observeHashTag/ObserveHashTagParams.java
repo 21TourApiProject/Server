@@ -1,4 +1,4 @@
-package com.server.tourApiProject.observation.ObserveHashTag;
+package com.server.tourApiProject.observation.observeHashTag;
 
 import lombok.*;
 

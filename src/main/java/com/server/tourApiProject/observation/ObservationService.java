@@ -2,9 +2,9 @@ package com.server.tourApiProject.observation;
 
 import com.server.tourApiProject.hashTag.HashTag;
 import com.server.tourApiProject.hashTag.HashTagRepository;
-import com.server.tourApiProject.observation.ObserveHashTag.ObserveHashTag;
-import com.server.tourApiProject.observation.ObserveHashTag.ObserveHashTagParams;
-import com.server.tourApiProject.observation.ObserveHashTag.ObserveHashTagRepository;
+import com.server.tourApiProject.observation.observeHashTag.ObserveHashTag;
+import com.server.tourApiProject.observation.observeHashTag.ObserveHashTagParams;
+import com.server.tourApiProject.observation.observeHashTag.ObserveHashTagRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
