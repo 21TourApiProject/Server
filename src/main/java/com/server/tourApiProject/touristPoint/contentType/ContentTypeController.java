@@ -26,4 +26,10 @@ public class ContentTypeController {
     public void createContentType2(@RequestBody ContentTypeParams contentTypeParams){
         contentTypeService.createContentType2(contentTypeParams);
     }
+
+    @ApiOperation(value = "서비스 정보 삭제", notes = "모든 서비스 정보를 삭제한다")
+    @DeleteMapping(value = "contentType/")
+    public void deleteContentType(){
+        contentTypeService.deleteContentType();
+    }
 }

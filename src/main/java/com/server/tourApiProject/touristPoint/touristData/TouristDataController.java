@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @Api(tags = {"5.3 관광지-관광 정보"})
 @RestController
@@ -18,8 +20,14 @@ public class TouristDataController {
 
     @ApiOperation(value = "관광 정보 입력", notes = "관광 정보를 입력한다")
     @PostMapping(value = "touristData/touristSpot")
-    public void createTouristData(@RequestBody TouristData touristData){
-        touristDataService.createTouristData(touristData);
+    public List<Double> createTouristData(@RequestBody TouristData touristData){
+        return touristDataService.createTouristData(touristData);
+    }
+
+    @ApiOperation(value = "관광 정보 삭제", notes = "모든 관광 정보를 삭제한다")
+    @DeleteMapping(value = "touristData/")
+    public void deleteTouristData(){
+        touristDataService.deleteTouristData();
     }
 
     @ApiOperation(value = "관광지 타입 조회", notes = "관광지 타입를 조회한다")

@@ -39,4 +39,8 @@ public class ContentTypeService {
         contentType.setCat3Name(contentTypeParams.getName3());
         contentTypeRepository.save(contentType);
     }
+
+    public void deleteContentType() {
+        contentTypeRepository.deleteAll();
+    }
 }
