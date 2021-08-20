@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+//일단 readTouristDataExcel함수 복사 붙여넣기하고 함수명 수정, 아까 action에 쓴 url로 수정 그리고 for문 안에 내용 수정하면 됨
 @Controller
 public class ExcelController {
     private final TouristDataService touristDataService;
@@ -32,7 +33,7 @@ public class ExcelController {
 
 
     @PostMapping("/excel/touristData/read")
-    public String readExcel(@RequestParam("file") MultipartFile file, Model model)
+    public String readTouristDataExcel(@RequestParam("file") MultipartFile file, Model model)
             throws IOException {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         if (!extension.equals("xlsx") && !extension.equals("xls")) {
