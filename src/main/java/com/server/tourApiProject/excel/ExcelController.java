@@ -25,13 +25,13 @@ public class ExcelController {
         this.touristDataService = touristDataService;
     }
 
-    @GetMapping("/excel")
+    @GetMapping("/excel/touristData")
     public String main() {
         return "excel";
     }
 
 
-    @PostMapping("/excel/read")
+    @PostMapping("/excel/touristData/read")
     public String readExcel(@RequestParam("file") MultipartFile file, Model model)
             throws IOException {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
