@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -39,7 +40,19 @@ public class NearTouristDataService {
         nearTouristDataRepository.save(nearTouristData);
     }
 
-    public List<NearTouristData> getNearTouristData(Long contentId) {
-        return nearTouristDataRepository.findByTouristDataId(contentId);
+    public List<NearTouristDataParams> getNearTouristData(Long contentId) {
+        List<NearTouristData> dataList = nearTouristDataRepository.findByTouristDataId(contentId);
+        List<NearTouristDataParams> result = new ArrayList<>();
+        for (NearTouristData data : dataList){
+            NearTouristDataParams param = new NearTouristDataParams();
+            param.setContentId(data.getContentId());
+            param.setFirstImage(data.getFirstImage());
+            param.setTitle(data.getTitle());
+            param.setAddr1(data.getAddr1());
+            param.setCat3Name(data.getCat3Name());
+            param.setOverviewSimple(data.getOverviewSimple());
+            result.add(param);
+        }
+        return result;
     }
 }

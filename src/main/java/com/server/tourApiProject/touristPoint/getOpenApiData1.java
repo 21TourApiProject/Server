@@ -28,23 +28,23 @@ public class getOpenApiData1 implements org.springframework.boot.ApplicationRunn
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-//        //지역
-//        JSONArray area_list = getJson("/areaCode", "");
-//        for (Object o1 : area_list) {
-//            JSONObject item1 = (JSONObject) o1;
-//            Long code1 = (Long) item1.get("code");
-//            String name1 = (String) item1.get("name");
-//
-//            JSONArray sigungu_list = getJson("/areaCode", "&areaCode=" + code1);
-//            for (Object o2 : sigungu_list) {
-//                JSONObject item2 = (JSONObject) o2;
-//                Long code2 = (Long) item2.get("code");
-//                String name2 = (String) item2.get("name");
-//
-//                AreaParams areaParams = new AreaParams(code1, name1, code2, name2);
-//                areaController.createArea(areaParams);
-//            }
-//        }
+        //지역
+        JSONArray area_list = getJson("/areaCode", "");
+        for (Object o1 : area_list) {
+            JSONObject item1 = (JSONObject) o1;
+            Long code1 = (Long) item1.get("code");
+            String name1 = (String) item1.get("name");
+
+            JSONArray sigungu_list = getJson("/areaCode", "&areaCode=" + code1);
+            for (Object o2 : sigungu_list) {
+                JSONObject item2 = (JSONObject) o2;
+                Long code2 = (Long) item2.get("code");
+                String name2 = (String) item2.get("name");
+
+                AreaParams areaParams = new AreaParams(code1, name1, code2, name2);
+                areaController.createArea(areaParams);
+            }
+        }
 
 
         //서비스 분류 - 관광지
@@ -72,30 +72,30 @@ public class getOpenApiData1 implements org.springframework.boot.ApplicationRunn
             }
         }
 
-//        //서비스 분류 - 음식
-//        JSONArray cat1_list2 = getJson("/categoryCode", "&contentTypeId=39");
-//        for (Object o1 : cat1_list2) {
-//            JSONObject item1 = (JSONObject) o1;
-//            String code1 = (String) item1.get("code");
-//            String name1 = (String) item1.get("name");
-//
-//            JSONArray cat2_list2 = getJson("/categoryCode", "&cat1=" + code1 + "&contentTypeId=39");
-//            for (Object o2 : cat2_list2) {
-//                JSONObject item2 = (JSONObject) o2;
-//                String code2 = (String) item2.get("code");
-//                String name2 = (String) item2.get("name");
-//
-//                JSONArray cat3_list2 = getJson("/categoryCode", "&cat1=" + code1 + "&cat2=" + code2 + "&contentTypeId=39");
-//                for (Object o3 : cat3_list2) {
-//                    JSONObject item3 = (JSONObject) o3;
-//                    String code3 = (String) item3.get("code");
-//                    String name3 = (String) item3.get("name");
-//
-//                    ContentTypeParams contentTypeParams = new ContentTypeParams(code1, name1, code2, name2, code3, name3);
-//                    contentTypeController.createContentType2(contentTypeParams);
-//                }
-//            }
-//        }
+        //서비스 분류 - 음식
+        JSONArray cat1_list2 = getJson("/categoryCode", "&contentTypeId=39");
+        for (Object o1 : cat1_list2) {
+            JSONObject item1 = (JSONObject) o1;
+            String code1 = (String) item1.get("code");
+            String name1 = (String) item1.get("name");
+
+            JSONArray cat2_list2 = getJson("/categoryCode", "&cat1=" + code1 + "&contentTypeId=39");
+            for (Object o2 : cat2_list2) {
+                JSONObject item2 = (JSONObject) o2;
+                String code2 = (String) item2.get("code");
+                String name2 = (String) item2.get("name");
+
+                JSONArray cat3_list2 = getJson("/categoryCode", "&cat1=" + code1 + "&cat2=" + code2 + "&contentTypeId=39");
+                for (Object o3 : cat3_list2) {
+                    JSONObject item3 = (JSONObject) o3;
+                    String code3 = (String) item3.get("code");
+                    String name3 = (String) item3.get("name");
+
+                    ContentTypeParams contentTypeParams = new ContentTypeParams(code1, name1, code2, name2, code3, name3);
+                    contentTypeController.createContentType2(contentTypeParams);
+                }
+            }
+        }
     }
 
     //open api 호출해서 결과 리턴하는 함수

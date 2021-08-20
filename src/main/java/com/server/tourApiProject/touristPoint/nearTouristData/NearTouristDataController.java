@@ -27,7 +27,7 @@ public class NearTouristDataController {
 
     @ApiOperation(value = "주변 관광지 정보 조회", notes = "주변 관광지 정보를 조회한다")
     @GetMapping(value = "nearTouristData/{contentId}")
-    public List<NearTouristData> getNearTouristPointData(@PathVariable("contentId") Long contentId){
+    public List<NearTouristDataParams> getNearTouristPointData(@PathVariable("contentId") Long contentId){
         return nearTouristDataService.getNearTouristData(contentId);
     }
 }
