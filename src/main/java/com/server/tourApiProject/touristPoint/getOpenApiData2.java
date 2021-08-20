@@ -46,13 +46,13 @@ public class getOpenApiData2 implements org.springframework.boot.ApplicationRunn
                 int f = 0;
 
                 //관광지
-                JSONArray tour_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=12", false); //관광 정보
-                for (Object o : tour_list) {
-
-                    JSONObject item = (JSONObject) o;
-                    TouristData touristData = getTouristData(item);
-                    Long contentId = (Long) item.get("contentid"); //컨텐츠ID
-
+//                JSONArray tour_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=12", false); //관광 정보
+//                for (Object o : tour_list) {
+//
+//                    JSONObject item = (JSONObject) o;
+//                    TouristData touristData = getTouristData(item);
+//                    Long contentId = (Long) item.get("contentid"); //컨텐츠ID
+//
 //                    JSONArray comm_list = getJson("/detailCommon", "&defaultYN=Y&overviewYN=Y&contentId=" + contentId, false); //공통 정보
 //                    JSONObject comm = (JSONObject) comm_list.get(0);
 //
@@ -99,13 +99,13 @@ public class getOpenApiData2 implements org.springframework.boot.ApplicationRunn
 //                    } else{
 //                        touristData.setChkPet((String) intro.get("chkpet"));
 //                    }
-                    List<Double> xny = touristDataController.createTouristData(touristData);
-                    tourXY[t][0] = xny.get(0);
-                    tourXY[t][1] = xny.get(1);
-                    tourId[t] = contentId;
-                    t++;
-                    System.out.println("t = " + t);
-                }
+//                    List<Double> xny = touristDataController.createTouristData(touristData);
+//                    tourXY[t][0] = xny.get(0);
+//                    tourXY[t][1] = xny.get(1);
+//                    tourId[t] = contentId;
+//                    t++;
+//                    System.out.println("t = " + t);
+//                }
 
 //                for (int i = 0; i<9569; i++){
 //                    if (tourXY[i][0] != null){
@@ -198,7 +198,7 @@ public class getOpenApiData2 implements org.springframework.boot.ApplicationRunn
 
             @Override
             public Trigger getTrigger() {
-                return new CronTrigger("0 11 15 * * ?");
+                return new CronTrigger("0 28 16 * * ?");
             }
         };
         scheduledConfig.startScheduler();
