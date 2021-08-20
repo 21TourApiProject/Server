@@ -32,7 +32,7 @@ public class ExcelController {
 
 
     @PostMapping("/excel/read")
-    public void readExcel(@RequestParam("file") MultipartFile file, Model model)
+    public String readExcel(@RequestParam("file") MultipartFile file, Model model)
             throws IOException {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         if (!extension.equals("xlsx") && !extension.equals("xls")) {
@@ -82,5 +82,6 @@ public class ExcelController {
 
             touristDataService.createTouristData(data);
         }
+        return "excel";
     }
 }
