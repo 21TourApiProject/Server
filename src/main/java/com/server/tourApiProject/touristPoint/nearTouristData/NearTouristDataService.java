@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -30,15 +31,31 @@ public class NearTouristDataService {
         if (me.getFirstImage() != null){
             nearTouristData.setFirstImage(me.getFirstImage());
         }
-        if (me.getOverview() != null){
-            nearTouristData.setOverviewSimple(me.getOverview().substring(0,10)); //짧은 개요 나중에 제대로 수정
-        }
+
+        nearTouristData.setOverviewSimple("임시 짧은 개요");
+//        if (me.getOverview() != null){
+//            nearTouristData.setOverviewSimple(me.getOverview().substring(0,15)+"..."); //짧은 개요 나중에 제대로 수정
+//        }
+
         nearTouristData.setTitle(me.getTitle());
+        nearTouristData.setAddr1(me.getAddr1());
         nearTouristData.setCat3Name(contentTypeRepository.findByCat3Code(me.getCat3()).getCat3Name());
         nearTouristDataRepository.save(nearTouristData);
     }
 
-    public List<NearTouristData> getNearTouristData(Long contentId) {
-        return nearTouristDataRepository.findByTouristDataId(contentId);
+    public List<NearTouristDataParams> getNearTouristData(Long contentId) {
+        List<NearTouristData> dataList = nearTouristDataRepository.findByTouristDataId(contentId);
+        List<NearTouristDataParams> result = new ArrayList<>();
+        for (NearTouristData data : dataList){
+            NearTouristDataParams param = new NearTouristDataParams();
+            param.setContentId(data.getContentId());
+            param.setFirstImage(data.getFirstImage());
+            param.setTitle(data.getTitle());
+            param.setAddr1(data.getAddr1());
+            param.setCat3Name(data.getCat3Name());
+            param.setOverviewSimple(data.getOverviewSimple());
+            result.add(param);
+        }
+        return result;
     }
 }

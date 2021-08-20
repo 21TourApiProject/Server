@@ -21,13 +21,13 @@ public class NearTouristDataController {
 
     @ApiOperation(value = "주변 관광지 정보 입력", notes = "주변 관광지 정보를 입력한다")
     @PostMapping(value = "nearTouristData/{contentId1}/{contentId2}")
-    public void createNearTouristData(@PathVariable("contentId") Long contentId1, @PathVariable("contentId") Long contentId2){
+    public void createNearTouristData(@PathVariable("contentId1") Long contentId1, @PathVariable("contentId2") Long contentId2){
         nearTouristDataService.createNearTouristData(contentId1, contentId2);
     }
 
     @ApiOperation(value = "주변 관광지 정보 조회", notes = "주변 관광지 정보를 조회한다")
     @GetMapping(value = "nearTouristData/{contentId}")
-    public List<NearTouristData> getNearTouristPointData(@PathVariable("contentId") Long contentId){
+    public List<NearTouristDataParams> getNearTouristPointData(@PathVariable("contentId") Long contentId){
         return nearTouristDataService.getNearTouristData(contentId);
     }
 }

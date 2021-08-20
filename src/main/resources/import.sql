@@ -1,4 +1,4 @@
-    -- 초기화 스크립트, 매번 db구동시 변하지 않는 값을 등록
+-- 초기화 스크립트, 매번 db구동시 변하지 않는 값을 등록
 
 -- 사용자
    INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, MOBILE_PHONE_NUMBER, EMAIL, PASSWORD, NICK_NAME, SIGN_UP_DT) VALUES(1, '이세인', false, '2000-02-11', '01094069717', 'test1@gmail.com', 'dltpdls00*', '23in', '2021-08-01T15:41:20');
@@ -61,6 +61,7 @@
     INSERT INTO CONSTELLATION (CONST_ID, CONST_BEST_MONTH, CONST_IMAGE, CONST_NAME, CONST_PERSONALITY, CONST_STORY, SPRING_CONST_MTD, SUMMER_CONST_MTD, FALL_CONST_MTD, WINTER_CONST_MTD, START_DATE, END_DATE ) VALUES (2, '1,3월에 잘보임', 'www.image2', '양자리', '양자리 성격', '양자리 설화', '양자리 봄 관측법', '양자리 여름 관측법', '양자리 가을 관측법', '양자리 겨울 관측법', '2021-08-18', '2021-08-30');
     INSERT INTO CONSTELLATION (CONST_ID, CONST_BEST_MONTH, CONST_IMAGE, CONST_NAME, CONST_PERSONALITY, CONST_STORY, SPRING_CONST_MTD, SUMMER_CONST_MTD, FALL_CONST_MTD, WINTER_CONST_MTD, START_DATE, END_DATE ) VALUES (3, '1,3월에 잘보임', 'www.image3', '황소자리', '황소자리 성격', '황소자리 설화', '황소자리 봄 관측법', '황소자리 여름 관측법', '황소자리 가을 관측법', '황소자리 겨울 관측법', '2021-08-21', '2021-08-30');
     INSERT INTO CONSTELLATION (CONST_ID, CONST_BEST_MONTH, CONST_IMAGE, CONST_NAME, CONST_PERSONALITY, CONST_STORY, SPRING_CONST_MTD, SUMMER_CONST_MTD, FALL_CONST_MTD, WINTER_CONST_MTD, START_DATE, END_DATE ) VALUES (4, '1,3월에 잘보임', 'www.image4', '쌍둥이자리', '쌍둥이자리 성격', '쌍둥이자리 설화', '쌍둥이자리 봄 관측법', '쌍둥이자리 여름 관측법', '쌍둥이자리 가을 관측법', '물쌍둥이자리 겨울 관측법', '2021-08-13', '2021-08-14');
+
 
 
 

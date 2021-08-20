@@ -1,7 +1,6 @@
 package com.server.tourApiProject.touristPoint.touristData;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.server.tourApiProject.bigPost.post.Post;
 import com.server.tourApiProject.touristPoint.nearTouristData.NearTouristData;
 import lombok.*;
 
@@ -19,8 +18,7 @@ import java.util.List;
 public class TouristData {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long touristDataId;
+    private Long contentId; //콘텐츠 ID
 
     @Column
     private String addr1; //주소
@@ -43,9 +41,6 @@ public class TouristData {
     @Column
     private String cat3; //소분류 코드
 
-    @Column(nullable = false, unique = true)
-    private Long contentId; //콘텐츠 ID
-
     @Column(nullable = false)
     private Long contentTypeId; //콘텐츠타입 ID
 
@@ -62,16 +57,13 @@ public class TouristData {
     private Double mapY; //GPS Y좌표
 
     @Column
-    private Long readCount; //조회수
-
-    @Column
     private String tel; //전화번호
 
     @Column
     private String title; //제목
 
-    @Column
-    private Long zipcode; //우편번호
+//    @Column
+//    private Long zipcode; //우편번호
 
     @Column(length = 50000)
     private String overview; //개요
@@ -79,37 +71,37 @@ public class TouristData {
     @Column(length = 50000)
     private String homePage; //홈페이지(관광지)
 
-    @Column
+    @Column(length = 50000)
     private String useTime; //이용시간(관광지)
 
-    @Column
+    @Column(length = 50000)
     private String restDate; //휴무일(관광지)
 
     @Column(length = 50000)
     private String expGuide ; //체험안내(관광지)
 
-    @Column
+    @Column(length = 50000)
     private String parking; //주차시설(관광지)
 
-    @Column
+    @Column(length = 50000)
     private String chkPet; //반려동물(관광지)
 
-    @Column
+    @Column(length = 50000)
     private String openTimeFood; //영업시간(음식)
 
-    @Column
+    @Column(length = 50000)
     private String restDateFood; //휴무일(음식)
 
-    @Column
+    @Column(length = 50000)
     private String firstMenu; //대표메뉴(음식)
 
-    @Column
+    @Column(length = 50000)
     private String treatMenu; //취급메뉴(음식)
 
-    @Column
+    @Column(length = 50000)
     private String packing; //포장(음식)
 
-    @Column
+    @Column(length = 50000)
     private String parkingFood; //주차시설(음식)
 
     @JsonIgnore

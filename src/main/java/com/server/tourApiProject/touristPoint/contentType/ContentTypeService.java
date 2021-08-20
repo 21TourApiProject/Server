@@ -40,7 +40,4 @@ public class ContentTypeService {
         contentTypeRepository.save(contentType);
     }
 
-    public void deleteContentType() {
-        contentTypeRepository.deleteAll();
-    }
 }
