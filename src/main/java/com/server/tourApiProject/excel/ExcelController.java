@@ -26,7 +26,7 @@ public class ExcelController {
         this.touristDataService = touristDataService;
     }
 
-    @GetMapping("/excel/touristData")
+    @GetMapping("/excel")
     public String main() {
         return "excel";
     }
