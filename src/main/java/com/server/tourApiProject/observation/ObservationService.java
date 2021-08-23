@@ -35,8 +35,6 @@ public class ObservationService {
         observation.setPhoneNumber(observationParams.getPhoneNumber());
         observation.setOperatingHour(observationParams.getOperatingHour());
         observation.setParking(observationParams.getParking());
-        observation.setParkingImg(observationParams.getParkingImg());
-        observation.setIntro(observationParams.getIntro());
         observation.setObserveType(observationParams.getObserveType());
         observation.setOutline(observationParams.getOutline());
         observationRepository.save(observation);
