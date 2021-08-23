@@ -42,7 +42,8 @@
     INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(22, '럭셔리한');
 
 --관측지
-    INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, ENTRANCE_FEE, PARKING, PARKING_IMG, INTRO, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY ) VALUES (1, '천문대1', 'https://www.yao.or.kr:451/', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '6000원', '주차는 여기에', 'img url', '여기는 어쩌구의저쩌구한줄소개', '천문대', '개애요', '이용안내', '월요일' );
+    INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, ENTRANCE_FEE, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE ) VALUES (1, '천문대1', 'https://www.yao.or.kr:451/', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '6000원', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, false );
+    INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, ENTRANCE_FEE, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE ) VALUES (2, '천문대2', 'https://www.yao.or.kr:451/', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '6000원', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, true );
 --     INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME) VALUES (2, '천문대2');
 --     INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME) VALUES (3, '천문대3');
 --     INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME) VALUES (4, '천문대4');
