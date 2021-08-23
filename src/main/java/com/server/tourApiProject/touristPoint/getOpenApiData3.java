@@ -3,6 +3,7 @@ package com.server.tourApiProject.touristPoint;
 import com.server.tourApiProject.touristPoint.nearTouristData.NearTouristDataController;
 import com.server.tourApiProject.touristPoint.touristData.TouristData;
 import com.server.tourApiProject.touristPoint.touristData.TouristDataController;
+import com.server.tourApiProject.touristPoint.touristData.TouristDataRepository;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -16,16 +17,19 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 
-@Order(3)
+@Order(2)
 @Component
 public class getOpenApiData3 implements org.springframework.boot.ApplicationRunner {
 
     @Autowired
     private TouristDataController touristDataController;
     @Autowired
+    private TouristDataRepository touristDataRepository;
+    @Autowired
     private NearTouristDataController nearTouristDataController;
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        System.out.println("order3");
 
         Double [][] tourXY = new Double[9548][2];
         Long [] tourId = new Long[9548];
@@ -36,14 +40,10 @@ public class getOpenApiData3 implements org.springframework.boot.ApplicationRunn
         int f = 0;
 
         //관광지
-//        JSONArray tour_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=12", false); //관광 정보
-//        for (Object o : tour_list) {
-//            if(t<2000)
-//                continue;
+//        List<Long> touristPointId = touristDataController.getTouristPointId();
+//        for (Long contentId : touristPointId){
 //
-//            JSONObject item = (JSONObject) o;
-//            TouristData touristData = getTouristData(item);
-//            Long contentId = (Long) item.get("contentid"); //컨텐츠ID
+//            TouristData touristData = touristDataRepository.findByContentId(contentId);
 //
 //            JSONArray comm_list = getJson("/detailCommon", "&defaultYN=Y&overviewYN=Y&contentId=" + contentId, false); //공통 정보
 //            JSONObject comm = (JSONObject) comm_list.get(0);
@@ -70,13 +70,13 @@ public class getOpenApiData3 implements org.springframework.boot.ApplicationRunn
 //            JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=12&contentId=" + contentId, false); //소개 정보
 //            JSONObject intro = (JSONObject) intro_list.get(0);
 //
-//            tmp = (String) intro.get("usetime");
-//            if (tmp == null) {
-//                touristData.setUseTime(null);
-//            } else if (tmp.isEmpty()){
-//                touristData.setUseTime(null);
-//            }else{
-//                touristData.setUseTime(extractString(tmp));
+//            if (intro.get("usetime") != null) {
+//                if (intro.get("usetime").getClass().getName().equals("java.lang.String")){
+//                    touristData.setUseTime((String) intro.get("usetime"));
+//                }
+//                else if (intro.get("usetime").getClass().getName().equals("java.lang.Long")){
+//                    touristData.setUseTime(String.valueOf(intro.get("usetime")));
+//                }
 //            }
 //
 //            tmp = (String) intro.get("restdate");
@@ -114,15 +114,11 @@ public class getOpenApiData3 implements org.springframework.boot.ApplicationRunn
 //            }else{
 //                touristData.setChkPet(extractString(tmp));
 //            }
+//            touristData.setIsCom(1);
+//            touristDataRepository.save(touristData);
 //
-//            List<Double> xny = touristDataController.createTouristData(touristData);
-//            tourXY[t][0] = xny.get(0);
-//            tourXY[t][1] = xny.get(1);
-//            tourId[t] = contentId;
-//            t++;
-//            System.out.println("t = " + t);
 //        }
-//
+
 //        for (int i = 0; i<9548; i++){
 //            if (tourXY[i][0] != null){
 //                String part2 = "&mapX=" + Double.toString(tourXY[i][0]) + "&mapY=" + Double.toString(tourXY[i][1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=12";
@@ -255,124 +251,6 @@ public class getOpenApiData3 implements org.springframework.boot.ApplicationRunn
         overview = overview.replaceAll("\n"," ");
 
         return overview;
-    }
-
-    public TouristData getTouristData(JSONObject item) {
-        TouristData touristData = new TouristData();
-        String tmp;
-
-        tmp = (String) item.get("addr1");
-        if (tmp == null) {
-            touristData.setAddr1(null);
-        } else if (tmp.isEmpty()){
-            touristData.setAddr1(null);
-        }else{
-            touristData.setAddr1(extractString(tmp));
-        }
-
-        if (item.get("addr2") != null) {
-            if (item.get("addr2").getClass().getName().equals("java.lang.String")){
-                touristData.setAddr2((String) item.get("addr2"));
-            }
-            else if (item.get("addr2").getClass().getName().equals("java.lang.Long")){
-                touristData.setAddr2(String.valueOf(item.get("addr2")));
-            }
-        }
-
-        touristData.setAreaCode((Long) item.get("areacode"));
-
-        tmp = (String) item.get("cat1");
-        if (tmp == null) {
-            touristData.setCat1(null);
-        } else if (tmp.isEmpty()){
-            touristData.setCat1(null);
-        }else{
-            touristData.setCat1(extractString(tmp));
-        }
-
-        tmp = (String) item.get("cat2");
-        if (tmp == null) {
-            touristData.setCat2(null);
-        } else if (tmp.isEmpty()){
-            touristData.setCat2(null);
-        }else{
-            touristData.setCat2(extractString(tmp));
-        }
-
-        tmp = (String) item.get("cat3");
-        if (tmp == null) {
-            touristData.setCat3(null);
-        } else if (tmp.isEmpty()){
-            touristData.setCat3(null);
-        }else{
-            touristData.setCat3(extractString(tmp));
-        }
-        touristData.setContentId((Long) item.get("contentid"));
-        touristData.setContentTypeId((Long) item.get("contenttypeid"));
-
-        tmp = (String) item.get("firstimage");
-        if (tmp == null) {
-            touristData.setFirstImage(null);
-        } else if (tmp.isEmpty()){
-            touristData.setFirstImage(null);
-        }else{
-            touristData.setFirstImage(extractString(tmp));
-        }
-
-        tmp = (String) item.get("firstimage2");
-        if (tmp == null) {
-            touristData.setFirstImage2(null);
-        } else if (tmp.isEmpty()){
-            touristData.setFirstImage2(null);
-        }else{
-            touristData.setFirstImage2(extractString(tmp));
-        }
-
-        if (item.get("mapx") != null) {
-            if (item.get("mapx").getClass().getName().equals("java.lang.Double")){
-                touristData.setMapX((Double) item.get("mapx"));
-            }
-            else if (item.get("mapx").getClass().getName().equals("java.lang.String")){
-                touristData.setMapX(Double.valueOf((String) item.get("mapx")));
-            }
-        }
-        if (item.get("mapy") != null) {
-            if (item.get("mapy").getClass().getName().equals("java.lang.Double")){
-                touristData.setMapY((Double) item.get("mapy"));
-            }
-            else if (item.get("mapy").getClass().getName().equals("java.lang.String")){
-                touristData.setMapY(Double.valueOf((String) item.get("mapy")));
-            }
-        }
-        touristData.setSigunguCode((Long) item.get("sigungucode"));
-
-        tmp = (String) item.get("tel");
-        if (tmp == null) {
-            touristData.setTel(null);
-        } else if (tmp.isEmpty()){
-            touristData.setTel(null);
-        }else{
-            touristData.setTel(extractString(tmp));
-        }
-
-        tmp = (String) item.get("title");
-        if (tmp == null) {
-            touristData.setTitle(null);
-        } else if (tmp.isEmpty()){
-            touristData.setTitle(null);
-        }else{
-            touristData.setTitle(extractString(tmp));
-        }
-
-//        if (item.get("zipcode") != null) {
-//            if (item.get("zipcode").getClass().getName().equals("java.lang.Long")){
-//                touristData.setZipcode((Long) item.get("zipcode"));
-//            }
-//            else if (item.get("zipcode").getClass().getName().equals("java.lang.String")){
-//                touristData.setZipcode(Long.valueOf((String) item.get("zipcode")));
-//            }
-//        }
-        return touristData;
     }
 
 

@@ -48,4 +48,22 @@ public class TouristDataController {
         return touristDataService.getFoodData(contentId);
     }
 
+    @ApiOperation(value = "관광지 아이디 조회", notes = "모든 관광지의 아이디 정보를 조회한다")
+    @GetMapping(value = "touristData/touristPoint/contentId")
+    public List<Long> getTouristPointId(){
+        return touristDataService.getTouristPointId();
+    }
+
+    @ApiOperation(value = "음식 아이디 조회", notes = "모든 음식의 아이디 정보를 조회한다")
+    @GetMapping(value = "touristData/food/contentId")
+    public List<Long> getFoodId(){
+        return touristDataService.getFoodId();
+    }
+
+//    @ApiOperation(value = "관광지 조회", notes = "관광지를 조회한다")
+//    @GetMapping(value = "touristData/{contentId}")
+//    public TouristData getTouristData(@PathVariable("contentId") Long contentId){
+//        return touristDataService.getTouristData(contentId);
+//    }
+
 }

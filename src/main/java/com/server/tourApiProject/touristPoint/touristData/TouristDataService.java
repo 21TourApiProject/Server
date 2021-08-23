@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -74,4 +75,31 @@ public class TouristDataService {
     public void deleteTouristData() {
         touristDataRepository.deleteAll();
     }
+
+    public List<Long> getTouristPointId() {
+        List<TouristData> list = touristDataRepository.findByContentTypeId(12L);
+        List<Long> result = new ArrayList<>();
+        for (TouristData data : list){
+            result.add(data.getContentId());
+        }
+        return result;
+    }
+
+    public List<Long> getFoodId() {
+        List<TouristData> list = touristDataRepository.findByContentTypeId(39L);
+        List<Long> result = new ArrayList<>();
+        for (TouristData data : list){
+            result.add(data.getContentId());
+        }
+        return result;
+    }
+
+    public Boolean isThere(Long contentId){
+        Optional<TouristData> data = touristDataRepository.findById(contentId);
+        return data.isPresent();
+    }
+
+//    public TouristData getTouristData(Long contentId) {
+//        return touristDataRepository.findById(contentId).orElseThrow(IllegalAccessError::new);
+//    }
 }

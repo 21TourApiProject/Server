@@ -66,6 +66,7 @@ public class ExcelController {
 
             areaService.createArea(data);
         }
+        System.out.println("엑셀 완료");
         return "excel";
     }
 
@@ -98,6 +99,7 @@ public class ExcelController {
 
             contentTypeService.createContentType1(data);
         }
+        System.out.println("엑셀 완료");
         return "excel";
     }
 
@@ -130,6 +132,7 @@ public class ExcelController {
 
             contentTypeService.createContentType2(data);
         }
+        System.out.println("엑셀 완료");
         return "excel";
     }
 
@@ -152,6 +155,10 @@ public class ExcelController {
         System.out.println(worksheet.getPhysicalNumberOfRows());
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows()-1; i++) {
             Row row = worksheet.getRow(i);
+            Long contentId = (long) row.getCell(3).getNumericCellValue();
+            if (touristDataService.isThere(contentId))
+                continue;
+
             TouristData data = new TouristData();
 
             data.setContentId((long) row.getCell(0).getNumericCellValue());
@@ -186,6 +193,7 @@ public class ExcelController {
 
             touristDataService.createTouristData(data);
         }
+        System.out.println("엑셀 완료");
         return "excel";
     }
 }
