@@ -20,6 +20,9 @@ public class TouristData {
     @Id
     private Long contentId; //콘텐츠 ID
 
+    @Column(nullable = false)
+    private Integer isCom; //정보가 다 들어왔는지 0이면 o 1이면 x
+
     @Column
     private String addr1; //주소
 
