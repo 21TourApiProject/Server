@@ -101,7 +101,7 @@ public class TouristDataService {
 
     public Double [][] getTouristPointMap() {
         List<TouristData> list = touristDataRepository.findByContentTypeId(12L);
-        Double [][] result = new Double[9543][2];
+        Double [][] result = new Double[9487][2];
         int i = 0;
         for (TouristData data : list){
             result[i][0] = data.getMapX();
@@ -113,7 +113,7 @@ public class TouristDataService {
 
     public Double[][] getFoodMap() {
         List<TouristData> list = touristDataRepository.findByContentTypeId(39L);
-        Double [][] result = new Double[9543][2];
+        Double [][] result = new Double[6331][2];
         int i = 0;
         for (TouristData data : list){
             result[i][0] = data.getMapX();

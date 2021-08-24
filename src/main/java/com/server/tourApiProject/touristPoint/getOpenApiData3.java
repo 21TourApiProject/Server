@@ -112,24 +112,24 @@ public class getOpenApiData3 implements org.springframework.boot.ApplicationRunn
             touristDataRepository.save(touristData);
 
         }
-        for (Long contentId : touristPointId) {
-            System.out.println("contentId = " + contentId);
+        int size = touristPointId.size();
+        Double[][] touristPointMap = touristDataController.getTouristPointMap();
+        for (int i=0; i < size; i++){
+            Long contentId = touristPointId.get(i);
             TouristData touristData = touristDataRepository.findByContentId(contentId);
             if (touristData.getIsNear() == 1)
                 continue;
 
-            Double[][] touristPointMap = touristDataController.getTouristPointMap();
-            for (Double[] map : touristPointMap) {
-                String part2 = "&mapX=" + Double.toString(map[0]) + "&mapY=" + Double.toString(map[1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=12";
-                JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
-                for (int j = 1; j < 4; j++) {
-                    JSONObject near = (JSONObject) near_list.get(j);
-                    nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
-                }
+            System.out.println("contentId = " + contentId);
+            String part2 = "&mapX=" + Double.toString(touristPointMap[i][0]) + "&mapY=" + Double.toString(touristPointMap[i][1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=12";
+            JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
+            for (int j = 1; j < near_list.size(); j++) {
+                JSONObject near = (JSONObject) near_list.get(j);
+                nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
             }
             touristData.setIsNear(1);
+            touristDataRepository.save(touristData);
         }
-
 
         //음식
         List<Long> foodId = touristDataController.getFoodId();
@@ -212,21 +212,23 @@ public class getOpenApiData3 implements org.springframework.boot.ApplicationRunn
             touristData.setIsCom(1);
             touristDataRepository.save(touristData);
         }
-        for (Long contentId : foodId) {
-            System.out.println("contentId = " + contentId);
+        int size2 = foodId.size();
+        Double[][] foodMap = touristDataController.getFoodMap();
+        for (int i=0; i < size2; i++){
+            Long contentId = foodId.get(i);
             TouristData touristData = touristDataRepository.findByContentId(contentId);
             if (touristData.getIsNear() == 1)
                 continue;
-            Double[][] foodMap = touristDataController.getFoodMap();
-            for (Double[] map : foodMap) {
-                String part2 = "&mapX=" + Double.toString(map[0]) + "&mapY=" + Double.toString(map[1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=39";
-                JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
-                for (int j = 1; j < 4; j++) {
-                    JSONObject near = (JSONObject) near_list.get(j);
-                    nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
-                }
+
+            System.out.println("contentId = " + contentId);
+            String part2 = "&mapX=" + Double.toString(foodMap[i][0]) + "&mapY=" + Double.toString(foodMap[i][1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=39";
+            JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
+            for (int j = 1; j < near_list.size(); j++) {
+                JSONObject near = (JSONObject) near_list.get(j);
+                nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
             }
             touristData.setIsNear(1);
+            touristDataRepository.save(touristData);
         }
 
     }
@@ -262,8 +264,8 @@ public class getOpenApiData3 implements org.springframework.boot.ApplicationRunn
 
         try{
             URL url = new URL("http://api.visitkorea.or.kr/openapi/service/rest/KorService" + part1 + key + part2 + "&MobileOS=AND&MobileApp=tourApiProject&_type=json");
-            if(isNear)
-                System.out.println("url = " + url);
+//            if(isNear)
+//                System.out.println("url = " + url);
             BufferedReader bf; //빠른 속도로 데이터를 처리하기 위해
             bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
             result = bf.readLine(); //api로 받아온 결과
@@ -284,6 +286,13 @@ public class getOpenApiData3 implements org.springframework.boot.ApplicationRunn
             JSONObject items = (JSONObject)body.get("items");
 
             if (isNear){
+                if (count == 1){
+                    System.out.println("0임");
+                    JSONObject item = new JSONObject();
+                    JSONArray resultForZero = new JSONArray();
+                    resultForZero.add(item);
+                    return resultForZero;
+                }
                 count = 4L;
             }
 
