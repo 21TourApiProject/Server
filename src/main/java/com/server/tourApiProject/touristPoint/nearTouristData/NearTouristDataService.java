@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -22,6 +23,10 @@ public class NearTouristDataService {
     private final ContentTypeRepository contentTypeRepository;
 
     public void createNearTouristData(Long contentId1, Long contentId2) {
+        Optional<TouristData> data = touristDataRepository.findById(contentId2);
+        if (!data.isPresent())
+            return;
+
         NearTouristData nearTouristData = new NearTouristData();
         nearTouristData.setTouristDataId(contentId1);
         nearTouristData.setTouristData(touristDataRepository.findByContentId(contentId1));
@@ -32,10 +37,12 @@ public class NearTouristDataService {
             nearTouristData.setFirstImage(me.getFirstImage());
         }
 
-        nearTouristData.setOverviewSimple("임시 짧은 개요");
-//        if (me.getOverview() != null){
-//            nearTouristData.setOverviewSimple(me.getOverview().substring(0,15)+"..."); //짧은 개요 나중에 제대로 수정
-//        }
+        if (me.getOverview() != null){
+            if (me.getOverview().length() > 15)
+                nearTouristData.setOverviewSimple(me.getOverview().substring(0,15)+"..."); //짧은 개요 나중에 제대로 수정
+            else
+                nearTouristData.setOverviewSimple(me.getOverview());
+        }
 
         nearTouristData.setTitle(me.getTitle());
         nearTouristData.setAddr1(me.getAddr1());
@@ -57,5 +64,9 @@ public class NearTouristDataService {
             result.add(param);
         }
         return result;
+    }
+
+    public void deleteNearTouristData() {
+        nearTouristDataRepository.deleteAll();
     }
 }

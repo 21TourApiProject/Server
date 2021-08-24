@@ -27,6 +27,7 @@ public class getOpenApiData1 implements org.springframework.boot.ApplicationRunn
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        System.out.println("order1");
 
         //지역
 //        JSONArray area_list = getJson("/areaCode", "");
@@ -34,7 +35,8 @@ public class getOpenApiData1 implements org.springframework.boot.ApplicationRunn
 //            JSONObject item1 = (JSONObject) o1;
 //            Long code1 = (Long) item1.get("code");
 //            String name1 = (String) item1.get("name");
-//
+//+
+
 //            JSONArray sigungu_list = getJson("/areaCode", "&areaCode=" + code1);
 //            for (Object o2 : sigungu_list) {
 //                JSONObject item2 = (JSONObject) o2;

@@ -30,4 +30,10 @@ public class NearTouristDataController {
     public List<NearTouristDataParams> getNearTouristPointData(@PathVariable("contentId") Long contentId){
         return nearTouristDataService.getNearTouristData(contentId);
     }
+
+    @ApiOperation(value = "주변 관광지 삭제", notes = "주변 관광지 정보를 삭제한다")
+    @DeleteMapping(value = "nearTouristData/")
+    public void deleteNearTouristData(){
+        nearTouristDataService.deleteNearTouristData();
+    }
 }
