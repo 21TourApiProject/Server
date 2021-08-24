@@ -153,12 +153,8 @@ public class ExcelController {
 
         Sheet worksheet = workbook.getSheetAt(0);
         System.out.println(worksheet.getPhysicalNumberOfRows());
-        for (int i = 1; i < worksheet.getPhysicalNumberOfRows()-1; i++) {
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
             Row row = worksheet.getRow(i);
-            Long contentId = (long) row.getCell(3).getNumericCellValue();
-            if (touristDataService.isThere(contentId))
-                continue;
-
             TouristData data = new TouristData();
 
             data.setContentId((long) row.getCell(0).getNumericCellValue());
@@ -176,20 +172,21 @@ public class ExcelController {
             data.setFirstMenu(row.getCell(12).getStringCellValue());
             data.setHomePage(row.getCell(13).getStringCellValue());
             data.setIsCom((int)row.getCell(14).getNumericCellValue());
-            data.setMapX((double) row.getCell(15).getNumericCellValue());
-            data.setMapY((double) row.getCell(16).getNumericCellValue());
-            data.setOpenTimeFood(row.getCell(17).getStringCellValue());
-            data.setOverview(row.getCell(18).getStringCellValue());
-            data.setPacking(row.getCell(19).getStringCellValue());
-            data.setParking(row.getCell(20).getStringCellValue());
-            data.setParkingFood(row.getCell(21).getStringCellValue());
-            data.setRestDate(row.getCell(22).getStringCellValue());
-            data.setRestDateFood(row.getCell(23).getStringCellValue());
-            data.setSigunguCode((long) row.getCell(24).getNumericCellValue());
-            data.setTel(row.getCell(25).getStringCellValue());
-            data.setTitle(row.getCell(26).getStringCellValue());
-            data.setTreatMenu(row.getCell(27).getStringCellValue());
-            data.setUseTime(row.getCell(28).getStringCellValue());
+            data.setIsNear((int)row.getCell(15).getNumericCellValue());
+            data.setMapX((double) row.getCell(16).getNumericCellValue());
+            data.setMapY((double) row.getCell(17).getNumericCellValue());
+            data.setOpenTimeFood(row.getCell(18).getStringCellValue());
+            data.setOverview(row.getCell(19).getStringCellValue());
+            data.setPacking(row.getCell(20).getStringCellValue());
+            data.setParking(row.getCell(21).getStringCellValue());
+            data.setParkingFood(row.getCell(22).getStringCellValue());
+            data.setRestDate(row.getCell(23).getStringCellValue());
+            data.setRestDateFood(row.getCell(24).getStringCellValue());
+            data.setSigunguCode((long) row.getCell(25).getNumericCellValue());
+            data.setTel(row.getCell(26).getStringCellValue());
+            data.setTitle(row.getCell(27).getStringCellValue());
+            data.setTreatMenu(row.getCell(28).getStringCellValue());
+            data.setUseTime(row.getCell(29).getStringCellValue());
 
             touristDataService.createTouristData(data);
         }

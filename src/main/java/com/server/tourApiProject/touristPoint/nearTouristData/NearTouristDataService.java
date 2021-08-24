@@ -32,10 +32,9 @@ public class NearTouristDataService {
             nearTouristData.setFirstImage(me.getFirstImage());
         }
 
-        nearTouristData.setOverviewSimple("임시 짧은 개요");
-//        if (me.getOverview() != null){
-//            nearTouristData.setOverviewSimple(me.getOverview().substring(0,15)+"..."); //짧은 개요 나중에 제대로 수정
-//        }
+        if (me.getOverview() != null){
+            nearTouristData.setOverviewSimple(me.getOverview().substring(0,15)+"..."); //짧은 개요 나중에 제대로 수정
+        }
 
         nearTouristData.setTitle(me.getTitle());
         nearTouristData.setAddr1(me.getAddr1());

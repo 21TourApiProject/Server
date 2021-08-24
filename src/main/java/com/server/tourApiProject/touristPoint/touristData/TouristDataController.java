@@ -1,6 +1,5 @@
 package com.server.tourApiProject.touristPoint.touristData;
 
-import com.server.tourApiProject.touristPoint.contentType.ContentTypeController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -60,10 +59,16 @@ public class TouristDataController {
         return touristDataService.getFoodId();
     }
 
-//    @ApiOperation(value = "관광지 조회", notes = "관광지를 조회한다")
-//    @GetMapping(value = "touristData/{contentId}")
-//    public TouristData getTouristData(@PathVariable("contentId") Long contentId){
-//        return touristDataService.getTouristData(contentId);
-//    }
+    @ApiOperation(value = "관광지 좌표 조회", notes = "모든 관광지의 좌표를 조회한다")
+    @GetMapping(value = "touristData/touristPoint/map")
+    public Double [][] getTouristPointMap(){
+        return touristDataService.getTouristPointMap();
+    }
+
+    @ApiOperation(value = "음식 좌표 조회", notes = "모든 음식의 좌표를 조회한다")
+    @GetMapping(value = "touristData/food/map")
+    public Double [][] getFoodMap(){
+        return touristDataService.getFoodMap();
+    }
 
 }

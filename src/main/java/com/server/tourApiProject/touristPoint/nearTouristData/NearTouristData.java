@@ -2,7 +2,6 @@ package com.server.tourApiProject.touristPoint.nearTouristData;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.tourApiProject.touristPoint.touristData.TouristData;
-import com.server.tourApiProject.user.User;
 import lombok.*;
 
 import javax.persistence.*;

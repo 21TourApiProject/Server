@@ -99,7 +99,28 @@ public class TouristDataService {
         return data.isPresent();
     }
 
-//    public TouristData getTouristData(Long contentId) {
-//        return touristDataRepository.findById(contentId).orElseThrow(IllegalAccessError::new);
-//    }
+    public Double [][] getTouristPointMap() {
+        List<TouristData> list = touristDataRepository.findByContentTypeId(12L);
+        Double [][] result = new Double[9543][2];
+        int i = 0;
+        for (TouristData data : list){
+            result[i][0] = data.getMapX();
+            result[i][1] = data.getMapY();
+            i++;
+        }
+        return result;
+    }
+
+    public Double[][] getFoodMap() {
+        List<TouristData> list = touristDataRepository.findByContentTypeId(39L);
+        Double [][] result = new Double[9543][2];
+        int i = 0;
+        for (TouristData data : list){
+            result[i][0] = data.getMapX();
+            result[i][1] = data.getMapY();
+            i++;
+        }
+        return result;
+
+    }
 }
