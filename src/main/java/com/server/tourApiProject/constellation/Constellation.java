@@ -1,8 +1,6 @@
 package com.server.tourApiProject.constellation;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.server.tourApiProject.tonightSky.TonightSky;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 

@@ -42,6 +42,7 @@ public class PostController {
     public List<PostHashTag> getPostHashTag(@PathVariable("postId") Long postId) {
         return postHashTagService.getPostHashTag(postId);
     }
+
     @ApiOperation(value = "게시물 관측지 조회", notes = "게시물 id로 해당 게시물의 게시물 관측지를 조회한다")
     @GetMapping(value = "post/{postId}/postObservePoint")
     public PostObservePoint getPostObservePoint(@PathVariable("postId") Long postId) {
@@ -51,6 +52,11 @@ public class PostController {
     @GetMapping(value = "post/{postId}/postImage")
     public List<String> getPostImage(@PathVariable("postId") Long postId) {
         return postImageService.getPostImage(postId);
+    }
+    @ApiOperation(value = "게시물 이미지 검색", notes = "게시물 관측지 id로 이미지를 조회한다")
+    @GetMapping(value = "postImage/{postObservePointId}")
+    public List<String> getRelatePostImage(@PathVariable("postObservePointId") Long postObservePointId){
+        return postImageService.getRelatePostImageList(postObservePointId);
     }
 
 

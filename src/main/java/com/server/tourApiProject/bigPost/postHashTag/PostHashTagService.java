@@ -1,5 +1,6 @@
 package com.server.tourApiProject.bigPost.postHashTag;
 
+import com.server.tourApiProject.bigPost.postImage.PostImage;
 import com.server.tourApiProject.hashTag.HashTag;
 import com.server.tourApiProject.hashTag.HashTagRepository;
 import com.server.tourApiProject.bigPost.post.Post;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -23,6 +25,15 @@ public class PostHashTagService {
 
     public List<PostHashTag> getPostHashTag(Long postId) {
         return postHashTagRepository.findByPostId(postId);
+    }
+
+    public List<String> getPostHashTagName(Long postId) {
+        List<String> postHashTagNameList =new ArrayList<>();
+        List<PostHashTag> postHashTagList = postHashTagRepository.findByPostId(postId);
+        for(PostHashTag p : postHashTagList) {
+            postHashTagNameList.add(p.getHashTagName());
+        }
+        return postHashTagNameList;
     }
 
     public void createPostHashTags(Long postId,List<PostHashTagParams> postHashTagParams) {

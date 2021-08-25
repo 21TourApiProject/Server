@@ -21,4 +21,10 @@ public class PostHashTagController {
     public void createPostHashTags(@PathVariable("postId")  Long postId, @RequestBody List<PostHashTagParams> postHashTagParams){
         postHashTagService.createPostHashTags(postId,postHashTagParams);
     }
+
+    @ApiOperation(value = "게시물 해시태그 리스트 이름 조회", notes = "게시물 id로 해시태그 이름을 조회한다.")
+    @GetMapping(value = "postHashTagName/{postId}")
+    public List<String> getPostHashTagName(@PathVariable("postId")Long postId){
+        return postHashTagService.getPostHashTagName(postId);
+    }
 }
