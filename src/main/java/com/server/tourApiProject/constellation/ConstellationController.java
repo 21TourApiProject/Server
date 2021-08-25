@@ -24,7 +24,7 @@ public class ConstellationController {
 
     @ApiOperation(value = "모든 별자리 조회", notes = "모든 별자리를 조회한다")
     @GetMapping(value = "constellations")
-    public List<Constellation> getConstellation() {
+    public List<ConstellationParams> getConstellation() {
         return constellationService.getConstellation();
     }
 
@@ -34,7 +34,7 @@ public class ConstellationController {
         return constellationService.getTodayConst();
     }
 
-    @ApiOperation(value = "별자리 상세 정보 조회", notes = "졀자리 id로 별자리 상세 정보를 조회한다.")
+    @ApiOperation(value = "별자리 상세 정보 조회", notes = "별자리 id로 별자리 상세 정보를 조회한다.")
     @GetMapping(value = "constellation/{constId}")
     public Constellation getDetailConst(@PathVariable("constId") Long constId) {
         return constellationService.getDetailConst(constId);

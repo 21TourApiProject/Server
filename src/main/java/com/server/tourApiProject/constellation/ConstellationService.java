@@ -20,8 +20,20 @@ public class ConstellationService {
         constellationRepository.save(constellation);
     }
 
-    public List<Constellation> getConstellation() {
-        return constellationRepository.findAll();
+    public List<ConstellationParams> getConstellation() {
+        List<ConstellationParams> result = new ArrayList<>();
+        List<Constellation> list = constellationRepository.findAll();
+
+        for (Constellation cl : list) {
+            Constellation constellation = constellationRepository.findById(cl.getConstId()).orElseThrow(IllegalAccessError::new);
+
+            ConstellationParams params = new ConstellationParams();
+            params.setConstId(constellation.getConstId());
+            params.setConstImage(constellation.getConstImage());
+            params.setConstName(constellation.getConstName());
+            result.add(params);
+        }
+        return result;
     }
 
     public List<ConstellationParams> getTodayConst() {
