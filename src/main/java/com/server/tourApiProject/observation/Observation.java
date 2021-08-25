@@ -1,7 +1,7 @@
 package com.server.tourApiProject.observation;
 
-import com.server.tourApiProject.observation.ObserveHashTag.ObserveHashTag;
-import com.server.tourApiProject.observation.ObserveImage.ObserveImage;
+import com.server.tourApiProject.observation.observeHashTag.ObserveHashTag;
+import com.server.tourApiProject.observation.observeImage.ObserveImage;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,7 +24,7 @@ public class Observation {
     private String observationName;
 
     @Column
-    private String Link;
+    private String link;
 
     @Column(nullable = false)
     private double latitude;    //지도를 위한 위도
@@ -36,7 +36,7 @@ public class Observation {
     private String address;
 
     @Column
-    private String phoneNumber;
+    private String phoneNumber; //문의
 
     @Column
     private String operatingHour;
@@ -48,16 +48,22 @@ public class Observation {
     private String parking; //주차안내
 
     @Column
-    private String parkingImg;  //주차안내 사진진
-
-    @Column
-    private String intro;   //한줄소개
-
-    @Column
     private String observeType;    //관측지 타입(천문대,등등), 추후 enum으로 수정가능?
 
     @Column
     private String outline; //개요
+
+    @Column
+    private String guide;   //이용안내
+
+    @Column
+    private String closedDay;   //휴무일
+
+    @Column
+    private double light;   //광공해
+
+    @Column
+    private boolean nature;   //자연관광지
 
     @OneToMany(mappedBy = "observation")
     private List<ObserveHashTag> observeHashTags=new ArrayList<>();

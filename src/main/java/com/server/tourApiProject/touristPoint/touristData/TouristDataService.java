@@ -6,6 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -16,8 +19,13 @@ public class TouristDataService {
     private final TouristDataRepository touristDataRepository;
     private final ContentTypeRepository contentTypeRepository;
 
-    public void createTouristData(TouristData touristData) {
+    public List<Double> createTouristData(TouristData touristData) {
         touristDataRepository.save(touristData);
+
+        List<Double> result = new ArrayList<>();
+        result.add(touristData.getMapX());
+        result.add(touristData.getMapY());
+        return result;
     }
 
     public Long getContentType(Long contentId) {
@@ -64,4 +72,55 @@ public class TouristDataService {
         return result;
     }
 
+    public void deleteTouristData() {
+        touristDataRepository.deleteAll();
+    }
+
+    public List<Long> getTouristPointId() {
+        List<TouristData> list = touristDataRepository.findByContentTypeId(12L);
+        List<Long> result = new ArrayList<>();
+        for (TouristData data : list){
+            result.add(data.getContentId());
+        }
+        return result;
+    }
+
+    public List<Long> getFoodId() {
+        List<TouristData> list = touristDataRepository.findByContentTypeId(39L);
+        List<Long> result = new ArrayList<>();
+        for (TouristData data : list){
+            result.add(data.getContentId());
+        }
+        return result;
+    }
+
+    public Boolean isThere(Long contentId){
+        Optional<TouristData> data = touristDataRepository.findById(contentId);
+        return data.isPresent();
+    }
+
+    public Double [][] getTouristPointMap() {
+        List<TouristData> list = touristDataRepository.findByContentTypeId(12L);
+        Double [][] result = new Double[9487][2];
+        int i = 0;
+        for (TouristData data : list){
+            result[i][0] = data.getMapX();
+            result[i][1] = data.getMapY();
+            i++;
+        }
+        return result;
+    }
+
+    public Double[][] getFoodMap() {
+        List<TouristData> list = touristDataRepository.findByContentTypeId(39L);
+        Double [][] result = new Double[6331][2];
+        int i = 0;
+        for (TouristData data : list){
+            result[i][0] = data.getMapX();
+            result[i][1] = data.getMapY();
+            i++;
+        }
+        return result;
+
+    }
 }

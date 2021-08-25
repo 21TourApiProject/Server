@@ -1,4 +1,4 @@
-package com.server.tourApiProject.observation.ObserveImage;
+package com.server.tourApiProject.observation.observeImage;
 
 import lombok.*;
 

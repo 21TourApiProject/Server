@@ -1,7 +1,7 @@
 package com.server.tourApiProject.observation;
 
-import com.server.tourApiProject.observation.ObserveHashTag.ObserveHashTagService;
-import com.server.tourApiProject.observation.ObserveImage.ObserveImageService;
+import com.server.tourApiProject.observation.observeHashTag.ObserveHashTagService;
+import com.server.tourApiProject.observation.observeImage.ObserveImageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

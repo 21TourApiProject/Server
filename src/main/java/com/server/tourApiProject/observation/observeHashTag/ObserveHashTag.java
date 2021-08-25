@@ -1,7 +1,6 @@
-package com.server.tourApiProject.observation.ObserveImage;
+package com.server.tourApiProject.observation.observeHashTag;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.server.tourApiProject.bigPost.post.Post;
 import com.server.tourApiProject.observation.Observation;
 import lombok.*;
 
@@ -13,11 +12,11 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "observeImage")
-public class ObserveImage {
+@Table(name="observeHashTag")
+public class ObserveHashTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long observeImageListId;
+    private Long observeHashTagListId;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,5 +27,8 @@ public class ObserveImage {
     private Long observationId;
 
     @Column(nullable = false)
-    private String image;
+    private Long hashTagId;
+
+    @Column(nullable = false)
+    private String hashTagName;
 }
