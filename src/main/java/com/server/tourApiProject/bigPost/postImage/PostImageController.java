@@ -21,9 +21,5 @@ public class PostImageController {
     public void createPostImage(@PathVariable("postId") Long postId, @RequestBody List<PostImageParams> postImageParams){
         postImageService.createPostImage(postId,postImageParams);
     }
-    @ApiOperation(value = "게시물 이미지 이름", notes = "게시물 이미지이름을 id로 조회한다")
-    @GetMapping(value = "postImage/{postImageListId}")
-    public String getPostImageName(@PathVariable("postContent") Long postImageListId){
-        return postImageService.getPostImageName(postImageListId);
-    }
+
 }

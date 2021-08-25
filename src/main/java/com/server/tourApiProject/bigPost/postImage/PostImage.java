@@ -27,4 +27,7 @@ public class PostImage {
 
     @Column(nullable = false)
     private String imageName;
+
+    @Column(nullable = false)
+    private Long postObservePointId;
 }
