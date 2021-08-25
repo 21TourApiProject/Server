@@ -37,7 +37,6 @@ public class TouristDataService {
         result.setTitle(touristData.getTitle());
         result.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
         result.setOverview(touristData.getOverview());
-        result.setOverviewSim(touristData.getOverviewSim());
         result.setAddr1(touristData.getAddr1());
         result.setTel(touristData.getTel());
         result.setUseTime(touristData.getUseTime());
@@ -57,7 +56,6 @@ public class TouristDataService {
         result.setTitle(touristData.getTitle());
         result.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
         result.setOverview(touristData.getOverview());
-        result.setOverviewSim(touristData.getOverviewSim());
         result.setAddr1(touristData.getAddr1());
         result.setTel(touristData.getTel());
         result.setOpenTimeFood(touristData.getOpenTimeFood());
