@@ -14,6 +14,7 @@ public class TouristDataParams2 {
     private String title; //제목
     private String cat3Name; //소분류 이름
     private String overview; //개요
+    private String overviewSim; //짧은 개요
     private String addr1; //주소
     private String tel; //전화번호
     private String openTimeFood; //영업시간(음식)

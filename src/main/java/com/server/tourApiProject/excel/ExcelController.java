@@ -173,10 +173,18 @@ public class ExcelController {
             data.setHomePage(row.getCell(13).getStringCellValue());
             data.setIsCom((int)row.getCell(14).getNumericCellValue());
             data.setIsNear((int)row.getCell(15).getNumericCellValue());
-            data.setMapX((double) row.getCell(16).getNumericCellValue());
-            data.setMapY((double) row.getCell(17).getNumericCellValue());
+            data.setMapX(row.getCell(16).getNumericCellValue());
+            data.setMapY(row.getCell(17).getNumericCellValue());
             data.setOpenTimeFood(row.getCell(18).getStringCellValue());
             data.setOverview(row.getCell(19).getStringCellValue());
+            if (!data.getOverview().equals("null")){
+                if (data.getOverview().length() > 15)
+                    data.setOverviewSim(data.getOverview().substring(0,15)+"..."); //나중에 수정
+                else
+                    data.setOverviewSim(data.getOverview());
+            } else{
+                data.setOverviewSim(null);
+            }
             data.setPacking(row.getCell(20).getStringCellValue());
             data.setParking(row.getCell(21).getStringCellValue());
             data.setParkingFood(row.getCell(22).getStringCellValue());

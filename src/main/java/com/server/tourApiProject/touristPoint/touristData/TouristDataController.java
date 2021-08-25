@@ -19,8 +19,8 @@ public class TouristDataController {
 
     @ApiOperation(value = "관광 정보 입력", notes = "관광 정보를 입력한다")
     @PostMapping(value = "touristData/touristSpot")
-    public List<Double> createTouristData(@RequestBody TouristData touristData){
-        return touristDataService.createTouristData(touristData);
+    public void createTouristData(@RequestBody TouristData touristData){
+        touristDataService.createTouristData(touristData);
     }
 
     @ApiOperation(value = "관광 정보 삭제", notes = "모든 관광 정보를 삭제한다")

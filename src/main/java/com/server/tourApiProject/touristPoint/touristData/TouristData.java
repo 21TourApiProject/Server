@@ -23,7 +23,7 @@ public class TouristData {
     @Column(nullable = false)
     private Integer isCom; //정보가 다 들어왔는지 0이면 x 1이면 o
 
-    @Column
+    @Column(nullable = false)
     private Integer isNear; //주변 정보가 들어왔는지 0이면 x 1이면 o
 
     @Column
@@ -68,11 +68,11 @@ public class TouristData {
     @Column
     private String title; //제목
 
-//    @Column
-//    private Long zipcode; //우편번호
-
     @Column(length = 50000)
     private String overview; //개요
+
+    @Column
+    private String overviewSim; //짧은 개요
 
     @Column(length = 50000)
     private String homePage; //홈페이지(관광지)

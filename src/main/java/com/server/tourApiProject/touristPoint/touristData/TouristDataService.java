@@ -19,13 +19,8 @@ public class TouristDataService {
     private final TouristDataRepository touristDataRepository;
     private final ContentTypeRepository contentTypeRepository;
 
-    public List<Double> createTouristData(TouristData touristData) {
+    public void createTouristData(TouristData touristData) {
         touristDataRepository.save(touristData);
-
-        List<Double> result = new ArrayList<>();
-        result.add(touristData.getMapX());
-        result.add(touristData.getMapY());
-        return result;
     }
 
     public Long getContentType(Long contentId) {
@@ -42,6 +37,7 @@ public class TouristDataService {
         result.setTitle(touristData.getTitle());
         result.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
         result.setOverview(touristData.getOverview());
+        result.setOverviewSim(touristData.getOverviewSim());
         result.setAddr1(touristData.getAddr1());
         result.setTel(touristData.getTel());
         result.setUseTime(touristData.getUseTime());
@@ -61,6 +57,7 @@ public class TouristDataService {
         result.setTitle(touristData.getTitle());
         result.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
         result.setOverview(touristData.getOverview());
+        result.setOverviewSim(touristData.getOverviewSim());
         result.setAddr1(touristData.getAddr1());
         result.setTel(touristData.getTel());
         result.setOpenTimeFood(touristData.getOpenTimeFood());
@@ -101,7 +98,7 @@ public class TouristDataService {
 
     public Double [][] getTouristPointMap() {
         List<TouristData> list = touristDataRepository.findByContentTypeId(12L);
-        Double [][] result = new Double[9487][2];
+        Double [][] result = new Double[10000][2];
         int i = 0;
         for (TouristData data : list){
             result[i][0] = data.getMapX();
@@ -113,7 +110,7 @@ public class TouristDataService {
 
     public Double[][] getFoodMap() {
         List<TouristData> list = touristDataRepository.findByContentTypeId(39L);
-        Double [][] result = new Double[6331][2];
+        Double [][] result = new Double[7000][2];
         int i = 0;
         for (TouristData data : list){
             result[i][0] = data.getMapX();

@@ -14,5 +14,5 @@ public class NearTouristDataParams {
     private String title;
     private String addr1;
     private String cat3Name;
-    private String overviewSimple;
+    private String overviewSim;
 }

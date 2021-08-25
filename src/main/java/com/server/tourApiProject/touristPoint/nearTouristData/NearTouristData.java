@@ -41,8 +41,8 @@ public class NearTouristData {
     @Column
     private String cat3Name; //소분류 이름
 
-    @Column(length = 50000)
-    private String overviewSimple; //개요 한줄
+    @Column
+    private String overviewSim; //개요 한줄
 
 
 
