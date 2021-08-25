@@ -46,7 +46,9 @@ public class Constellation {
 
     private String constPersonality; // 별자리 성격
 
-    private String constPeriod;
+    private String constPeriod; // 별자리 기간(성격에 포함됨)
+
+    private String constFeature; // 별자리 특징(배너 형식)
 
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
