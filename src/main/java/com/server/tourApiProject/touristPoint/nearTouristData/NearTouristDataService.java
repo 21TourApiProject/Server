@@ -36,14 +36,9 @@ public class NearTouristDataService {
         if (me.getFirstImage() != null){
             nearTouristData.setFirstImage(me.getFirstImage());
         }
-
-        if (me.getOverview() != null){
-            if (me.getOverview().length() > 15)
-                nearTouristData.setOverviewSimple(me.getOverview().substring(0,15)+"..."); //짧은 개요 나중에 제대로 수정
-            else
-                nearTouristData.setOverviewSimple(me.getOverview());
+        if (me.getOverviewSim() != null){
+            nearTouristData.setOverviewSim(me.getOverviewSim());
         }
-
         nearTouristData.setTitle(me.getTitle());
         nearTouristData.setAddr1(me.getAddr1());
         nearTouristData.setCat3Name(contentTypeRepository.findByCat3Code(me.getCat3()).getCat3Name());
@@ -60,7 +55,7 @@ public class NearTouristDataService {
             param.setTitle(data.getTitle());
             param.setAddr1(data.getAddr1());
             param.setCat3Name(data.getCat3Name());
-            param.setOverviewSimple(data.getOverviewSimple());
+            param.setOverviewSim(data.getOverviewSim());
             result.add(param);
         }
         return result;
