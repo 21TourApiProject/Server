@@ -1,4 +1,4 @@
-package com.server.tourApiProject.observation.observeImage;
+package com.server.tourApiProject.observation.observeFee;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.tourApiProject.observation.Observation;
@@ -12,11 +12,11 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "observeImage")
-public class ObserveImage {
+@Table(name="observeFee")
+public class ObserveFee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long observeImageListId;
+    private Long observeFeeListId;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -27,9 +27,9 @@ public class ObserveImage {
     private Long observationId;
 
     @Column(nullable = false)
-    private String image;
+    private String feeName;
 
-    @Column
-    private String imageSource;
+    @Column(nullable = false)
+    private String entranceFee;
 
 }
