@@ -46,6 +46,10 @@ public class Constellation {
 
     private String constPersonality; // 별자리 성격
 
+    private String constPeriod; // 별자리 기간(성격에 포함됨)
+
+    private String constFeature; // 별자리 특징(배너 형식)
+
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
@@ -55,10 +59,4 @@ public class Constellation {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate endDate;    // 별자리가 보이기 끝나는 날짜
-
-
-//    @JsonIgnore
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "skyId", insertable = false, updatable = false)
-//    private TonightSky tonightSky; //오늘의 밤하늘 id
 }

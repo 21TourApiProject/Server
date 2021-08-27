@@ -20,15 +20,14 @@ public class ConstellationService {
         constellationRepository.save(constellation);
     }
 
-    public List<Constellation> getConstellation() {
-        return constellationRepository.findAll();
+    public List<ConstellationParams> getConstellation() {
+        List<ConstellationParams> result = new ArrayList<>();
+        List<Constellation> list = constellationRepository.findAll();
+
+        return getConstellationParams(result, list);
     }
 
-    public List<ConstellationParams> getTodayConst() {
-        List<ConstellationParams> result = new ArrayList<>();
-        LocalDate currentDate = LocalDate.now();
-        List<Constellation> list = constellationRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqual(currentDate, currentDate);
-
+    private List<ConstellationParams> getConstellationParams(List<ConstellationParams> result, List<Constellation> list) {
         for (Constellation cl : list) {
             Constellation constellation = constellationRepository.findById(cl.getConstId()).orElseThrow(IllegalAccessError::new);
 
@@ -39,6 +38,14 @@ public class ConstellationService {
             result.add(params);
         }
         return result;
+    }
+
+    public List<ConstellationParams> getTodayConst() {
+        List<ConstellationParams> result = new ArrayList<>();
+        LocalDate currentDate = LocalDate.now();
+        List<Constellation> list = constellationRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqual(currentDate, currentDate);
+
+        return getConstellationParams(result, list);
     }
 
     public Constellation getDetailConst(Long constId) {
