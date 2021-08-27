@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,8 +42,10 @@ public class ConstellationService {
     }
 
     public List<ConstellationParams> getTodayConst() {
+        // startDate, endDate 12-30 ~ 01-22 인 경우 어떻게 할건지 고려
         List<ConstellationParams> result = new ArrayList<>();
-        LocalDate currentDate = LocalDate.now();
+        String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MM-dd"));
+        //String currentDate = LocalDate.of(2021,01,22).format(DateTimeFormatter.ofPattern("MM-dd"));
         List<Constellation> list = constellationRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqual(currentDate, currentDate);
 
         return getConstellationParams(result, list);
