@@ -25,7 +25,7 @@ public class TouristData {
     private Integer isCom; //정보가 다 들어왔는지 0이면 x 1이면 o
 
     @Column(nullable = false)
-    private Integer isNear; //주변 정보가 들어왔는지 0이면 x 1이면 o
+    private Integer isJu; //주변 정보가 들어왔는지 0이면 x 1이면 o
 
     @JsonIgnore
     @OneToMany(mappedBy = "touristData", cascade = CascadeType.REMOVE, orphanRemoval = true)

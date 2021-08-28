@@ -176,7 +176,7 @@ public class ExcelController {
             data.setFirstMenu(row.getCell(12).getStringCellValue());
             data.setHomePage(row.getCell(13).getStringCellValue());
             data.setIsCom((int)row.getCell(14).getNumericCellValue());
-            data.setIsNear((int)row.getCell(15).getNumericCellValue());
+            data.setIsJu((int)row.getCell(15).getNumericCellValue());
             data.setMapX(row.getCell(16).getNumericCellValue());
             data.setMapY(row.getCell(17).getNumericCellValue());
             data.setOpenTimeFood(row.getCell(18).getStringCellValue());

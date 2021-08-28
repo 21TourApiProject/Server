@@ -75,7 +75,7 @@ public class JobA extends QuartzJobBean {
                 touristData = touristDataRepository.findByContentId((Long) item.get("contentid"));
             } else{ //새로 들어온 데이터면
                 touristData = new TouristData();
-                touristData.setIsNear(0);
+                touristData.setIsJu(0);
                 touristData.setIsCom(0);
                 touristData.setContentId((Long) item.get("contentid"));
                 touristData.setContentTypeId((Long) item.get("contenttypeid"));
@@ -299,7 +299,7 @@ public class JobA extends QuartzJobBean {
 
             Long contentId = touristPointId.get(i);
             TouristData touristData = touristDataRepository.findByContentId(contentId);
-            if (touristData.getIsNear() == 1)
+            if (touristData.getIsJu() == 1)
                 continue;
 
             System.out.println("contentId = " + contentId);
@@ -309,7 +309,7 @@ public class JobA extends QuartzJobBean {
                 JSONObject near = (JSONObject) near_list.get(j);
                 nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
             }
-            touristData.setIsNear(1);
+            touristData.setIsJu(1);
             touristDataRepository.save(touristData);
         }
 
@@ -341,7 +341,7 @@ public class JobA extends QuartzJobBean {
                 touristData = touristDataRepository.findByContentId((Long) item.get("contentid"));
             } else{ //새로 들어온 데이터면
                 touristData = new TouristData();
-                touristData.setIsNear(0);
+                touristData.setIsJu(0);
                 touristData.setIsCom(0);
                 touristData.setContentId((Long) item.get("contentid"));
                 touristData.setContentTypeId((Long) item.get("contenttypeid"));
@@ -563,7 +563,7 @@ public class JobA extends QuartzJobBean {
 
             Long contentId = foodId2.get(i);
             TouristData touristData = touristDataRepository.findByContentId(contentId);
-            if (touristData.getIsNear() == 1)
+            if (touristData.getIsJu() == 1)
                 continue;
 
             System.out.println("contentId = " + contentId);
@@ -573,7 +573,7 @@ public class JobA extends QuartzJobBean {
                 JSONObject near = (JSONObject) near_list.get(j);
                 nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
             }
-            touristData.setIsNear(1);
+            touristData.setIsJu(1);
             touristDataRepository.save(touristData);
         }
 

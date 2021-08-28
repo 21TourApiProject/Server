@@ -127,10 +127,12 @@ public class TouristDataService {
     }
 
     public Double[][] getTouristPointMap2() {
-        List<TouristData> list = touristDataRepository.findByIsNearAndContentTypeId(0, 12L);
+        List<TouristData> list = touristDataRepository.findByIsJu(0);
         Double [][] result = new Double[1000][2];
         int i = 0;
         for (TouristData data : list){
+            if (data.getContentTypeId() != 12L)
+                continue;
             result[i][0] = data.getMapX();
             result[i][1] = data.getMapY();
             i++;
@@ -139,10 +141,12 @@ public class TouristDataService {
     }
 
     public Double[][] getFoodMap2() {
-        List<TouristData> list = touristDataRepository.findByIsNearAndContentTypeId(0, 39L);
+        List<TouristData> list = touristDataRepository.findByIsJu(0);
         Double [][] result = new Double[700][2];
         int i = 0;
         for (TouristData data : list){
+            if (data.getContentTypeId() != 39L)
+                continue;
             result[i][0] = data.getMapX();
             result[i][1] = data.getMapY();
             i++;
@@ -151,18 +155,22 @@ public class TouristDataService {
     }
 
     public List<Long> getTouristPointId2() {
-        List<TouristData> list = touristDataRepository.findByIsNearAndContentTypeId(0,12L);
+        List<TouristData> list = touristDataRepository.findByIsJu(0);
         List<Long> result = new ArrayList<>();
         for (TouristData data : list){
+            if (data.getContentTypeId() != 12L)
+                continue;
             result.add(data.getContentId());
         }
         return result;
     }
 
     public List<Long> getFoodId2() {
-        List<TouristData> list = touristDataRepository.findByIsNearAndContentTypeId(0,39L);
+        List<TouristData> list = touristDataRepository.findByIsJu(0);
         List<Long> result = new ArrayList<>();
         for (TouristData data : list){
+            if (data.getContentTypeId() != 39L)
+                continue;
             result.add(data.getContentId());
         }
         return result;
