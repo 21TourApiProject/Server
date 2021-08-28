@@ -44,7 +44,7 @@
 //                continue;
 //            if (touristData.getCat1().equals("A01") || touristData.getCat1().equals("A02")){
 //                touristData.setIsCom(0);
-//                touristData.setIsNear(0);
+//                touristData.setIsJu(0);
 //                touristDataController.createTouristData(touristData);
 //            } else{
 //                error++;
@@ -146,7 +146,7 @@
 //                continue;
 //            Long contentId = touristPointId.get(i);
 //            TouristData touristData = touristDataRepository.findByContentId(contentId);
-//            if (touristData.getIsNear() == 1)
+//            if (touristData.getIsJu() == 1)
 //                continue;
 //
 //            System.out.println("contentId = " + contentId);
@@ -156,7 +156,7 @@
 //                JSONObject near = (JSONObject) near_list.get(j);
 //                nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
 //            }
-//            touristData.setIsNear(1);
+//            touristData.setIsJu(1);
 //            touristDataRepository.save(touristData);
 //        }
 //
@@ -169,7 +169,7 @@
 //                continue;
 //            if (touristData.getCat1().equals("A05")){
 //                touristData.setIsCom(0);
-//                touristData.setIsNear(0);
+//                touristData.setIsJu(0);
 //                touristDataController.createTouristData(touristData);
 //            } else{
 //                error++;
@@ -272,7 +272,7 @@
 //
 //            Long contentId = foodId.get(i);
 //            TouristData touristData = touristDataRepository.findByContentId(contentId);
-//            if (touristData.getIsNear() == 1)
+//            if (touristData.getIsJu() == 1)
 //                continue;
 //
 //            System.out.println("contentId = " + contentId);
@@ -282,7 +282,7 @@
 //                JSONObject near = (JSONObject) near_list.get(j);
 //                nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
 //            }
-//            touristData.setIsNear(1);
+//            touristData.setIsJu(1);
 //            touristDataRepository.save(touristData);
 //        }
 //

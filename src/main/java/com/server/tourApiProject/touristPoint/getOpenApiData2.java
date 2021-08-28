@@ -127,7 +127,7 @@
 ////                for (int i=0; i < touristPointId.size(); i++){
 ////                    Long contentId = touristPointId.get(i);
 ////                    TouristData touristData = touristDataRepository.findByContentId(contentId);
-////                    if (touristData.getIsNear() == 1)
+////                    if (touristData.getIsJu() == 1)
 ////                        continue;
 ////
 ////                    System.out.println("contentId = " + contentId);
@@ -137,7 +137,7 @@
 ////                        JSONObject near = (JSONObject) near_list.get(j);
 ////                        nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
 ////                    }
-////                    touristData.setIsNear(1);
+////                    touristData.setIsJu(1);
 ////                    touristDataRepository.save(touristData);
 ////                }
 //
@@ -224,7 +224,7 @@
 //                for (int i=0; i < foodId.size(); i++){
 //                    Long contentId = foodId.get(i);
 //                    TouristData touristData = touristDataRepository.findByContentId(contentId);
-//                    if (touristData.getIsNear() == 1)
+//                    if (touristData.getIsJu() == 1)
 //                        continue;
 //
 //                    System.out.println("contentId = " + contentId);
@@ -234,7 +234,7 @@
 //                        JSONObject near = (JSONObject) near_list.get(j);
 //                        nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
 //                    }
-//                    touristData.setIsNear(1);
+//                    touristData.setIsJu(1);
 //                    touristDataRepository.save(touristData);
 //                }
 //
