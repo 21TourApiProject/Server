@@ -607,6 +607,10 @@ public class JobA extends QuartzJobBean {
         overview = overview.replaceAll("</strong>","");
         overview = overview.replaceAll("<u>","");
         overview = overview.replaceAll("</u>","");
+        overview = overview.replaceAll("&nbsp;","");
+        overview = overview.replaceAll("&lt;","");
+        overview = overview.replaceAll("&gt;","");
+        overview = overview.replaceAll("&amp;","");
         overview = overview.replaceAll("\n"," ");
 
         return overview;
