@@ -9,7 +9,6 @@
 //import org.json.simple.parser.JSONParser;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.ApplicationArguments;
-//import org.springframework.core.annotation.Order;
 //import org.springframework.stereotype.Component;
 //
 //import java.io.BufferedReader;
@@ -17,7 +16,7 @@
 //import java.net.URL;
 //import java.util.List;
 //
-//@Order(2)
+////@Order(1)
 //@Component
 //public class getOpenApiData4 implements org.springframework.boot.ApplicationRunner {
 //
@@ -28,6 +27,8 @@
 //    @Autowired
 //    private NearTouristDataController nearTouristDataController;
 //
+//    int error;
+//
 //    @Override
 //    public void run(ApplicationArguments args) throws Exception {
 //        System.out.println("order2");
@@ -37,13 +38,19 @@
 //        for (Object o : tour_list) {
 //            JSONObject item = (JSONObject) o;
 //            TouristData touristData = getTouristData(item);
+//            System.out.println("touristData = " + touristData.getContentId());
+//
+//            if (touristData.getCat1() == null)
+//                continue;
 //            if (touristData.getCat1().equals("A01") || touristData.getCat1().equals("A02")){
 //                touristData.setIsCom(0);
-//                touristData.setIsNear(0);
+//                touristData.setIsJu(0);
 //                touristDataController.createTouristData(touristData);
+//            } else{
+//                error++;
 //            }
 //        }
-//        System.out.println("기본 정보 완료");
+//        System.out.println("기본 정보 완료" + error);
 //
 //        //관광지 추가정보
 //        List<Long> touristPointId = touristDataController.getTouristPointId();
@@ -92,6 +99,8 @@
 //                } else if (intro.get("usetime").getClass().getName().equals("java.lang.Long")) {
 //                    touristData.setUseTime(extractString(String.valueOf(intro.get("usetime"))));
 //                }
+//            } else {
+//                touristData.setUseTime(null);
 //            }
 //
 //            tmp = (String) intro.get("restdate");
@@ -133,9 +142,11 @@
 //        }
 //
 //        for (int i=0; i < touristPointId.size(); i++){
+//            if (touristPointMap[i][0] == null)
+//                continue;
 //            Long contentId = touristPointId.get(i);
 //            TouristData touristData = touristDataRepository.findByContentId(contentId);
-//            if (touristData.getIsNear() == 1)
+//            if (touristData.getIsJu() == 1)
 //                continue;
 //
 //            System.out.println("contentId = " + contentId);
@@ -145,7 +156,7 @@
 //                JSONObject near = (JSONObject) near_list.get(j);
 //                nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
 //            }
-//            touristData.setIsNear(1);
+//            touristData.setIsJu(1);
 //            touristDataRepository.save(touristData);
 //        }
 //
@@ -154,13 +165,17 @@
 //        for (Object o : food_list) {
 //            JSONObject item = (JSONObject) o;
 //            TouristData touristData = getTouristData(item);
+//            if (touristData.getCat1() == null)
+//                continue;
 //            if (touristData.getCat1().equals("A05")){
 //                touristData.setIsCom(0);
-//                touristData.setIsNear(0);
+//                touristData.setIsJu(0);
 //                touristDataController.createTouristData(touristData);
+//            } else{
+//                error++;
 //            }
 //        }
-//        System.out.println("기본 정보 완료");
+//        System.out.println("기본 정보 완료"  + error);
 //
 //        //음식 추가정보
 //        List<Long> foodId = touristDataController.getFoodId();
@@ -252,9 +267,12 @@
 //        }
 //
 //        for (int i=0; i < foodId.size(); i++){
+//            if (foodMap[i][0] == null || foodMap[i][1] == null)
+//                continue;
+//
 //            Long contentId = foodId.get(i);
 //            TouristData touristData = touristDataRepository.findByContentId(contentId);
-//            if (touristData.getIsNear() == 1)
+//            if (touristData.getIsJu() == 1)
 //                continue;
 //
 //            System.out.println("contentId = " + contentId);
@@ -264,7 +282,7 @@
 //                JSONObject near = (JSONObject) near_list.get(j);
 //                nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
 //            }
-//            touristData.setIsNear(1);
+//            touristData.setIsJu(1);
 //            touristDataRepository.save(touristData);
 //        }
 //
@@ -372,7 +390,10 @@
 //            else if (item.get("mapx").getClass().getName().equals("java.lang.String")){
 //                touristData.setMapX(Double.valueOf((String) item.get("mapx")));
 //            }
+//        } else{
+//            touristData.setMapX(-1D);
 //        }
+//
 //        if (item.get("mapy") != null) {
 //            if (item.get("mapy").getClass().getName().equals("java.lang.Double")){
 //                touristData.setMapY((Double) item.get("mapy"));
@@ -380,7 +401,10 @@
 //            else if (item.get("mapy").getClass().getName().equals("java.lang.String")){
 //                touristData.setMapY(Double.valueOf((String) item.get("mapy")));
 //            }
+//        } else{
+//            touristData.setMapX(-1D);
 //        }
+//
 //        touristData.setSigunguCode((Long) item.get("sigungucode"));
 //
 //        tmp = (String) item.get("tel");

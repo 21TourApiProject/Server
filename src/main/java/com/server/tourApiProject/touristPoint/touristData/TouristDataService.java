@@ -118,4 +118,61 @@ public class TouristDataService {
         return result;
 
     }
+
+    public void deleteTouristPoint() {
+        List<TouristData> t12  = touristDataRepository.findByContentTypeId(12L);
+        for (TouristData touristData : t12) {
+            touristDataRepository.deleteById(touristData.getContentId());
+        }
+    }
+
+    public Double[][] getTouristPointMap2() {
+        List<TouristData> list = touristDataRepository.findByIsJu(0);
+        Double [][] result = new Double[1000][2];
+        int i = 0;
+        for (TouristData data : list){
+            if (data.getContentTypeId() != 12L)
+                continue;
+            result[i][0] = data.getMapX();
+            result[i][1] = data.getMapY();
+            i++;
+        }
+        return result;
+    }
+
+    public Double[][] getFoodMap2() {
+        List<TouristData> list = touristDataRepository.findByIsJu(0);
+        Double [][] result = new Double[700][2];
+        int i = 0;
+        for (TouristData data : list){
+            if (data.getContentTypeId() != 39L)
+                continue;
+            result[i][0] = data.getMapX();
+            result[i][1] = data.getMapY();
+            i++;
+        }
+        return result;
+    }
+
+    public List<Long> getTouristPointId2() {
+        List<TouristData> list = touristDataRepository.findByIsJu(0);
+        List<Long> result = new ArrayList<>();
+        for (TouristData data : list){
+            if (data.getContentTypeId() != 12L)
+                continue;
+            result.add(data.getContentId());
+        }
+        return result;
+    }
+
+    public List<Long> getFoodId2() {
+        List<TouristData> list = touristDataRepository.findByIsJu(0);
+        List<Long> result = new ArrayList<>();
+        for (TouristData data : list){
+            if (data.getContentTypeId() != 39L)
+                continue;
+            result.add(data.getContentId());
+        }
+        return result;
+    }
 }

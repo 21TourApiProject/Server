@@ -64,4 +64,11 @@ public class NearTouristDataService {
     public void deleteNearTouristData() {
         nearTouristDataRepository.deleteAll();
     }
+
+    public void deleteNearTouristPoint() {
+        List<TouristData> t12  = touristDataRepository.findByContentTypeId(12L);
+        for (TouristData touristData : t12) {
+            touristDataRepository.deleteById(touristData.getContentId());
+        }
+    }
 }
