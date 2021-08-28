@@ -59,9 +59,6 @@ public class TouristData {
     private String firstImage; //대표이미지 원본
 
     @Column
-    private String firstImage2; //대표이미지 화질낮은
-
-    @Column
     private Double mapX; //GPS X좌표
 
     @Column

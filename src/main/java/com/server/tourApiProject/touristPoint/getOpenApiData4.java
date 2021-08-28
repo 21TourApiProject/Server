@@ -307,7 +307,17 @@
 //        overview = overview.replaceAll("</strong>","");
 //        overview = overview.replaceAll("<u>","");
 //        overview = overview.replaceAll("</u>","");
+//        overview = overview.replaceAll("&nbsp;","");
+//        overview = overview.replaceAll("&lt;","");
+//        overview = overview.replaceAll("&gt;","");
+//        overview = overview.replaceAll("&amp;","");
 //        overview = overview.replaceAll("\n"," ");
+//        int i = overview.indexOf("<a href=");
+//        int j = overview.indexOf("</a>");
+//        if (i != -1 && j != -1) {
+//        overview = overview.substring(0, i) + overview.substring(j);
+//        overview = overview.replaceAll("</a>", " ");
+//        }
 //
 //        return overview;
 //    }
@@ -372,15 +382,6 @@
 //            touristData.setFirstImage(null);
 //        }else{
 //            touristData.setFirstImage(extractString(tmp));
-//        }
-//
-//        tmp = (String) item.get("firstimage2");
-//        if (tmp == null) {
-//            touristData.setFirstImage2(null);
-//        } else if (tmp.isEmpty()){
-//            touristData.setFirstImage2(null);
-//        }else{
-//            touristData.setFirstImage2(extractString(tmp));
 //        }
 //
 //        if (item.get("mapx") != null) {

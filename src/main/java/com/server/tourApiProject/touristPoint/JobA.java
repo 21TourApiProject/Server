@@ -148,15 +148,6 @@ public class JobA extends QuartzJobBean {
                 touristData.setFirstImage(extractString(tmp));
             }
 
-            tmp = (String) item.get("firstimage2");
-            if (tmp == null) {
-                touristData.setFirstImage2(null);
-            } else if (tmp.isEmpty()){
-                touristData.setFirstImage2(null);
-            }else{
-                touristData.setFirstImage2(extractString(tmp));
-            }
-
             if (item.get("mapx") != null) {
                 if (item.get("mapx").getClass().getName().equals("java.lang.Double")){
                     touristData.setMapX((Double) item.get("mapx"));
@@ -415,15 +406,6 @@ public class JobA extends QuartzJobBean {
                 touristData.setFirstImage(extractString(tmp));
             }
 
-            tmp = (String) item.get("firstimage2");
-            if (tmp == null) {
-                touristData.setFirstImage2(null);
-            } else if (tmp.isEmpty()){
-                touristData.setFirstImage2(null);
-            }else{
-                touristData.setFirstImage2(extractString(tmp));
-            }
-
             if (item.get("mapx") != null) {
                 if (item.get("mapx").getClass().getName().equals("java.lang.Double")){
                     touristData.setMapX((Double) item.get("mapx"));
@@ -600,6 +582,7 @@ public class JobA extends QuartzJobBean {
     }
 
     public String extractString(String overview){
+
         overview = overview.replaceAll("<br>","");
         overview = overview.replaceAll("<br />"," ");
         overview = overview.replaceAll("<br/>"," ");
@@ -612,6 +595,13 @@ public class JobA extends QuartzJobBean {
         overview = overview.replaceAll("&gt;","");
         overview = overview.replaceAll("&amp;","");
         overview = overview.replaceAll("\n"," ");
+
+        int i = overview.indexOf("<a href=");
+        int j = overview.indexOf("</a>");
+        if (i != -1 && j != -1) {
+            overview = overview.substring(0, i) + overview.substring(j);
+            overview = overview.replaceAll("</a>", " ");
+        }
 
         return overview;
     }
