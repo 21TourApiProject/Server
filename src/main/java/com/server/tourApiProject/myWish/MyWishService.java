@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,14 +27,15 @@ public class MyWishService {
         MyWish myWish = new MyWish();
         switch(wishType) {
             case 0: //관측지
-
+                myWish.setWishTime(LocalTime.now()); //필수
                 break;
             case 1: //관광지
                 touristDataRepository.findById(itemId).orElseThrow(IllegalAccessError::new);  //itemId에 해당하는 관광지가 없으면 오류 발생
                 myWish.setUserId(userId);
                 myWish.setUser(userRepository.findById(userId).orElseThrow(IllegalAccessError::new));
                 myWish.setWishType(1);
-                myWish.setContentId(itemId);
+                myWish.setItemId(itemId);
+                myWish.setWishTime(LocalTime.now()); //필수
                 myWishRepository.save(myWish);
                 break;
             case 2: //게시물
@@ -41,7 +43,8 @@ public class MyWishService {
                 myWish.setUserId(userId);
                 myWish.setUser(userRepository.findById(userId).orElseThrow(IllegalAccessError::new));
                 myWish.setWishType(2);
-                myWish.setPostId(itemId);
+                myWish.setItemId(itemId);
+                myWish.setWishTime(LocalTime.now()); //필수
                 myWishRepository.save(myWish);
                 break;
         }
@@ -52,7 +55,7 @@ public class MyWishService {
         List<MyWishParams01> result= new ArrayList<>();
         List<MyWish> wish = myWishRepository.findByUserIdAndWishType(userId, 1);
         for (MyWish myWish: wish){
-            Long contentId = myWish.getContentId();
+            Long contentId = myWish.getItemId();
             TouristData touristData = touristDataRepository.findById(contentId).orElseThrow(IllegalAccessError::new);
             MyWishParams01 myWishParams01 = new MyWishParams01();
             myWishParams01.setItemId(contentId);
@@ -67,4 +70,20 @@ public class MyWishService {
         return result;
     }
 
+    public List<MyWishParams> getMyWish(Long userId) {
+        List<MyWishParams> result = new ArrayList<>();
+//        List<MyWish> list = myWishRepository.findAllOrderByWishTime();
+//        int len = list.size();
+//        if (len > 3){
+//            for (int i=len-1; i>len-4;i++){
+//                MyWishParams myWishParams = new MyWishParams();
+//                myWishParams.setTitle(list.get(i).get);
+//            }
+//        } else {
+//            for (MyWish myWish : list){
+//
+//            }
+//        }
+        return result;
+    }
 }

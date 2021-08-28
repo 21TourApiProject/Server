@@ -7,4 +7,7 @@ public interface TouristDataRepository extends JpaRepository<TouristData, Long> 
     TouristData findByContentId(@Param("contentId") Long contentId);
 
     List<TouristData> findByContentTypeId(@Param("contentTypeId") Long contentTypeId);
+
+    List<TouristData> findByIsNearAndContentTypeId(@Param("isNear") Integer isNear, @Param("contentTypeId") Long contentTypeId);
+
 }

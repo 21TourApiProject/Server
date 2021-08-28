@@ -4,6 +4,8 @@ import com.server.tourApiProject.touristPoint.area.AreaParams;
 import com.server.tourApiProject.touristPoint.area.AreaService;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeParams;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeService;
+import com.server.tourApiProject.touristPoint.nearTouristData.NearTouristData;
+import com.server.tourApiProject.touristPoint.nearTouristData.NearTouristDataRepository;
 import com.server.tourApiProject.touristPoint.touristData.TouristData;
 import com.server.tourApiProject.touristPoint.touristData.TouristDataService;
 import org.apache.commons.io.FilenameUtils;
@@ -27,11 +29,13 @@ public class ExcelController {
     private final TouristDataService touristDataService;
     private final AreaService areaService;
     private final ContentTypeService contentTypeService;
+    private final NearTouristDataRepository nearTouristDataRepository;
 
-    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService) {
+    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository) {
         this.touristDataService = touristDataService;
         this.areaService = areaService;
         this.contentTypeService = contentTypeService;
+        this.nearTouristDataRepository = nearTouristDataRepository;
     }
 
     @GetMapping("/excel")
@@ -177,26 +181,55 @@ public class ExcelController {
             data.setMapY(row.getCell(17).getNumericCellValue());
             data.setOpenTimeFood(row.getCell(18).getStringCellValue());
             data.setOverview(row.getCell(19).getStringCellValue());
-            if (!data.getOverview().equals("null")){
-                if (data.getOverview().length() > 15)
-                    data.setOverviewSim(data.getOverview().substring(0,15)+"..."); //나중에 수정
-                else
-                    data.setOverviewSim(data.getOverview());
-            } else{
-                data.setOverviewSim(null);
-            }
-            data.setPacking(row.getCell(20).getStringCellValue());
-            data.setParking(row.getCell(21).getStringCellValue());
-            data.setParkingFood(row.getCell(22).getStringCellValue());
-            data.setRestDate(row.getCell(23).getStringCellValue());
-            data.setRestDateFood(row.getCell(24).getStringCellValue());
-            data.setSigunguCode((long) row.getCell(25).getNumericCellValue());
-            data.setTel(row.getCell(26).getStringCellValue());
-            data.setTitle(row.getCell(27).getStringCellValue());
-            data.setTreatMenu(row.getCell(28).getStringCellValue());
-            data.setUseTime(row.getCell(29).getStringCellValue());
+            data.setOverviewSim(row.getCell(20).getStringCellValue());
+            data.setPacking(row.getCell(21).getStringCellValue());
+            data.setParking(row.getCell(22).getStringCellValue());
+            data.setParkingFood(row.getCell(23).getStringCellValue());
+            data.setRestDate(row.getCell(24).getStringCellValue());
+            data.setRestDateFood(row.getCell(25).getStringCellValue());
+            data.setSigunguCode((long) row.getCell(26).getNumericCellValue());
+            data.setTel(row.getCell(27).getStringCellValue());
+            data.setTitle(row.getCell(28).getStringCellValue());
+            data.setTreatMenu(row.getCell(29).getStringCellValue());
+            data.setUseTime(row.getCell(30).getStringCellValue());
 
             touristDataService.createTouristData(data);
+        }
+        System.out.println("엑셀 완료");
+        return "excel";
+    }
+
+    @PostMapping("/excel/nearTouristData/read")
+    public String readnearTouristDataExcel(@RequestParam("file") MultipartFile file, Model model)
+            throws IOException {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (!extension.equals("xlsx") && !extension.equals("xls")) {
+            throw new IOException("엑셀파일만 업로드 해주세요.");
+        }
+        Workbook workbook = null;
+
+        if (extension.equals("xlsx")) {
+            workbook = new XSSFWorkbook(file.getInputStream());
+        } else if (extension.equals("xls")) {
+            workbook = new HSSFWorkbook(file.getInputStream());
+        }
+
+        Sheet worksheet = workbook.getSheetAt(0);
+        System.out.println(worksheet.getPhysicalNumberOfRows());
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            Row row = worksheet.getRow(i);
+            NearTouristData data = new NearTouristData();
+
+            data.setNearTouristDataId((long) row.getCell(0).getNumericCellValue());
+            data.setAddr1(row.getCell(1).getStringCellValue());
+            data.setCat3Name(row.getCell(2).getStringCellValue());
+            data.setContentId((long) row.getCell(3).getNumericCellValue());
+            data.setFirstImage(row.getCell(4).getStringCellValue());
+            data.setOverviewSim(row.getCell(5).getStringCellValue());
+            data.setTitle(row.getCell(6).getStringCellValue());
+            data.setTouristDataId((long)row.getCell(7).getNumericCellValue());
+
+            nearTouristDataRepository.save(data);
         }
         System.out.println("엑셀 완료");
         return "excel";
