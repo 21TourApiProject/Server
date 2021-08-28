@@ -2,6 +2,8 @@ package com.server.tourApiProject.observation;
 
 import com.server.tourApiProject.hashTag.HashTag;
 import com.server.tourApiProject.hashTag.HashTagRepository;
+import com.server.tourApiProject.observation.observeFee.ObserveFee;
+import com.server.tourApiProject.observation.observeFee.ObserveFeeRepository;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTag;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTagParams;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTagRepository;
@@ -20,6 +22,7 @@ public class ObservationService {
     private final ObservationRepository observationRepository;
     private final ObserveHashTagRepository observeHashTagRepository;
     private final HashTagRepository hashTagRepository;
+    private final ObserveFeeRepository observeFeeRepository;
 
     public List<Observation> getAllObservation() {
         return observationRepository.findAll();
@@ -53,6 +56,13 @@ public class ObservationService {
             observeHashTagRepository.save(observeHashTag);
         }
 
+    }
+
+    public void createObserveFees(Long observationId, List<ObserveFee> feeList) {
+        Observation observation = observationRepository.findById(observationId).orElseThrow(IllegalAccessError::new);
+        for (ObserveFee p : feeList) {
+            observation.getObserveFees().add(p);
+        }
     }
 
     public Observation getObservation(Long observationId){

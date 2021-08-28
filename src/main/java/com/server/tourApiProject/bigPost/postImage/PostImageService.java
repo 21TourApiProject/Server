@@ -39,8 +39,18 @@ public class PostImageService {
             postImage.setImageName(p.getImageName());
             postImage.setPost(post);
             postImage.setPostId(post.getPostId());
+            postImage.setPostObservePointId(post.getPostObservePointId());
 
             postImageRepository.save(postImage);
         }
+    }
+    public List<String> getRelatePostImageList(Long postObservePointId){
+        List<String> postImageList = new ArrayList<>();
+        List<PostImage> postImagelist = postImageRepository.findByPostObservePointId(postObservePointId);
+        for(int i=1;i<postImagelist.size();i++) {
+            if (!postImagelist.get(i - 1).getPostId().equals(postImagelist.get(i).getPostId())) {
+            postImageList.add(postImagelist.get(i-1).getImageName());}
+        }
+        return postImageList;
     }
 }

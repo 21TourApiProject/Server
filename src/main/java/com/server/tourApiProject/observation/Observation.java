@@ -1,5 +1,6 @@
 package com.server.tourApiProject.observation;
 
+import com.server.tourApiProject.observation.observeFee.ObserveFee;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTag;
 import com.server.tourApiProject.observation.observeImage.ObserveImage;
 import lombok.*;
@@ -42,9 +43,6 @@ public class Observation {
     private String operatingHour;
 
     @Column
-    private String entranceFee;
-
-    @Column
     private String parking; //주차안내
 
     @Column
@@ -65,12 +63,17 @@ public class Observation {
     @Column
     private boolean nature;   //자연관광지
 
+    @Column
+    private Long courseOrder;   //코스내에서의 관측지 순서서
+
     @OneToMany(mappedBy = "observation")
+    private List<ObserveFee> observeFees=new ArrayList<>();
+
+   @OneToMany(mappedBy = "observation")
     private List<ObserveHashTag> observeHashTags=new ArrayList<>();
 
     @OneToMany(mappedBy = "observation")
     private List<ObserveImage> observeImages = new ArrayList<>();
 
     //코스 추가 필요함함
-
 }
