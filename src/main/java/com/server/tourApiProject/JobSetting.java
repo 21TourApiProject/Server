@@ -21,7 +21,7 @@ public class JobSetting {
         JobDetail jobDetail = buildJobDetail(JobA.class, new HashMap());
 
         try{
-            scheduler.scheduleJob(jobDetail, buildJobTrigger("0 50 19 * * ?"));
+            scheduler.scheduleJob(jobDetail, buildJobTrigger("10 42 20 * * ?"));
         } catch(SchedulerException e){
             e.printStackTrace();
         }

@@ -38,8 +38,11 @@ public class JobA extends QuartzJobBean {
     @Autowired
     private NearTouristDataController nearTouristDataController;
 
-    Long criteria = 202108260000L; //수정사항 기준 시간
+    Long criteria = 20210826000000L; //수정사항 기준 시간
     SimpleDateFormat format1 = new SimpleDateFormat ( "yyyyMMddHHmmss");
+
+    int newTour = 0;
+    int newFood = 0;
 
     @SneakyThrows
     @Override
@@ -57,6 +60,7 @@ public class JobA extends QuartzJobBean {
             Long modifiedTime = (Long) item.get("modifiedtime");
             if (modifiedTime < criteria)
                 break;
+            newTour++;
 
             String cat1;
             cat1 = (String) item.get("cat1");
@@ -201,7 +205,7 @@ public class JobA extends QuartzJobBean {
             touristData.setIsCom(0);
             touristDataRepository.save(touristData);
         }
-        System.out.println("기본 정보 완료");
+        System.out.println("기본 정보 완료 " + newTour);
 
         //관광지 추가정보
         for (Long contentId : tourId) {
@@ -209,7 +213,7 @@ public class JobA extends QuartzJobBean {
             if (touristData.getIsCom() == 1)
                 continue;
 
-            System.out.println("contentId = " + contentId);
+            System.out.println("1 contentId = " + contentId);
             JSONArray comm_list = getJson("/detailCommon", "&defaultYN=Y&overviewYN=Y&contentId=" + contentId, false); //공통 정보
             JSONObject comm = (JSONObject) comm_list.get(0);
 
@@ -302,7 +306,7 @@ public class JobA extends QuartzJobBean {
             if (touristData.getIsJu() == 1)
                 continue;
 
-            System.out.println("contentId = " + contentId);
+            System.out.println("2 contentId = " + contentId);
             String part2 = "&mapX=" + Double.toString(touristPointMap[i][0]) + "&mapY=" + Double.toString(touristPointMap[i][1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=12";
             JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
             for (int j = 1; j < near_list.size(); j++) {
@@ -316,13 +320,14 @@ public class JobA extends QuartzJobBean {
         List<Long> foodId = new ArrayList<>();
 
         //음식 기본정보
-        JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=39", false); //관광 정보
+        JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=C&contentTypeId=39", false); //관광 정보
         for (Object o : food_list) {
             JSONObject item = (JSONObject) o;
 
             Long modifiedTime = (Long) item.get("modifiedtime");
             if (modifiedTime < criteria)
                 break;
+            newFood++;
 
             String cat1;
             cat1 = (String) item.get("cat1");
@@ -467,7 +472,7 @@ public class JobA extends QuartzJobBean {
             touristData.setIsCom(0);
             touristDataRepository.save(touristData);
         }
-        System.out.println("기본 정보 완료");
+        System.out.println("기본 정보 완료 " + newFood);
 
         //음식 추가정보
         for (Long contentId : foodId) {
@@ -475,7 +480,7 @@ public class JobA extends QuartzJobBean {
             if (touristData.getIsCom() == 1)
                 continue;
 
-            System.out.println("contentId = " + contentId);
+            System.out.println("3 contentId = " + contentId);
             JSONArray comm_list = getJson("/detailCommon", "&overviewYN=Y&contentId=" + contentId, false); //공통 정보
             JSONObject comm = (JSONObject) comm_list.get(0);
 
@@ -566,7 +571,7 @@ public class JobA extends QuartzJobBean {
             if (touristData.getIsJu() == 1)
                 continue;
 
-            System.out.println("contentId = " + contentId);
+            System.out.println("4 contentId = " + contentId);
             String part2 = "&mapX=" + Double.toString(foodMap[i][0]) + "&mapY=" + Double.toString(foodMap[i][1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=39";
             JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
             for (int j = 1; j < near_list.size(); j++) {
@@ -576,7 +581,7 @@ public class JobA extends QuartzJobBean {
             touristData.setIsJu(1);
             touristDataRepository.save(touristData);
         }
-
+        System.out.println("수정사항 반영 종료");
         criteria = Long.parseLong(format1.format(time));
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         scheduler.pauseJob(jobKey);
