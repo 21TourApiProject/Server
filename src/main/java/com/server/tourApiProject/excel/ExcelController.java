@@ -188,51 +188,51 @@ public class ExcelController {
             data.setFirstImage(row.getCell(10).getStringCellValue());
             if (data.getFirstImage().equals("null"))
                 data.setFirstImage(null);
-            data.setFirstMenu(row.getCell(12).getStringCellValue());
+            data.setFirstMenu(row.getCell(11).getStringCellValue());
             if (data.getFirstMenu().equals("null"))
                 data.setFirstMenu(null);
-            data.setHomePage(row.getCell(13).getStringCellValue());
+            data.setHomePage(row.getCell(12).getStringCellValue());
             if (data.getHomePage().equals("null"))
                 data.setHomePage(null);
-            data.setIsCom((int)row.getCell(14).getNumericCellValue());
-            data.setIsJu((int)row.getCell(15).getNumericCellValue());
-            data.setMapX(row.getCell(16).getNumericCellValue());
-            data.setMapY(row.getCell(17).getNumericCellValue());
-            data.setOpenTimeFood(row.getCell(18).getStringCellValue());
+            data.setIsCom((int)row.getCell(13).getNumericCellValue());
+            data.setIsJu((int)row.getCell(14).getNumericCellValue());
+            data.setMapX(row.getCell(15).getNumericCellValue());
+            data.setMapY(row.getCell(16).getNumericCellValue());
+            data.setOpenTimeFood(row.getCell(17).getStringCellValue());
             if (data.getOpenTimeFood().equals("null"))
                 data.setOpenTimeFood(null);
-            data.setOverview(row.getCell(19).getStringCellValue());
+            data.setOverview(row.getCell(18).getStringCellValue());
             if (data.getOverview().equals("null"))
                 data.setOverview(null);
-            data.setOverviewSim(row.getCell(20).getStringCellValue());
+            data.setOverviewSim(row.getCell(19).getStringCellValue());
             if (data.getOverviewSim().equals("null"))
                 data.setOverviewSim(null);
-            data.setPacking(row.getCell(21).getStringCellValue());
+            data.setPacking(row.getCell(20).getStringCellValue());
             if (data.getPacking().equals("null"))
                 data.setPacking(null);
-            data.setParking(row.getCell(22).getStringCellValue());
+            data.setParking(row.getCell(21).getStringCellValue());
             if (data.getParking().equals("null"))
                 data.setParking(null);
-            data.setParkingFood(row.getCell(23).getStringCellValue());
+            data.setParkingFood(row.getCell(22).getStringCellValue());
             if (data.getParkingFood().equals("null"))
                 data.setParkingFood(null);
-            data.setRestDate(row.getCell(24).getStringCellValue());
+            data.setRestDate(row.getCell(23).getStringCellValue());
             if (data.getRestDate().equals("null"))
                 data.setRestDate(null);
-            data.setRestDateFood(row.getCell(25).getStringCellValue());
+            data.setRestDateFood(row.getCell(24).getStringCellValue());
             if (data.getRestDateFood().equals("null"))
                 data.setRestDateFood(null);
-            data.setSigunguCode((long) row.getCell(26).getNumericCellValue());
-            data.setTel(row.getCell(27).getStringCellValue());
+            data.setSigunguCode((long) row.getCell(25).getNumericCellValue());
+            data.setTel(row.getCell(26).getStringCellValue());
             if (data.getTel().equals("null"))
                 data.setTel(null);
-            data.setTitle(row.getCell(28).getStringCellValue());
+            data.setTitle(row.getCell(27).getStringCellValue());
             if (data.getTitle().equals("null"))
                 data.setTitle(null);
-            data.setTreatMenu(row.getCell(29).getStringCellValue());
+            data.setTreatMenu(row.getCell(28).getStringCellValue());
             if (data.getTreatMenu().equals("null"))
                 data.setTreatMenu(null);
-            data.setUseTime(row.getCell(30).getStringCellValue());
+            data.setUseTime(row.getCell(29).getStringCellValue());
             if (data.getUseTime().equals("null"))
                 data.setUseTime(null);
 
