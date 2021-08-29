@@ -12,6 +12,8 @@ import com.server.tourApiProject.observation.observeHashTag.ObserveHashTag;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTagRepository;
 import com.server.tourApiProject.observation.observeImage.ObserveImage;
 import com.server.tourApiProject.observation.observeImage.ObserveImageRepository;
+import com.server.tourApiProject.touristPoint.contentType.ContentType;
+import com.server.tourApiProject.touristPoint.contentType.ContentTypeRepository;
 import com.server.tourApiProject.touristPoint.touristData.TouristData;
 import com.server.tourApiProject.touristPoint.touristData.TouristDataRepository;
 import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTag;
@@ -35,6 +37,7 @@ import java.util.List;
 public class MyWishService {
 
     private final MyWishRepository myWishRepository;
+    private final ContentTypeRepository contentTypeRepository;
     private final UserRepository userRepository;
     private final ObservationRepository observationRepository;
     private final ObserveImageRepository observeImageRepository;
@@ -99,8 +102,8 @@ public class MyWishService {
 
             myWishParams01.setTitle(observation.getObservationName());
             myWishParams01.setAddress(observation.getAddress());
-            myWishParams01.setCat3(observation.getObserveType());
-            myWishParams01.setOverviewSim(observation.getOutline());
+            myWishParams01.setCat3Name(observation.getObserveType());
+            myWishParams01.setOverviewSim(observation.getOutline().substring(0,15) + "...");
 
             List<ObserveHashTag> hashTagList = observeHashTagRepository.findByObservationId(observationId);
             List<String> hashTagNames = new ArrayList<>();
@@ -126,7 +129,7 @@ public class MyWishService {
             myWishParams01.setThumbnail(touristData.getFirstImage());
             myWishParams01.setTitle(touristData.getTitle());
             myWishParams01.setAddress(touristData.getAddr1());
-            myWishParams01.setCat3(touristData.getCat3());
+            myWishParams01.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
             myWishParams01.setOverviewSim(touristData.getOverviewSim());
 
             List<TouristDataHashTag> hashTagList = touristDataHashTagRepository.findByContentId(contentId);
