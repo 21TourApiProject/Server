@@ -5,8 +5,6 @@ import com.server.tourApiProject.user.User;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalTime;
-import java.util.List;
 
 @Builder
 @Getter
@@ -32,9 +30,9 @@ public class MyWish {
     private Integer wishType; //0이면 관측지, 1이면 관광지, 2면 게시물
 
     @Column
-    private Long itemId; //관측지id 또는 관광지id 또는 게시물 id
+    private Long itemId; //관측지 id 또는 관광지 id 또는 게시물 id
 
     @Column(nullable = false)
-    private LocalTime wishTime; //찜한 시간
+    private Long wishTime; //찜한 시간
 
 }
