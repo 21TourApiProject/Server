@@ -1,7 +1,5 @@
 package com.server.tourApiProject.touristPoint.nearTouristData;
 
-import com.server.tourApiProject.touristPoint.touristData.TouristData;
-import com.server.tourApiProject.touristPoint.touristData.TouristDataParams;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -35,5 +33,11 @@ public class NearTouristDataController {
     @DeleteMapping(value = "nearTouristData/")
     public void deleteNearTouristData(){
         nearTouristDataService.deleteNearTouristData();
+    }
+
+    @ApiOperation(value = "관광지 삭제", notes = "모든 관광지를 삭제한다")
+    @DeleteMapping(value = "nearTouristData/touristPoint")
+    public void deleteNearTouristPoint(){
+        nearTouristDataService.deleteNearTouristPoint();
     }
 }
