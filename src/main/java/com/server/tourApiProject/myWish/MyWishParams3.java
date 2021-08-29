@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MyWishParams {
+public class MyWishParams3 {
     private String thumbnail; //썸네일
     private String title; //제목
 }

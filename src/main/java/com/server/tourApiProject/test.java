@@ -1,14 +1,13 @@
 package com.server.tourApiProject;
 
+import java.time.LocalDateTime;
+
 public class test {
     public static void main(String[] args) {
-        String overview = "as<a href=das</a>d";
-        int i = overview.indexOf("<a href=");
-        int j = overview.indexOf("</a>");
-        if (i != -1 && j != -1) {
-            overview = overview.substring(0, i) + overview.substring(j);
-            overview = overview.replaceAll("</a>", " ");
+        LocalDateTime date1 = LocalDateTime.parse("2021-08-29T23:44:00.884434");
+        LocalDateTime date2 = LocalDateTime.parse("2021-08-29T23:44:03.439894");
+        if (date1.isBefore(date2)) {
+            System.out.println("Date1 is before Date2");
         }
-        System.out.println(overview);
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@Api(tags = {"5.5 관광지 해시태그"})
+@Api(tags = {"5.5 관광지-해시태그"})
 @RestController
 @RequestMapping(value = "/v1")
 @RequiredArgsConstructor
