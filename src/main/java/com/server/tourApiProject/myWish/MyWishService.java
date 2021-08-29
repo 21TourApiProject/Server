@@ -33,6 +33,7 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class MyWishService {
+
     private final MyWishRepository myWishRepository;
     private final UserRepository userRepository;
     private final ObservationRepository observationRepository;
@@ -175,20 +176,50 @@ public class MyWishService {
 
     public List<MyWishParams3> getMyWish(Long userId) {
         List<MyWishParams3> result = new ArrayList<>();
-//        List<MyWish> list = myWishRepository.findAllOrderByWishTime();
-//        int len = list.size();
-//        if (len > 3){
-//            for (int i=len-1; i>len-4;i++){
-//                MyWishParams myWishParams = new MyWishParams();
-//                myWishParams.setTitle(list.get(i).get);
-//            }
-//        } else {
-//            for (MyWish myWish : list){
-//
-//            }
-//        }
+        List<MyWish> list = myWishRepository.findByUserId(userId);
+        List<MyWish> three = new ArrayList<>();
+        int len = list.size();
+        if (len > 3){
+            for (int i=len-1; i>len-4; i--){
+                three.add(list.get(i));
+            }
+        } else {
+            three = list;
+        }
+
+        for (MyWish myWish : three){
+            MyWishParams3 myWishParams3 = new MyWishParams3();
+            if (myWish.getWishType() == 0){
+                Observation observation = observationRepository.findById(myWish.getItemId()).orElseThrow(IllegalAccessError::new);
+                myWishParams3.setTitle(observation.getObservationName());
+                List<ObserveImage> imageList = observeImageRepository.findByObservationId(myWish.getItemId());
+                ObserveImage observeImage = imageList.get(0);
+                myWishParams3.setThumbnail(observeImage.getImage());
+
+                result.add(myWishParams3);
+            }
+            else if (myWish.getWishType() == 1){
+                TouristData touristData = touristDataRepository.findById(myWish.getItemId()).orElseThrow(IllegalAccessError::new);
+                myWishParams3.setTitle(touristData.getTitle());
+                myWishParams3.setThumbnail(touristData.getFirstImage());
+
+                result.add(myWishParams3);
+            }
+            else if (myWish.getWishType() == 2){
+                Post post = postRepository.findById(myWish.getItemId()).orElseThrow(IllegalAccessError::new);
+                myWishParams3.setTitle(post.getPostTitle());
+                List<PostImage> imageList = postImageRepository.findByPostId(myWish.getItemId());
+                PostImage postImage = imageList.get(0);
+                myWishParams3.setThumbnail(postImage.getImageName());
+
+                result.add(myWishParams3);
+            }
+
+        }
         return result;
     }
+
+
 
 
 }
