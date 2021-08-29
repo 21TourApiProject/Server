@@ -118,4 +118,18 @@ public class TouristDataService {
         return result;
 
     }
+
+    public TouristDataCourseParams getCourseTouristPointData(Long contentId) {
+        TouristData touristData = touristDataRepository.findByContentId(contentId);
+        TouristDataCourseParams result = new TouristDataCourseParams();
+
+        result.setContentTypeId(touristData.getContentTypeId()); //12
+        result.setFirstImage(touristData.getFirstImage());
+        result.setTitle(touristData.getTitle());
+        result.setOverview(touristData.getOverview());
+        result.setAddr1(touristData.getAddr1());
+        result.setUseTime(touristData.getUseTime());
+        result.setParking(touristData.getParking());
+        return result;
+    }
 }
