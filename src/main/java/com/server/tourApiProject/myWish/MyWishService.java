@@ -103,11 +103,11 @@ public class MyWishService {
             myWishParams01.setOverviewSim(observation.getOutline());
 
             List<ObserveHashTag> hashTagList = observeHashTagRepository.findByObservationId(observationId);
-            List<Long> hashTags = new ArrayList<>();
+            List<String> hashTagNames = new ArrayList<>();
             for (ObserveHashTag hashTag : hashTagList){
-                hashTags.add(hashTag.getHashTagId());
+                hashTagNames.add(hashTag.getHashTagName());
             }
-            myWishParams01.setHashTags(hashTags);
+            myWishParams01.setHashTagNames(hashTagNames);
 
             result.add(myWishParams01);
         }
@@ -130,11 +130,11 @@ public class MyWishService {
             myWishParams01.setOverviewSim(touristData.getOverviewSim());
 
             List<TouristDataHashTag> hashTagList = touristDataHashTagRepository.findByContentId(contentId);
-            List<Long> hashTags = new ArrayList<>();
+            List<String> hashTagNames = new ArrayList<>();
             for (TouristDataHashTag hashTag : hashTagList){
-                hashTags.add(hashTag.getHashTagId());
+                hashTagNames.add(hashTag.getHashTagName());
             }
-            myWishParams01.setHashTags(hashTags);
+            myWishParams01.setHashTagNames(hashTagNames);
 
             result.add(myWishParams01);
         }
@@ -163,11 +163,11 @@ public class MyWishService {
             myWishParams2.setProfileImage(user.getProfileImage());
 
             List<PostHashTag> hashTagList = postHashTagRepository.findByPostId(postId);
-            List<Long> hashTags = new ArrayList<>();
+            List<String> hashTagNames = new ArrayList<>();
             for (PostHashTag hashTag : hashTagList){
-                hashTags.add(hashTag.getHashTagId());
+                hashTagNames.add(hashTag.getHashTagName());
             }
-            myWishParams2.setHashTags(hashTags);
+            myWishParams2.setHashTagNames(hashTagNames);
 
             result.add(myWishParams2);
         }
@@ -190,6 +190,7 @@ public class MyWishService {
         for (MyWish myWish : three){
             MyWishParams3 myWishParams3 = new MyWishParams3();
             if (myWish.getWishType() == 0){
+                myWishParams3.setWishType(0);
                 Observation observation = observationRepository.findById(myWish.getItemId()).orElseThrow(IllegalAccessError::new);
                 myWishParams3.setTitle(observation.getObservationName());
                 List<ObserveImage> imageList = observeImageRepository.findByObservationId(myWish.getItemId());
@@ -199,6 +200,7 @@ public class MyWishService {
                 result.add(myWishParams3);
             }
             else if (myWish.getWishType() == 1){
+                myWishParams3.setWishType(1);
                 TouristData touristData = touristDataRepository.findById(myWish.getItemId()).orElseThrow(IllegalAccessError::new);
                 myWishParams3.setTitle(touristData.getTitle());
                 myWishParams3.setThumbnail(touristData.getFirstImage());
@@ -206,6 +208,7 @@ public class MyWishService {
                 result.add(myWishParams3);
             }
             else if (myWish.getWishType() == 2){
+                myWishParams3.setWishType(2);
                 Post post = postRepository.findById(myWish.getItemId()).orElseThrow(IllegalAccessError::new);
                 myWishParams3.setTitle(post.getPostTitle());
                 List<PostImage> imageList = postImageRepository.findByPostId(myWish.getItemId());

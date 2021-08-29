@@ -17,5 +17,5 @@ public class MyWishParams01 {
     private String address; //주소
     private String cat3; //분류 ex) 카페, 해변..
     private String overviewSim; //짧은 개요
-    private List<Long> hashTags; //해시태그 배열
+    private List<String> hashTagNames; //해시태그 배열
 }
