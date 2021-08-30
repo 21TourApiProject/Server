@@ -34,23 +34,24 @@
 //        System.out.println("order2");
 //
 //        //관광지 기본정보
-//        JSONArray tour_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=12", false); //관광 정보
-//        for (Object o : tour_list) {
-//            JSONObject item = (JSONObject) o;
-//            TouristData touristData = getTouristData(item);
-//            System.out.println("touristData = " + touristData.getContentId());
-//
-//            if (touristData.getCat1() == null)
-//                continue;
-//            if (touristData.getCat1().equals("A01") || touristData.getCat1().equals("A02")){
-//                touristData.setIsCom(0);
-//                touristData.setIsJu(0);
-//                touristDataController.createTouristData(touristData);
-//            } else{
-//                error++;
-//            }
-//        }
-//        System.out.println("기본 정보 완료" + error);
+////        JSONArray tour_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=12", false); //관광 정보
+////        for (Object o : tour_list) {
+////            JSONObject item = (JSONObject) o;
+////            TouristData touristData = getTouristData(item);
+////
+////            String cat1;
+////            cat1 = (String) item.get("cat1");
+////            String cat2;
+////            cat2 = (String) item.get("cat2");
+////            if ((cat1 == null || cat1.equals("A01") || cat1.equals("A02")) && (cat2 == null || cat2.equals("A0101") || cat2.equals("A0102") || cat2.equals("A0201") || cat2.equals("A0202") || cat2.equals("A0203") || cat2.equals("A0204") || cat2.equals("A0205"))){
+////                touristData.setIsCom(0);
+////                touristData.setIsJu(0);
+////                touristDataController.createTouristData(touristData);
+////            } else {
+////                error++;
+////            }
+////        }
+////        System.out.println("기본 정보 완료 " + error);
 //
 //        //관광지 추가정보
 //        List<Long> touristPointId = touristDataController.getTouristPointId();
@@ -61,7 +62,7 @@
 //            if (touristData.getIsCom() == 1)
 //                continue;
 //
-//            System.out.println("contentId = " + contentId);
+//            System.out.println("1 contentId = " + contentId);
 //            JSONArray comm_list = getJson("/detailCommon", "&defaultYN=Y&overviewYN=Y&contentId=" + contentId, false); //공통 정보
 //            JSONObject comm = (JSONObject) comm_list.get(0);
 //
@@ -93,7 +94,7 @@
 //            JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=12&contentId=" + contentId, false); //소개 정보
 //            JSONObject intro = (JSONObject) intro_list.get(0);
 //
-//            if (intro.get("usetime") != null) {
+//            if (intro.get("usetime") != null || intro.get("usetime") != "") {
 //                if (intro.get("usetime").getClass().getName().equals("java.lang.String")) {
 //                    touristData.setUseTime(extractString((String) intro.get("usetime")));
 //                } else if (intro.get("usetime").getClass().getName().equals("java.lang.Long")) {
@@ -142,14 +143,14 @@
 //        }
 //
 //        for (int i=0; i < touristPointId.size(); i++){
-//            if (touristPointMap[i][0] == null)
+//            if (touristPointMap[i][0] == -1 || touristPointMap[i][1] == -1)
 //                continue;
 //            Long contentId = touristPointId.get(i);
 //            TouristData touristData = touristDataRepository.findByContentId(contentId);
 //            if (touristData.getIsJu() == 1)
 //                continue;
 //
-//            System.out.println("contentId = " + contentId);
+//            System.out.println("2 contentId = " + contentId);
 //            String part2 = "&mapX=" + Double.toString(touristPointMap[i][0]) + "&mapY=" + Double.toString(touristPointMap[i][1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=12";
 //            JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
 //            for (int j = 1; j < near_list.size(); j++) {
@@ -161,21 +162,24 @@
 //        }
 //
 //        //음식 기본정보
-//        JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=39", false); //관광 정보
-//        for (Object o : food_list) {
-//            JSONObject item = (JSONObject) o;
-//            TouristData touristData = getTouristData(item);
-//            if (touristData.getCat1() == null)
-//                continue;
-//            if (touristData.getCat1().equals("A05")){
-//                touristData.setIsCom(0);
-//                touristData.setIsJu(0);
-//                touristDataController.createTouristData(touristData);
-//            } else{
-//                error++;
-//            }
-//        }
-//        System.out.println("기본 정보 완료"  + error);
+////        JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=39", false); //관광 정보
+////        for (Object o : food_list) {
+////            JSONObject item = (JSONObject) o;
+////            TouristData touristData = getTouristData(item);
+////
+////            String cat1;
+////            cat1 = (String) item.get("cat1");
+////            String cat2;
+////            cat2 = (String) item.get("cat2");
+////            if ((cat1 == null || cat1.equals("A05")) && (cat2 == null || cat2.equals("A0502"))){
+////                touristData.setIsCom(0);
+////                touristData.setIsJu(0);
+////                touristDataController.createTouristData(touristData);
+////            } else {
+////                error++;
+////            }
+////        }
+////        System.out.println("기본 정보 완료 " + error);
 //
 //        //음식 추가정보
 //        List<Long> foodId = touristDataController.getFoodId();
@@ -186,7 +190,7 @@
 //            if (touristData.getIsCom() == 1)
 //                continue;
 //
-//            System.out.println("contentId = " + contentId);
+//            System.out.println("3 contentId = " + contentId);
 //            JSONArray comm_list = getJson("/detailCommon", "&overviewYN=Y&contentId=" + contentId, false); //공통 정보
 //            JSONObject comm = (JSONObject) comm_list.get(0);
 //
@@ -275,7 +279,7 @@
 //            if (touristData.getIsJu() == 1)
 //                continue;
 //
-//            System.out.println("contentId = " + contentId);
+//            System.out.println("4 contentId = " + contentId);
 //            String part2 = "&mapX=" + Double.toString(foodMap[i][0]) + "&mapY=" + Double.toString(foodMap[i][1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=39";
 //            JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
 //            for (int j = 1; j < near_list.size(); j++) {
@@ -312,6 +316,7 @@
 //        overview = overview.replaceAll("&gt;","");
 //        overview = overview.replaceAll("&amp;","");
 //        overview = overview.replaceAll("\n"," ");
+//
 //        int i = overview.indexOf("<a href=");
 //        int j = overview.indexOf("</a>");
 //        if (i != -1 && j != -1) {
@@ -342,9 +347,15 @@
 //            else if (item.get("addr2").getClass().getName().equals("java.lang.Long")){
 //                touristData.setAddr2(String.valueOf(item.get("addr2")));
 //            }
+//        } else{
+//            touristData.setAddr2(null);
 //        }
 //
-//        touristData.setAreaCode((Long) item.get("areacode"));
+//        if(item.get("areacode") != null){
+//            touristData.setAreaCode((Long) item.get("areacode"));
+//        } else{
+//            touristData.setAreaCode(-1L);
+//        }
 //
 //        tmp = (String) item.get("cat1");
 //        if (tmp == null) {
@@ -403,10 +414,14 @@
 //                touristData.setMapY(Double.valueOf((String) item.get("mapy")));
 //            }
 //        } else{
-//            touristData.setMapX(-1D);
+//            touristData.setMapY(-1D);
 //        }
 //
-//        touristData.setSigunguCode((Long) item.get("sigungucode"));
+//        if(item.get("sigungucode") != null){
+//            touristData.setSigunguCode((Long) item.get("sigungucode"));
+//        } else{
+//            touristData.setSigunguCode(-1L);
+//        }
 //
 //        tmp = (String) item.get("tel");
 //        if (tmp == null) {
@@ -438,8 +453,6 @@
 //
 //        try{
 //            URL url = new URL("http://api.visitkorea.or.kr/openapi/service/rest/KorService" + part1 + key + part2 + "&MobileOS=AND&MobileApp=tourApiProject&_type=json");
-////            if(isNear)
-////                System.out.println("url = " + url);
 //            BufferedReader bf; //빠른 속도로 데이터를 처리하기 위해
 //            bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
 //            result = bf.readLine(); //api로 받아온 결과
