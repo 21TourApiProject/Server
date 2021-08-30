@@ -128,8 +128,20 @@ public class TouristDataService {
         result.setTitle(touristData.getTitle());
         result.setOverview(touristData.getOverview());
         result.setAddr1(touristData.getAddr1());
-        result.setUseTime(touristData.getUseTime());
-        result.setParking(touristData.getParking());
+
+
+        if (touristData.getContentId() == 12)//관광지
+        {
+            result.setUseTime(touristData.getUseTime());
+            result.setParking(touristData.getParking());
+            result.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
+        } else {
+            result.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
+            result.setUseTime(touristData.getOpenTimeFood());
+            result.setTreatMenu(touristData.getTreatMenu());
+            result.setParking(touristData.getParkingFood());
+        }
+
         return result;
     }
 

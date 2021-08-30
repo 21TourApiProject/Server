@@ -101,5 +101,9 @@ public class TouristDataController {
         return touristDataService.getFoodId2();
     }
 
-
+    @ApiOperation(value = "코스 관광지 정보 조회", notes = "코스에 필요한 관광지 정보를 조회한다")
+    @GetMapping(value = "touristData/CoursetouristPoint/{contentId}")
+    public TouristDataCourseParams getCourseTouristPointData(@PathVariable("contentId") Long contentId){
+        return touristDataService.getCourseTouristPointData(contentId);
+    }
 }
