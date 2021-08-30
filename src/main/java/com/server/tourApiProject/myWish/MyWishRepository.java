@@ -5,12 +5,13 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface MyWishRepository extends JpaRepository<MyWish, Long> {
 
     List<MyWish> findByUserIdAndWishType(@Param("userId") Long userId, @Param("wishType") Integer wishType);
 
-    List<MyWish> findAllOrderByWishTime(@Param("wishTime") LocalTime wishTime);
-
     List<MyWish> findByUserId(@Param("userId") Long userId);
+
+    Optional<MyWish> findByUserIdAndItemIdAndWishType(@Param("userId") Long userId, @Param("itemId") Long itemId, @Param("wishType") Integer wishType);
 }

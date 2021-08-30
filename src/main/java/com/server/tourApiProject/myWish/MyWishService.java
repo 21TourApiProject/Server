@@ -29,6 +29,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -84,6 +85,19 @@ public class MyWishService {
                 myWishRepository.save(myWish);
                 break;
         }
+    }
+
+    //이전에 이미 찜을 해놓았는지 확인하기
+    public Boolean isThereMyWish(Long userId, Long itemId, Integer wishType) {
+        Optional<MyWish> myWish = myWishRepository.findByUserIdAndItemIdAndWishType(userId, itemId, wishType);
+        return myWish.isPresent();
+    }
+
+    //찜해 놓은거 삭제
+    public void deleteMyWish(Long userId, Long itemId, Integer wishType) {
+        Optional<MyWish> myWishOp = myWishRepository.findByUserIdAndItemIdAndWishType(userId, itemId, wishType);
+        MyWish myWish = myWishOp.get();
+        myWishRepository.delete(myWish);
     }
 
     //찜한 관측지 목록 불러오기
@@ -224,8 +238,5 @@ public class MyWishService {
         }
         return result;
     }
-
-
-
 
 }
