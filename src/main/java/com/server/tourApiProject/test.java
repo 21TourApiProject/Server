@@ -1,17 +1,13 @@
 package com.server.tourApiProject;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class test {
     public static void main(String[] args) {
-        LocalDateTime now = LocalDateTime.now(); // 현재시간
-        LocalDateTime oneDayAgo = now.minusDays(1);
-        System.out.println(oneDayAgo.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
-
-        Long a = Long.parseLong(LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
+        List<String> a = new ArrayList<>();
         System.out.println(a);
-        if (20210829040000L < a)
-            System.out.println(123);
+        if (a.isEmpty())
+            System.out.println(13);
     }
 }

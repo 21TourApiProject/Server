@@ -111,8 +111,12 @@ public class MyWishService {
             myWishParams01.setItemId(observationId);
 
             List<ObserveImage> imageList = observeImageRepository.findByObservationId(observationId);
-            ObserveImage observeImage = imageList.get(0);
-            myWishParams01.setThumbnail(observeImage.getImage());
+            if (!imageList.isEmpty()){
+                ObserveImage observeImage = imageList.get(0);
+                myWishParams01.setThumbnail(observeImage.getImage());
+            } else {
+                myWishParams01.setThumbnail(null);
+            }
 
             myWishParams01.setTitle(observation.getObservationName());
             myWishParams01.setAddress(observation.getAddress());
@@ -170,8 +174,12 @@ public class MyWishService {
             myWishParams2.setItemId(postId);
 
             List<PostImage> imageList = postImageRepository.findByPostId(postId);
-            PostImage postImage = imageList.get(0);
-            myWishParams2.setThumbnail(postImage.getImageName());
+            if (!imageList.isEmpty()){
+                PostImage postImage = imageList.get(0);
+                myWishParams2.setThumbnail(postImage.getImageName());
+            } else {
+                myWishParams2.setThumbnail(null);
+            }
 
             myWishParams2.setTitle(post.getPostTitle());
 
@@ -191,7 +199,7 @@ public class MyWishService {
         return result;
     }
 
-    public List<MyWishParams3> getMyWish(Long userId) {
+    public List<MyWishParams3> getMyWish3(Long userId) {
         List<MyWishParams3> result = new ArrayList<>();
         List<MyWish> list = myWishRepository.findByUserId(userId);
         List<MyWish> three = new ArrayList<>();
@@ -211,8 +219,12 @@ public class MyWishService {
                 Observation observation = observationRepository.findById(myWish.getItemId()).orElseThrow(IllegalAccessError::new);
                 myWishParams3.setTitle(observation.getObservationName());
                 List<ObserveImage> imageList = observeImageRepository.findByObservationId(myWish.getItemId());
-                ObserveImage observeImage = imageList.get(0);
-                myWishParams3.setThumbnail(observeImage.getImage());
+                if (!imageList.isEmpty()) {
+                    ObserveImage observeImage = imageList.get(0);
+                    myWishParams3.setThumbnail(observeImage.getImage());
+                } else{
+                    myWishParams3.setThumbnail(null);
+                }
 
                 result.add(myWishParams3);
             }
@@ -229,8 +241,12 @@ public class MyWishService {
                 Post post = postRepository.findById(myWish.getItemId()).orElseThrow(IllegalAccessError::new);
                 myWishParams3.setTitle(post.getPostTitle());
                 List<PostImage> imageList = postImageRepository.findByPostId(myWish.getItemId());
-                PostImage postImage = imageList.get(0);
-                myWishParams3.setThumbnail(postImage.getImageName());
+                if (!imageList.isEmpty()) {
+                    PostImage postImage = imageList.get(0);
+                    myWishParams3.setThumbnail(postImage.getImageName());
+                } else{
+                    myWishParams3.setThumbnail(null);
+                }
 
                 result.add(myWishParams3);
             }

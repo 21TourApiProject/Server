@@ -623,6 +623,11 @@ public class JobA extends QuartzJobBean {
             JSONObject jsonObject = (JSONObject)jsonParser.parse(result);
             JSONObject response = (JSONObject)jsonObject.get("response");
             JSONObject body = (JSONObject)response.get("body");
+            if (body == null){
+                System.out.println("수정사항 반영 중단");
+                Scheduler scheduler = schedulerFactoryBean.getScheduler();
+                scheduler.pauseJob(jobKey);
+            }
             Long count = (Long)body.get("totalCount");
 
             if (count == 0){
@@ -662,6 +667,11 @@ public class JobA extends QuartzJobBean {
                     JSONObject jsonObject2 = (JSONObject)jsonParser2.parse(result);
                     JSONObject response2 = (JSONObject)jsonObject2.get("response");
                     JSONObject body2 = (JSONObject)response2.get("body");
+                    if (body2 == null){
+                        System.out.println("수정사항 반영 중단");
+                        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+                        scheduler.pauseJob(jobKey);
+                    }
                     JSONObject items2 = (JSONObject)body2.get("items");
                     JSONArray item_list2 = (JSONArray) items2.get("item");
                     bf2.close();

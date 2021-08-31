@@ -28,7 +28,7 @@ public class MyWishController {
         return myWishService.isThereMyWish(userId, itemId, wishType);
     }
 
-    @ApiOperation(value = "내 찜 입력", notes = "찜한 것(관측지 또는 관광지 또는 게시물)의 정보를 삭제한다")
+    @ApiOperation(value = "내 찜 삭제", notes = "찜한 것(관측지 또는 관광지 또는 게시물)의 정보를 삭제한다")
     @DeleteMapping(value = "myWish/{userId}/{itemId}/{wishType}")
     public void deleteMyWish(@PathVariable("userId") Long userId, @PathVariable("itemId") Long itemId, @PathVariable("wishType") Integer wishType){
         myWishService.deleteMyWish(userId, itemId, wishType);
@@ -53,8 +53,8 @@ public class MyWishController {
     }
 
     @ApiOperation(value = "내 찜 3개 조회", notes = "해당 사용자가 최근에 찜한 것(최대 3개)을 조회한다")
-    @GetMapping(value = "myWish/{userId}")
-    public List<MyWishParams3> getMyWish(@PathVariable("userId") Long userId){
-        return myWishService.getMyWish(userId);
+    @GetMapping(value = "myWish/3/{userId}")
+    public List<MyWishParams3> getMyWish3(@PathVariable("userId") Long userId){
+        return myWishService.getMyWish3(userId);
     }
 }
