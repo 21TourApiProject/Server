@@ -27,9 +27,9 @@ public class ObserveImage {
     private Long observationId;
 
     @Column(nullable = false)
-    private String image;
+    private String image;   // 이미지 경로
 
     @Column
-    private String imageSource;
+    private String imageSource; //이미지 출저
 
 }

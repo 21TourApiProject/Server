@@ -119,6 +119,32 @@ public class TouristDataService {
 
     }
 
+    public TouristDataCourseParams getCourseTouristPointData(Long contentId) {
+        TouristData touristData = touristDataRepository.findByContentId(contentId);
+        TouristDataCourseParams result = new TouristDataCourseParams();
+
+        result.setContentTypeId(touristData.getContentTypeId()); //12
+        result.setFirstImage(touristData.getFirstImage());
+        result.setTitle(touristData.getTitle());
+        result.setOverview(touristData.getOverview());
+        result.setAddr1(touristData.getAddr1());
+
+
+        if (touristData.getContentId() == 12)//관광지
+        {
+            result.setUseTime(touristData.getUseTime());
+            result.setParking(touristData.getParking());
+            result.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
+        } else {
+            result.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
+            result.setUseTime(touristData.getOpenTimeFood());
+            result.setTreatMenu(touristData.getTreatMenu());
+            result.setParking(touristData.getParkingFood());
+        }
+
+        return result;
+    }
+
     public void deleteTouristPoint() {
         List<TouristData> t12  = touristDataRepository.findByContentTypeId(12L);
         for (TouristData touristData : t12) {
