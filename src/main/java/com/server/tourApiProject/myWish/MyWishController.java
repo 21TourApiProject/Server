@@ -22,6 +22,18 @@ public class MyWishController {
         myWishService.createMyWish(userId, itemId, wishType);
     }
 
+    @ApiOperation(value = "내 찜 조희", notes = "해당하는 아이템에 대해 사용자가 찜을 했는지 조회한다.")
+    @GetMapping(value = "myWish/{userId}/{itemId}/{wishType}")
+    public Boolean isThereMyWish(@PathVariable("userId") Long userId, @PathVariable("itemId") Long itemId, @PathVariable("wishType") Integer wishType){
+        return myWishService.isThereMyWish(userId, itemId, wishType);
+    }
+
+    @ApiOperation(value = "내 찜 삭제", notes = "찜한 것(관측지 또는 관광지 또는 게시물)의 정보를 삭제한다")
+    @DeleteMapping(value = "myWish/{userId}/{itemId}/{wishType}")
+    public void deleteMyWish(@PathVariable("userId") Long userId, @PathVariable("itemId") Long itemId, @PathVariable("wishType") Integer wishType){
+        myWishService.deleteMyWish(userId, itemId, wishType);
+    }
+
     @ApiOperation(value = "내 찜 관측지 조회", notes = "해당 사용자가 찜한 모든 '관측지' 목록을 조회한다")
     @GetMapping(value = "myWish/observation/{userId}")
     public List<MyWishParams01> getMyWishObservation(@PathVariable("userId") Long userId){
@@ -41,8 +53,8 @@ public class MyWishController {
     }
 
     @ApiOperation(value = "내 찜 3개 조회", notes = "해당 사용자가 최근에 찜한 것(최대 3개)을 조회한다")
-    @GetMapping(value = "myWish/{userId}")
-    public List<MyWishParams3> getMyWish(@PathVariable("userId") Long userId){
-        return myWishService.getMyWish(userId);
+    @GetMapping(value = "myWish/3/{userId}")
+    public List<MyWishParams3> getMyWish3(@PathVariable("userId") Long userId){
+        return myWishService.getMyWish3(userId);
     }
 }

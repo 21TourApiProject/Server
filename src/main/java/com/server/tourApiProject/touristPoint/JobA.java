@@ -8,7 +8,10 @@ import lombok.SneakyThrows;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.quartz.*;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +21,9 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,8 +41,7 @@ public class JobA extends QuartzJobBean {
     @Autowired
     private NearTouristDataController nearTouristDataController;
 
-    Long criteria = 20210826000000L; //수정사항 기준 시간
-    SimpleDateFormat format1 = new SimpleDateFormat ( "yyyyMMddHHmmss");
+    Long criteria = Long.parseLong(LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))); //수정사항 기준 시간
 
     int newTour = 0;
     int newFood = 0;
@@ -48,8 +50,8 @@ public class JobA extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         log.info("수정사항 반영");
+        System.out.println("criteria = " + criteria);
         jobKey = jobExecutionContext.getJobDetail().getKey();
-        Date time = new Date();
         List<Long> tourId = new ArrayList<>();
 
         //관광지 기본정보
@@ -237,7 +239,7 @@ public class JobA extends QuartzJobBean {
             JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=12&contentId=" + contentId, false); //소개 정보
             JSONObject intro = (JSONObject) intro_list.get(0);
 
-            if (intro.get("usetime") != null) {
+            if (intro.get("usetime") != null || intro.get("usetime") != "") {
                 if (intro.get("usetime").getClass().getName().equals("java.lang.String")) {
                     touristData.setUseTime(extractString((String) intro.get("usetime")));
                 } else if (intro.get("usetime").getClass().getName().equals("java.lang.Long")) {
@@ -425,7 +427,7 @@ public class JobA extends QuartzJobBean {
                     touristData.setMapY(Double.valueOf((String) item.get("mapy")));
                 }
             } else{
-                touristData.setMapX(-1D);
+                touristData.setMapY(-1D);
             }
 
             if(item.get("sigungucode") != null){
@@ -564,10 +566,8 @@ public class JobA extends QuartzJobBean {
             touristDataRepository.save(touristData);
         }
         System.out.println("수정사항 반영 종료");
-        criteria = Long.parseLong(format1.format(time));
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         scheduler.pauseJob(jobKey);
-
     }
 
     public String extractHomePage(String url){
@@ -623,6 +623,11 @@ public class JobA extends QuartzJobBean {
             JSONObject jsonObject = (JSONObject)jsonParser.parse(result);
             JSONObject response = (JSONObject)jsonObject.get("response");
             JSONObject body = (JSONObject)response.get("body");
+            if (body == null){
+                System.out.println("수정사항 반영 중단");
+                Scheduler scheduler = schedulerFactoryBean.getScheduler();
+                scheduler.pauseJob(jobKey);
+            }
             Long count = (Long)body.get("totalCount");
 
             if (count == 0){
@@ -662,6 +667,11 @@ public class JobA extends QuartzJobBean {
                     JSONObject jsonObject2 = (JSONObject)jsonParser2.parse(result);
                     JSONObject response2 = (JSONObject)jsonObject2.get("response");
                     JSONObject body2 = (JSONObject)response2.get("body");
+                    if (body2 == null){
+                        System.out.println("수정사항 반영 중단");
+                        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+                        scheduler.pauseJob(jobKey);
+                    }
                     JSONObject items2 = (JSONObject)body2.get("items");
                     JSONArray item_list2 = (JSONArray) items2.get("item");
                     bf2.close();

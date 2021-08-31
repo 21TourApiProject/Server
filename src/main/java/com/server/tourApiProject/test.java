@@ -1,10 +1,13 @@
 package com.server.tourApiProject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class test {
     public static void main(String[] args) {
-        int len = 3;
-        for (int i=len-1; i>len-4;i--){
-            System.out.println(i);
-        }
+        List<String> a = new ArrayList<>();
+        System.out.println(a);
+        if (a.isEmpty())
+            System.out.println(13);
     }
 }

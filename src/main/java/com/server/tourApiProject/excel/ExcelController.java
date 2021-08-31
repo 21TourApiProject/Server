@@ -8,6 +8,8 @@ import com.server.tourApiProject.touristPoint.nearTouristData.NearTouristData;
 import com.server.tourApiProject.touristPoint.nearTouristData.NearTouristDataRepository;
 import com.server.tourApiProject.touristPoint.touristData.TouristData;
 import com.server.tourApiProject.touristPoint.touristData.TouristDataService;
+import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTag;
+import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTagRepository;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -30,12 +32,14 @@ public class ExcelController {
     private final AreaService areaService;
     private final ContentTypeService contentTypeService;
     private final NearTouristDataRepository nearTouristDataRepository;
+    private final TouristDataHashTagRepository touristDataHashTagRepository;
 
-    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository) {
+    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository) {
         this.touristDataService = touristDataService;
         this.areaService = areaService;
         this.contentTypeService = contentTypeService;
         this.nearTouristDataRepository = nearTouristDataRepository;
+        this.touristDataHashTagRepository = touristDataHashTagRepository;
     }
 
     @GetMapping("/excel")
@@ -283,6 +287,37 @@ public class ExcelController {
             data.setTouristDataId((long)row.getCell(7).getNumericCellValue());
 
             nearTouristDataRepository.save(data);
+        }
+        System.out.println("엑셀 완료");
+        return "excel";
+    }
+
+    @PostMapping("/excel/touristDataHashTag/read")
+    public String readTouristDataHashTagExcel(@RequestParam("file") MultipartFile file, Model model)
+            throws IOException {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (!extension.equals("xlsx") && !extension.equals("xls")) {
+            throw new IOException("엑셀파일만 업로드 해주세요.");
+        }
+        Workbook workbook = null;
+
+        if (extension.equals("xlsx")) {
+            workbook = new XSSFWorkbook(file.getInputStream());
+        } else if (extension.equals("xls")) {
+            workbook = new HSSFWorkbook(file.getInputStream());
+        }
+
+        Sheet worksheet = workbook.getSheetAt(0);
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            Row row = worksheet.getRow(i);
+            TouristDataHashTag data = new TouristDataHashTag();
+
+            data.setTouristDataHashTagId((long)row.getCell(0).getNumericCellValue());
+            data.setContentId((long)row.getCell(1).getNumericCellValue());
+            data.setHashTagId((long)row.getCell(2).getNumericCellValue());
+            data.setHashTagName(row.getCell(3).getStringCellValue());
+
+            touristDataHashTagRepository.save(data);
         }
         System.out.println("엑셀 완료");
         return "excel";
