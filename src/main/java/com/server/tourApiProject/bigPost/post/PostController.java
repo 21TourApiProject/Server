@@ -65,7 +65,7 @@ public class PostController {
 
     @ApiOperation(value = "내 게시물 정보 조회", notes = "해당 사용자의 게시물을 조회한다")
     @GetMapping(value = "post/user/{userId}")
-    public List<PostParams2> getMyPost(@PathVariable("userId")Long userId ){ return postService.getMyPost(userId); }
+    public List<PostParams3> getMyPost(@PathVariable("userId")Long userId ){ return postService.getMyPost(userId); }
 
 }
 
