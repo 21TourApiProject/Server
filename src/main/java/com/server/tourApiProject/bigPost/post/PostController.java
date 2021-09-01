@@ -36,6 +36,11 @@ public class PostController {
     public Long createPost(@PathVariable("observePointName") String observePointName,@RequestBody PostParams postParams) {
         return postService.createPost(observePointName,postParams);
     }
+    @ApiOperation(value = "게시물정보 삭제", notes = "게시물 정보를 삭제한다")
+    @DeleteMapping(value = "post/{userId}")
+    public void deletePost(@PathVariable("userId") Long userId){
+        postService.deletePost(userId);
+    }
 
     @ApiOperation(value = "게시물 해시태그 조회", notes = "게시물 id로 해당 게시물의 게시물 해시태그를 조회한다")
     @GetMapping(value = "post/{postId}/postHashTag")
@@ -53,15 +58,11 @@ public class PostController {
     public List<String> getPostImage(@PathVariable("postId") Long postId) {
         return postImageService.getPostImage(postId);
     }
-    @ApiOperation(value = "게시물 이미지 검색", notes = "게시물 관측지 id로 이미지를 조회한다")
+    @ApiOperation(value = "관련 게시물 이미지 검색", notes = "게시물 관측지 id로 이미지를 조회한다")
     @GetMapping(value = "postImage/{postObservePointId}")
-    public List<String> getRelatePostImage(@PathVariable("postObservePointId") Long postObservePointId){
+    public List<String> getRelatePostImageList(@PathVariable("postObservePointId") Long postObservePointId){
         return postImageService.getRelatePostImageList(postObservePointId);
     }
-
-    @ApiOperation(value = "내 게시물 3개 조회", notes = "해당 사용자의 게시물(최대 3개)을 조회한다")
-    @GetMapping(value = "post/3/{userId}")
-    public List<PostParams2> getMyPost3(@PathVariable("userId")Long userId ){ return postService.getMyPost3(userId); }
 
     @ApiOperation(value = "내 게시물 정보 조회", notes = "해당 사용자의 게시물을 조회한다")
     @GetMapping(value = "post/user/{userId}")

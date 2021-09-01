@@ -48,4 +48,5 @@ public class PostHashTagService {
             postHashTagRepository.save(postHashTag);
         }
     }
+    public void deletePostHashTags(){postHashTagRepository.deleteAll();}
 }

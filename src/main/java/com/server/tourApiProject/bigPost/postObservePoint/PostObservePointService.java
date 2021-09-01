@@ -21,5 +21,6 @@ public class PostObservePointService {
         postObservePoint.setObservePointName(postObservePointParams.getObservePointName());
         postObservePointRepository.save(postObservePoint);
     }
+    public void deletePostObservePoint(Long postObservePointId){postObservePointRepository.deleteById(postObservePointId);}
 }
 
