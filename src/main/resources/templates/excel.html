@@ -13,17 +13,22 @@
 
 <form th:action="@{/excel/contentType1/read}" method="POST" enctype="multipart/form-data">
     <input type="file" th:name="file">
-    <input th:type="submit" value="타입(관광지) 제출" />
-</form>
-
-<form th:action="@{/excel/contentType2/read}" method="POST" enctype="multipart/form-data">
-    <input type="file" th:name="file">
-    <input th:type="submit" value="타입(음식) 제출" />
+    <input th:type="submit" value="관광지 타입 제출" />
 </form>
 
 <form th:action="@{/excel/touristData/read}" method="POST" enctype="multipart/form-data">
     <input type="file" th:name="file">
     <input th:type="submit" value="관광지/음식 제출" />
+</form>
+
+<form th:action="@{/excel/nearTouristData/read}" method="POST" enctype="multipart/form-data">
+    <input type="file" th:name="file">
+    <input th:type="submit" value="주변 관광지/음식 제출" />
+</form>
+
+<form th:action="@{/excel/touristDataHashTag/read}" method="POST" enctype="multipart/form-data">
+    <input type="file" th:name="file">
+    <input th:type="submit" value="관광지 해시태그 제출" />
 </form>
 </body>
 
