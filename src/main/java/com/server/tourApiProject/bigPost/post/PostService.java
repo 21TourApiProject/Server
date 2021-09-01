@@ -55,4 +55,5 @@ public class PostService {
         }
         return result;
     }
+    public void deletePost(Long userId){postRepository.deleteById(userId);}
 }
