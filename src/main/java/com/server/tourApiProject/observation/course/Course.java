@@ -1,5 +1,7 @@
 package com.server.tourApiProject.observation.course;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.server.tourApiProject.observation.Observation;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,6 +20,11 @@ public class Course {
 
     @Column(nullable = false)
     private Long courseOrder;   //코스안에서 관광지 순서
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "observationId", insertable = false, updatable=false)
+    private Observation observation;
 
     @Column(nullable = false)
     private Long observationId;
