@@ -1,5 +1,6 @@
 package com.server.tourApiProject.observation;
 
+import com.server.tourApiProject.observation.course.Course;
 import com.server.tourApiProject.observation.observeFee.ObserveFee;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTag;
 import com.server.tourApiProject.observation.observeImage.ObserveImage;
@@ -75,5 +76,6 @@ public class Observation {
     @OneToMany(mappedBy = "observation")
     private List<ObserveImage> observeImages = new ArrayList<>();
 
-    //코스 추가 필요함함
+    @OneToMany(mappedBy = "observation")
+    private List<Course> courses = new ArrayList<>();
 }

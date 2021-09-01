@@ -1,5 +1,7 @@
 package com.server.tourApiProject.touristPoint.touristData;
 
+import com.server.tourApiProject.observation.course.Course;
+import com.server.tourApiProject.observation.course.CourseRepository;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,7 @@ public class TouristDataService {
 
     private final TouristDataRepository touristDataRepository;
     private final ContentTypeRepository contentTypeRepository;
+    private final CourseRepository courseRepository;
 
     public void createTouristData(TouristData touristData) {
         touristDataRepository.save(touristData);
@@ -117,32 +120,6 @@ public class TouristDataService {
         }
         return result;
 
-    }
-
-    public TouristDataCourseParams getCourseTouristPointData(Long contentId) {
-        TouristData touristData = touristDataRepository.findByContentId(contentId);
-        TouristDataCourseParams result = new TouristDataCourseParams();
-
-        result.setContentTypeId(touristData.getContentTypeId()); //12
-        result.setFirstImage(touristData.getFirstImage());
-        result.setTitle(touristData.getTitle());
-        result.setOverview(touristData.getOverview());
-        result.setAddr1(touristData.getAddr1());
-
-
-        if (touristData.getContentId() == 12)//관광지
-        {
-            result.setUseTime(touristData.getUseTime());
-            result.setParking(touristData.getParking());
-            result.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
-        } else {
-            result.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
-            result.setUseTime(touristData.getOpenTimeFood());
-            result.setTreatMenu(touristData.getTreatMenu());
-            result.setParking(touristData.getParkingFood());
-        }
-
-        return result;
     }
 
     public void deleteTouristPoint() {
