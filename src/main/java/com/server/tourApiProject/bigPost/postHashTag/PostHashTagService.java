@@ -38,7 +38,7 @@ public class PostHashTagService {
 
     public void createPostHashTags(Long postId,List<PostHashTagParams> postHashTagParams) {
         for (PostHashTagParams p : postHashTagParams) {
-            Post post =postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
+            Post post = postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
             PostHashTag postHashTag = new PostHashTag();
             postHashTag.setHashTagName(p.getHashTagName());
             postHashTag.setPost(post);

@@ -31,27 +31,27 @@
 //
 //    @Override
 //    public void run(ApplicationArguments args) throws Exception {
-//        System.out.println("order2");
+//        System.out.println("만오천개 받기");
 //
 //        //관광지 기본정보
-//        JSONArray tour_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=12", false); //관광 정보
-//        for (Object o : tour_list) {
-//            JSONObject item = (JSONObject) o;
-//            TouristData touristData = getTouristData(item);
-//
-//            String cat1;
-//            cat1 = (String) item.get("cat1");
-//            String cat2;
-//            cat2 = (String) item.get("cat2");
-//            if ((cat1 == null || cat1.equals("A01") || cat1.equals("A02")) && (cat2 == null || cat2.equals("A0101") || cat2.equals("A0102") || cat2.equals("A0201") || cat2.equals("A0202") || cat2.equals("A0203") || cat2.equals("A0204") || cat2.equals("A0205"))){
-//                touristData.setIsCom(0);
-//                touristData.setIsJu(0);
-//                touristDataController.createTouristData(touristData);
-//            } else {
-//                error++;
-//            }
-//        }
-//        System.out.println("기본 정보 완료 " + error);
+////        JSONArray tour_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=12", false); //관광 정보
+////        for (Object o : tour_list) {
+////            JSONObject item = (JSONObject) o;
+////            TouristData touristData = getTouristData(item);
+////
+////            String cat1;
+////            cat1 = (String) item.get("cat1");
+////            String cat2;
+////            cat2 = (String) item.get("cat2");
+////            if ((cat1 == null || cat1.equals("A01") || cat1.equals("A02")) && (cat2 == null || cat2.equals("A0101") || cat2.equals("A0102") || cat2.equals("A0201") || cat2.equals("A0202") || cat2.equals("A0203") || cat2.equals("A0204") || cat2.equals("A0205"))){
+////                touristData.setIsCom(0);
+////                touristData.setIsJu(0);
+////                touristDataController.createTouristData(touristData);
+////            } else {
+////                error++;
+////            }
+////        }
+////        System.out.println("기본 정보 완료 " + error);
 //
 //        //관광지 추가정보
 //        List<Long> touristPointId = touristDataController.getTouristPointId();
@@ -94,14 +94,13 @@
 //            JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=12&contentId=" + contentId, false); //소개 정보
 //            JSONObject intro = (JSONObject) intro_list.get(0);
 //
+//            touristData.setUseTime(null);
 //            if (intro.get("usetime") != null || intro.get("usetime") != "") {
 //                if (intro.get("usetime").getClass().getName().equals("java.lang.String")) {
 //                    touristData.setUseTime(extractString((String) intro.get("usetime")));
 //                } else if (intro.get("usetime").getClass().getName().equals("java.lang.Long")) {
 //                    touristData.setUseTime(extractString(String.valueOf(intro.get("usetime"))));
 //                }
-//            } else {
-//                touristData.setUseTime(null);
 //            }
 //
 //            tmp = (String) intro.get("restdate");
@@ -162,24 +161,24 @@
 //        }
 //
 //        //음식 기본정보
-//        JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=39", false); //관광 정보
-//        for (Object o : food_list) {
-//            JSONObject item = (JSONObject) o;
-//            TouristData touristData = getTouristData(item);
-//
-//            String cat1;
-//            cat1 = (String) item.get("cat1");
-//            String cat2;
-//            cat2 = (String) item.get("cat2");
-//            if ((cat1 == null || cat1.equals("A05")) && (cat2 == null || cat2.equals("A0502"))){
-//                touristData.setIsCom(0);
-//                touristData.setIsJu(0);
-//                touristDataController.createTouristData(touristData);
-//            } else {
-//                error++;
-//            }
-//        }
-//        System.out.println("기본 정보 완료 " + error);
+////        JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=39", false); //관광 정보
+////        for (Object o : food_list) {
+////            JSONObject item = (JSONObject) o;
+////            TouristData touristData = getTouristData(item);
+////
+////            String cat1;
+////            cat1 = (String) item.get("cat1");
+////            String cat2;
+////            cat2 = (String) item.get("cat2");
+////            if ((cat1 == null || cat1.equals("A05")) && (cat2 == null || cat2.equals("A0502"))){
+////                touristData.setIsCom(0);
+////                touristData.setIsJu(0);
+////                touristDataController.createTouristData(touristData);
+////            } else {
+////                error++;
+////            }
+////        }
+////        System.out.println("기본 정보 완료 " + error);
 //
 //        //음식 추가정보
 //        List<Long> foodId = touristDataController.getFoodId();
