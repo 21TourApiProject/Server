@@ -1,9 +1,11 @@
 package com.server.tourApiProject.observation;
 
+import com.server.tourApiProject.observation.course.CourseService;
 import com.server.tourApiProject.observation.observeFee.ObserveFee;
 import com.server.tourApiProject.observation.observeFee.ObserveFeeService;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTagService;
 import com.server.tourApiProject.observation.observeImage.ObserveImageService;
+import com.server.tourApiProject.touristPoint.touristData.TouristDataCourseParams;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ public class ObservationController {
     private final ObserveHashTagService observeHashTagService;
     private final ObserveImageService observeImageService;
     private final ObserveFeeService observeFeeService;
+    private final CourseService courseService;
 
     @ApiOperation(value = "모든 관측지 조회", notes = "모든 관측지를 조회한다")
     @GetMapping(value = "observations")
@@ -57,4 +60,9 @@ public class ObservationController {
         return observeFeeService.getObserveFees(observationId);
     }
 
+    @ApiOperation(value = "코스 관광지 정보 조회", notes = "코스에 필요한 관광지 정보리스트를 조회한다")
+    @GetMapping(value = "observation/{observationId}/courseTouristPoint")
+    public List<TouristDataCourseParams> getCourseTouristPointList(@PathVariable("observationId") Long observationId){
+        return courseService.getCourseTPList(observationId);
+    }
 }

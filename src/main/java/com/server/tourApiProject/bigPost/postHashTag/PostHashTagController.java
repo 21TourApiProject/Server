@@ -27,4 +27,9 @@ public class PostHashTagController {
     public List<String> getPostHashTagName(@PathVariable("postId")Long postId){
         return postHashTagService.getPostHashTagName(postId);
     }
+    @ApiOperation(value = "게시물 해시태그 정보 삭제", notes = "모든 게시물 해시태그를 삭제한다")
+    @DeleteMapping(value = "postHashTag/")
+    public void deletePostHashTag(){
+        postHashTagService.deletePostHashTags();
+    }
 }

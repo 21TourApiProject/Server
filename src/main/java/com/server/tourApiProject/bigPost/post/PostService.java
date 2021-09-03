@@ -78,6 +78,9 @@ public class PostService {
         }
         return result;
     }
+    public void deletePost(Long userId){
+        postRepository.deleteById(userId);
+    }
 
     public List<PostParams3> getMyPost(Long userId) {
         List<PostParams3> result = new ArrayList<>();

@@ -45,11 +45,11 @@ public class Post {
     private LocalTime time;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<PostHashTag> postHashTags=new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<PostImage> postImages=new ArrayList<>();
 
     @JsonIgnore
