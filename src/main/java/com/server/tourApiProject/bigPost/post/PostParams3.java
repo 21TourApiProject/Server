@@ -15,5 +15,5 @@ public class PostParams3 {
     private String title;
     private String nickName;
     private String profileImage;
-    private List<String> hashTagName;
+    private List<String> hashTagNames;
 }
