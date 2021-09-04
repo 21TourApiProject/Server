@@ -60,9 +60,4 @@ public class ObservationController {
         return observeFeeService.getObserveFees(observationId);
     }
 
-    @ApiOperation(value = "코스 관광지 정보 조회", notes = "코스에 필요한 관광지 정보리스트를 조회한다")
-    @GetMapping(value = "observation/{observationId}/courseTouristPoint")
-    public List<TouristDataCourseParams> getCourseTouristPointList(@PathVariable("observationId") Long observationId){
-        return courseService.getCourseTPList(observationId);
-    }
 }

@@ -38,8 +38,8 @@
     INSERT INTO HASH_TAG (HASH_TAG_ID, HASH_TAG_NAME) VALUES(21, '럭셔리한');
 
 --관측지
-    INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE ) VALUES (1, '천문대1', 'https://www.yao.or.kr:451/', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, false );
-    INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE ) VALUES (2, '천문대2', 'https://www.yao.or.kr:451/', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, true );
+    INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE, COURSE_ORDER ) VALUES (1, '천문대1', 'https://www.yao.or.kr:451/', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, false, 0 );
+    INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE, COURSE_ORDER ) VALUES (2, '천문대2', 'https://www.yao.or.kr:451/', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, true, 2 );
 
 --관측지 해쉬태그
     INSERT INTO OBSERVE_HASH_TAG (OBSERVE_HASH_TAG_LIST_ID, OBSERVATION_ID, HASH_TAG_ID, HASH_TAG_NAME) VALUES(1,1,1,'공기좋은');
@@ -62,10 +62,13 @@
     INSERT INTO OBSERVE_FEE (OBSERVE_FEE_LIST_ID, OBSERVATION_ID, FEE_NAME, ENTRANCE_FEE) VALUES (3, 1, '단체', '홈페이지 참고');
 
 --관측지 코스
-    INSERT INTO COURSE (COURSE_ID, COURSE_ORDER, OBSERVATION_ID, TOURIST_POINT_ID) VALUES (1, 1, 1, 125266);
-    INSERT INTO COURSE (COURSE_ID, COURSE_ORDER, OBSERVATION_ID, TOURIST_POINT_ID) VALUES (2, 2, 1, 125405);
-    INSERT INTO COURSE (COURSE_ID, COURSE_ORDER, OBSERVATION_ID, TOURIST_POINT_ID) VALUES (3, 3, 1, 132805);
-    INSERT INTO COURSE (COURSE_ID, COURSE_ORDER, OBSERVATION_ID, TOURIST_POINT_ID) VALUES (4, 4, 1, 132807);
+    INSERT INTO COURSE (COURSE_ID, COURSE_ORDER, OBSERVATION_ID, TOURIST_POINT_ID) VALUES (1, 4, 1, 125266);
+    INSERT INTO COURSE (COURSE_ID, COURSE_ORDER, OBSERVATION_ID, TOURIST_POINT_ID) VALUES (2, 3, 1, 125405);
+    INSERT INTO COURSE (COURSE_ID, COURSE_ORDER, OBSERVATION_ID, TOURIST_POINT_ID) VALUES (3, 2, 1, 132805);
+    INSERT INTO COURSE (COURSE_ID, COURSE_ORDER, OBSERVATION_ID, TOURIST_POINT_ID) VALUES (4, 1, 1, 132807);
+    INSERT INTO COURSE (COURSE_ID, COURSE_ORDER, OBSERVATION_ID, TOURIST_POINT_ID) VALUES (5, 0, 2, 125405);
+    INSERT INTO COURSE (COURSE_ID, COURSE_ORDER, OBSERVATION_ID, TOURIST_POINT_ID) VALUES (6, 1, 2, 132805);
+    INSERT INTO COURSE (COURSE_ID, COURSE_ORDER, OBSERVATION_ID, TOURIST_POINT_ID) VALUES (7, 3, 2, 132807);
 
 
 -- 별자리
