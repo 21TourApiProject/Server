@@ -1,5 +1,7 @@
 package com.server.tourApiProject.observation.course;
 
+import com.server.tourApiProject.observation.Observation;
+import com.server.tourApiProject.observation.ObservationRepository;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeRepository;
 import com.server.tourApiProject.touristPoint.touristData.TouristData;
 import com.server.tourApiProject.touristPoint.touristData.TouristDataCourseParams;
@@ -22,6 +24,7 @@ public class CourseService {
     private final CourseRepository courseRepository;
     private final TouristDataRepository touristDataRepository;
     private final ContentTypeRepository contentTypeRepository;
+    private final ObservationRepository observationRepository;
 
     public List<TouristDataCourseParams> getCourseTPList(Long observationId) {
         //코스 받아서 순서대로 정리후 관광지Id 리스트반환
@@ -35,6 +38,21 @@ public class CourseService {
         }
 
         return courseTPList;
+    }
+
+    public List<String> getCourseNameList(Long observationId) {
+        //코스 받아서 관측지와 합쳐서 순서대로 이름제공 (이름인디케이터에 이용)
+        List<TouristDataCourseParams> tpList = getCourseTPList(observationId);
+        Observation observation = observationRepository.findById(observationId).orElseThrow(IllegalAccessError::new);
+        List<String> nameList = new ArrayList<>();
+
+        for(TouristDataCourseParams tp :tpList)
+        {
+            nameList.add(tp.getTitle());
+        }
+        nameList.add(observation.getCourseOrder(), observation.getObservationName());
+
+        return nameList;
     }
 
     public TouristDataCourseParams getCourseTouristPointData(Long contentId) {

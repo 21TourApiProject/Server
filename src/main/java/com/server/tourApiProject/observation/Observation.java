@@ -65,7 +65,7 @@ public class Observation {
     private boolean nature;   //자연관광지
 
     @Column
-    private Long courseOrder;   //코스내에서의 관측지 순서서
+    private int courseOrder;   //코스내에서의 관측지 순서서
 
     @OneToMany(mappedBy = "observation")
     private List<ObserveFee> observeFees=new ArrayList<>();
