@@ -70,46 +70,46 @@ public class TouristData {
     @Column
     private String title; //제목
 
-    @Column(length = 50000)
+    @Column(columnDefinition = "TEXT")
     private String overview; //개요
 
     @Column
     private String overviewSim; //짧은 개요
 
-    @Column(length = 50000)
+    @Column(columnDefinition = "TEXT")
     private String homePage; //홈페이지(관광지)
 
-    @Column(length = 50000)
+    @Column(columnDefinition = "TEXT")
     private String useTime; //이용시간(관광지)
 
-    @Column(length = 50000)
+    @Column
     private String restDate; //휴무일(관광지)
 
-    @Column(length = 50000)
+    @Column(columnDefinition = "TEXT")
     private String expGuide ; //체험안내(관광지)
 
-    @Column(length = 50000)
+    @Column(columnDefinition = "TEXT")
     private String parking; //주차시설(관광지)
 
-    @Column(length = 50000)
+    @Column
     private String chkPet; //반려동물(관광지)
 
-    @Column(length = 50000)
+    @Column
     private String openTimeFood; //영업시간(음식)
 
-    @Column(length = 50000)
+    @Column
     private String restDateFood; //휴무일(음식)
 
-    @Column(length = 50000)
+    @Column
     private String firstMenu; //대표메뉴(음식)
 
-    @Column(length = 50000)
+    @Column(columnDefinition = "TEXT")
     private String treatMenu; //취급메뉴(음식)
 
-    @Column(length = 50000)
+    @Column
     private String packing; //포장(음식)
 
-    @Column(length = 50000)
+    @Column
     private String parkingFood; //주차시설(음식)
 
     @JsonIgnore

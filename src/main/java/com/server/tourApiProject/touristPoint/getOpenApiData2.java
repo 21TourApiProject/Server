@@ -43,7 +43,9 @@ public class getOpenApiData2 implements org.springframework.boot.ApplicationRunn
 //            cat1 = (String) item.get("cat1");
 //            String cat2;
 //            cat2 = (String) item.get("cat2");
-//            if ((cat1 == null || cat1.equals("A01") || cat1.equals("A02")) && (cat2 == null || cat2.equals("A0101") || cat2.equals("A0102") || cat2.equals("A0201") || cat2.equals("A0202") || cat2.equals("A0203") || cat2.equals("A0204") || cat2.equals("A0205"))){
+//            String cat3;
+//            cat3 = (String) item.get("cat3");
+//            if ((cat1.equals("A01") || cat1.equals("A02")) && (cat2.equals("A0101") || cat2.equals("A0102") || cat2.equals("A0201") || cat2.equals("A0202") || cat2.equals("A0203") || cat2.equals("A0204") || cat2.equals("A0205")) && (cat3 != null)){
 //                touristData.setIsCom(0);
 //                touristData.setIsJu(0);
 //                touristDataController.createTouristData(touristData);
@@ -84,18 +86,19 @@ public class getOpenApiData2 implements org.springframework.boot.ApplicationRunn
                 touristData.setOverview(null);
                 touristData.setOverviewSim(null);
             } else {
-                touristData.setOverview(extractString(tmp));
-                if (extractString(tmp).length() > 15)
-                    touristData.setOverviewSim(extractString(tmp).substring(0,15)+"...");
+                String overview = extractOverview(tmp);
+                touristData.setOverview(overview);
+                if (overview.length() > 15)
+                    touristData.setOverviewSim(overview.substring(0,15)+"...");
                 else
-                    touristData.setOverviewSim(extractString(tmp));
+                    touristData.setOverviewSim(overview);
             }
 
             JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=12&contentId=" + contentId, false); //소개 정보
             JSONObject intro = (JSONObject) intro_list.get(0);
 
             touristData.setUseTime(null);
-            if (intro.get("usetime") != null || intro.get("usetime") != "") {
+            if (intro.get("usetime") != null && intro.get("usetime") != "") {
                 if (intro.get("usetime").getClass().getName().equals("java.lang.String")) {
                     touristData.setUseTime(extractString((String) intro.get("usetime")));
                 } else if (intro.get("usetime").getClass().getName().equals("java.lang.Long")) {
@@ -111,6 +114,8 @@ public class getOpenApiData2 implements org.springframework.boot.ApplicationRunn
             } else {
                 touristData.setRestDate(extractString(tmp));
             }
+
+            touristData.setExpGuide(null);
             tmp = (String) intro.get("expguide");
             if (tmp == null) {
                 touristData.setExpGuide(null);
@@ -170,7 +175,9 @@ public class getOpenApiData2 implements org.springframework.boot.ApplicationRunn
 //            cat1 = (String) item.get("cat1");
 //            String cat2;
 //            cat2 = (String) item.get("cat2");
-//            if ((cat1 == null || cat1.equals("A05")) && (cat2 == null || cat2.equals("A0502"))){
+//            String cat3;
+//            cat3 = (String) item.get("cat3");
+//            if ((cat1.equals("A05")) && (cat2.equals("A0502")) && (cat3 != null)){
 //                touristData.setIsCom(0);
 //                touristData.setIsJu(0);
 //                touristDataController.createTouristData(touristData);
@@ -202,11 +209,14 @@ public class getOpenApiData2 implements org.springframework.boot.ApplicationRunn
                 touristData.setOverview(null);
                 touristData.setOverviewSim(null);
             }else{
-                touristData.setOverview(extractString(tmp));
-                if (extractString(tmp).length() > 15)
-                    touristData.setOverviewSim(extractString(tmp).substring(0,15)+"...");
+                String overview = extractOverview2(tmp);
+                touristData.setOverview(overview);
+                if (overview == null)
+                    touristData.setOverviewSim(null);
+                else if (overview.length() > 15)
+                    touristData.setOverviewSim(overview.substring(0,15)+"...");
                 else
-                    touristData.setOverviewSim(extractString(tmp));
+                    touristData.setOverviewSim(overview);
             }
 
             JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=39&contentId=" + contentId, false); //소개 정보
@@ -269,29 +279,135 @@ public class getOpenApiData2 implements org.springframework.boot.ApplicationRunn
             touristDataRepository.save(touristData);
         }
 
-        for (int i=0; i < foodId.size(); i++){
-            if (foodMap[i][0] == null || foodMap[i][1] == null)
-                continue;
+//        for (int i=0; i < foodId.size(); i++){
+//            if (foodMap[i][0] == null || foodMap[i][1] == null)
+//                continue;
+//
+//            Long contentId = foodId.get(i);
+//            TouristData touristData = touristDataRepository.findByContentId(contentId);
+//            if (touristData.getIsJu() == 1)
+//                continue;
+//
+//            System.out.println("4 contentId = " + contentId);
+//            String part2 = "&mapX=" + Double.toString(foodMap[i][0]) + "&mapY=" + Double.toString(foodMap[i][1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=39";
+//            JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
+//            for (int j = 1; j < near_list.size(); j++) {
+//                JSONObject near = (JSONObject) near_list.get(j);
+//                nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
+//            }
+//            touristData.setIsJu(1);
+//            touristDataRepository.save(touristData);
+//        }
 
-            Long contentId = foodId.get(i);
-            TouristData touristData = touristDataRepository.findByContentId(contentId);
-            if (touristData.getIsJu() == 1)
-                continue;
+    }
 
-            System.out.println("4 contentId = " + contentId);
-            String part2 = "&mapX=" + Double.toString(foodMap[i][0]) + "&mapY=" + Double.toString(foodMap[i][1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=39";
-            JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
-            for (int j = 1; j < near_list.size(); j++) {
-                JSONObject near = (JSONObject) near_list.get(j);
-                nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
-            }
-            touristData.setIsJu(1);
-            touristDataRepository.save(touristData);
+    private String extractOverview(String overview) { //관광지 개요 정제
+        overview = overview.replaceAll("<br>","");
+        overview = overview.replaceAll("<br >"," ");
+        overview = overview.replaceAll("<BR>","");
+        overview = overview.replaceAll("<Br>","");
+        overview = overview.replaceAll("<br />"," ");
+        overview = overview.replaceAll("<br/>"," ");
+        overview = overview.replaceAll("<br /","");
+        overview = overview.replaceAll("<div>","");
+        overview = overview.replaceAll("</div>","");
+        overview = overview.replaceAll("<strong>","");
+        overview = overview.replaceAll("</strong>","");
+        overview = overview.replaceAll("<u>","");
+        overview = overview.replaceAll("</u>","");
+        overview = overview.replaceAll("&nbsp;","");
+        overview = overview.replaceAll("&lt;","");
+        overview = overview.replaceAll("&gt;","");
+        overview = overview.replaceAll("&amp;","");
+        overview = overview.replaceAll("&lsquo;","");
+        overview = overview.replaceAll("&rsquo;","");
+        overview = overview.replaceAll("\n"," ");
+
+        int i = overview.indexOf("<a href=");
+        int j = overview.indexOf("</a>");
+        if (i != -1 && j != -1) {
+            overview = overview.substring(0, i) + overview.substring(j);
+            overview = overview.replaceAll("</a>", " ");
         }
+
+        int n = overview.indexOf("<b>※");
+        int n2 = overview.indexOf("</b>");
+        if (n != -1 && n2 != -1){
+            overview = overview.substring(0,n) + overview.substring(n2+4) + " " + overview.substring(n+3,n2);
+        }
+
+        while (overview.charAt(0) == ' '){
+            overview=overview.substring(1);
+        }
+
+        overview = overview.replaceAll("<b>","");
+        overview = overview.replaceAll("</b>"," ");
+        overview = overview.replaceAll("</a>"," ");
+
+        return overview;
+    }
+
+    private String extractOverview2(String overview) { //음식 개요 정제
+        overview = overview.replaceAll("<br>","");
+        overview = overview.replaceAll("<br />"," ");
+        overview = overview.replaceAll("<br/>"," ");
+        overview = overview.replaceAll("<strong>","");
+        overview = overview.replaceAll("</strong>","");
+        overview = overview.replaceAll("<u>","");
+        overview = overview.replaceAll("</u>","");
+        overview = overview.replaceAll("&nbsp;","");
+        overview = overview.replaceAll("&lt;","");
+        overview = overview.replaceAll("&gt;","");
+        overview = overview.replaceAll("&amp;","");
+        overview = overview.replaceAll("\n"," ");
+
+        int i = overview.indexOf("<a href=");
+        int j = overview.indexOf("</a>");
+        if (i != -1 && j != -1) {
+            overview = overview.substring(0, i) + overview.substring(j);
+            overview = overview.replaceAll("</a>", " ");
+        }
+
+        overview = overview.replace("※ 식품의약품안전처 음식점 위생등급 : 매우 우수(2017년)", "");
+        overview = overview.replace("[중소벤처기업부 2018년도 '백년가게'로 선정]", "");
+        overview = overview.replace("[중소벤처기업부2018년도'백년가게'로선정]", "");
+        overview = overview.replace("[중소벤처기업부 2019년도 '백년가게'로 선정]", "");
+        overview = overview.replace("※ 식품의약품안전처 음식점 위생등급 : 매우 우수(2017년)", "");
+        overview = overview.replace("※ 점심 주문마감(LO) 14:30 / 저녁 주문마감(LO) 21:20", "");
+        overview = overview.replace("※ 영업시간 11:50 ~ 14:30 (화,목,토,일), 17:00 ~ 22:00 (매일)", "");
+
+
+        int n = overview.indexOf("(정보제공자");
+        if (n != -1 && overview.length() < 20){
+            return null;
+        }
+
+        int m = overview.indexOf("※ 영업시간");
+        if (m != -1){
+            int m2 = overview.indexOf("0 (");
+            int m3 = overview.indexOf("0(");
+            int m4 = overview.indexOf(")");
+
+            if(m2 != -1 && m4 != -1){
+                //overview = overview.substring(0, m) + overview.substring(m4+1) + " " + overview.substring(0,m+20) + " " + overview.substring(m2+2,m4+1);
+                overview = overview.substring(0, m) + overview.substring(m4+1);
+            } else if(m3 != -1 && m4 != -1) {
+                //overview = overview.substring(0, m) + overview.substring(m4+1) + " " + overview.substring(0,m+20) + " " +overview.substring(m3+1,m4+1);
+                overview = overview.substring(0, m) + overview.substring(m4+1);
+            } else{
+                //overview = overview.substring(0, m) + overview.substring(m+20) + " " + overview.substring(0,m+20);
+                overview = overview.substring(0, m) + overview.substring(m+20);
+            }
+        }
+        while (overview.charAt(0) == ' '){
+            overview=overview.substring(1);
+        }
+        return overview;
 
     }
 
     public String extractHomePage(String url){
+        url = url.replaceAll("\n","");
         if (url.contains("href=\"")){
             int start = url.indexOf("href=\"");
             int end = url.indexOf("\"", start+6);
@@ -319,21 +435,14 @@ public class getOpenApiData2 implements org.springframework.boot.ApplicationRunn
         int i = overview.indexOf("<a href=");
         int j = overview.indexOf("</a>");
         if (i != -1 && j != -1) {
-        overview = overview.substring(0, i) + overview.substring(j);
-        overview = overview.replaceAll("</a>", " ");
+        overview = overview.substring(0, i) + overview.substring(j+4);
         }
 
-        int m = overview.indexOf("※ 영업시간");
-        if (m != -1){
-            overview = overview.substring(m+22);
+        i = overview.indexOf("<a title=");
+        j = overview.indexOf("</a>");
+        if (i != -1 && j != -1) {
+            overview = overview.substring(0, i-1) + overview.substring(j+4);
         }
-
-        int n = overview.indexOf("<b>"); //코로나
-        int n2 = overview.indexOf("</b>");
-        if (n != -1 && n2 != -1){
-            overview = overview.substring(n+3,n2) + " " + overview.substring(n2+4);
-        }
-
         return overview;
     }
 
@@ -480,6 +589,7 @@ public class getOpenApiData2 implements org.springframework.boot.ApplicationRunn
                 resultForZero.add(item);
                 return resultForZero;
             }
+            System.out.println("body = " + body);
             JSONObject items = (JSONObject)body.get("items");
 
             if (isNear){
