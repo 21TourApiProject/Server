@@ -48,10 +48,10 @@
 
 --관측지 이미지
 
---    INSERT INTO OBSERVE_IMAGE (OBSERVE_IMAGE_LIST_ID, OBSERVATION_ID, IMAGE, IMAGE_SOURCE) VALUES (1, 1, 'https://wallpapercave.com/wp/YVnW7ve.jpg');
---    INSERT INTO OBSERVE_IMAGE (OBSERVE_IMAGE_LIST_ID, OBSERVATION_ID, IMAGE, IMAGE_SOURCE) VALUES (2, 1, 'https://www.cnet.com/a/img/Aosra4Cz8-Kvz3a5mYrUCVaf5VQ=/1200x630/2020/05/15/101c537d-d2e5-4ee5-ae6f-21f18eb3e3ad/gettyimages-1210618112.jpg', 'www.source.com');
---    INSERT INTO OBSERVE_IMAGE (OBSERVE_IMAGE_LIST_ID, OBSERVATION_ID, IMAGE, IMAGE_SOURCE) VALUES (3, 1, 'https://img.freepik.com/free-photo/vibrant-night-sky-with-stars-nebula-galaxy_146671-19188.jpg?size=626&ext=jpg&ga=GA1.2.1933447203.1629590400', 'www.source.com');
-    INSERT INTO OBSERVE_IMAGE (OBSERVE_IMAGE_LIST_ID, OBSERVATION_ID, IMAGE, IMAGE_SOURCE) VALUES (4, 2, 'https://wallpapercave.com/wp/YVnW7ve.jpg');
+    INSERT INTO OBSERVE_IMAGE (OBSERVE_IMAGE_LIST_ID, OBSERVATION_ID, IMAGE, IMAGE_SOURCE) VALUES (1, 1, 'https://wallpapercave.com/wp/YVnW7ve.jpg', 'www.source.com');
+    INSERT INTO OBSERVE_IMAGE (OBSERVE_IMAGE_LIST_ID, OBSERVATION_ID, IMAGE, IMAGE_SOURCE) VALUES (2, 1, 'https://www.cnet.com/a/img/Aosra4Cz8-Kvz3a5mYrUCVaf5VQ=/1200x630/2020/05/15/101c537d-d2e5-4ee5-ae6f-21f18eb3e3ad/gettyimages-1210618112.jpg', 'www.source.com');
+    INSERT INTO OBSERVE_IMAGE (OBSERVE_IMAGE_LIST_ID, OBSERVATION_ID, IMAGE, IMAGE_SOURCE) VALUES (3, 1, 'https://img.freepik.com/free-photo/vibrant-night-sky-with-stars-nebula-galaxy_146671-19188.jpg?size=626&ext=jpg&ga=GA1.2.1933447203.1629590400', 'www.source.com');
+    INSERT INTO OBSERVE_IMAGE (OBSERVE_IMAGE_LIST_ID, OBSERVATION_ID, IMAGE, IMAGE_SOURCE) VALUES (4, 2, 'https://wallpapercave.com/wp/YVnW7ve.jpg', 'www.source.com');
     INSERT INTO OBSERVE_IMAGE (OBSERVE_IMAGE_LIST_ID, OBSERVATION_ID, IMAGE, IMAGE_SOURCE) VALUES (5, 2, 'https://www.cnet.com/a/img/Aosra4Cz8-Kvz3a5mYrUCVaf5VQ=/1200x630/2020/05/15/101c537d-d2e5-4ee5-ae6f-21f18eb3e3ad/gettyimages-1210618112.jpg', 'www.source.com');
     INSERT INTO OBSERVE_IMAGE (OBSERVE_IMAGE_LIST_ID, OBSERVATION_ID, IMAGE, IMAGE_SOURCE) VALUES (6, 2, 'https://img.freepik.com/free-photo/vibrant-night-sky-with-stars-nebula-galaxy_146671-19188.jpg?size=626&ext=jpg&ga=GA1.2.1933447203.1629590400', 'www.source.com');
     INSERT INTO OBSERVE_IMAGE (OBSERVE_IMAGE_LIST_ID, OBSERVATION_ID, IMAGE, IMAGE_SOURCE) VALUES (7, 2, 'https://images.unsplash.com/photo-1444080748397-f442aa95c3e5?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG5pZ2h0JTIwc2t5fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80', 'www.source.com');
