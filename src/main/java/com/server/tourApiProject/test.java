@@ -3,13 +3,13 @@ package com.server.tourApiProject;
 public class test {
     public static void main(String[] args) {
 
-        String overview = "예약 문의) <a title=\"새창 : 템플스테이 홈페이지로 이동\" href=\"https://www.templestay.com/\">https://www.templestay.com/</a> - 템플스테이 사무실 063-322-6162";
-        int i = overview.indexOf("<a title=");
-        int j = overview.indexOf("</a>");
-        if (i != -1 && j != -1) {
-            overview = overview.substring(0, i-1) + overview.substring(j+4);
-
-        }System.out.println("overview = " + overview);
+//        String overview = "예약 문의) <a title=\"새창 : 템플스테이 홈페이지로 이동\" href=\"https://www.templestay.com/\">https://www.templestay.com/</a> - 템플스테이 사무실 063-322-6162";
+//        int i = overview.indexOf("<a title=");
+//        int j = overview.indexOf("</a>");
+//        if (i != -1 && j != -1) {
+//            overview = overview.substring(0, i-1) + overview.substring(j+4);
+//
+//        }System.out.println("overview = " + overview);
 //
 //        String overview = "※ 영업시간 11:30 ~ 22:00 (브레이크타임 15:00 ~ 17:00) 얼큰하고 톡 쏘는 맛이 일";
 //        overview = overview.replace("※ 식품의약품안전처 음식점 위생등급 : 매우 우수(2017년)", "");
