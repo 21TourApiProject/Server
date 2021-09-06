@@ -108,7 +108,7 @@ public class PostService {
             for(PostHashTag postHashTag : list){
                 hashTagName.add(postHashTag.getHashTagName());
             }
-            postParams3.setHashTagName(hashTagName);
+            postParams3.setHashTagNames(hashTagName);
 
             result.add(postParams3);
         }

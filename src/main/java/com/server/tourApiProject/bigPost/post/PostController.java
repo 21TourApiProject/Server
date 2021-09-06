@@ -39,7 +39,7 @@ public class PostController {
     @ApiOperation(value = "게시물정보 삭제", notes = "게시물 정보를 삭제한다")
     @DeleteMapping(value = "post/{userId}")
     public void deletePost(@PathVariable("userId") Long userId){
-        postService.deletePost(userId);
+//        postService.deletePost(userId);
     }
 
     @ApiOperation(value = "게시물 해시태그 조회", notes = "게시물 id로 해당 게시물의 게시물 해시태그를 조회한다")
@@ -64,9 +64,13 @@ public class PostController {
         return postImageService.getRelatePostImageList(postObservePointId);
     }
 
+    @ApiOperation(value = "내 게시물 3개 정보 조회", notes = "해당 사용자의 최근 게시물(최대 3개)을 조회한다")
+    @GetMapping(value = "post/3/{userId}")
+    public List<PostParams2> getMyPost3(@PathVariable("userId")Long userId){ return postService.getMyPost3(userId); }
+
     @ApiOperation(value = "내 게시물 정보 조회", notes = "해당 사용자의 게시물을 조회한다")
     @GetMapping(value = "post/user/{userId}")
-    public List<PostParams3> getMyPost(@PathVariable("userId")Long userId ){ return postService.getMyPost(userId); }
+    public List<PostParams3> getMyPost(@PathVariable("userId")Long userId){ return postService.getMyPost(userId); }
 
 }
 
