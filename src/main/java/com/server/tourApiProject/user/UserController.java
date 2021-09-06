@@ -81,8 +81,8 @@ public class UserController {
 
     @ApiOperation(value = "사용자 프로필 사진 수정", notes = "해당 사용자의 프로필 사진을 수정한다")
     @PutMapping(value = "user/{userId}/profileImage")
-    public void updateProfileImage(@PathVariable("userId") Long userId, @RequestBody UserParams2 profileImage){
-        userService.changeProfileImage(userId, profileImage);
+    public void updateProfileImage(@PathVariable("userId") Long userId, @RequestBody String profileImageName){
+        userService.changeProfileImage(userId, profileImageName);
     }
 
     @ApiOperation(value = "사용자 비밀번호 수정", notes = "해당 사용자의 비밀번호를 수정한다")
