@@ -1,5 +1,6 @@
 package com.server.tourApiProject.touristPoint.touristDataHashTag;
 
+import com.server.tourApiProject.myWish.MyWishParams01;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -22,5 +23,11 @@ public class TouristDataHashTagController {
     @GetMapping(value = "touristDataHashTag/{contentId}")
     public List<String> getTouristDataHashTag(@PathVariable("contentId") Long contentId){
         return touristDataHashTagService.getTouristDataHashTag(contentId);
+    }
+
+    @ApiOperation(value = "해시태그 리스트로 관광지 조희", notes = "해당 해시태그가 붙은 관광지 정보를 조희한다")
+    @GetMapping(value = "touristDataHashTag/search/{hashTagIdList}")
+    public List<MyWishParams01> getTouristDataWithHashTag(@PathVariable("hashTagIdList") List<Long> hashTagIdList){
+        return touristDataHashTagService.getTouristDataWithHashTag(hashTagIdList);
     }
 }
