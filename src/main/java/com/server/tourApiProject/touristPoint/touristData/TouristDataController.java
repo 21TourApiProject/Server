@@ -1,5 +1,6 @@
 package com.server.tourApiProject.touristPoint.touristData;
 
+import com.server.tourApiProject.myWish.MyWishParams01;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -101,6 +102,12 @@ public class TouristDataController {
     @GetMapping(value = "touristData/food/noNear/contentId")
     public List<Long> getFoodId2(){
         return touristDataService.getFoodId2();
+    }
+
+    @ApiOperation(value = "필터로 관광지 조희", notes = "해당 필터에 해당되는 관광지 정보를 조희한다")
+    @GetMapping(value = "touristDataHashTag/search/{areaCodeList}/{hashTagIdList}")
+    public List<MyWishParams01> getTouristDataWithHashTag(@PathVariable("areaCodeList") List<Long> areaCodeList, @PathVariable("hashTagIdList") List<Long> hashTagIdList){
+        return touristDataService.getTouristDataWithFilter(areaCodeList, hashTagIdList);
     }
 
 }

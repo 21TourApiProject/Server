@@ -10,4 +10,6 @@ public interface TouristDataRepository extends JpaRepository<TouristData, Long> 
 
     List<TouristData> findByIsJu(@Param("isJu") Integer isJu);
 
+    List<TouristData> findByAreaCode(@Param("areaCode") Long areaCode);
+
 }
