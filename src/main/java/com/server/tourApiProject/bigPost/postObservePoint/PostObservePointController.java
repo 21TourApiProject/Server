@@ -18,6 +18,7 @@ public class PostObservePointController {
     public void createPostObeservePoint(@RequestBody PostObservePointParams postObservePointParams){
         postObservePointService.createPostObservePoint(postObservePointParams);
     }
+
     @ApiOperation(value = "게시물 관광지 정보 삭제", notes = "게시물 관광지 정보를 삭제한다")
     @DeleteMapping(value = "postObservePoint/{postObservePointId}")
     public void deletePostObservePoint(@PathVariable Long postObservePointId){
