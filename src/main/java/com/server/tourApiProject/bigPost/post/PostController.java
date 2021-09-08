@@ -49,9 +49,9 @@ public class PostController {
     }
 
     @ApiOperation(value = "게시물 관측지 조회", notes = "게시물 id로 해당 게시물의 게시물 관측지를 조회한다")
-    @GetMapping(value = "post/{postId}/postObservePoint")
-    public PostObservePoint getPostObservePoint(@PathVariable("postId") Long postId) {
-        return postObservePointService.getPostObservePoint(postId);
+    @GetMapping(value = "post/{postObservePointId}/postObservePoint")
+    public PostObservePoint getPostObservePoint(@PathVariable("postObservePointId") Long postObservePointId) {
+        return postObservePointService.getPostObservePoint(postObservePointId);
     }
     @ApiOperation(value = "게시물 이미지 조회", notes = "게시물 id로 해당 게시물의 게시물 이미지를 조회한다")
     @GetMapping(value = "post/{postId}/postImage")
