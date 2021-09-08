@@ -2,6 +2,7 @@ package com.server.tourApiProject.touristPoint.touristData;
 
 import com.server.tourApiProject.myWish.MyWishParams01;
 import com.server.tourApiProject.observation.course.CourseRepository;
+import com.server.tourApiProject.search.Filter;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeRepository;
 import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTag;
 import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTagRepository;
@@ -182,7 +183,9 @@ public class TouristDataService {
         return result;
     }
 
-    public List<MyWishParams01> getTouristDataWithFilter(List<Long> areaCodeList, List<Long> hashTagIdList) {
+    public List<MyWishParams01> getTouristDataWithFilter(Filter filter) {
+        List<Long> areaCodeList = filter.getAreaCodeList();
+        List<Long> hashTagIdList= filter.getHashTagIdList();
 
         List<MyWishParams01> result = new ArrayList<>();
         List<Long> contentIdList = new ArrayList<>();

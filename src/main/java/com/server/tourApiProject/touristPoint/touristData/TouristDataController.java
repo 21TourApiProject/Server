@@ -1,6 +1,7 @@
 package com.server.tourApiProject.touristPoint.touristData;
 
 import com.server.tourApiProject.myWish.MyWishParams01;
+import com.server.tourApiProject.search.Filter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -105,9 +106,9 @@ public class TouristDataController {
     }
 
     @ApiOperation(value = "필터로 관광지 조희", notes = "해당 필터에 해당되는 관광지 정보를 조희한다")
-    @GetMapping(value = "touristData/search/{areaCodeList}/{hashTagIdList}")
-    public List<MyWishParams01> getTouristDataWithFilter(@PathVariable("areaCodeList") List<Long> areaCodeList, @PathVariable("hashTagIdList") List<Long> hashTagIdList){
-        return touristDataService.getTouristDataWithFilter(areaCodeList, hashTagIdList);
+    @PostMapping(value = "touristData/search")
+    public List<MyWishParams01> getTouristDataWithFilter(@RequestBody Filter filter){
+        return touristDataService.getTouristDataWithFilter(filter);
     }
 
 }
