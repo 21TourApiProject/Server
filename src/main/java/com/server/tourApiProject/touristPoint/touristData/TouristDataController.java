@@ -105,8 +105,8 @@ public class TouristDataController {
     }
 
     @ApiOperation(value = "필터로 관광지 조희", notes = "해당 필터에 해당되는 관광지 정보를 조희한다")
-    @GetMapping(value = "touristDataHashTag/search/{areaCodeList}/{hashTagIdList}")
-    public List<MyWishParams01> getTouristDataWithHashTag(@PathVariable("areaCodeList") List<Long> areaCodeList, @PathVariable("hashTagIdList") List<Long> hashTagIdList){
+    @GetMapping(value = "touristData/search/{areaCodeList}/{hashTagIdList}")
+    public List<MyWishParams01> getTouristDataWithFilter(@PathVariable("areaCodeList") List<Long> areaCodeList, @PathVariable("hashTagIdList") List<Long> hashTagIdList){
         return touristDataService.getTouristDataWithFilter(areaCodeList, hashTagIdList);
     }
 
