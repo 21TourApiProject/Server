@@ -29,13 +29,7 @@ public class NearTouristDataController {
         return nearTouristDataService.getNearTouristData(contentId);
     }
 
-    @ApiOperation(value = "주변 관광지 삭제", notes = "주변 관광지 정보를 삭제한다")
-    @DeleteMapping(value = "nearTouristData/")
-    public void deleteNearTouristData(){
-        nearTouristDataService.deleteNearTouristData();
-    }
-
-    @ApiOperation(value = "관광지 삭제", notes = "모든 관광지를 삭제한다")
+    @ApiOperation(value = "관광지 삭제", notes = "모든 주변 관광지를 삭제한다")
     @DeleteMapping(value = "nearTouristData/touristPoint")
     public void deleteNearTouristPoint(){
         nearTouristDataService.deleteNearTouristPoint();

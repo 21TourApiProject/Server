@@ -129,9 +129,9 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void changeProfileImage(Long userId, UserParams2 profileImage) {
+    public void changeProfileImage(Long userId, String profileImageName) {
         User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
-        user.setProfileImage(profileImage.getProfileImage());
+        user.setProfileImage(profileImageName);
         userRepository.save(user);
     }
 
