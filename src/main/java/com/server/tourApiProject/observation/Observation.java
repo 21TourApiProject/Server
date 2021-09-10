@@ -28,6 +28,9 @@ public class Observation {
     @Column
     private String link;
 
+    @Column
+    private String intro;   //한줄소개
+
     @Column(nullable = false)
     private Double latitude;    //지도를 위한 위도
 
