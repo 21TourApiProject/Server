@@ -52,6 +52,9 @@ public class TouristDataService {
         result.setParking(touristData.getParking());
         result.setChkPet(touristData.getChkPet());
         result.setHomePage(touristData.getHomePage());
+        result.setMapX(touristData.getMapX());
+        result.setMapY(touristData.getMapY());
+        result.setOverviewSim(touristData.getOverviewSim());
         return result;
     }
 
@@ -71,6 +74,9 @@ public class TouristDataService {
         result.setTreatMenu(touristData.getTreatMenu());
         result.setPacking(touristData.getPacking());
         result.setParkingFood(touristData.getParkingFood());
+        result.setMapX(touristData.getMapX());
+        result.setMapY(touristData.getMapY());
+        result.setOverviewSim(touristData.getOverviewSim());
         return result;
     }
 

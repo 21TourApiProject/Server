@@ -1,13 +1,9 @@
 package com.server.tourApiProject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class test {
     public static void main(String[] args) {
 
-        List<Long> areaCodeList = new ArrayList<>();
-        System.out.println("areaCodeList = " + areaCodeList);
+
 //        String overview = "예약 문의) <a title=\"새창 : 템플스테이 홈페이지로 이동\" href=\"https://www.templestay.com/\">https://www.templestay.com/</a> - 템플스테이 사무실 063-322-6162";
 //        int i = overview.indexOf("<a title=");
 //        int j = overview.indexOf("</a>");

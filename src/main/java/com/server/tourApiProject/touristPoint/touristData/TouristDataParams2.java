@@ -22,4 +22,7 @@ public class TouristDataParams2 {
     private String treatMenu; //취급메뉴(음식)
     private String packing; //포장(음식)
     private String parkingFood; //주차시설(음식)
+    private Double mapX; //경도
+    private Double mapY; //위도
+    private String overviewSim; //한줄소개
 }
