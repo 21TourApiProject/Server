@@ -10,6 +10,9 @@ import com.server.tourApiProject.touristPoint.touristData.TouristData;
 import com.server.tourApiProject.touristPoint.touristData.TouristDataService;
 import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTag;
 import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTagRepository;
+import com.server.tourApiProject.weather.WtArea;
+import com.server.tourApiProject.weather.WtAreaRepository;
+import com.server.tourApiProject.weather.WtAreaService;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -33,13 +36,16 @@ public class ExcelController {
     private final ContentTypeService contentTypeService;
     private final NearTouristDataRepository nearTouristDataRepository;
     private final TouristDataHashTagRepository touristDataHashTagRepository;
+    private final WtAreaRepository wtAreaRepository;
 
-    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository) {
+    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository) {
         this.touristDataService = touristDataService;
         this.areaService = areaService;
         this.contentTypeService = contentTypeService;
         this.nearTouristDataRepository = nearTouristDataRepository;
         this.touristDataHashTagRepository = touristDataHashTagRepository;
+        this.wtAreaRepository = wtAreaRepository;
+        ;
     }
 
     @GetMapping("/excel")
@@ -198,8 +204,8 @@ public class ExcelController {
             data.setHomePage(row.getCell(12).getStringCellValue());
             if (data.getHomePage().equals("null"))
                 data.setHomePage(null);
-            data.setIsCom((int)row.getCell(13).getNumericCellValue());
-            data.setIsJu((int)row.getCell(14).getNumericCellValue());
+            data.setIsCom((int) row.getCell(13).getNumericCellValue());
+            data.setIsJu((int) row.getCell(14).getNumericCellValue());
             data.setMapX(row.getCell(15).getNumericCellValue());
             data.setMapY(row.getCell(16).getNumericCellValue());
             data.setOpenTimeFood(row.getCell(17).getStringCellValue());
@@ -284,7 +290,7 @@ public class ExcelController {
             data.setTitle(row.getCell(6).getStringCellValue());
             if (data.getTitle().equals("null"))
                 data.setTitle(null);
-            data.setTouristDataId((long)row.getCell(7).getNumericCellValue());
+            data.setTouristDataId((long) row.getCell(7).getNumericCellValue());
 
             nearTouristDataRepository.save(data);
         }
@@ -312,12 +318,45 @@ public class ExcelController {
             Row row = worksheet.getRow(i);
             TouristDataHashTag data = new TouristDataHashTag();
 
-            data.setTouristDataHashTagId((long)row.getCell(0).getNumericCellValue());
-            data.setContentId((long)row.getCell(1).getNumericCellValue());
-            data.setHashTagId((long)row.getCell(2).getNumericCellValue());
+            data.setTouristDataHashTagId((long) row.getCell(0).getNumericCellValue());
+            data.setContentId((long) row.getCell(1).getNumericCellValue());
+            data.setHashTagId((long) row.getCell(2).getNumericCellValue());
             data.setHashTagName(row.getCell(3).getStringCellValue());
 
             touristDataHashTagRepository.save(data);
+        }
+        System.out.println("엑셀 완료");
+        return "excel";
+    }
+
+    @PostMapping("/excel/wtArea/read")
+    public String readWtAreaExcel(@RequestParam("file") MultipartFile file, Model model)
+            throws IOException {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (!extension.equals("xlsx") && !extension.equals("xls")) {
+            throw new IOException("엑셀파일만 업로드 해주세요.");
+        }
+        Workbook workbook = null;
+
+        if (extension.equals("xlsx")) {
+            workbook = new XSSFWorkbook(file.getInputStream());
+        } else if (extension.equals("xls")) {
+            workbook = new HSSFWorkbook(file.getInputStream());
+        }
+
+        Sheet worksheet = workbook.getSheetAt(0);
+        System.out.println(worksheet.getPhysicalNumberOfRows());
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            Row row = worksheet.getRow(i);
+            WtArea data = new WtArea();
+
+            data.setWtAreaId((long) row.getCell(0).getNumericCellValue());
+            data.setCityName(row.getCell(1).getStringCellValue());
+            data.setProvName(row.getCell(2).getStringCellValue());
+            data.setLatitude(row.getCell(3).getNumericCellValue());
+            data.setLongitude(row.getCell(4).getNumericCellValue());
+
+            wtAreaRepository.save(data);
         }
         System.out.println("엑셀 완료");
         return "excel";
