@@ -1,5 +1,6 @@
 package com.server.tourApiProject.observation;
 
+import com.server.tourApiProject.bigPost.post.Post;
 import com.server.tourApiProject.observation.course.Course;
 import com.server.tourApiProject.observation.observeFee.ObserveFee;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTag;
@@ -78,4 +79,7 @@ public class Observation {
 
     @OneToMany(mappedBy = "observation")
     private List<Course> courses = new ArrayList<>();
+
+    @OneToMany(mappedBy = "observation", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Post> posts=new ArrayList<>();
 }

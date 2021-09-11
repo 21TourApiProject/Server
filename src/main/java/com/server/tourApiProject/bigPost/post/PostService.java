@@ -4,8 +4,8 @@ import com.server.tourApiProject.bigPost.postHashTag.PostHashTag;
 import com.server.tourApiProject.bigPost.postHashTag.PostHashTagRepository;
 import com.server.tourApiProject.bigPost.postImage.PostImage;
 import com.server.tourApiProject.bigPost.postImage.PostImageRepository;
-import com.server.tourApiProject.bigPost.postObservePoint.PostObservePoint;
-import com.server.tourApiProject.bigPost.postObservePoint.PostObservePointRepository;
+import com.server.tourApiProject.observation.Observation;
+import com.server.tourApiProject.observation.ObservationRepository;
 import com.server.tourApiProject.user.User;
 import com.server.tourApiProject.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
-    private final PostObservePointRepository postObservePointRepository;
+    private final ObservationRepository observationRepository;
     private final PostImageRepository postImageRepository;
     private final PostHashTagRepository postHashTagRepository;
 
@@ -36,16 +36,18 @@ public class PostService {
 
     public Long createPost(String observePointName, PostParams postParams) {
         Post post = new Post();
-        PostObservePoint postObservePoint = postObservePointRepository.findByObservePointName(observePointName);
-        Long postObservePointId = postObservePoint.getPostObservePointId();
+        Observation observation = observationRepository.findByObservationName(observePointName);
+        Long observationId = observation.getObservationId();
         post.setPostContent(postParams.getPostContent());
         post.setPostTitle(postParams.getPostTitle());
+        post.setOptionHashTag(postParams.getOptionHashTag());
+        post.setOptionObservation(postParams.getOptionObservation());
         post.setYearDate(postParams.getYearDate());
         post.setTime(postParams.getTime());
         post.setUser(userRepository.findById(postParams.getUserId()).orElseThrow(IllegalAccessError::new));
         post.setUserId(postParams.getUserId());
-        post.setPostObservePoint(postObservePoint);
-        post.setPostObservePointId(postObservePointId);
+        post.setObservation(observation);
+        post.setObservationId(observationId);
         postRepository.save(post);
         return post.getPostId();
     }

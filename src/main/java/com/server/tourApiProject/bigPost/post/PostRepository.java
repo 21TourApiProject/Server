@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository <Post, Long> {
     List<Post> findByUserId(@Param("userId") Long userId);
-    List<Post> findByPostObservePointId(@Param("postObservePointId")Long postObservePointId);
+    List<Post> findByObservationId(@Param("ObservationId")Long observationId);
 }
