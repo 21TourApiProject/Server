@@ -32,10 +32,7 @@ public class TouristData {
     private List<TouristDataHashTag> touristDataHashTags = new ArrayList<>();
 
     @Column
-    private String addr1; //주소
-
-    @Column
-    private String addr2; //상세주소
+    private String addr; //주소
 
     @Column
     private Long areaCode; //지역 코드

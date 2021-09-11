@@ -40,7 +40,7 @@ public class NearTouristDataService {
             nearTouristData.setOverviewSim(me.getOverviewSim());
         }
         nearTouristData.setTitle(me.getTitle());
-        nearTouristData.setAddr1(me.getAddr1());
+        nearTouristData.setAddr1(me.getAddr());
         nearTouristData.setCat3Name(contentTypeRepository.findByCat3Code(me.getCat3()).getCat3Name());
         nearTouristDataRepository.save(nearTouristData);
     }

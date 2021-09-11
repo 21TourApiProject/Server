@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class JobA extends QuartzJobBean {
@@ -70,11 +71,15 @@ public class JobA extends QuartzJobBean {
             cat2 = (String) item.get("cat2");
             String cat3;
             cat3 = (String) item.get("cat3");
-            if ((cat1.equals("A01") || cat1.equals("A02")) && (cat2.equals("A0101") || cat2.equals("A0102") || cat2.equals("A0201") || cat2.equals("A0202") || cat2.equals("A0203") || cat2.equals("A0204") || cat2.equals("A0205")) && (cat3 != null)){
-                tourId.add((Long) item.get("contentid"));
 
-            } else {
-                continue; //혹시 모르니까 거르기
+            if(cat1 == null || cat2 == null || cat3 == null){
+                continue;
+            }
+            else if ((cat1.equals("A01") || cat1.equals("A02")) && (cat2.equals("A0101") || cat2.equals("A0102") || cat2.equals("A0201") || cat2.equals("A0202") || cat2.equals("A0203") || cat2.equals("A0204") || cat2.equals("A0205"))){
+                tourId.add((Long) item.get("contentid"));
+            }
+            else {
+                continue;
             }
 
             Optional<TouristData> optional = touristDataRepository.findById((Long) item.get("contentid"));
@@ -91,24 +96,28 @@ public class JobA extends QuartzJobBean {
             }
 
             String tmp;
+
             tmp = (String) item.get("addr1");
-            if (tmp == null) {
-                touristData.setAddr1(null);
-            } else if (tmp.isEmpty()){
-                touristData.setAddr1(null);
-            }else{
-                touristData.setAddr1(extractString(tmp));
+            String addr1 = "";
+            String addr2 = "";
+            if(!(tmp == null || tmp.isEmpty())){
+                addr1 = extractString(tmp);
             }
 
             if (item.get("addr2") != null) {
                 if (item.get("addr2").getClass().getName().equals("java.lang.String")){
-                    touristData.setAddr2((String) item.get("addr2"));
+                    addr2 = (String) item.get("addr2");
                 }
                 else if (item.get("addr2").getClass().getName().equals("java.lang.Long")){
-                    touristData.setAddr2(String.valueOf(item.get("addr2")));
+                    System.out.println("숫자 addr2 = " + item.get("addr2"));
+                    if (!Objects.equals(String.valueOf(item.get("addr2")), "123546378"))
+                        addr2 = String.valueOf(item.get("addr2"));
                 }
+            }
+            if(addr1.isEmpty() && addr2.isEmpty()){
+                touristData.setAddr(null);
             } else{
-                touristData.setAddr2(null);
+                touristData.setAddr(addr1 + addr2);
             }
 
             if(item.get("areacode") != null){
@@ -334,10 +343,14 @@ public class JobA extends QuartzJobBean {
             cat2 = (String) item.get("cat2");
             String cat3;
             cat3 = (String) item.get("cat3");
-            if ((cat1.equals("A05")) && (cat2.equals("A0502")) && (cat3 != null)){
+
+            if(cat1 == null || cat2 == null || cat3 == null){
+                continue;
+            }
+            else if (cat1.equals("A05") && cat2.equals("A0502")){
                 foodId.add((Long) item.get("contentid"));
             } else {
-                continue; //혹시 모르니까 거르기
+                continue;
             }
 
             Optional<TouristData> optional = touristDataRepository.findById((Long) item.get("contentid"));
@@ -354,24 +367,28 @@ public class JobA extends QuartzJobBean {
             }
 
             String tmp;
+
             tmp = (String) item.get("addr1");
-            if (tmp == null) {
-                touristData.setAddr1(null);
-            } else if (tmp.isEmpty()){
-                touristData.setAddr1(null);
-            }else{
-                touristData.setAddr1(extractString(tmp));
+            String addr1 = "";
+            String addr2 = "";
+            if(!(tmp == null || tmp.isEmpty())){
+                addr1 = extractString(tmp);
             }
 
             if (item.get("addr2") != null) {
                 if (item.get("addr2").getClass().getName().equals("java.lang.String")){
-                    touristData.setAddr2((String) item.get("addr2"));
+                    addr2 = (String) item.get("addr2");
                 }
                 else if (item.get("addr2").getClass().getName().equals("java.lang.Long")){
-                    touristData.setAddr2(String.valueOf(item.get("addr2")));
+                    System.out.println("숫자 addr2 = " + item.get("addr2"));
+                    if (!Objects.equals(String.valueOf(item.get("addr2")), "123546378"))
+                        addr2 = String.valueOf(item.get("addr2"));
                 }
+            }
+            if(addr1.isEmpty() && addr2.isEmpty()){
+                touristData.setAddr(null);
             } else{
-                touristData.setAddr2(null);
+                touristData.setAddr(addr1 + addr2);
             }
 
             if(item.get("areacode") != null){

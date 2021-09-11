@@ -14,7 +14,7 @@ public class TouristDataParams {
     private String title; //제목
     private String cat3Name; //소분류 이름
     private String overview; //개요
-    private String addr1; //주소
+    private String addr; //주소
     private String tel; //전화번호
     private String useTime; //이용시간(관광지)
     private String restDate; //휴무일(관광지)

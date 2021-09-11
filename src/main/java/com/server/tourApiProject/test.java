@@ -1,8 +1,7 @@
 package com.server.tourApiProject;
 
 public class test {
-    public static void main(String[] args) {
-
+    public static void main(String[] args){
 
 //        String overview = "예약 문의) <a title=\"새창 : 템플스테이 홈페이지로 이동\" href=\"https://www.templestay.com/\">https://www.templestay.com/</a> - 템플스테이 사무실 063-322-6162";
 //        int i = overview.indexOf("<a title=");
@@ -68,5 +67,30 @@ public class test {
 //            overview=overview.substring(1);
 //        }
 //        System.out.println("fin = " + overview);
+    }
+    public static class A{
+        String a;
+        String b;
+
+        public A(String a, String b) {
+            this.a = a;
+            this.b = b;
+        }
+
+        public String getA() {
+            return a;
+        }
+
+        public String getB() {
+            return b;
+        }
+
+        public void setA(String a) {
+            this.a = a;
+        }
+
+        public void setB(String b) {
+            this.b = b;
+        }
     }
 }

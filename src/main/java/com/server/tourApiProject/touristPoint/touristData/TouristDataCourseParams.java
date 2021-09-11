@@ -14,7 +14,7 @@ public class TouristDataCourseParams {
     private String title; //제목
     private String cat3Name; //소분류 이름
     private String overview; //개요
-    private String addr1; //주소
+    private String addr; //주소
     private String useTime; //이용시간(관광지)
     private String parking; //주차시설(관광지)
     private String treatMenu; //취급메뉴(음식)

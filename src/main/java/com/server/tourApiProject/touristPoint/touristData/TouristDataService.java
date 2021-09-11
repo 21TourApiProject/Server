@@ -44,7 +44,7 @@ public class TouristDataService {
         result.setTitle(touristData.getTitle());
         result.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
         result.setOverview(touristData.getOverview());
-        result.setAddr1(touristData.getAddr1());
+        result.setAddr(touristData.getAddr());
         result.setTel(touristData.getTel());
         result.setUseTime(touristData.getUseTime());
         result.setRestDate(touristData.getRestDate());
@@ -66,7 +66,7 @@ public class TouristDataService {
         result.setTitle(touristData.getTitle());
         result.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
         result.setOverview(touristData.getOverview());
-        result.setAddr1(touristData.getAddr1());
+        result.setAddr(touristData.getAddr());
         result.setTel(touristData.getTel());
         result.setOpenTimeFood(touristData.getOpenTimeFood());
         result.setRestDateFood(touristData.getRestDateFood());
@@ -221,7 +221,7 @@ public class TouristDataService {
             myWishParams01.setItemId(contentId);
             myWishParams01.setThumbnail(touristData.getFirstImage());
             myWishParams01.setTitle(touristData.getTitle());
-            myWishParams01.setAddress(touristData.getAddr1());
+            myWishParams01.setAddress(touristData.getAddr());
             myWishParams01.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
             myWishParams01.setOverviewSim(touristData.getOverviewSim());
 

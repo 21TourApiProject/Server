@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.List;
+import java.util.Objects;
 
 @Component
 public class GetOpenApiData implements org.springframework.boot.ApplicationRunner {
@@ -60,251 +60,251 @@ public class GetOpenApiData implements org.springframework.boot.ApplicationRunne
 //        System.out.println("관광지 기본정보 완료 " + errorCat);
 
         //관광지 추가정보
-        List<Long> touristPointId = touristDataController.getTouristPointId();
-        Double[][] touristPointMap = touristDataController.getTouristPointMap();
-
-        for (Long contentId : touristPointId) {
-            TouristData touristData = touristDataRepository.findByContentId(contentId);
-            if (touristData.getIsCom() == 1)
-                continue;
-
-            System.out.println("1 contentId = " + contentId);
-            JSONArray comm_list = getJson("/detailCommon", "&defaultYN=Y&overviewYN=Y&contentId=" + contentId, false); //공통 정보
-            JSONObject comm = (JSONObject) comm_list.get(0);
-
-            String tmp;
-            tmp = (String) comm.get("homepage");
-            if (tmp == null) {
-                touristData.setHomePage(null);
-            } else if (tmp.isEmpty()) {
-                touristData.setHomePage(null);
-            } else {
-                touristData.setHomePage(extractHomePage(tmp));
-            }
-
-            tmp = (String) comm.get("overview");
-            if (tmp == null) {
-                touristData.setOverview(null);
-                touristData.setOverviewSim(null);
-            } else if (tmp.isEmpty()) {
-                touristData.setOverview(null);
-                touristData.setOverviewSim(null);
-            } else {
-                String overview = extractOverview(tmp);
-                touristData.setOverview(overview);
-                if (overview.length() > 15)
-                    touristData.setOverviewSim(overview.substring(0,15)+"...");
-                else
-                    touristData.setOverviewSim(overview);
-            }
-
-            JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=12&contentId=" + contentId, false); //소개 정보
-            JSONObject intro = (JSONObject) intro_list.get(0);
-
-            touristData.setUseTime(null);
-            if (intro.get("usetime") != null && intro.get("usetime") != "") {
-                if (intro.get("usetime").getClass().getName().equals("java.lang.String")) {
-                    touristData.setUseTime(extractString((String) intro.get("usetime")));
-                } else if (intro.get("usetime").getClass().getName().equals("java.lang.Long")) {
-                    touristData.setUseTime(extractString(String.valueOf(intro.get("usetime"))));
-                }
-            }
-
-            tmp = (String) intro.get("restdate");
-            if (tmp == null) {
-                touristData.setRestDate(null);
-            } else if (tmp.isEmpty()) {
-                touristData.setRestDate(null);
-            } else {
-                touristData.setRestDate(extractString(tmp));
-            }
-
-            touristData.setExpGuide(null);
-            tmp = (String) intro.get("expguide");
-            if (tmp == null) {
-                touristData.setExpGuide(null);
-            } else if (tmp.isEmpty()) {
-                touristData.setExpGuide(null);
-            } else {
-                touristData.setExpGuide(extractString(tmp));
-            }
-
-            tmp = (String) intro.get("parking");
-            if (tmp == null) {
-                touristData.setParking(null);
-            } else if (tmp.isEmpty()) {
-                touristData.setParking(null);
-            } else {
-                touristData.setParking(extractString(tmp));
-            }
-
-            tmp = (String) intro.get("chkpet");
-            if (tmp == null) {
-                touristData.setChkPet(null);
-            } else if (tmp.isEmpty()) {
-                touristData.setChkPet(null);
-            } else {
-                touristData.setChkPet(extractString(tmp));
-            }
-            touristData.setIsCom(1);
-            touristDataRepository.save(touristData);
-        }
-
-        for (int i=0; i < touristPointId.size(); i++){
-            if (touristPointMap[i][0] == -1 || touristPointMap[i][1] == -1)
-                continue;
-            Long contentId = touristPointId.get(i);
-            TouristData touristData = touristDataRepository.findByContentId(contentId);
-            if (touristData.getIsJu() == 1)
-                continue;
-            System.out.println("2 contentId = " + contentId);
-            String part2 = "&mapX=" + Double.toString(touristPointMap[i][0]) + "&mapY=" + Double.toString(touristPointMap[i][1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=12";
-            JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
-            for (int j = 1; j < near_list.size(); j++) {
-                JSONObject near = (JSONObject) near_list.get(j);
-                nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
-            }
-            touristData.setIsJu(1);
-            touristDataRepository.save(touristData);
-        }
+//        List<Long> touristPointId = touristDataController.getTouristPointId();
+//        Double[][] touristPointMap = touristDataController.getTouristPointMap();
+//
+//        for (Long contentId : touristPointId) {
+//            TouristData touristData = touristDataRepository.findByContentId(contentId);
+//            if (touristData.getIsCom() == 1)
+//                continue;
+//
+//            System.out.println("1 contentId = " + contentId);
+//            JSONArray comm_list = getJson("/detailCommon", "&defaultYN=Y&overviewYN=Y&contentId=" + contentId, false); //공통 정보
+//            JSONObject comm = (JSONObject) comm_list.get(0);
+//
+//            String tmp;
+//            tmp = (String) comm.get("homepage");
+//            if (tmp == null) {
+//                touristData.setHomePage(null);
+//            } else if (tmp.isEmpty()) {
+//                touristData.setHomePage(null);
+//            } else {
+//                touristData.setHomePage(extractHomePage(tmp));
+//            }
+//
+//            tmp = (String) comm.get("overview");
+//            if (tmp == null) {
+//                touristData.setOverview(null);
+//                touristData.setOverviewSim(null);
+//            } else if (tmp.isEmpty()) {
+//                touristData.setOverview(null);
+//                touristData.setOverviewSim(null);
+//            } else {
+//                String overview = extractOverview(tmp);
+//                touristData.setOverview(overview);
+//                if (overview.length() > 15)
+//                    touristData.setOverviewSim(overview.substring(0,15)+"...");
+//                else
+//                    touristData.setOverviewSim(overview);
+//            }
+//
+//            JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=12&contentId=" + contentId, false); //소개 정보
+//            JSONObject intro = (JSONObject) intro_list.get(0);
+//
+//            touristData.setUseTime(null);
+//            if (intro.get("usetime") != null && intro.get("usetime") != "") {
+//                if (intro.get("usetime").getClass().getName().equals("java.lang.String")) {
+//                    touristData.setUseTime(extractString((String) intro.get("usetime")));
+//                } else if (intro.get("usetime").getClass().getName().equals("java.lang.Long")) {
+//                    touristData.setUseTime(extractString(String.valueOf(intro.get("usetime"))));
+//                }
+//            }
+//
+//            tmp = (String) intro.get("restdate");
+//            if (tmp == null) {
+//                touristData.setRestDate(null);
+//            } else if (tmp.isEmpty()) {
+//                touristData.setRestDate(null);
+//            } else {
+//                touristData.setRestDate(extractString(tmp));
+//            }
+//
+//            touristData.setExpGuide(null);
+//            tmp = (String) intro.get("expguide");
+//            if (tmp == null) {
+//                touristData.setExpGuide(null);
+//            } else if (tmp.isEmpty()) {
+//                touristData.setExpGuide(null);
+//            } else {
+//                touristData.setExpGuide(extractString(tmp));
+//            }
+//
+//            tmp = (String) intro.get("parking");
+//            if (tmp == null) {
+//                touristData.setParking(null);
+//            } else if (tmp.isEmpty()) {
+//                touristData.setParking(null);
+//            } else {
+//                touristData.setParking(extractString(tmp));
+//            }
+//
+//            tmp = (String) intro.get("chkpet");
+//            if (tmp == null) {
+//                touristData.setChkPet(null);
+//            } else if (tmp.isEmpty()) {
+//                touristData.setChkPet(null);
+//            } else {
+//                touristData.setChkPet(extractString(tmp));
+//            }
+//            touristData.setIsCom(1);
+//            touristDataRepository.save(touristData);
+//        }
+//
+//        for (int i=0; i < touristPointId.size(); i++){
+//            if (touristPointMap[i][0] == -1 || touristPointMap[i][1] == -1)
+//                continue;
+//            Long contentId = touristPointId.get(i);
+//            TouristData touristData = touristDataRepository.findByContentId(contentId);
+//            if (touristData.getIsJu() == 1)
+//                continue;
+//            System.out.println("2 contentId = " + contentId);
+//            String part2 = "&mapX=" + Double.toString(touristPointMap[i][0]) + "&mapY=" + Double.toString(touristPointMap[i][1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=12";
+//            JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
+//            for (int j = 1; j < near_list.size(); j++) {
+//                JSONObject near = (JSONObject) near_list.get(j);
+//                nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
+//            }
+//            touristData.setIsJu(1);
+//            touristDataRepository.save(touristData);
+//        }
 
         //음식 기본정보
-//        JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=39", false); //관광 정보
-//        for (Object o : food_list) {
-//            JSONObject item = (JSONObject) o;
-//            TouristData touristData = getTouristData(item);
-//
-//            String cat1;
-//            cat1 = (String) item.get("cat1");
-//            String cat2;
-//            cat2 = (String) item.get("cat2");
-//            String cat3;
-//            cat3 = (String) item.get("cat3");
-//
-//            if(cat1 == null || cat2 == null || cat3 == null){
-//                errorCat++;
-//            }
-//            else if (cat1.equals("A05") && cat2.equals("A0502")){
-//                touristData.setIsCom(0);
-//                touristData.setIsJu(0);
-//                touristDataController.createTouristData(touristData);
-//            } else {
-//                errorCat++;
-//            }
-//        }
-//        System.out.println("음식 기본정보 완료 " + errorCat);
+        JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=39", false); //관광 정보
+        for (Object o : food_list) {
+            JSONObject item = (JSONObject) o;
+            TouristData touristData = getTouristData(item);
+
+            String cat1;
+            cat1 = (String) item.get("cat1");
+            String cat2;
+            cat2 = (String) item.get("cat2");
+            String cat3;
+            cat3 = (String) item.get("cat3");
+
+            if(cat1 == null || cat2 == null || cat3 == null){
+                errorCat++;
+            }
+            else if (cat1.equals("A05") && cat2.equals("A0502")){
+                touristData.setIsCom(0);
+                touristData.setIsJu(0);
+                touristDataController.createTouristData(touristData);
+            } else {
+                errorCat++;
+            }
+        }
+        System.out.println("음식 기본정보 완료 " + errorCat);
 
         //음식 추가정보
-        List<Long> foodId = touristDataController.getFoodId();
-        Double[][] foodMap = touristDataController.getFoodMap();
-
-        for (Long contentId : foodId) {
-            TouristData touristData = touristDataRepository.findByContentId(contentId);
-            if (touristData.getIsCom() == 1)
-                continue;
-
-            System.out.println("3 contentId = " + contentId);
-            JSONArray comm_list = getJson("/detailCommon", "&defaultYN=Y&overviewYN=Y&contentId=" + contentId, false); //공통 정보
-            JSONObject comm = (JSONObject) comm_list.get(0);
-
-            String tmp;
-            tmp = (String) comm.get("overview");
-            if (tmp == null) {
-                touristData.setOverview(null);
-                touristData.setOverviewSim(null);
-            } else if (tmp.isEmpty()){
-                touristData.setOverview(null);
-                touristData.setOverviewSim(null);
-            }else{
-                String overview = extractOverview2(tmp);
-                touristData.setOverview(overview);
-                if (overview == null)
-                    touristData.setOverviewSim(null);
-                else if (overview.length() > 15)
-                    touristData.setOverviewSim(overview.substring(0,15)+"...");
-                else
-                    touristData.setOverviewSim(overview);
-            }
-
-            JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=39&contentId=" + contentId, false); //소개 정보
-            JSONObject intro = (JSONObject) intro_list.get(0);
-
-            tmp = (String) intro.get("opentimefood");
-            if (tmp == null) {
-                touristData.setOpenTimeFood(null);
-            } else if (tmp.isEmpty()){
-                touristData.setOpenTimeFood(null);
-            }else{
-                touristData.setOpenTimeFood(extractString(tmp));
-            }
-
-            tmp = (String) intro.get("restdatefood");
-            if (tmp == null) {
-                touristData.setRestDateFood(null);
-            } else if (tmp.isEmpty()){
-                touristData.setRestDateFood(null);
-            }else{
-                touristData.setRestDateFood(extractString(tmp));
-            }
-
-            tmp = (String) intro.get("firstmenu");
-            if (tmp == null) {
-                touristData.setFirstMenu(null);
-            } else if (tmp.isEmpty()){
-                touristData.setFirstMenu(null);
-            }else{
-                touristData.setFirstMenu(extractString(tmp));
-            }
-
-            tmp = (String) intro.get("treatmenu");
-            if (tmp == null) {
-                touristData.setTreatMenu(null);
-            } else if (tmp.isEmpty()){
-                touristData.setTreatMenu(null);
-            }else{
-                touristData.setTreatMenu(extractString(tmp));
-            }
-
-            tmp = (String) intro.get("packing");
-            if (tmp == null) {
-                touristData.setPacking(null);
-            } else if (tmp.isEmpty()){
-                touristData.setPacking(null);
-            }else{
-                touristData.setPacking(extractString(tmp));
-            }
-
-            tmp = (String) intro.get("parkingfood");
-            if (tmp == null) {
-                touristData.setParkingFood(null);
-            } else if (tmp.isEmpty()){
-                touristData.setParkingFood(null);
-            }else{
-                touristData.setParkingFood(extractString(tmp));
-            }
-            touristData.setIsCom(1);
-            touristDataRepository.save(touristData);
-        }
-
-        for (int i=0; i < foodId.size(); i++){
-            if (foodMap[i][0] == null || foodMap[i][1] == null)
-                continue;
-
-            Long contentId = foodId.get(i);
-            TouristData touristData = touristDataRepository.findByContentId(contentId);
-            if (touristData.getIsJu() == 1)
-                continue;
-
-            System.out.println("4 contentId = " + contentId);
-            String part2 = "&mapX=" + Double.toString(foodMap[i][0]) + "&mapY=" + Double.toString(foodMap[i][1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=39";
-            JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
-            for (int j = 1; j < near_list.size(); j++) {
-                JSONObject near = (JSONObject) near_list.get(j);
-                nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
-            }
-            touristData.setIsJu(1);
-            touristDataRepository.save(touristData);
-        }
+//        List<Long> foodId = touristDataController.getFoodId();
+//        Double[][] foodMap = touristDataController.getFoodMap();
+//
+//        for (Long contentId : foodId) {
+//            TouristData touristData = touristDataRepository.findByContentId(contentId);
+//            if (touristData.getIsCom() == 1)
+//                continue;
+//
+//            System.out.println("3 contentId = " + contentId);
+//            JSONArray comm_list = getJson("/detailCommon", "&defaultYN=Y&overviewYN=Y&contentId=" + contentId, false); //공통 정보
+//            JSONObject comm = (JSONObject) comm_list.get(0);
+//
+//            String tmp;
+//            tmp = (String) comm.get("overview");
+//            if (tmp == null) {
+//                touristData.setOverview(null);
+//                touristData.setOverviewSim(null);
+//            } else if (tmp.isEmpty()){
+//                touristData.setOverview(null);
+//                touristData.setOverviewSim(null);
+//            }else{
+//                String overview = extractOverview2(tmp);
+//                touristData.setOverview(overview);
+//                if (overview == null)
+//                    touristData.setOverviewSim(null);
+//                else if (overview.length() > 15)
+//                    touristData.setOverviewSim(overview.substring(0,15)+"...");
+//                else
+//                    touristData.setOverviewSim(overview);
+//            }
+//
+//            JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=39&contentId=" + contentId, false); //소개 정보
+//            JSONObject intro = (JSONObject) intro_list.get(0);
+//
+//            tmp = (String) intro.get("opentimefood");
+//            if (tmp == null) {
+//                touristData.setOpenTimeFood(null);
+//            } else if (tmp.isEmpty()){
+//                touristData.setOpenTimeFood(null);
+//            }else{
+//                touristData.setOpenTimeFood(extractString(tmp));
+//            }
+//
+//            tmp = (String) intro.get("restdatefood");
+//            if (tmp == null) {
+//                touristData.setRestDateFood(null);
+//            } else if (tmp.isEmpty()){
+//                touristData.setRestDateFood(null);
+//            }else{
+//                touristData.setRestDateFood(extractString(tmp));
+//            }
+//
+//            tmp = (String) intro.get("firstmenu");
+//            if (tmp == null) {
+//                touristData.setFirstMenu(null);
+//            } else if (tmp.isEmpty()){
+//                touristData.setFirstMenu(null);
+//            }else{
+//                touristData.setFirstMenu(extractString(tmp));
+//            }
+//
+//            tmp = (String) intro.get("treatmenu");
+//            if (tmp == null) {
+//                touristData.setTreatMenu(null);
+//            } else if (tmp.isEmpty()){
+//                touristData.setTreatMenu(null);
+//            }else{
+//                touristData.setTreatMenu(extractString(tmp));
+//            }
+//
+//            tmp = (String) intro.get("packing");
+//            if (tmp == null) {
+//                touristData.setPacking(null);
+//            } else if (tmp.isEmpty()){
+//                touristData.setPacking(null);
+//            }else{
+//                touristData.setPacking(extractString(tmp));
+//            }
+//
+//            tmp = (String) intro.get("parkingfood");
+//            if (tmp == null) {
+//                touristData.setParkingFood(null);
+//            } else if (tmp.isEmpty()){
+//                touristData.setParkingFood(null);
+//            }else{
+//                touristData.setParkingFood(extractString(tmp));
+//            }
+//            touristData.setIsCom(1);
+//            touristDataRepository.save(touristData);
+//        }
+//
+//        for (int i=0; i < foodId.size(); i++){
+//            if (foodMap[i][0] == null || foodMap[i][1] == null)
+//                continue;
+//
+//            Long contentId = foodId.get(i);
+//            TouristData touristData = touristDataRepository.findByContentId(contentId);
+//            if (touristData.getIsJu() == 1)
+//                continue;
+//
+//            System.out.println("4 contentId = " + contentId);
+//            String part2 = "&mapX=" + Double.toString(foodMap[i][0]) + "&mapY=" + Double.toString(foodMap[i][1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=39";
+//            JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
+//            for (int j = 1; j < near_list.size(); j++) {
+//                JSONObject near = (JSONObject) near_list.get(j);
+//                nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
+//            }
+//            touristData.setIsJu(1);
+//            touristDataRepository.save(touristData);
+//        }
 
     }
 
@@ -376,9 +376,13 @@ public class GetOpenApiData implements org.springframework.boot.ApplicationRunne
                 overview = overview.substring(0, m) + overview.substring(m+20);
             }
         }
+
         while (overview.charAt(0) == ' '){
             overview=overview.substring(1);
         }
+
+        overview = overview.replaceAll("/>","");
+
         return overview;
 
     }
@@ -420,6 +424,7 @@ public class GetOpenApiData implements org.springframework.boot.ApplicationRunne
         overview = overview.replaceAll("</br>","");
         overview = overview.replaceAll("<br >","");
         overview = overview.replaceAll("<BR>","");
+        overview = overview.replaceAll("<BR/>","");
         overview = overview.replaceAll("<Br>","");
         overview = overview.replaceAll("<br />"," ");
         overview = overview.replaceAll("<br/>"," ");
@@ -446,24 +451,26 @@ public class GetOpenApiData implements org.springframework.boot.ApplicationRunne
         String tmp;
 
         tmp = (String) item.get("addr1");
-        if (tmp == null) {
-            touristData.setAddr1(null);
-        } else if (tmp.isEmpty()){
-            touristData.setAddr1(null);
-        }else{
-            touristData.setAddr1(extractString(tmp));
+        String addr1 = "";
+        String addr2 = "";
+        if(!(tmp == null || tmp.isEmpty())){
+            addr1 = extractString(tmp);
         }
 
         if (item.get("addr2") != null) {
             if (item.get("addr2").getClass().getName().equals("java.lang.String")){
-                touristData.setAddr2((String) item.get("addr2"));
+                addr2 = (String) item.get("addr2");
             }
             else if (item.get("addr2").getClass().getName().equals("java.lang.Long")){
                 System.out.println("숫자 addr2 = " + item.get("addr2"));
-                touristData.setAddr2(String.valueOf(item.get("addr2")));
+                if (!Objects.equals(String.valueOf(item.get("addr2")), "123546378"))
+                    addr2 = String.valueOf(item.get("addr2"));
             }
+        }
+        if(addr1.isEmpty() && addr2.isEmpty()){
+            touristData.setAddr(null);
         } else{
-            touristData.setAddr2(null);
+            touristData.setAddr(addr1+addr2);
         }
 
         if(item.get("areacode") != null){
