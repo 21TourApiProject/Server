@@ -29,11 +29,14 @@ public class Observation {
     @Column
     private String link;
 
-    @Column(nullable = false)
-    private double latitude;    //지도를 위한 위도
+    @Column
+    private String intro;   //한줄소개
 
     @Column(nullable = false)
-    private double longitude;    //지도를 위한 경도
+    private Double latitude;    //지도를 위한 위도
+
+    @Column(nullable = false)
+    private Double longitude;    //지도를 위한 경도
 
     @Column(nullable = false)
     private String address;
@@ -60,13 +63,13 @@ public class Observation {
     private String closedDay;   //휴무일
 
     @Column
-    private double light;   //광공해
+    private Double light;   //광공해
 
     @Column
-    private boolean nature;   //자연관광지
+    private Boolean nature;   //자연관광지
 
     @Column
-    private int courseOrder;   //코스내에서의 관측지 순서서
+    private Integer courseOrder;   //코스내에서의 관측지 순서서
 
     @OneToMany(mappedBy = "observation")
     private List<ObserveFee> observeFees=new ArrayList<>();

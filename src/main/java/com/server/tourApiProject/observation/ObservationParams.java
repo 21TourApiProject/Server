@@ -13,9 +13,9 @@ public class ObservationParams {
 
     private String link;
 
-    private float latitude;
+    private Double latitude;
 
-    private float longitude;
+    private Double longitude;
 
     private String address;
 
