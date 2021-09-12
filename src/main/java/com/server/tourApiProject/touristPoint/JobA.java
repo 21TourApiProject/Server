@@ -46,6 +46,7 @@ public class JobA extends QuartzJobBean {
 
     int newTour = 0;
     int newFood = 0;
+    Boolean isRealNew;
 
     @SneakyThrows
     @Override
@@ -71,8 +72,10 @@ public class JobA extends QuartzJobBean {
             cat2 = (String) item.get("cat2");
             String cat3;
             cat3 = (String) item.get("cat3");
+            String addr;
+            addr = (String) item.get("addr1");
 
-            if(cat1 == null || cat2 == null || cat3 == null){
+            if(cat1 == null || cat2 == null || cat3 == null || addr == null){
                 continue;
             }
             else if ((cat1.equals("A01") || cat1.equals("A02")) && (cat2.equals("A0101") || cat2.equals("A0102") || cat2.equals("A0201") || cat2.equals("A0202") || cat2.equals("A0203") || cat2.equals("A0204") || cat2.equals("A0205"))){
@@ -86,8 +89,10 @@ public class JobA extends QuartzJobBean {
             TouristData touristData;
 
             if (optional.isPresent()){ //원래 있던 데이터면
+                isRealNew = false;
                 touristData = touristDataRepository.findByContentId((Long) item.get("contentid"));
             } else{ //새로 들어온 데이터면
+                isRealNew = true;
                 touristData = new TouristData();
                 touristData.setIsJu(0);
                 touristData.setIsCom(0);
@@ -97,30 +102,17 @@ public class JobA extends QuartzJobBean {
 
             String tmp;
 
-            tmp = (String) item.get("addr1");
-            String addr1 = "";
-            String addr2 = "";
-            if(!(tmp == null || tmp.isEmpty())){
-                addr1 = extractString(tmp);
-            }
+            String addr1 = (String) item.get("addr1");
+            touristData.setAddr(addr1);
 
             if (item.get("addr2") != null) {
                 if (item.get("addr2").getClass().getName().equals("java.lang.String")){
-                    addr2 = (String) item.get("addr2");
+                    touristData.setAddr(addr1 + item.get("addr2"));
+
                 }
                 else if (item.get("addr2").getClass().getName().equals("java.lang.Long")){
-                    System.out.println("숫자 addr2 = " + item.get("addr2"));
                     if (!Objects.equals(String.valueOf(item.get("addr2")), "123546378"))
-                        addr2 = String.valueOf(item.get("addr2"));
-                }
-            }
-            if(addr1.isEmpty() && addr2.isEmpty()){
-                touristData.setAddr(null);
-            } else{
-                if(addr2.charAt(0) == '('){
-                    touristData.setAddr(addr1 + " " + addr2);
-                } else {
-                    touristData.setAddr(addr1 + addr2);
+                        touristData.setAddr(addr1 + " " +item.get("addr2"));
                 }
             }
 
@@ -131,30 +123,24 @@ public class JobA extends QuartzJobBean {
             }
 
             tmp = (String) item.get("cat1");
-            if (tmp == null) {
+            if (tmp.isEmpty()){
                 touristData.setCat1(null);
-            } else if (tmp.isEmpty()){
-                touristData.setCat1(null);
-            }else{
-                touristData.setCat1(extractString(tmp));
+            } else{
+                touristData.setCat1(tmp);
             }
 
             tmp = (String) item.get("cat2");
-            if (tmp == null) {
+            if (tmp.isEmpty()){
                 touristData.setCat2(null);
-            } else if (tmp.isEmpty()){
-                touristData.setCat2(null);
-            }else{
-                touristData.setCat2(extractString(tmp));
+            } else{
+                touristData.setCat2(tmp);
             }
 
             tmp = (String) item.get("cat3");
-            if (tmp == null) {
+            if (tmp.isEmpty()){
                 touristData.setCat3(null);
-            } else if (tmp.isEmpty()){
-                touristData.setCat3(null);
-            }else{
-                touristData.setCat3(extractString(tmp));
+            } else{
+                touristData.setCat3(tmp);
             }
 
             tmp = (String) item.get("firstimage");
@@ -240,17 +226,21 @@ public class JobA extends QuartzJobBean {
             tmp = (String) comm.get("overview");
             if (tmp == null) {
                 touristData.setOverview(null);
-                touristData.setOverviewSim(null);
+                if(isRealNew)
+                    touristData.setOverviewSim(null);
             } else if (tmp.isEmpty()) {
                 touristData.setOverview(null);
-                touristData.setOverviewSim(null);
+                if(isRealNew)
+                    touristData.setOverviewSim(null);
             } else {
                 String overview = extractOverview(tmp);
                 touristData.setOverview(overview);
-                if (overview.length() > 15)
-                    touristData.setOverviewSim(overview.substring(0,15)+"...");
-                else
-                    touristData.setOverviewSim(overview);
+                if(isRealNew){
+                    if (overview.length() > 15)
+                        touristData.setOverviewSim(overview.substring(0,15)+"...");
+                    else
+                        touristData.setOverviewSim(overview);
+                }
             }
 
             JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=12&contentId=" + contentId, false); //소개 정보
@@ -347,13 +337,16 @@ public class JobA extends QuartzJobBean {
             cat2 = (String) item.get("cat2");
             String cat3;
             cat3 = (String) item.get("cat3");
+            String addr;
+            addr = (String) item.get("addr1");
 
-            if(cat1 == null || cat2 == null || cat3 == null){
+            if(cat1 == null || cat2 == null || cat3 == null || addr == null){
                 continue;
             }
             else if (cat1.equals("A05") && cat2.equals("A0502")){
                 foodId.add((Long) item.get("contentid"));
-            } else {
+            }
+            else {
                 continue;
             }
 
@@ -361,8 +354,10 @@ public class JobA extends QuartzJobBean {
             TouristData touristData;
 
             if (optional.isPresent()){ //원래 있던 데이터면
+                isRealNew = false;
                 touristData = touristDataRepository.findByContentId((Long) item.get("contentid"));
             } else{ //새로 들어온 데이터면
+                isRealNew = true;
                 touristData = new TouristData();
                 touristData.setIsJu(0);
                 touristData.setIsCom(0);
@@ -372,30 +367,17 @@ public class JobA extends QuartzJobBean {
 
             String tmp;
 
-            tmp = (String) item.get("addr1");
-            String addr1 = "";
-            String addr2 = "";
-            if(!(tmp == null || tmp.isEmpty())){
-                addr1 = extractString(tmp);
-            }
+            String addr1 = (String) item.get("addr1");
+            touristData.setAddr(addr1);
 
             if (item.get("addr2") != null) {
                 if (item.get("addr2").getClass().getName().equals("java.lang.String")){
-                    addr2 = (String) item.get("addr2");
+                    touristData.setAddr(addr1 + item.get("addr2"));
+
                 }
                 else if (item.get("addr2").getClass().getName().equals("java.lang.Long")){
-                    System.out.println("숫자 addr2 = " + item.get("addr2"));
                     if (!Objects.equals(String.valueOf(item.get("addr2")), "123546378"))
-                        addr2 = String.valueOf(item.get("addr2"));
-                }
-            }
-            if(addr1.isEmpty() && addr2.isEmpty()){
-                touristData.setAddr(null);
-            } else{
-                if(addr2.charAt(0) == '('){
-                    touristData.setAddr(addr1 + " " + addr2);
-                } else {
-                    touristData.setAddr(addr1 + addr2);
+                        touristData.setAddr(addr1 + " " +item.get("addr2"));
                 }
             }
 
@@ -406,30 +388,24 @@ public class JobA extends QuartzJobBean {
             }
 
             tmp = (String) item.get("cat1");
-            if (tmp == null) {
+            if (tmp.isEmpty()){
                 touristData.setCat1(null);
-            } else if (tmp.isEmpty()){
-                touristData.setCat1(null);
-            }else{
-                touristData.setCat1(extractString(tmp));
+            } else{
+                touristData.setCat1(tmp);
             }
 
             tmp = (String) item.get("cat2");
-            if (tmp == null) {
+            if (tmp.isEmpty()){
                 touristData.setCat2(null);
-            } else if (tmp.isEmpty()){
-                touristData.setCat2(null);
-            }else{
-                touristData.setCat2(extractString(tmp));
+            } else{
+                touristData.setCat2(tmp);
             }
 
             tmp = (String) item.get("cat3");
-            if (tmp == null) {
+            if (tmp.isEmpty()){
                 touristData.setCat3(null);
-            } else if (tmp.isEmpty()){
-                touristData.setCat3(null);
-            }else{
-                touristData.setCat3(extractString(tmp));
+            } else{
+                touristData.setCat3(tmp);
             }
 
             tmp = (String) item.get("firstimage");
@@ -505,19 +481,21 @@ public class JobA extends QuartzJobBean {
             tmp = (String) comm.get("overview");
             if (tmp == null) {
                 touristData.setOverview(null);
-                touristData.setOverviewSim(null);
-            } else if (tmp.isEmpty()){
+                if(isRealNew)
+                    touristData.setOverviewSim(null);
+            } else if (tmp.isEmpty()) {
                 touristData.setOverview(null);
-                touristData.setOverviewSim(null);
-            }else{
+                if(isRealNew)
+                    touristData.setOverviewSim(null);
+            } else {
                 String overview = extractOverview2(tmp);
                 touristData.setOverview(overview);
-                if (overview == null)
-                    touristData.setOverviewSim(null);
-                else if (overview.length() > 15)
-                    touristData.setOverviewSim(overview.substring(0,15)+"...");
-                else
-                    touristData.setOverviewSim(overview);
+                if(isRealNew){
+                    if (overview.length() > 15)
+                        touristData.setOverviewSim(overview.substring(0,15)+"...");
+                    else
+                        touristData.setOverviewSim(overview);
+                }
             }
 
             JSONArray intro_list = getJson("/detailIntro", "&contentTypeId=39&contentId=" + contentId, false); //소개 정보
@@ -607,26 +585,7 @@ public class JobA extends QuartzJobBean {
     }
 
     private String extractOverview(String overview) { //관광지 개요 정제
-        overview = overview.replaceAll("<br>","");
-        overview = overview.replaceAll("<br >"," ");
-        overview = overview.replaceAll("<BR>","");
-        overview = overview.replaceAll("<Br>","");
-        overview = overview.replaceAll("<br />"," ");
-        overview = overview.replaceAll("<br/>"," ");
-        overview = overview.replaceAll("<br /","");
-        overview = overview.replaceAll("<div>","");
-        overview = overview.replaceAll("</div>","");
-        overview = overview.replaceAll("<strong>","");
-        overview = overview.replaceAll("</strong>","");
-        overview = overview.replaceAll("<u>","");
-        overview = overview.replaceAll("</u>","");
-        overview = overview.replaceAll("&nbsp;","");
-        overview = overview.replaceAll("&lt;","");
-        overview = overview.replaceAll("&gt;","");
-        overview = overview.replaceAll("&amp;","");
-        overview = overview.replaceAll("&lsquo;","");
-        overview = overview.replaceAll("&rsquo;","");
-        overview = overview.replaceAll("\n"," ");
+        overview = ridTag(overview);
 
         int i = overview.indexOf("<a href=");
         int j = overview.indexOf("</a>");
@@ -653,18 +612,7 @@ public class JobA extends QuartzJobBean {
     }
 
     private String extractOverview2(String overview) { //음식 개요 정제
-        overview = overview.replaceAll("<br>","");
-        overview = overview.replaceAll("<br />"," ");
-        overview = overview.replaceAll("<br/>"," ");
-        overview = overview.replaceAll("<strong>","");
-        overview = overview.replaceAll("</strong>","");
-        overview = overview.replaceAll("<u>","");
-        overview = overview.replaceAll("</u>","");
-        overview = overview.replaceAll("&nbsp;","");
-        overview = overview.replaceAll("&lt;","");
-        overview = overview.replaceAll("&gt;","");
-        overview = overview.replaceAll("&amp;","");
-        overview = overview.replaceAll("\n"," ");
+        overview = ridTag(overview);
 
         int i = overview.indexOf("<a href=");
         int j = overview.indexOf("</a>");
@@ -704,9 +652,13 @@ public class JobA extends QuartzJobBean {
                 overview = overview.substring(0, m) + overview.substring(m+20);
             }
         }
+
         while (overview.charAt(0) == ' '){
             overview=overview.substring(1);
         }
+
+        overview = overview.replaceAll("/>","");
+
         return overview;
 
     }
@@ -724,9 +676,38 @@ public class JobA extends QuartzJobBean {
     }
 
     public String extractString(String overview){
+        overview = ridTag(overview);
+
+        while(overview.contains("<a href=") && overview.contains("</a>")){
+            overview = overview.substring(0, overview.indexOf("<a href=")) + overview.substring(overview.indexOf("</a>") + 4);
+        }
+
+        int i = overview.indexOf("<a title=");
+        int j = overview.indexOf("</a>");
+        if (i != -1 && j != -1) {
+            overview = overview.substring(0, i-1) + overview.substring(j+4);
+        }
+
+        if(overview.equals(""))
+            return null;
+
+        return overview;
+    }
+
+    private String ridTag(String overview) {
         overview = overview.replaceAll("<br>","");
+        overview = overview.replaceAll("<br","");
+        overview = overview.replaceAll("</br>","");
+        overview = overview.replaceAll("<br >","");
+        overview = overview.replaceAll("<BR>","");
+        overview = overview.replaceAll("<BR/>","");
+        overview = overview.replaceAll("<Br>","");
         overview = overview.replaceAll("<br />"," ");
         overview = overview.replaceAll("<br/>"," ");
+        overview = overview.replaceAll("<br /","");
+        overview = overview.replaceAll("<div>","");
+        overview = overview.replaceAll("</div>","");
+        overview = overview.replaceAll("<strong>","");
         overview = overview.replaceAll("<strong>","");
         overview = overview.replaceAll("</strong>","");
         overview = overview.replaceAll("<u>","");
@@ -735,19 +716,9 @@ public class JobA extends QuartzJobBean {
         overview = overview.replaceAll("&lt;","");
         overview = overview.replaceAll("&gt;","");
         overview = overview.replaceAll("&amp;","");
+        overview = overview.replaceAll("&lsquo;","");
+        overview = overview.replaceAll("&rsquo;","");
         overview = overview.replaceAll("\n"," ");
-
-        int i = overview.indexOf("<a href=");
-        int j = overview.indexOf("</a>");
-        if (i != -1 && j != -1) {
-            overview = overview.substring(0, i) + overview.substring(j+4);
-        }
-
-        i = overview.indexOf("<a title=");
-        j = overview.indexOf("</a>");
-        if (i != -1 && j != -1) {
-            overview = overview.substring(0, i-1) + overview.substring(j+4);
-        }
         return overview;
     }
 

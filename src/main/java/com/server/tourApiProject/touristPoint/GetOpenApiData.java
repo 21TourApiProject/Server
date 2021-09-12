@@ -33,31 +33,33 @@ public class GetOpenApiData implements org.springframework.boot.ApplicationRunne
         System.out.println("만오천개 받기");
 
         //관광지 기본정보
-//        JSONArray tour_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=12", false); //관광 정보
-//        for (Object o : tour_list) {
-//            JSONObject item = (JSONObject) o;
-//            TouristData touristData = getTouristData(item);
-//
-//            String cat1;
-//            cat1 = (String) item.get("cat1");
-//            String cat2;
-//            cat2 = (String) item.get("cat2");
-//            String cat3;
-//            cat3 = (String) item.get("cat3");
-//
-//            if(cat1 == null || cat2 == null || cat3 == null){
-//                errorCat++;
-//            }
-//            else if ((cat1.equals("A01") || cat1.equals("A02")) && (cat2.equals("A0101") || cat2.equals("A0102") || cat2.equals("A0201") || cat2.equals("A0202") || cat2.equals("A0203") || cat2.equals("A0204") || cat2.equals("A0205"))){
-//                touristData.setIsCom(0);
-//                touristData.setIsJu(0);
-//                touristDataController.createTouristData(touristData);
-//            }
-//            else {
-//                errorCat++;
-//            }
-//        }
-//        System.out.println("관광지 기본정보 완료 " + errorCat);
+        JSONArray tour_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=12", false); //관광 정보
+        for (Object o : tour_list) {
+            JSONObject item = (JSONObject) o;
+
+            String cat1;
+            cat1 = (String) item.get("cat1");
+            String cat2;
+            cat2 = (String) item.get("cat2");
+            String cat3;
+            cat3 = (String) item.get("cat3");
+            String addr1;
+            addr1 = (String) item.get("addr1");
+
+            if(cat1 == null || cat2 == null || cat3 == null || addr1 == null){
+                errorCat++;
+            }
+            else if ((cat1.equals("A01") || cat1.equals("A02")) && (cat2.equals("A0101") || cat2.equals("A0102") || cat2.equals("A0201") || cat2.equals("A0202") || cat2.equals("A0203") || cat2.equals("A0204") || cat2.equals("A0205"))){
+                TouristData touristData = getTouristData(item);
+                touristData.setIsCom(0);
+                touristData.setIsJu(0);
+                touristDataController.createTouristData(touristData);
+            }
+            else {
+                errorCat++;
+            }
+        }
+        System.out.println("관광지 기본정보 완료 " + errorCat);
 
         //관광지 추가정보
 //        List<Long> touristPointId = touristDataController.getTouristPointId();
@@ -169,32 +171,35 @@ public class GetOpenApiData implements org.springframework.boot.ApplicationRunne
 //        }
 
         //음식 기본정보
-        JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=39", false); //관광 정보
-        for (Object o : food_list) {
-            JSONObject item = (JSONObject) o;
-            TouristData touristData = getTouristData(item);
-
-            String cat1;
-            cat1 = (String) item.get("cat1");
-            String cat2;
-            cat2 = (String) item.get("cat2");
-            String cat3;
-            cat3 = (String) item.get("cat3");
-
-            if(cat1 == null || cat2 == null || cat3 == null){
-                errorCat++;
-            }
-            else if (cat1.equals("A05") && cat2.equals("A0502")){
-                touristData.setIsCom(0);
-                touristData.setIsJu(0);
-                touristDataController.createTouristData(touristData);
-            } else {
-                errorCat++;
-            }
-        }
-        System.out.println("음식 기본정보 완료 " + errorCat);
-
-        //음식 추가정보
+//        errorCat = 0;
+//        JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=39", false); //관광 정보
+//        for (Object o : food_list) {
+//            JSONObject item = (JSONObject) o;
+//
+//            String cat1;
+//            cat1 = (String) item.get("cat1");
+//            String cat2;
+//            cat2 = (String) item.get("cat2");
+//            String cat3;
+//            cat3 = (String) item.get("cat3");
+//            String addr1;
+//            addr1 = (String) item.get("addr1");
+//
+//            if(cat1 == null || cat2 == null || cat3 == null || addr1 == null){
+//                errorCat++;
+//            }
+//            else if (cat1.equals("A05") && cat2.equals("A0502")){
+//                TouristData touristData = getTouristData(item);
+//                touristData.setIsCom(0);
+//                touristData.setIsJu(0);
+//                touristDataController.createTouristData(touristData);
+//            } else {
+//                errorCat++;
+//            }
+//        }
+//        System.out.println("음식 기본정보 완료 " + errorCat);
+//
+//        //음식 추가정보
 //        List<Long> foodId = touristDataController.getFoodId();
 //        Double[][] foodMap = touristDataController.getFoodMap();
 //
@@ -450,30 +455,17 @@ public class GetOpenApiData implements org.springframework.boot.ApplicationRunne
         TouristData touristData = new TouristData();
         String tmp;
 
-        tmp = (String) item.get("addr1");
-        String addr1 = "";
-        String addr2 = "";
-        if(!(tmp == null || tmp.isEmpty())){
-            addr1 = extractString(tmp);
-        }
+        String addr1 = (String) item.get("addr1");
+        touristData.setAddr(addr1);
 
         if (item.get("addr2") != null) {
             if (item.get("addr2").getClass().getName().equals("java.lang.String")){
-                addr2 = (String) item.get("addr2");
+                touristData.setAddr(addr1 + item.get("addr2"));
+
             }
             else if (item.get("addr2").getClass().getName().equals("java.lang.Long")){
-                System.out.println("숫자 addr2 = " + item.get("addr2"));
                 if (!Objects.equals(String.valueOf(item.get("addr2")), "123546378"))
-                    addr2 = String.valueOf(item.get("addr2"));
-            }
-        }
-        if(addr1.isEmpty() && addr2.isEmpty()){
-            touristData.setAddr(null);
-        } else{
-            if(addr2 != null && addr2.charAt(0) == '('){
-                touristData.setAddr(addr1 + " " + addr2);
-            } else {
-                touristData.setAddr(addr1 + addr2);
+                    touristData.setAddr(addr1 + " " +item.get("addr2"));
             }
         }
 
@@ -484,31 +476,26 @@ public class GetOpenApiData implements org.springframework.boot.ApplicationRunne
         }
 
         tmp = (String) item.get("cat1");
-        if (tmp == null) {
-            touristData.setCat1(null);
-        } else if (tmp.isEmpty()){
+        if (tmp.isEmpty()){
             touristData.setCat1(null);
         }else{
-            touristData.setCat1(extractString(tmp));
+            touristData.setCat1(tmp);
         }
 
         tmp = (String) item.get("cat2");
-        if (tmp == null) {
-            touristData.setCat2(null);
-        } else if (tmp.isEmpty()){
+        if (tmp.isEmpty()){
             touristData.setCat2(null);
         }else{
-            touristData.setCat2(extractString(tmp));
+            touristData.setCat2(tmp);
         }
 
         tmp = (String) item.get("cat3");
-        if (tmp == null) {
-            touristData.setCat3(null);
-        } else if (tmp.isEmpty()){
+        if (tmp.isEmpty()){
             touristData.setCat3(null);
         }else{
-            touristData.setCat3(extractString(tmp));
+            touristData.setCat3(tmp);
         }
+
         touristData.setContentId((Long) item.get("contentid"));
         touristData.setContentTypeId((Long) item.get("contenttypeid"));
 
