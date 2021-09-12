@@ -43,9 +43,9 @@ public class PostImageService {
             postImageRepository.save(postImage);
         }
     }
-    public List<String> getRelatePostImageList(Long postObservePointId){
+    public List<String> getRelatePostImageList(Long observationId){
         List<String> postImageList = new ArrayList<>();
-        List<Post> posts = postRepository.findByPostObservePointId(postObservePointId);
+        List<Post> posts = postRepository.findByObservationId(observationId);
         for (Post post : posts){
             postImageList.add(post.getPostImages().get(0).getImageName());
         }
