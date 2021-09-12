@@ -470,7 +470,11 @@ public class GetOpenApiData implements org.springframework.boot.ApplicationRunne
         if(addr1.isEmpty() && addr2.isEmpty()){
             touristData.setAddr(null);
         } else{
-            touristData.setAddr(addr1+addr2);
+            if(addr2 != null && addr2.charAt(0) == '('){
+                touristData.setAddr(addr1 + " " + addr2);
+            } else {
+                touristData.setAddr(addr1 + addr2);
+            }
         }
 
         if(item.get("areacode") != null){

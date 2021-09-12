@@ -117,7 +117,11 @@ public class JobA extends QuartzJobBean {
             if(addr1.isEmpty() && addr2.isEmpty()){
                 touristData.setAddr(null);
             } else{
-                touristData.setAddr(addr1 + addr2);
+                if(addr2.charAt(0) == '('){
+                    touristData.setAddr(addr1 + " " + addr2);
+                } else {
+                    touristData.setAddr(addr1 + addr2);
+                }
             }
 
             if(item.get("areacode") != null){
@@ -388,7 +392,11 @@ public class JobA extends QuartzJobBean {
             if(addr1.isEmpty() && addr2.isEmpty()){
                 touristData.setAddr(null);
             } else{
-                touristData.setAddr(addr1 + addr2);
+                if(addr2.charAt(0) == '('){
+                    touristData.setAddr(addr1 + " " + addr2);
+                } else {
+                    touristData.setAddr(addr1 + addr2);
+                }
             }
 
             if(item.get("areacode") != null){
