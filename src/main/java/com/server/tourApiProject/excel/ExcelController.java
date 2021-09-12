@@ -13,6 +13,7 @@ import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHash
 import com.server.tourApiProject.weather.WtArea;
 import com.server.tourApiProject.weather.WtAreaRepository;
 import com.server.tourApiProject.weather.WtAreaService;
+import lombok.extern.java.Log;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -352,9 +353,12 @@ public class ExcelController {
 
             data.setWtAreaId((long) row.getCell(0).getNumericCellValue());
             data.setCityName(row.getCell(1).getStringCellValue());
+            System.out.println(row.getCell(1).getStringCellValue());
             data.setProvName(row.getCell(2).getStringCellValue());
             data.setLatitude(row.getCell(3).getNumericCellValue());
             data.setLongitude(row.getCell(4).getNumericCellValue());
+            data.setMinLightPol(row.getCell(5).getNumericCellValue());
+            data.setMaxLightPol(row.getCell(6).getNumericCellValue());
 
             wtAreaRepository.save(data);
         }

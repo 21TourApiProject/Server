@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class WtAreaController {
     private final WtAreaService wtAreaService;
 
-    @ApiOperation(value = "지역명으로 경도,위도 조회", notes = "해당 지역의 경도, 위도 정보를 조회한다")
+    @ApiOperation(value = "지역명으로 경도, 위도, 광공해 조회", notes = "해당 지역의 경도, 위도, 광공해 정보를 조회한다")
     @GetMapping(value = "wtAreas/{cityName}/{provName}")
     public WtAreaParams getAreaInfo(@PathVariable("cityName") String cityName, @PathVariable("provName") String provName) {
         return wtAreaService.getAreaInfo(cityName, provName);
     }
-
 }

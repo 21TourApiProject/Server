@@ -20,6 +20,8 @@ public class WtAreaService {
             WtAreaParams wtAreaParams = new WtAreaParams();
             wtAreaParams.setLatitude(wtArea.getLatitude());
             wtAreaParams.setLongitude(wtArea.getLongitude());
+            wtAreaParams.setMinLightPol(wtArea.getMinLightPol());
+            wtAreaParams.setMaxLightPol(wtArea.getMaxLightPol());
             return wtAreaParams;
         }
         return WtAreaParams.builder().build();

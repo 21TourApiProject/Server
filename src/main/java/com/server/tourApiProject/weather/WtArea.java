@@ -27,4 +27,11 @@ public class WtArea {
 
     @Column(nullable = false)
     private Double longitude;    //경도
+
+    @Column(nullable = false)
+    private Double minLightPol;    //광공해 최소
+
+    @Column(nullable = false)
+    private Double maxLightPol;    //광공해 최대
+
 }
