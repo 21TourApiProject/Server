@@ -42,7 +42,7 @@ public class JobA extends QuartzJobBean {
     @Autowired
     private NearTouristDataController nearTouristDataController;
 
-    Long criteria = Long.parseLong(LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))); //수정사항 기준 시간
+    Long criteria = Long.parseLong(LocalDateTime.now().minusDays(3).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))); //수정사항 기준 시간
 
     int newTour = 0;
     int newFood = 0;
@@ -54,9 +54,9 @@ public class JobA extends QuartzJobBean {
         log.info("수정사항 반영");
         System.out.println("criteria = " + criteria);
         jobKey = jobExecutionContext.getJobDetail().getKey();
-        List<Long> tourId = new ArrayList<>();
 
         //관광지 기본정보
+        List<Long> tourId = new ArrayList<>();
         JSONArray tour_list = getJson("/areaBasedList", "&listYN=Y&arrange=C&contentTypeId=12", false); //관광 정보
         for (Object o : tour_list) {
             JSONObject item = (JSONObject) o;
@@ -91,11 +91,13 @@ public class JobA extends QuartzJobBean {
             if (optional.isPresent()){ //원래 있던 데이터면
                 isRealNew = false;
                 touristData = touristDataRepository.findByContentId((Long) item.get("contentid"));
+                touristData.setIsCom(0);
+                touristData.setIsJu(0);
             } else{ //새로 들어온 데이터면
                 isRealNew = true;
                 touristData = new TouristData();
-                touristData.setIsJu(0);
                 touristData.setIsCom(0);
+                touristData.setIsJu(0);
                 touristData.setContentId((Long) item.get("contentid"));
                 touristData.setContentTypeId((Long) item.get("contenttypeid"));
             }
@@ -197,10 +199,10 @@ public class JobA extends QuartzJobBean {
             }else{
                 touristData.setTitle(extractString(tmp));
             }
-            touristData.setIsCom(0);
+
             touristDataRepository.save(touristData);
         }
-        System.out.println("기본 정보 완료 " + newTour);
+        System.out.println("수정 - 관광지 기본정보 완료 " + newTour);
 
         //관광지 추가정보
         for (Long contentId : tourId) {
@@ -236,7 +238,9 @@ public class JobA extends QuartzJobBean {
                 String overview = extractOverview(tmp);
                 touristData.setOverview(overview);
                 if(isRealNew){
-                    if (overview.length() > 15)
+                    if (overview == null)
+                        touristData.setOverviewSim(null);
+                    else if (overview.length() > 15)
                         touristData.setOverviewSim(overview.substring(0,15)+"...");
                     else
                         touristData.setOverviewSim(overview);
@@ -319,9 +323,9 @@ public class JobA extends QuartzJobBean {
             touristDataRepository.save(touristData);
         }
 
-        List<Long> foodId = new ArrayList<>();
 
         //음식 기본정보
+        List<Long> foodId = new ArrayList<>();
         JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=C&contentTypeId=39", false); //관광 정보
         for (Object o : food_list) {
             JSONObject item = (JSONObject) o;
@@ -356,11 +360,13 @@ public class JobA extends QuartzJobBean {
             if (optional.isPresent()){ //원래 있던 데이터면
                 isRealNew = false;
                 touristData = touristDataRepository.findByContentId((Long) item.get("contentid"));
+                touristData.setIsCom(0);
+                touristData.setIsJu(0);
             } else{ //새로 들어온 데이터면
                 isRealNew = true;
                 touristData = new TouristData();
-                touristData.setIsJu(0);
                 touristData.setIsCom(0);
+                touristData.setIsJu(0);
                 touristData.setContentId((Long) item.get("contentid"));
                 touristData.setContentTypeId((Long) item.get("contenttypeid"));
             }
@@ -462,10 +468,9 @@ public class JobA extends QuartzJobBean {
             }else{
                 touristData.setTitle(extractString(tmp));
             }
-            touristData.setIsCom(0);
             touristDataRepository.save(touristData);
         }
-        System.out.println("기본 정보 완료 " + newFood);
+        System.out.println("수정 - 음식 기본정보 완료 " + newFood);
 
         //음식 추가정보
         for (Long contentId : foodId) {
@@ -491,7 +496,9 @@ public class JobA extends QuartzJobBean {
                 String overview = extractOverview2(tmp);
                 touristData.setOverview(overview);
                 if(isRealNew){
-                    if (overview.length() > 15)
+                    if (overview == null)
+                        touristData.setOverviewSim(null);
+                    else if (overview.length() > 15)
                         touristData.setOverviewSim(overview.substring(0,15)+"...");
                     else
                         touristData.setOverviewSim(overview);
@@ -579,6 +586,8 @@ public class JobA extends QuartzJobBean {
             touristData.setIsJu(1);
             touristDataRepository.save(touristData);
         }
+
+
         System.out.println("수정사항 반영 종료");
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         scheduler.pauseJob(jobKey);
@@ -657,7 +666,9 @@ public class JobA extends QuartzJobBean {
             overview=overview.substring(1);
         }
 
-        overview = overview.replaceAll("/>","");
+        overview = overview.replaceAll("<b>","");
+        overview = overview.replaceAll("</b>"," ");
+        overview = overview.replaceAll("</a>"," ");
 
         return overview;
 
@@ -718,6 +729,8 @@ public class JobA extends QuartzJobBean {
         overview = overview.replaceAll("&amp;","");
         overview = overview.replaceAll("&lsquo;","");
         overview = overview.replaceAll("&rsquo;","");
+        overview = overview.replaceAll(" />","");
+        overview = overview.replaceAll("/>","");
         overview = overview.replaceAll("\n"," ");
         return overview;
     }
@@ -725,7 +738,7 @@ public class JobA extends QuartzJobBean {
     //open api 호출해서 결과 리턴하는 함수
     public JSONArray getJson(String part1, String part2, Boolean isNear){
 
-        String key = "?ServiceKey=BdxNGWQJQFutFYE6DkjePTmerMbwG2fzioTf6sr69ecOAdLGMH4iiukF8Ex93YotSgkDOHe1VxKNOr8USSN6EQ=="; //인증키
+        String key = "?ServiceKey=VQ0keALnEea3BkQdEGgwgCD8XNDNR%2Fg98L9D4GzWryl4UYHnGfUUUI%2BHDA6DdzYjjzJmuHT1UmuJZ7wJHoGfuA%3D%3D"; //인증키
         String result = "";
 
         try{
@@ -755,7 +768,7 @@ public class JobA extends QuartzJobBean {
 
             if (isNear){
                 if (count == 1){
-                    System.out.println("0임");
+                    System.out.println("주변 관광지 개수가 0임");
                     JSONObject item = new JSONObject();
                     JSONArray resultForZero = new JSONArray();
                     resultForZero.add(item);
