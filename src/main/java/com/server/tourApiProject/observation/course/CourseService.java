@@ -63,7 +63,7 @@ public class CourseService {
         result.setFirstImage(touristData.getFirstImage());
         result.setTitle(touristData.getTitle());
         result.setOverview(touristData.getOverview());
-        result.setAddr1(touristData.getAddr1());
+        result.setAddr(touristData.getAddr());
 
 
         if (touristData.getContentTypeId() == 12)//관광지

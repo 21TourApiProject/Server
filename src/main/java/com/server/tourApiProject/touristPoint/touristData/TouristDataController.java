@@ -26,14 +26,14 @@ public class TouristDataController {
     }
 
     //테스트용(나중에 삭제)
-    @ApiOperation(value = "관광 정보 삭제", notes = "모든 관광 정보를 삭제한다")
+    @ApiOperation(value = "12, 39 삭제", notes = "12, 39를 삭제한다")
     @DeleteMapping(value = "touristData/")
     public void deleteTouristData(){
         touristDataService.deleteTouristData();
     }
 
     //테스트용(나중에 삭제)
-    @ApiOperation(value = "관광지 삭제", notes = "모든 관광지를 삭제한다")
+    @ApiOperation(value = "12 삭제", notes = "12를 삭제한다")
     @DeleteMapping(value = "touristData/touristPoint")
     public void deleteTouristPoint(){
         touristDataService.deleteTouristPoint();

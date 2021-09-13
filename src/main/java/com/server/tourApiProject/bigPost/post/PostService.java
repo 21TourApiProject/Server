@@ -41,6 +41,15 @@ public class PostService {
         post.setPostContent(postParams.getPostContent());
         post.setPostTitle(postParams.getPostTitle());
         post.setOptionHashTag(postParams.getOptionHashTag());
+        post.setOptionHashTag2(postParams.getOptionHashTag2());
+        post.setOptionHashTag3(postParams.getOptionHashTag3());
+        post.setOptionHashTag4(postParams.getOptionHashTag4());
+        post.setOptionHashTag5(postParams.getOptionHashTag5());
+        post.setOptionHashTag6(postParams.getOptionHashTag6());
+        post.setOptionHashTag7(postParams.getOptionHashTag7());
+        post.setOptionHashTag8(postParams.getOptionHashTag8());
+        post.setOptionHashTag9(postParams.getOptionHashTag9());
+        post.setOptionHashTag10(postParams.getOptionHashTag10());
         post.setOptionObservation(postParams.getOptionObservation());
         post.setYearDate(postParams.getYearDate());
         post.setTime(postParams.getTime());
@@ -117,4 +126,40 @@ public class PostService {
         return result;
     }
 
+    public List<PostParams4>getMainPost(){
+        List<PostParams4> result = new ArrayList<>();
+        List<Post> posts = postRepository.findAll();
+        for (Post post : posts){
+            PostParams4 postParams4 = new PostParams4();
+            postParams4.setMainTitle(post.getPostTitle());
+            Optional<User> userOp = userRepository.findById(post.getUserId());
+            if (userOp.isPresent()){
+                User user = userOp.get();
+                postParams4.setMainNickName(user.getNickName());
+                postParams4.setProfileImage(user.getProfileImage());
+            }
+            postParams4.setMainObservation(post.getObservation().getObservationName());
+            postParams4.setOptionObservation(post.getOptionObservation());
+            List<PostImage> mainImageList = postImageRepository.findByPostId(post.getPostId());
+            if (!mainImageList.isEmpty()) {
+                ArrayList<String> imageList = new ArrayList<>();
+                for (int i=0;i<mainImageList.size();i++){
+                imageList.add("https://starry-night.s3.ap-northeast-2.amazonaws.com/"+mainImageList.get(i).getImageName());}
+                postParams4.setImages(imageList);
+            } else{
+                postParams4.setImages(null);
+            }
+            List<String> mainHashTagName = new ArrayList<>();
+            List<PostHashTag> list = postHashTagRepository.findByPostId(post.getPostId());
+            if (!list.isEmpty()){
+            for(PostHashTag postHashTag : list){
+                mainHashTagName.add(postHashTag.getHashTagName());
+            }postParams4.setHashTags(mainHashTagName);
+            }else{
+                postParams4.setOptionHashTag(post.getOptionHashTag());
+            }
+            result.add(postParams4);
+        }
+        return result;
+    }
 }
