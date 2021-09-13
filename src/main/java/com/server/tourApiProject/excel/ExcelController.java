@@ -173,12 +173,9 @@ public class ExcelController {
             TouristData data = new TouristData();
 
             data.setContentId((long) row.getCell(0).getNumericCellValue());
-            data.setAddr1(row.getCell(1).getStringCellValue());
-            if (data.getAddr1().equals("null"))
-                data.setAddr1(null);
-            data.setAddr2(row.getCell(2).getStringCellValue());
-            if (data.getAddr2().equals("null"))
-                data.setAddr2(null);
+            data.setAddr(row.getCell(1).getStringCellValue());
+            if (data.getAddr().equals("null"))
+                data.setAddr(null);
             data.setAreaCode((long) row.getCell(3).getNumericCellValue());
             data.setCat1(row.getCell(4).getStringCellValue());
             if (data.getCat1().equals("null"))

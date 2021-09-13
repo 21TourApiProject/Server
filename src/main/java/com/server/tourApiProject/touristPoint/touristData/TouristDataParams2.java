@@ -14,7 +14,7 @@ public class TouristDataParams2 {
     private String title; //제목
     private String cat3Name; //소분류 이름
     private String overview; //개요
-    private String addr1; //주소
+    private String addr; //주소
     private String tel; //전화번호
     private String openTimeFood; //영업시간(음식)
     private String restDateFood; //휴무일(음식)
@@ -22,4 +22,7 @@ public class TouristDataParams2 {
     private String treatMenu; //취급메뉴(음식)
     private String packing; //포장(음식)
     private String parkingFood; //주차시설(음식)
+    private Double mapX; //경도
+    private Double mapY; //위도
+    private String overviewSim; //한줄소개
 }

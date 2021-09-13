@@ -146,7 +146,7 @@ public class MyWishService {
             myWishParams01.setItemId(contentId);
             myWishParams01.setThumbnail(touristData.getFirstImage());
             myWishParams01.setTitle(touristData.getTitle());
-            myWishParams01.setAddress(touristData.getAddr1());
+            myWishParams01.setAddress(touristData.getAddr());
             myWishParams01.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
             myWishParams01.setOverviewSim(touristData.getOverviewSim());
 
