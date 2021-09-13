@@ -176,33 +176,34 @@ public class ExcelController {
             data.setAddr(row.getCell(1).getStringCellValue());
             if (data.getAddr().equals("null"))
                 data.setAddr(null);
-            data.setAreaCode((long) row.getCell(3).getNumericCellValue());
-            data.setCat1(row.getCell(4).getStringCellValue());
+            data.setAreaCode((long) row.getCell(2).getNumericCellValue());
+            data.setCat1(row.getCell(3).getStringCellValue());
             if (data.getCat1().equals("null"))
                 data.setCat1(null);
-            data.setCat2(row.getCell(5).getStringCellValue());
+            data.setCat2(row.getCell(4).getStringCellValue());
             if (data.getCat2().equals("null"))
                 data.setCat2(null);
-            data.setCat3(row.getCell(6).getStringCellValue());
+            data.setCat3(row.getCell(5).getStringCellValue());
             if (data.getCat3().equals("null"))
                 data.setCat3(null);
-            data.setChkPet(row.getCell(7).getStringCellValue());
+            data.setChkPet(row.getCell(6).getStringCellValue());
             if (data.getChkPet().equals("null"))
                 data.setChkPet(null);
-            data.setContentTypeId((long) row.getCell(8).getNumericCellValue());
-            data.setExpGuide(row.getCell(9).getStringCellValue());
+            data.setContentTypeId((long) row.getCell(7).getNumericCellValue());
+            data.setExpGuide(row.getCell(8).getStringCellValue());
             if (data.getExpGuide().equals("null"))
                 data.setExpGuide(null);
-            data.setFirstImage(row.getCell(10).getStringCellValue());
+            data.setFirstImage(row.getCell(9).getStringCellValue());
             if (data.getFirstImage().equals("null"))
                 data.setFirstImage(null);
-            data.setFirstMenu(row.getCell(11).getStringCellValue());
+            data.setFirstMenu(row.getCell(10).getStringCellValue());
             if (data.getFirstMenu().equals("null"))
                 data.setFirstMenu(null);
-            data.setHomePage(row.getCell(12).getStringCellValue());
+            data.setHomePage(row.getCell(11).getStringCellValue());
             if (data.getHomePage().equals("null"))
                 data.setHomePage(null);
-            data.setIsCom((int) row.getCell(13).getNumericCellValue());
+            data.setIsCom((int) row.getCell(12).getNumericCellValue());
+            data.setIsIm((int) row.getCell(13).getNumericCellValue());
             data.setIsJu((int) row.getCell(14).getNumericCellValue());
             data.setMapX(row.getCell(15).getNumericCellValue());
             data.setMapY(row.getCell(16).getNumericCellValue());
