@@ -105,6 +105,12 @@ public class TouristDataController {
         return touristDataService.getFoodId2();
     }
 
+    @ApiOperation(value = "이미지 없는 관광지 조회", notes = "이미지가 없는 관광지의 아이디 정보를 조회한다")
+    @GetMapping(value = "touristData/noFirstImage/contentId")
+    public List<Long> getId4Image(){
+        return touristDataService.getId4Image();
+    }
+
     @ApiOperation(value = "필터로 관광지 조희", notes = "해당 필터에 해당되는 관광지 정보를 조희한다")
     @PostMapping(value = "touristData/search")
     public List<MyWishParams01> getTouristDataWithFilter(@RequestBody Filter filter){

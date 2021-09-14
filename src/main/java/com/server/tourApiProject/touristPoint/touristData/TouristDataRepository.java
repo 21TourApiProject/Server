@@ -13,4 +13,6 @@ public interface TouristDataRepository extends JpaRepository<TouristData, Long> 
 
     List<TouristData> findByAreaCode(@Param("areaCode") Long areaCode);
 
+    List<TouristData> findByFirstImage(@Param("firstImage") String firstImage);
+
 }
