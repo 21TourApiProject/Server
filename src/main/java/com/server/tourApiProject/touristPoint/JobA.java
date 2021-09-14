@@ -42,7 +42,7 @@ public class JobA extends QuartzJobBean {
     @Autowired
     private NearTouristDataController nearTouristDataController;
 
-    Long criteria = Long.parseLong(LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))); //수정사항 기준 시간
+    Long criteria = Long.parseLong(LocalDateTime.now().minusDays(2).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))); //수정사항 기준 시간
 
     int newTour = 0;
     int newFood = 0;
@@ -319,9 +319,9 @@ public class JobA extends QuartzJobBean {
             } else if (tmp.isEmpty()){
                 touristData.setFirstImage(null);
             }else{
+                touristData.setIsIm(2);
                 touristData.setFirstImage(tmp);
             }
-            touristData.setIsIm(2);
             touristDataRepository.save(touristData);
         }
 
@@ -385,11 +385,13 @@ public class JobA extends QuartzJobBean {
                 isRealNew = false;
                 touristData = touristDataRepository.findByContentId((Long) item.get("contentid"));
                 touristData.setIsCom(0);
+                touristData.setIsIm(0);
                 touristData.setIsJu(0);
             } else{ //새로 들어온 데이터면
                 isRealNew = true;
                 touristData = new TouristData();
                 touristData.setIsCom(0);
+                touristData.setIsIm(0);
                 touristData.setIsJu(0);
                 touristData.setContentId((Long) item.get("contentid"));
                 touristData.setContentTypeId((Long) item.get("contenttypeid"));
@@ -590,7 +592,7 @@ public class JobA extends QuartzJobBean {
             touristDataRepository.save(touristData);
         }
 
-        //관광지 추가 이미지 조회
+        //음식 추가 이미지 조회
         for (Long contentId : foodId) {
             TouristData touristData = touristDataRepository.findByContentId(contentId);
             if (touristData.getIsIm() != 0)
@@ -606,9 +608,9 @@ public class JobA extends QuartzJobBean {
             } else if (tmp.isEmpty()){
                 touristData.setFirstImage(null);
             }else{
+                touristData.setIsIm(2);
                 touristData.setFirstImage(tmp);
             }
-            touristData.setIsIm(2);
             touristDataRepository.save(touristData);
         }
 
