@@ -26,10 +26,10 @@ public class ObserveImage {
     @Column(nullable = false)
     private Long observationId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String image;   // 이미지 경로
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String imageSource; //이미지 출저
 
 }
