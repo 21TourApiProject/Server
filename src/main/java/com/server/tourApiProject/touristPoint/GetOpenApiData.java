@@ -53,8 +53,8 @@ public class GetOpenApiData implements org.springframework.boot.ApplicationRunne
 //            else if ((cat1.equals("A01") || cat1.equals("A02")) && (cat2.equals("A0101") || cat2.equals("A0102") || cat2.equals("A0201") || cat2.equals("A0202") || cat2.equals("A0203") || cat2.equals("A0204") || cat2.equals("A0205"))){
 //                TouristData touristData = getTouristData(item);
 //                touristData.setIsCom(0);
-//                touristData.setIsJu(0);
 //                touristData.setIsIm(0);
+//                touristData.setIsJu(0);
 //                touristDataController.createTouristData(touristData);
 //            }
 //            else {
@@ -318,7 +318,7 @@ public class GetOpenApiData implements org.springframework.boot.ApplicationRunne
         List<Long> noImage = touristDataController.getId4Image();
         for (Long contentId : noImage) {
             TouristData touristData = touristDataRepository.findByContentId(contentId);
-            if (touristData.getIsIm() == 1)
+            if (touristData.getIsIm() != 0)
                 continue;
 
             System.out.println("5 contentId = " + contentId);
@@ -333,7 +333,7 @@ public class GetOpenApiData implements org.springframework.boot.ApplicationRunne
             }else{
                 touristData.setFirstImage(tmp);
             }
-            touristData.setIsIm(1);
+            touristData.setIsIm(2);
             touristDataRepository.save(touristData);
         }
 

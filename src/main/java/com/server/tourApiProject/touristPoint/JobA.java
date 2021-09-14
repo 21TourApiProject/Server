@@ -65,7 +65,6 @@ public class JobA extends QuartzJobBean {
             if (modifiedTime < criteria)
                 break;
             newTour++;
-
             String cat1;
             cat1 = (String) item.get("cat1");
             String cat2;
@@ -92,11 +91,13 @@ public class JobA extends QuartzJobBean {
                 isRealNew = false;
                 touristData = touristDataRepository.findByContentId((Long) item.get("contentid"));
                 touristData.setIsCom(0);
+                touristData.setIsIm(0);
                 touristData.setIsJu(0);
             } else{ //새로 들어온 데이터면
                 isRealNew = true;
                 touristData = new TouristData();
                 touristData.setIsCom(0);
+                touristData.setIsIm(0);
                 touristData.setIsJu(0);
                 touristData.setContentId((Long) item.get("contentid"));
                 touristData.setContentTypeId((Long) item.get("contenttypeid"));
@@ -151,6 +152,7 @@ public class JobA extends QuartzJobBean {
             } else if (tmp.isEmpty()){
                 touristData.setFirstImage(null);
             }else{
+                touristData.setIsIm(1);
                 touristData.setFirstImage(extractString(tmp));
             }
 
@@ -301,6 +303,28 @@ public class JobA extends QuartzJobBean {
             touristDataRepository.save(touristData);
         }
 
+        //관광지 추가 이미지 조회
+        for (Long contentId : tourId) {
+            TouristData touristData = touristDataRepository.findByContentId(contentId);
+            if (touristData.getIsIm() != 0)
+                continue;
+
+            System.out.println("5 contentId = " + contentId);
+            JSONArray image_list = getJson("/detailImage", "&imageYN=Y&contentId=" + contentId, false); //이미지 정보
+            JSONObject image = (JSONObject) image_list.get(0);
+
+            String tmp = (String) image.get("originimgurl");
+            if (tmp == null) {
+                touristData.setFirstImage(null);
+            } else if (tmp.isEmpty()){
+                touristData.setFirstImage(null);
+            }else{
+                touristData.setFirstImage(tmp);
+            }
+            touristData.setIsIm(2);
+            touristDataRepository.save(touristData);
+        }
+
         Double[][] touristPointMap = touristDataController.getTouristPointMap2();
         List<Long> touristPointId = touristDataController.getTouristPointId2();
         for (int i=0; i < touristPointId.size(); i++){
@@ -420,6 +444,7 @@ public class JobA extends QuartzJobBean {
             } else if (tmp.isEmpty()){
                 touristData.setFirstImage(null);
             }else{
+                touristData.setIsIm(1);
                 touristData.setFirstImage(extractString(tmp));
             }
 
@@ -562,6 +587,28 @@ public class JobA extends QuartzJobBean {
                 touristData.setParkingFood(extractString(tmp));
             }
             touristData.setIsCom(1);
+            touristDataRepository.save(touristData);
+        }
+
+        //관광지 추가 이미지 조회
+        for (Long contentId : foodId) {
+            TouristData touristData = touristDataRepository.findByContentId(contentId);
+            if (touristData.getIsIm() != 0)
+                continue;
+
+            System.out.println("5 contentId = " + contentId);
+            JSONArray image_list = getJson("/detailImage", "&imageYN=Y&contentId=" + contentId, false); //이미지 정보
+            JSONObject image = (JSONObject) image_list.get(0);
+
+            String tmp = (String) image.get("originimgurl");
+            if (tmp == null) {
+                touristData.setFirstImage(null);
+            } else if (tmp.isEmpty()){
+                touristData.setFirstImage(null);
+            }else{
+                touristData.setFirstImage(tmp);
+            }
+            touristData.setIsIm(2);
             touristDataRepository.save(touristData);
         }
 
