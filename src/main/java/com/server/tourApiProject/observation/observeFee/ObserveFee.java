@@ -29,7 +29,7 @@ public class ObserveFee {
     @Column(nullable = false)
     private String feeName;
 
-    @Column(nullable = false)
+    @Column
     private String entranceFee;
 
 }

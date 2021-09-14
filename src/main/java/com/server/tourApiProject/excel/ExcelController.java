@@ -1,5 +1,13 @@
 package com.server.tourApiProject.excel;
 
+import com.server.tourApiProject.observation.Observation;
+import com.server.tourApiProject.observation.ObservationRepository;
+import com.server.tourApiProject.observation.observeFee.ObserveFee;
+import com.server.tourApiProject.observation.observeFee.ObserveFeeRepository;
+import com.server.tourApiProject.observation.observeHashTag.ObserveHashTag;
+import com.server.tourApiProject.observation.observeHashTag.ObserveHashTagRepository;
+import com.server.tourApiProject.observation.observeImage.ObserveImage;
+import com.server.tourApiProject.observation.observeImage.ObserveImageRepository;
 import com.server.tourApiProject.touristPoint.area.AreaParams;
 import com.server.tourApiProject.touristPoint.area.AreaService;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeParams;
@@ -13,7 +21,6 @@ import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHash
 import com.server.tourApiProject.weather.WtArea;
 import com.server.tourApiProject.weather.WtAreaRepository;
 import com.server.tourApiProject.weather.WtAreaService;
-import lombok.extern.java.Log;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -38,15 +45,22 @@ public class ExcelController {
     private final NearTouristDataRepository nearTouristDataRepository;
     private final TouristDataHashTagRepository touristDataHashTagRepository;
     private final WtAreaRepository wtAreaRepository;
+    private final ObservationRepository observationRepository;
+    private final ObserveHashTagRepository observeHashTagRepository;
+    private final ObserveImageRepository observeImageRepository;
+    private final ObserveFeeRepository observeFeeRepository;
 
-    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository) {
+    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository) {
         this.touristDataService = touristDataService;
         this.areaService = areaService;
         this.contentTypeService = contentTypeService;
         this.nearTouristDataRepository = nearTouristDataRepository;
         this.touristDataHashTagRepository = touristDataHashTagRepository;
         this.wtAreaRepository = wtAreaRepository;
-        ;
+        this.observationRepository = observationRepository;
+        this.observeHashTagRepository = observeHashTagRepository;
+        this.observeImageRepository = observeImageRepository;
+        this.observeFeeRepository = observeFeeRepository;
     }
 
     @GetMapping("/excel")
@@ -362,4 +376,166 @@ public class ExcelController {
         System.out.println("엑셀 완료");
         return "excel";
     }
+
+    @PostMapping("/excel/observationData/read")
+    public String readObservationDataExcel(@RequestParam("file") MultipartFile file, Model model)
+            throws IOException {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (!extension.equals("xlsx") && !extension.equals("xls")) {
+            throw new IOException("엑셀파일만 업로드 해주세요.");
+        }
+        Workbook workbook = null;
+
+        if (extension.equals("xlsx")) {
+            workbook = new XSSFWorkbook(file.getInputStream());
+        } else if (extension.equals("xls")) {
+            workbook = new HSSFWorkbook(file.getInputStream());
+        }
+
+        Sheet worksheet = workbook.getSheetAt(0);
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            Row row = worksheet.getRow(i);
+            Observation data = new Observation();
+            if(row.getCell(0) == null){
+                break;
+            }
+            data.setObservationId((long) row.getCell(0).getNumericCellValue());
+            data.setObservationName(row.getCell(1).getStringCellValue());
+            data.setOutline(row.getCell(2).getStringCellValue());
+            data.setIntro(row.getCell(3).getStringCellValue());
+            data.setAddress(row.getCell(4).getStringCellValue());
+            data.setPhoneNumber(row.getCell(5).getStringCellValue());
+            if (data.getPhoneNumber().equals("null"))
+                data.setPhoneNumber(null);
+            data.setOperatingHour(row.getCell(6).getStringCellValue());
+            if (data.getOperatingHour().equals("null"))
+                data.setOperatingHour(null);
+            data.setClosedDay(row.getCell(7).getStringCellValue());
+            if (data.getClosedDay().equals("null"))
+                data.setClosedDay(null);
+            data.setGuide(row.getCell(8).getStringCellValue());
+            data.setParking(row.getCell(9).getStringCellValue());
+            data.setLink(row.getCell(10).getStringCellValue());
+            if (data.getLink().equals("null"))
+                data.setLink(null);
+            data.setObserveType(row.getCell(11).getStringCellValue());
+            data.setLatitude((double)row.getCell(12).getNumericCellValue());
+            data.setLongitude((double)row.getCell(13).getNumericCellValue());
+            data.setLight((double)row.getCell(14).getNumericCellValue());
+            if(row.getCell(15).getNumericCellValue()==1)
+                data.setNature(true);
+            else
+                data.setNature(false);
+
+            observationRepository.save(data);
+        }
+        System.out.println("엑셀 완료");
+        return "excel";
+    }
+    @PostMapping("/excel/observationHashTag/read")
+    public String readObservationHashTagExcel(@RequestParam("file") MultipartFile file, Model model)
+            throws IOException {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (!extension.equals("xlsx") && !extension.equals("xls")) {
+            throw new IOException("엑셀파일만 업로드 해주세요.");
+        }
+        Workbook workbook = null;
+
+        if (extension.equals("xlsx")) {
+            workbook = new XSSFWorkbook(file.getInputStream());
+        } else if (extension.equals("xls")) {
+            workbook = new HSSFWorkbook(file.getInputStream());
+        }
+
+        Sheet worksheet = workbook.getSheetAt(0);
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            Row row = worksheet.getRow(i);
+            if(row.getCell(0) == null){
+                break;
+            }
+            ObserveHashTag data = new ObserveHashTag();
+
+            data.setObserveHashTagListId((long) row.getCell(0).getNumericCellValue());
+            data.setObservationId((long) row.getCell(1).getNumericCellValue());
+            data.setHashTagId((long) row.getCell(2).getNumericCellValue());
+            data.setHashTagName(row.getCell(3).getStringCellValue());
+
+            observeHashTagRepository.save(data);
+        }
+        System.out.println("엑셀 완료");
+        return "excel";
+    }
+
+    @PostMapping("/excel/observationFee/read")
+    public String readObservationFeeExcel(@RequestParam("file") MultipartFile file, Model model)
+            throws IOException {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (!extension.equals("xlsx") && !extension.equals("xls")) {
+            throw new IOException("엑셀파일만 업로드 해주세요.");
+        }
+        Workbook workbook = null;
+
+        if (extension.equals("xlsx")) {
+            workbook = new XSSFWorkbook(file.getInputStream());
+        } else if (extension.equals("xls")) {
+            workbook = new HSSFWorkbook(file.getInputStream());
+        }
+
+        Sheet worksheet = workbook.getSheetAt(0);
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            Row row = worksheet.getRow(i);
+            if(row.getCell(0) == null){
+                break;
+            }
+            ObserveFee data = new ObserveFee();
+
+            data.setObserveFeeListId((long) row.getCell(0).getNumericCellValue());
+            data.setObservationId((long) row.getCell(1).getNumericCellValue());
+            data.setFeeName(row.getCell(2).getStringCellValue());
+            data.setEntranceFee(row.getCell(3).getStringCellValue());
+            if(data.getEntranceFee().equals("null"))
+                data.setEntranceFee(null);
+
+            observeFeeRepository.save(data);
+        }
+        System.out.println("엑셀 완료");
+        return "excel";
+    }
+
+    @PostMapping("/excel/observationImage/read")
+    public String readObservationImageExcel(@RequestParam("file") MultipartFile file, Model model)
+            throws IOException {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (!extension.equals("xlsx") && !extension.equals("xls")) {
+            throw new IOException("엑셀파일만 업로드 해주세요.");
+        }
+        Workbook workbook = null;
+
+        if (extension.equals("xlsx")) {
+            workbook = new XSSFWorkbook(file.getInputStream());
+        } else if (extension.equals("xls")) {
+            workbook = new HSSFWorkbook(file.getInputStream());
+        }
+
+        Sheet worksheet = workbook.getSheetAt(0);
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            Row row = worksheet.getRow(i);
+            if(row.getCell(0) == null){
+                break;
+            } else if (row.getCell(2)==null) {
+                continue;
+            }
+            ObserveImage data = new ObserveImage();
+
+            data.setObserveImageListId((long) row.getCell(0).getNumericCellValue());
+            data.setObservationId((long) row.getCell(1).getNumericCellValue());
+            data.setImage(row.getCell(2).getStringCellValue());
+            data.setImageSource(row.getCell(3).getStringCellValue());
+
+            observeImageRepository.save(data);
+        }
+        System.out.println("엑셀 완료");
+        return "excel";
+    }
+
 }

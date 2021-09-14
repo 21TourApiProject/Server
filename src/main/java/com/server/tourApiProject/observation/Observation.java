@@ -53,10 +53,10 @@ public class Observation {
     @Column
     private String observeType;    //관측지 타입(천문대,등등), 추후 enum으로 수정가능?
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String outline; //개요
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String guide;   //이용안내
 
     @Column
