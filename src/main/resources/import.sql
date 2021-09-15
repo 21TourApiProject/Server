@@ -118,8 +118,8 @@
     INSERT INTO TOURIST_DATA_HASH_TAG (TOURIST_DATA_HASH_TAG_ID, CONTENT_ID, HASH_TAG_ID, HASH_TAG_NAME) VALUES (8, 125406, 20, '소확행');
 
 --주변 관광지
-    INSERT INTO NEAR_TOURIST_DATA (NEAR_TOURIST_DATA_ID, ADDR1, CAT3NAME, CONTENT_ID, FIRST_IMAGE, OVERVIEW_SIM, TITLE, TOURIST_DATA_ID) VALUES (1, '경상북도 경주시 양북면 불국로 1208-45', '자연휴양림', 125405, null, '토함산 자연휴양림은 삼국통일...', '토함산자연휴양림', 125266);
+    INSERT INTO NEAR_TOURIST_DATA (NEAR_TOURIST_DATA_ID, ADDR, CAT3NAME, CONTENT_ID, FIRST_IMAGE, OVERVIEW_SIM, TITLE, TOURIST_DATA_ID) VALUES (1, '경상북도 경주시 양북면 불국로 1208-45', '자연휴양림', 125405, null, '토함산 자연휴양림은 삼국통일...', '토함산자연휴양림', 125266);
 
-    INSERT INTO NEAR_TOURIST_DATA (NEAR_TOURIST_DATA_ID, ADDR1, CAT3NAME, CONTENT_ID, FIRST_IMAGE, OVERVIEW_SIM, TITLE, TOURIST_DATA_ID) VALUES (2, '대구광역시 달성군 유가읍 일연선사길 61', '자연휴양림', 125406, 'http://tong.visitkorea.or.kr/cms/resource/62/219162_image2_1.jpg', '비슬산 자연휴양림은 대견봉(...', '비슬산자연휴양림', 125266);
+    INSERT INTO NEAR_TOURIST_DATA (NEAR_TOURIST_DATA_ID, ADDR, CAT3NAME, CONTENT_ID, FIRST_IMAGE, OVERVIEW_SIM, TITLE, TOURIST_DATA_ID) VALUES (2, '대구광역시 달성군 유가읍 일연선사길 61', '자연휴양림', 125406, 'http://tong.visitkorea.or.kr/cms/resource/62/219162_image2_1.jpg', '비슬산 자연휴양림은 대견봉(...', '비슬산자연휴양림', 125266);
 
-    INSERT INTO NEAR_TOURIST_DATA (NEAR_TOURIST_DATA_ID, ADDR1, CAT3NAME, CONTENT_ID, FIRST_IMAGE, OVERVIEW_SIM, TITLE, TOURIST_DATA_ID) VALUES (3, '대구광역시 달성군 유가읍 일연선사길 61', '자연휴양림', 125406, 'http://tong.visitkorea.or.kr/cms/resource/62/219162_image2_1.jpg', '비슬산 자연휴양림은 대견봉(...', '비슬산자연휴양림', 125405);
+    INSERT INTO NEAR_TOURIST_DATA (NEAR_TOURIST_DATA_ID, ADDR, CAT3NAME, CONTENT_ID, FIRST_IMAGE, OVERVIEW_SIM, TITLE, TOURIST_DATA_ID) VALUES (3, '대구광역시 달성군 유가읍 일연선사길 61', '자연휴양림', 125406, 'http://tong.visitkorea.or.kr/cms/resource/62/219162_image2_1.jpg', '비슬산 자연휴양림은 대견봉(...', '비슬산자연휴양림', 125405);
