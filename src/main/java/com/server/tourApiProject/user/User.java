@@ -1,9 +1,10 @@
 package com.server.tourApiProject.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.tourApiProject.myHashTag.MyHashTag;
-import com.server.tourApiProject.myWishPost.MyWishPost;
-import com.server.tourApiProject.post.Post;
+import com.server.tourApiProject.myWish.MyWish;
+import com.server.tourApiProject.bigPost.post.Post;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -52,14 +53,17 @@ public class User{
     @Column
     private String ageRange; //연령대
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Post> myPosts = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<MyHashTag> myHashTags = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<MyWishPost> myWishPosts = new ArrayList<>();
+    private List<MyWish> myWishes = new ArrayList<>();
 
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")

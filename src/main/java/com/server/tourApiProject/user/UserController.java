@@ -1,7 +1,6 @@
 package com.server.tourApiProject.user;
 
-import com.server.tourApiProject.myHashTag.MyHashTagService;
-import com.server.tourApiProject.post.Post;
+import com.server.tourApiProject.bigPost.post.Post;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final MyHashTagService myHashTagService;
 
     @ApiOperation(value = "사용자정보 입력", notes = "사용자 정보를 입력한다")
     @PostMapping(value = "user")
@@ -83,19 +81,15 @@ public class UserController {
 
     @ApiOperation(value = "사용자 프로필 사진 수정", notes = "해당 사용자의 프로필 사진을 수정한다")
     @PutMapping(value = "user/{userId}/profileImage")
-    public void updateProfileImage(@PathVariable("userId") Long userId, @RequestBody UserParams2 profileImage){
-        userService.changeProfileImage(userId, profileImage);
+    public void updateProfileImage(@PathVariable("userId") Long userId, @RequestBody String profileImageName){
+        userService.changeProfileImage(userId, profileImageName);
     }
 
     @ApiOperation(value = "사용자 비밀번호 수정", notes = "해당 사용자의 비밀번호를 수정한다")
     @PutMapping(value = "user/{userId}/password/{originPwd}/{newPwd}")
-    public Boolean updatePassword(@PathVariable("userId") Long userId, @PathVariable("originPwd") String originPwd, @PathVariable("newPwd") String newPwd){
+    public Boolean updatePassword(@PathVariable("userId") Long userId, @PathVariable("originPwd") String originPwd, @PathVariable("newPwd") String newPwd) {
         return userService.changePassword(userId, originPwd, newPwd);
     }
-
-    @ApiOperation(value = "선호 해시태그 조회", notes = "사용자 id로 해당 사용자의 선호 해시태그를 조회한다")
-    @GetMapping(value = "user/{userId}/myHashTag")
-    public List<String> getMyHashTag(@PathVariable("userId") Long userId){ return myHashTagService.getMyHashTag(userId); }
 
     @ApiOperation(value = "사용자 게시물 조회", notes = "사용자가 작성한 모든 게시물을 조회한다")
     @GetMapping(value = "user/{userId}/posts")
