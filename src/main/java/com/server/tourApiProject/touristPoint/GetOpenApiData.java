@@ -53,6 +53,7 @@
 ////            else if ((cat1.equals("A01") || cat1.equals("A02")) && (cat2.equals("A0101") || cat2.equals("A0102") || cat2.equals("A0201") || cat2.equals("A0202") || cat2.equals("A0203") || cat2.equals("A0204") || cat2.equals("A0205"))){
 ////                TouristData touristData = getTouristData(item);
 ////                touristData.setIsCom(0);
+////                touristData.setIsIm(0);
 ////                touristData.setIsJu(0);
 ////                touristDataController.createTouristData(touristData);
 ////            }
@@ -152,24 +153,24 @@
 //            touristData.setIsCom(1);
 //            touristDataRepository.save(touristData);
 //        }
-////
-////        for (int i=0; i < touristPointId.size(); i++){
-////            if (touristPointMap[i][0] == -1 || touristPointMap[i][1] == -1)
-////                continue;
-////            Long contentId = touristPointId.get(i);
-////            TouristData touristData = touristDataRepository.findByContentId(contentId);
-////            if (touristData.getIsJu() == 1)
-////                continue;
-////            System.out.println("2 contentId = " + contentId);
-////            String part2 = "&mapX=" + Double.toString(touristPointMap[i][0]) + "&mapY=" + Double.toString(touristPointMap[i][1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=12";
-////            JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
-////            for (int j = 1; j < near_list.size(); j++) {
-////                JSONObject near = (JSONObject) near_list.get(j);
-////                nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
-////            }
-////            touristData.setIsJu(1);
-////            touristDataRepository.save(touristData);
-////        }
+//
+//        for (int i=0; i < touristPointId.size(); i++){
+//            if (touristPointMap[i][0] == -1 || touristPointMap[i][1] == -1)
+//                continue;
+//            Long contentId = touristPointId.get(i);
+//            TouristData touristData = touristDataRepository.findByContentId(contentId);
+//            if (touristData.getIsJu() == 1)
+//                continue;
+//            System.out.println("2 contentId = " + contentId);
+//            String part2 = "&mapX=" + Double.toString(touristPointMap[i][0]) + "&mapY=" + Double.toString(touristPointMap[i][1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=12";
+//            JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
+//            for (int j = 1; j < near_list.size(); j++) {
+//                JSONObject near = (JSONObject) near_list.get(j);
+//                nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
+//            }
+//            touristData.setIsJu(1);
+//            touristDataRepository.save(touristData);
+//        }
 //
 //        //음식 기본정보
 ////        errorCat = 0;
@@ -193,6 +194,7 @@
 ////                TouristData touristData = getTouristData(item);
 ////                touristData.setIsCom(0);
 ////                touristData.setIsJu(0);
+////                touristData.setIsIm(0);
 ////                touristDataController.createTouristData(touristData);
 ////            } else {
 ////                errorCat++;
@@ -291,26 +293,50 @@
 //            touristData.setIsCom(1);
 //            touristDataRepository.save(touristData);
 //        }
-////
-////        for (int i=0; i < foodId.size(); i++){
-////            if (foodMap[i][0] == null || foodMap[i][1] == null)
-////                continue;
-////
-////            Long contentId = foodId.get(i);
-////            TouristData touristData = touristDataRepository.findByContentId(contentId);
-////            if (touristData.getIsJu() == 1)
-////                continue;
-////
-////            System.out.println("4 contentId = " + contentId);
-////            String part2 = "&mapX=" + Double.toString(foodMap[i][0]) + "&mapY=" + Double.toString(foodMap[i][1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=39";
-////            JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
-////            for (int j = 1; j < near_list.size(); j++) {
-////                JSONObject near = (JSONObject) near_list.get(j);
-////                nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
-////            }
-////            touristData.setIsJu(1);
-////            touristDataRepository.save(touristData);
-////        }
+//
+//        for (int i=0; i < foodId.size(); i++){
+//            if (foodMap[i][0] == null || foodMap[i][1] == null)
+//                continue;
+//
+//            Long contentId = foodId.get(i);
+//            TouristData touristData = touristDataRepository.findByContentId(contentId);
+//            if (touristData.getIsJu() == 1)
+//                continue;
+//
+//            System.out.println("4 contentId = " + contentId);
+//            String part2 = "&mapX=" + Double.toString(foodMap[i][0]) + "&mapY=" + Double.toString(foodMap[i][1]) + "&radius=20000&listYN=Y&arrange=S&numOfRows=4&contentTypeId=39";
+//            JSONArray near_list = getJson("/locationBasedList", part2, true); //주변 정보
+//            for (int j = 1; j < near_list.size(); j++) {
+//                JSONObject near = (JSONObject) near_list.get(j);
+//                nearTouristDataController.createNearTouristData(contentId, (Long) near.get("contentid"));
+//            }
+//            touristData.setIsJu(1);
+//            touristDataRepository.save(touristData);
+//        }
+//
+//        //추가 이미지 조회
+//        List<Long> noImage = touristDataController.getId4Image();
+//        for (Long contentId : noImage) {
+//            TouristData touristData = touristDataRepository.findByContentId(contentId);
+//            if (touristData.getIsIm() != 0)
+//                continue;
+//
+//            System.out.println("5 contentId = " + contentId);
+//            JSONArray image_list = getJson("/detailImage", "&imageYN=Y&contentId=" + contentId, false); //이미지 정보
+//            JSONObject image = (JSONObject) image_list.get(0);
+//
+//            String tmp = (String) image.get("originimgurl");
+//            if (tmp == null) {
+//                touristData.setFirstImage(null);
+//            } else if (tmp.isEmpty()){
+//                touristData.setFirstImage(null);
+//            }else{
+//                touristData.setIsIm(2);
+//                touristData.setFirstImage(tmp);
+//            }
+//
+//            touristDataRepository.save(touristData);
+//        }
 //
 //    }
 //
@@ -510,6 +536,7 @@
 //        } else if (tmp.isEmpty()){
 //            touristData.setFirstImage(null);
 //        }else{
+//            touristData.setIsIm(1);
 //            touristData.setFirstImage(extractString(tmp));
 //        }
 //

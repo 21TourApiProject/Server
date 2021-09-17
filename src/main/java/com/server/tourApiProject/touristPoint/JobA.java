@@ -21,12 +21,10 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class JobA extends QuartzJobBean {
     private static final Logger log = LoggerFactory.getLogger(JobA.class);
@@ -42,10 +40,12 @@ public class JobA extends QuartzJobBean {
     @Autowired
     private NearTouristDataController nearTouristDataController;
 
-    Long criteria = Long.parseLong(LocalDateTime.now().minusDays(3).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))); //수정사항 기준 시간
+    Long criteria = Long.parseLong(LocalDateTime.now().minusDays(2).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))); //수정사항 기준 시간
 
     int newTour = 0;
+    int realNewTour = 0;
     int newFood = 0;
+    int realNewFood = 0;
     Boolean isRealNew;
 
     @SneakyThrows
@@ -54,9 +54,12 @@ public class JobA extends QuartzJobBean {
         log.info("수정사항 반영");
         System.out.println("criteria = " + criteria);
         jobKey = jobExecutionContext.getJobDetail().getKey();
+        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+
 
         //관광지 기본정보
         List<Long> tourId = new ArrayList<>();
+        List<Long> newTourId = new ArrayList<>();
         JSONArray tour_list = getJson("/areaBasedList", "&listYN=Y&arrange=C&contentTypeId=12", false); //관광 정보
         for (Object o : tour_list) {
             JSONObject item = (JSONObject) o;
@@ -64,7 +67,6 @@ public class JobA extends QuartzJobBean {
             Long modifiedTime = (Long) item.get("modifiedtime");
             if (modifiedTime < criteria)
                 break;
-            newTour++;
 
             String cat1;
             cat1 = (String) item.get("cat1");
@@ -80,6 +82,7 @@ public class JobA extends QuartzJobBean {
             }
             else if ((cat1.equals("A01") || cat1.equals("A02")) && (cat2.equals("A0101") || cat2.equals("A0102") || cat2.equals("A0201") || cat2.equals("A0202") || cat2.equals("A0203") || cat2.equals("A0204") || cat2.equals("A0205"))){
                 tourId.add((Long) item.get("contentid"));
+                newTour++;
             }
             else {
                 continue;
@@ -92,11 +95,13 @@ public class JobA extends QuartzJobBean {
                 isRealNew = false;
                 touristData = touristDataRepository.findByContentId((Long) item.get("contentid"));
                 touristData.setIsCom(0);
-                touristData.setIsJu(0);
             } else{ //새로 들어온 데이터면
+                realNewTour++;
                 isRealNew = true;
+                newTourId.add((Long) item.get("contentid"));
                 touristData = new TouristData();
                 touristData.setIsCom(0);
+                touristData.setIsIm(0);
                 touristData.setIsJu(0);
                 touristData.setContentId((Long) item.get("contentid"));
                 touristData.setContentTypeId((Long) item.get("contenttypeid"));
@@ -151,6 +156,7 @@ public class JobA extends QuartzJobBean {
             } else if (tmp.isEmpty()){
                 touristData.setFirstImage(null);
             }else{
+                touristData.setIsIm(1);
                 touristData.setFirstImage(extractString(tmp));
             }
 
@@ -202,7 +208,7 @@ public class JobA extends QuartzJobBean {
 
             touristDataRepository.save(touristData);
         }
-        System.out.println("수정 - 관광지 기본정보 완료 " + newTour);
+        System.out.println("수정 - 관광지 기본정보 완료 " + newTour + " " + realNewTour);
 
         //관광지 추가정보
         for (Long contentId : tourId) {
@@ -301,6 +307,7 @@ public class JobA extends QuartzJobBean {
             touristDataRepository.save(touristData);
         }
 
+        //주변 관광지 조회
         Double[][] touristPointMap = touristDataController.getTouristPointMap2();
         List<Long> touristPointId = touristDataController.getTouristPointId2();
         for (int i=0; i < touristPointId.size(); i++){
@@ -323,9 +330,32 @@ public class JobA extends QuartzJobBean {
             touristDataRepository.save(touristData);
         }
 
+        //관광지 추가 이미지 조회
+        for (Long contentId : newTourId) {
+            TouristData touristData = touristDataRepository.findByContentId(contentId);
+            if (touristData.getIsIm() != 0)
+                continue;
+
+            System.out.println("5 contentId = " + contentId);
+            JSONArray image_list = getJson("/detailImage", "&imageYN=Y&contentId=" + contentId, false); //이미지 정보
+            JSONObject image = (JSONObject) image_list.get(0);
+
+            String tmp = (String) image.get("originimgurl");
+            if (tmp == null) {
+                touristData.setFirstImage(null);
+            } else if (tmp.isEmpty()){
+                touristData.setFirstImage(null);
+            }else{
+                touristData.setIsIm(2);
+                touristData.setFirstImage(tmp);
+            }
+            touristDataRepository.save(touristData);
+        }
+
 
         //음식 기본정보
         List<Long> foodId = new ArrayList<>();
+        List<Long> newFoodId = new ArrayList<>();
         JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=C&contentTypeId=39", false); //관광 정보
         for (Object o : food_list) {
             JSONObject item = (JSONObject) o;
@@ -333,7 +363,6 @@ public class JobA extends QuartzJobBean {
             Long modifiedTime = (Long) item.get("modifiedtime");
             if (modifiedTime < criteria)
                 break;
-            newFood++;
 
             String cat1;
             cat1 = (String) item.get("cat1");
@@ -349,6 +378,7 @@ public class JobA extends QuartzJobBean {
             }
             else if (cat1.equals("A05") && cat2.equals("A0502")){
                 foodId.add((Long) item.get("contentid"));
+                newFood++;
             }
             else {
                 continue;
@@ -361,11 +391,13 @@ public class JobA extends QuartzJobBean {
                 isRealNew = false;
                 touristData = touristDataRepository.findByContentId((Long) item.get("contentid"));
                 touristData.setIsCom(0);
-                touristData.setIsJu(0);
             } else{ //새로 들어온 데이터면
                 isRealNew = true;
+                realNewFood++;
+                newFoodId.add((Long) item.get("contentid"));
                 touristData = new TouristData();
                 touristData.setIsCom(0);
+                touristData.setIsIm(0);
                 touristData.setIsJu(0);
                 touristData.setContentId((Long) item.get("contentid"));
                 touristData.setContentTypeId((Long) item.get("contenttypeid"));
@@ -420,6 +452,7 @@ public class JobA extends QuartzJobBean {
             } else if (tmp.isEmpty()){
                 touristData.setFirstImage(null);
             }else{
+                touristData.setIsIm(1);
                 touristData.setFirstImage(extractString(tmp));
             }
 
@@ -470,7 +503,7 @@ public class JobA extends QuartzJobBean {
             }
             touristDataRepository.save(touristData);
         }
-        System.out.println("수정 - 음식 기본정보 완료 " + newFood);
+        System.out.println("수정 - 음식 기본정보 완료 " + newFood + " " + realNewFood);
 
         //음식 추가정보
         for (Long contentId : foodId) {
@@ -486,20 +519,20 @@ public class JobA extends QuartzJobBean {
             tmp = (String) comm.get("overview");
             if (tmp == null) {
                 touristData.setOverview(null);
-                if(isRealNew)
+                if (isRealNew)
                     touristData.setOverviewSim(null);
             } else if (tmp.isEmpty()) {
                 touristData.setOverview(null);
-                if(isRealNew)
+                if (isRealNew)
                     touristData.setOverviewSim(null);
             } else {
                 String overview = extractOverview2(tmp);
                 touristData.setOverview(overview);
-                if(isRealNew){
+                if (isRealNew) {
                     if (overview == null)
                         touristData.setOverviewSim(null);
                     else if (overview.length() > 15)
-                        touristData.setOverviewSim(overview.substring(0,15)+"...");
+                        touristData.setOverviewSim(overview.substring(0, 15) + "...");
                     else
                         touristData.setOverviewSim(overview);
                 }
@@ -511,60 +544,61 @@ public class JobA extends QuartzJobBean {
             tmp = (String) intro.get("opentimefood");
             if (tmp == null) {
                 touristData.setOpenTimeFood(null);
-            } else if (tmp.isEmpty()){
+            } else if (tmp.isEmpty()) {
                 touristData.setOpenTimeFood(null);
-            }else{
+            } else {
                 touristData.setOpenTimeFood(extractString(tmp));
             }
 
             tmp = (String) intro.get("restdatefood");
             if (tmp == null) {
                 touristData.setRestDateFood(null);
-            } else if (tmp.isEmpty()){
+            } else if (tmp.isEmpty()) {
                 touristData.setRestDateFood(null);
-            }else{
+            } else {
                 touristData.setRestDateFood(extractString(tmp));
             }
 
             tmp = (String) intro.get("firstmenu");
             if (tmp == null) {
                 touristData.setFirstMenu(null);
-            } else if (tmp.isEmpty()){
+            } else if (tmp.isEmpty()) {
                 touristData.setFirstMenu(null);
-            }else{
+            } else {
                 touristData.setFirstMenu(extractString(tmp));
             }
 
             tmp = (String) intro.get("treatmenu");
             if (tmp == null) {
                 touristData.setTreatMenu(null);
-            } else if (tmp.isEmpty()){
+            } else if (tmp.isEmpty()) {
                 touristData.setTreatMenu(null);
-            }else{
+            } else {
                 touristData.setTreatMenu(extractString(tmp));
             }
 
             tmp = (String) intro.get("packing");
             if (tmp == null) {
                 touristData.setPacking(null);
-            } else if (tmp.isEmpty()){
+            } else if (tmp.isEmpty()) {
                 touristData.setPacking(null);
-            }else{
+            } else {
                 touristData.setPacking(extractString(tmp));
             }
 
             tmp = (String) intro.get("parkingfood");
             if (tmp == null) {
                 touristData.setParkingFood(null);
-            } else if (tmp.isEmpty()){
+            } else if (tmp.isEmpty()) {
                 touristData.setParkingFood(null);
-            }else{
+            } else {
                 touristData.setParkingFood(extractString(tmp));
             }
             touristData.setIsCom(1);
             touristDataRepository.save(touristData);
         }
 
+        //주변 음식 조회
         Double[][] foodMap = touristDataController.getFoodMap2();
         List<Long> foodId2 = touristDataController.getFoodId2();
         for (int i=0; i < foodId2.size(); i++){
@@ -587,9 +621,29 @@ public class JobA extends QuartzJobBean {
             touristDataRepository.save(touristData);
         }
 
+        //음식 추가 이미지 조회
+        for (Long contentId : newFoodId) {
+            TouristData touristData = touristDataRepository.findByContentId(contentId);
+            if (touristData.getIsIm() != 0)
+                continue;
+
+            System.out.println("5 contentId = " + contentId);
+            JSONArray image_list = getJson("/detailImage", "&imageYN=Y&contentId=" + contentId, false); //이미지 정보
+            JSONObject image = (JSONObject) image_list.get(0);
+
+            String tmp = (String) image.get("originimgurl");
+            if (tmp == null) {
+                touristData.setFirstImage(null);
+            } else if (tmp.isEmpty()){
+                touristData.setFirstImage(null);
+            }else{
+                touristData.setIsIm(2);
+                touristData.setFirstImage(tmp);
+            }
+            touristDataRepository.save(touristData);
+        }
 
         System.out.println("수정사항 반영 종료");
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
         scheduler.pauseJob(jobKey);
     }
 
@@ -738,7 +792,7 @@ public class JobA extends QuartzJobBean {
     //open api 호출해서 결과 리턴하는 함수
     public JSONArray getJson(String part1, String part2, Boolean isNear){
 
-        String key = "?ServiceKey=VQ0keALnEea3BkQdEGgwgCD8XNDNR%2Fg98L9D4GzWryl4UYHnGfUUUI%2BHDA6DdzYjjzJmuHT1UmuJZ7wJHoGfuA%3D%3D"; //인증키
+        String key = "?ServiceKey=BdxNGWQJQFutFYE6DkjePTmerMbwG2fzioTf6sr69ecOAdLGMH4iiukF8Ex93YotSgkDOHe1VxKNOr8USSN6EQ%3D%3D"; //인증키
         String result = "";
 
         try{

@@ -36,7 +36,7 @@ public class NearTouristData {
     private String title; //제목
 
     @Column
-    private String addr1; //주소
+    private String addr; //주소
 
     @Column
     private String cat3Name; //소분류 이름

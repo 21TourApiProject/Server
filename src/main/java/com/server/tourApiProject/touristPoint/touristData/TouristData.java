@@ -27,6 +27,9 @@ public class TouristData {
     @Column(nullable = false)
     private Integer isJu; //주변 정보가 들어왔는지 0이면 x 1이면 o
 
+    @Column(nullable = false)
+    private Integer isIm; //기본 이미지 정보가 없으면 0, 있으면 1, 추가 이미지 정보가 있으면 2
+
     @JsonIgnore
     @OneToMany(mappedBy = "touristData", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<TouristDataHashTag> touristDataHashTags = new ArrayList<>();

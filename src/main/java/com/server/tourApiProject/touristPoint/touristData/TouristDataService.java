@@ -235,4 +235,13 @@ public class TouristDataService {
         }
         return result;
     }
+
+    public List<Long> getId4Image() {
+        List<TouristData> list = touristDataRepository.findByFirstImage(null);
+        List<Long> result = new ArrayList<>();
+        for (TouristData data : list){
+            result.add(data.getContentId());
+        }
+        return result;
+    }
 }
