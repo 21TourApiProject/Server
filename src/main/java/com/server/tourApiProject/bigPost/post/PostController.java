@@ -2,6 +2,7 @@ package com.server.tourApiProject.bigPost.post;
 
 import com.server.tourApiProject.bigPost.postHashTag.PostHashTag;
 import com.server.tourApiProject.bigPost.postHashTag.PostHashTagService;
+import com.server.tourApiProject.bigPost.postImage.PostImage;
 import com.server.tourApiProject.bigPost.postImage.PostImageService;
 import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.ObservationService;
@@ -60,7 +61,7 @@ public class PostController {
     }
     @ApiOperation(value = "관련 게시물 이미지 검색", notes = "게시물 관측지 id로 이미지를 조회한다")
     @GetMapping(value = "postImage/{postObservePointId}")
-    public List<String> getRelatePostImageList(@PathVariable("postObservePointId") Long postObservePointId){
+    public List<PostImage> getRelatePostImageList(@PathVariable("postObservePointId") Long postObservePointId){
         return postImageService.getRelatePostImageList(postObservePointId);
     }
 

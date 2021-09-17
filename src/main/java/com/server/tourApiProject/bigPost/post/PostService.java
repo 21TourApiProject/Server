@@ -131,6 +131,8 @@ public class PostService {
         List<Post> posts = postRepository.findAll();
         for (Post post : posts){
             PostParams4 postParams4 = new PostParams4();
+            postParams4.setPostId(post.getPostId());
+            postParams4.setObservationId(post.getObservationId());
             postParams4.setMainTitle(post.getPostTitle());
             Optional<User> userOp = userRepository.findById(post.getUserId());
             if (userOp.isPresent()){
@@ -144,7 +146,7 @@ public class PostService {
             if (!mainImageList.isEmpty()) {
                 ArrayList<String> imageList = new ArrayList<>();
                 for (int i=0;i<mainImageList.size();i++){
-                imageList.add("https://starry-night.s3.ap-northeast-2.amazonaws.com/"+mainImageList.get(i).getImageName());}
+                imageList.add("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/"+mainImageList.get(i).getImageName());}
                 postParams4.setImages(imageList);
             } else{
                 postParams4.setImages(null);
@@ -156,7 +158,10 @@ public class PostService {
                 mainHashTagName.add(postHashTag.getHashTagName());
             }postParams4.setHashTags(mainHashTagName);
             }else{
+                postParams4.setHashTags(null);
                 postParams4.setOptionHashTag(post.getOptionHashTag());
+                postParams4.setOptionHashTag2(post.getOptionHashTag2());
+                postParams4.setOptionHashTag3(post.getOptionHashTag3());
             }
             result.add(postParams4);
         }
