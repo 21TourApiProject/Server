@@ -53,6 +53,9 @@ public class User{
     @Column
     private String ageRange; //연령대
 
+    @Column(nullable = false)
+    private Boolean isMarketing; //마케팅 정보 수신 동의
+
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Post> myPosts = new ArrayList<>();
