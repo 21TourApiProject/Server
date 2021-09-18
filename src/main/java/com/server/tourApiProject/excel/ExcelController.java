@@ -287,9 +287,9 @@ public class ExcelController {
             NearTouristData data = new NearTouristData();
 
             data.setNearTouristDataId((long) row.getCell(0).getNumericCellValue());
-            data.setAddr1(row.getCell(1).getStringCellValue());
-            if (data.getAddr1().equals("null"))
-                data.setAddr1(null);
+            data.setAddr(row.getCell(1).getStringCellValue());
+            if (data.getAddr().equals("null"))
+                data.setAddr(null);
             data.setCat3Name(row.getCell(2).getStringCellValue());
             if (data.getCat3Name().equals("null"))
                 data.setCat3Name(null);
