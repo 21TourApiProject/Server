@@ -95,4 +95,7 @@ public class UserController {
     @GetMapping(value = "user/{userId}/posts")
     public List<Post> getMyPosts(@PathVariable("userId") Long userId){ return userService.getMyPosts(userId); }
 
+    @ApiOperation(value = "사용자가 타입 조회", notes = "사용자가 카카오 가입인지 확인한다")
+    @GetMapping(value = "user/{userId}/isKakao")
+    public Boolean checkIsKakao(@PathVariable("userId") Long userId){ return userService.checkIsKakao(userId); }
 }

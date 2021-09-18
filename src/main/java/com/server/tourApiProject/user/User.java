@@ -56,6 +56,9 @@ public class User{
     @Column
     private Boolean isMarketing; //마케팅 정보 수신 동의
 
+    @Column
+    private Boolean kakao;
+
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Post> myPosts = new ArrayList<>();
