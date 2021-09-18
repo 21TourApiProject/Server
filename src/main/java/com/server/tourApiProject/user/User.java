@@ -54,6 +54,9 @@ public class User{
     private String ageRange; //연령대
 
     @Column
+    private Boolean isMarketing; //마케팅 정보 수신 동의
+
+    @Column
     private Boolean kakao;
 
     @JsonIgnore
