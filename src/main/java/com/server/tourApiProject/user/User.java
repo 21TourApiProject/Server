@@ -53,7 +53,7 @@ public class User{
     @Column
     private String ageRange; //연령대
 
-    @Column(nullable = false)
+    @Column
     private Boolean isMarketing; //마케팅 정보 수신 동의
 
     @JsonIgnore
