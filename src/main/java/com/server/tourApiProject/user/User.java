@@ -53,6 +53,9 @@ public class User{
     @Column
     private String ageRange; //연령대
 
+    @Column
+    private Boolean kakao;
+
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Post> myPosts = new ArrayList<>();

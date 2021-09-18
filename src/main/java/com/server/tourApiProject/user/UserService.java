@@ -45,6 +45,7 @@ public class UserService {
         user.setPassword(userParam.getPassword());
         user.setNickName(userParam.getEmail());
         user.setSignUpDt(LocalDateTime.now());
+        user.setKakao(false);
 
         userRepository.save(user);
     }
@@ -55,6 +56,7 @@ public class UserService {
         user.setNickName(userParam.getNickName());
         user.setProfileImage(userParam.getProfileImage());
         user.setSignUpDt(LocalDateTime.now());
+        user.setKakao(true);
         if(userParam.getMobilePhoneNumber()!=null)
             user.setMobilePhoneNumber(userParam.getMobilePhoneNumber());
         if(userParam.getSex()!=null)
@@ -158,5 +160,10 @@ public class UserService {
     public void deleteUser2(String email) {
         User user = userRepository.findByEmail(email);
         userRepository.delete(user);
+    }
+
+    public boolean checkIsKakao(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
+        return user.getKakao();
     }
 }
