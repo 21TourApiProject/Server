@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -44,5 +45,20 @@ public class MyHashTagService {
             myHashTagRepository.save(myHashTag);
         }
         return userId;
+    }
+
+    public void changeMyHashTag(Long userId, List<MyHashTagParams> myHashTagParams) {
+        User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
+        List<MyHashTag> origin = myHashTagRepository.findByUserId(userId);
+        myHashTagRepository.deleteAll(origin);
+        for(MyHashTagParams p : myHashTagParams) {
+            MyHashTag myHashTag = new MyHashTag();
+            myHashTag.setHashTagName(p.getHashTagName());
+            myHashTag.setUser(user);
+            myHashTag.setUserId(userId);
+            HashTag hashTag = hashTagRepository.findByHashTagName(p.getHashTagName());
+            myHashTag.setHashTagId(hashTag.getHashTagId());
+            myHashTagRepository.save(myHashTag);
+        }
     }
 }
