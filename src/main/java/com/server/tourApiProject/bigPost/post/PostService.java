@@ -6,6 +6,7 @@ import com.server.tourApiProject.bigPost.postImage.PostImage;
 import com.server.tourApiProject.bigPost.postImage.PostImageRepository;
 import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.ObservationRepository;
+import com.server.tourApiProject.search.Filter;
 import com.server.tourApiProject.user.User;
 import com.server.tourApiProject.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -126,6 +127,39 @@ public class PostService {
         return result;
     }
 
+    public List<PostParams5> getRelatePost(Long observationId) {
+        List<PostParams5> result1 = new ArrayList<>();
+        List<Post> relatePosts = postRepository.findByObservationId(observationId);
+        for (Post relatePost : relatePosts){
+            PostParams5 postParams5 = new PostParams5();
+            postParams5.setPostId(relatePost.getPostId());
+
+            List<PostImage> imageList = postImageRepository.findByPostId(relatePost.getPostId());
+            if (!imageList.isEmpty()) {
+                PostImage postImage = imageList.get(0);
+                postParams5.setThumbnail(postImage.getImageName());
+            } else{
+                postParams5.setThumbnail(null);
+            }
+            postParams5.setTitle(relatePost.getPostTitle());
+            Optional<User> userOp = userRepository.findById(relatePost.getUserId());
+            if (userOp.isPresent()){
+                User user = userOp.get();
+                postParams5.setNickName(user.getNickName());
+                postParams5.setProfileImage(user.getProfileImage());
+            }
+            List<String> hashTagName = new ArrayList<>();
+            List<PostHashTag> list = postHashTagRepository.findByPostId(relatePost.getPostId());
+            for(PostHashTag postHashTag : list){
+                hashTagName.add(postHashTag.getHashTagName());
+            }
+            postParams5.setHashTagNames(hashTagName);
+
+            result1.add(postParams5);
+        }
+        return result1;
+    }
+
     public List<PostParams4>getMainPost(){
         List<PostParams4> result = new ArrayList<>();
         List<Post> posts = postRepository.findAll();
@@ -164,6 +198,49 @@ public class PostService {
                 postParams4.setOptionHashTag3(post.getOptionHashTag3());
             }
             result.add(postParams4);
+        }
+        return result;
+    }
+
+    public List<PostParams6>getPostDataWithFilter(Filter filter){
+        List<Long> areaCodeList = filter.getAreaCodeList();
+        List<Long> hashTagIdList= filter.getHashTagIdList();
+        List<PostParams6>result = new ArrayList<>();
+        List<Long>postIdList = new ArrayList<>();
+        for (Long hashTagId: hashTagIdList){
+            List<PostHashTag> postHashTagList= postHashTagRepository.findByHashTagId(hashTagId);
+            for (PostHashTag postHashTag : postHashTagList){
+                Long postId = postHashTag.getPostId();
+                if (!postIdList.contains(postId)){
+                    postIdList.add(postId);
+                }
+            }
+        }
+        for (Long postId : postIdList){
+            Post post = postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
+            PostParams6 postParams6 = new PostParams6();
+            postParams6.setPostId(post.getPostId());
+            postParams6.setTitle(post.getPostTitle());
+            Optional<User> userOp = userRepository.findById(post.getUserId());
+            if (userOp.isPresent()){
+                User user = userOp.get();
+                postParams6.setNickName(user.getNickName());
+                postParams6.setProfileImage(user.getProfileImage());
+            }
+            List<String> hashTagName = new ArrayList<>();
+            List<PostHashTag> list = postHashTagRepository.findByPostId(post.getPostId());
+            for(PostHashTag postHashTag : list){
+                hashTagName.add(postHashTag.getHashTagName());
+            }
+            postParams6.setHashTagNames(hashTagName);
+            List<PostImage> imageList = postImageRepository.findByPostId(post.getPostId());
+            if (!imageList.isEmpty()) {
+                PostImage postImage = imageList.get(0);
+                postParams6.setThumbnail(postImage.getImageName());
+            } else{
+                postParams6.setThumbnail(null);
+            }
+            result.add(postParams6);
         }
         return result;
     }
