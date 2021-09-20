@@ -22,7 +22,7 @@ public class MyWishController {
         myWishService.createMyWish(userId, itemId, wishType);
     }
 
-    @ApiOperation(value = "내 찜 조희", notes = "해당하는 아이템에 대해 사용자가 찜을 했는지 조회한다.")
+    @ApiOperation(value = "내 찜 조회", notes = "해당하는 아이템에 대해 사용자가 찜을 했는지 조회한다.")
     @GetMapping(value = "myWish/{userId}/{itemId}/{wishType}")
     public Boolean isThereMyWish(@PathVariable("userId") Long userId, @PathVariable("itemId") Long itemId, @PathVariable("wishType") Integer wishType){
         return myWishService.isThereMyWish(userId, itemId, wishType);
