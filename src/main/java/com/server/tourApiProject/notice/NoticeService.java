@@ -26,7 +26,7 @@ public class NoticeService {
         Notice notice = new Notice();
         notice.setNoticeTitle(noticeParams.getNoticeTitle());
         notice.setNoticeContent(noticeParams.getNoticeContent());
-        notice.setDate(noticeParams.getDate());
+        notice.setNoticeDate(noticeParams.getNoticeDate());
         noticeRepository.save(notice);
     }
 }

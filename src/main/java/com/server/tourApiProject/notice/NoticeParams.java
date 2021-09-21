@@ -11,5 +11,5 @@ import java.time.LocalDate;
 public class NoticeParams {
     private String noticeTitle;
     private String noticeContent;
-    private LocalDate date;
+    private String noticeDate;
 }
