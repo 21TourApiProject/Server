@@ -1,6 +1,5 @@
 package com.server.tourApiProject.alarm;
 
-import com.server.tourApiProject.hashTag.HashTag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

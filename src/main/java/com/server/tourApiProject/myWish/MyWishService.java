@@ -125,8 +125,12 @@ public class MyWishService {
 
             List<ObserveHashTag> hashTagList = observeHashTagRepository.findByObservationId(observationId);
             List<String> hashTagNames = new ArrayList<>();
+            int i = 0;
             for (ObserveHashTag hashTag : hashTagList){
+                if (i > 2)
+                    break;
                 hashTagNames.add(hashTag.getHashTagName());
+                i++;
             }
             myWishParams01.setHashTagNames(hashTagNames);
 
@@ -152,8 +156,12 @@ public class MyWishService {
 
             List<TouristDataHashTag> hashTagList = touristDataHashTagRepository.findByContentId(contentId);
             List<String> hashTagNames = new ArrayList<>();
+            int i = 0;
             for (TouristDataHashTag hashTag : hashTagList){
+                if(i > 2)
+                    break;
                 hashTagNames.add(hashTag.getHashTagName());
+                i++;
             }
             myWishParams01.setHashTagNames(hashTagNames);
 
@@ -188,9 +196,13 @@ public class MyWishService {
             myWishParams2.setProfileImage(user.getProfileImage());
 
             List<PostHashTag> hashTagList = postHashTagRepository.findByPostId(postId);
+            int i = 0;
             List<String> hashTagNames = new ArrayList<>();
             for (PostHashTag hashTag : hashTagList){
+                if(i > 2)
+                    break;
                 hashTagNames.add(hashTag.getHashTagName());
+                i++;
             }
             myWishParams2.setHashTagNames(hashTagNames);
 

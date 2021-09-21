@@ -117,8 +117,12 @@ public class PostService {
             }
             List<String> hashTagName = new ArrayList<>();
             List<PostHashTag> list = postHashTagRepository.findByPostId(post.getPostId());
+            int i = 0;
             for(PostHashTag postHashTag : list){
+                if(i > 3)
+                    break;
                 hashTagName.add(postHashTag.getHashTagName());
+                i++;
             }
             postParams3.setHashTagNames(hashTagName);
 
