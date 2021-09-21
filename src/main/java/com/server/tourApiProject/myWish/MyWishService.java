@@ -127,7 +127,7 @@ public class MyWishService {
             List<String> hashTagNames = new ArrayList<>();
             int i = 0;
             for (ObserveHashTag hashTag : hashTagList){
-                if (i > 3)
+                if (i > 2)
                     break;
                 hashTagNames.add(hashTag.getHashTagName());
                 i++;
@@ -158,7 +158,7 @@ public class MyWishService {
             List<String> hashTagNames = new ArrayList<>();
             int i = 0;
             for (TouristDataHashTag hashTag : hashTagList){
-                if(i > 3)
+                if(i > 2)
                     break;
                 hashTagNames.add(hashTag.getHashTagName());
                 i++;
@@ -199,7 +199,7 @@ public class MyWishService {
             int i = 0;
             List<String> hashTagNames = new ArrayList<>();
             for (PostHashTag hashTag : hashTagList){
-                if(i > 3)
+                if(i > 2)
                     break;
                 hashTagNames.add(hashTag.getHashTagName());
                 i++;

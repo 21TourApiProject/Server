@@ -61,4 +61,17 @@ public class MyHashTagService {
             myHashTagRepository.save(myHashTag);
         }
     }
+
+    public List<String> getMyHashTag3(Long userId) {
+        List<String> myHashTagNameList = new ArrayList<>();
+        List<MyHashTag> myHashTagList = myHashTagRepository.findByUserId(userId);
+        int i = 0;
+        for(MyHashTag p : myHashTagList) {
+            if (i > 2)
+                break;
+            myHashTagNameList.add(p.getHashTagName());
+            i++;
+        }
+        return myHashTagNameList;
+    }
 }
