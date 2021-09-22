@@ -22,6 +22,14 @@ public class MyHashTagService {
     private final UserRepository userRepository;
     private final HashTagRepository hashTagRepository;
 
+    List<Long> getMyHashTagIdList(Long userId){
+        List<Long> myHashTagIdList = new ArrayList<>();
+        List<MyHashTag> myHashTagList = myHashTagRepository.findByUserId(userId);
+        for (MyHashTag p: myHashTagList){
+            myHashTagIdList.add(p.getHashTagId());
+        }return  myHashTagIdList;
+    }
+
     public List<String> getMyHashTag(Long userId) {
         List<String> myHashTagNameList = new ArrayList<>();
         List<MyHashTag> myHashTagList = myHashTagRepository.findByUserId(userId);
