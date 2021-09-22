@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import retrofit2.http.POST;
 
 import java.util.List;
 
@@ -83,8 +84,8 @@ public class PostController {
     public List<PostParams6> getPostWithFilter(@RequestBody Filter filter){ return postService.getPostDataWithFilter(filter); }
 
     @ApiOperation(value = "메인페이지 게시물 정보 조회", notes = "메인페이지에 띄울 모든 게시물을 조회한다")
-    @GetMapping(value = "post/")
-    public List<PostParams4> getMainPost(){ return postService.getMainPost(); }
+    @PostMapping(value = "post/main")
+    public List<PostParams4> getMainPost(@RequestBody Filter filter){ return postService.getMainPost(filter); }
 
 }
 
