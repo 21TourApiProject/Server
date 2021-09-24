@@ -1,5 +1,8 @@
-package com.server.tourApiProject.weather;
+package com.server.tourApiProject.weather.WtArea;
 
+import com.server.tourApiProject.weather.WtArea.WtArea;
+import com.server.tourApiProject.weather.WtArea.WtAreaParams;
+import com.server.tourApiProject.weather.WtArea.WtAreaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
