@@ -105,9 +105,9 @@ public class ObservationService {
 
         if (!areaCodeList.isEmpty()) {
             for (Long areaCode : areaCodeList) {
-//                List<Observation> observationList = observationRepository.findByAreaCode(areaCode);
+                List<Observation> observationList = observationRepository.findByAreaCode(areaCode);
                 //관측지에 아직 지역코드 추가 안해서 아래줄로 대체해 놓았음
-                List<Observation> observationList = observationRepository.findAll();
+//                List<Observation> observationList = observationRepository.findAll();
                 if (hashTagIdList.isEmpty()) {
                     //해쉬태그 없으면 지역결과 전부추가
                     for (Observation observation : observationList) {
@@ -143,6 +143,10 @@ public class ObservationService {
                 }
             }
         }
+        if (searchResult.get(0).getObservationId() == 0) {
+            //0번이면 나만의 관측지 더미데이터라서 삭제
+            searchResult.remove(0);
+        }
 
         //결과 param에 넣음
         for(Observation observation : searchResult){
@@ -153,9 +157,11 @@ public class ObservationService {
             searchParams1.setLatitude(observation.getLatitude());
             searchParams1.setLongitude(observation.getLongitude());
             searchParams1.setIntro(observation.getIntro());
-            ObserveImage observeImage = observeImageRepository.findByObservationId(observation.getObservationId()).get(0);
-            searchParams1.setThumbnail(observeImage.getImage());
-
+            searchParams1.setContentType(observation.getObserveType());
+            if (!observeImageRepository.findByObservationId(observation.getObservationId()).isEmpty()) {
+                ObserveImage observeImage = observeImageRepository.findByObservationId(observation.getObservationId()).get(0);
+                searchParams1.setThumbnail(observeImage.getImage());
+            }
             List<ObserveHashTag> hashTagList = observeHashTagRepository.findByObservationId(observation.getObservationId());
             List<String> hashTagNames = new ArrayList<>();
             for (ObserveHashTag hashTag : hashTagList){

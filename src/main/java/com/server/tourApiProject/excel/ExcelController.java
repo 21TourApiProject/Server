@@ -427,6 +427,7 @@ public class ExcelController {
                 data.setNature(true);
             else
                 data.setNature(false);
+            data.setAreaCode((long)row.getCell(16).getNumericCellValue());
 
             observationRepository.save(data);
         }

@@ -15,7 +15,7 @@ public class SearchParams1 {
     private String thumbnail; //썸네일
     private String title; //제목
     private String address; //주소
-    private String observeType; //분류
+    private String contentType; //분류
     private String intro; //짧은 개요
     private Double longitude;  //경도
     private Double latitude; //위도
