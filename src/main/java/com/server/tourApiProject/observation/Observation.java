@@ -71,6 +71,9 @@ public class Observation {
     @Column
     private Integer courseOrder;   //코스내에서의 관측지 순서서
 
+    @Column
+    private Long areaCode;  //지역코드
+
     @OneToMany(mappedBy = "observation")
     private List<ObserveFee> observeFees=new ArrayList<>();
 
