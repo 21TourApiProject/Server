@@ -1,4 +1,4 @@
-package com.server.tourApiProject.constellation;
+package com.server.tourApiProject.star.constellation;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;

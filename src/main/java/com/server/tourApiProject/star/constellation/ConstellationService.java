@@ -1,4 +1,4 @@
-package com.server.tourApiProject.constellation;
+package com.server.tourApiProject.star.constellation;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
