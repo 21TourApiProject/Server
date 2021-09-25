@@ -1,4 +1,4 @@
-package com.server.tourApiProject.weather;
+package com.server.tourApiProject.weather.WtArea;
 
 import lombok.*;
 

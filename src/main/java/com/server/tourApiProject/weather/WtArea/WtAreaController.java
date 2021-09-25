@@ -1,4 +1,4 @@
-package com.server.tourApiProject.weather;
+package com.server.tourApiProject.weather.WtArea;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
