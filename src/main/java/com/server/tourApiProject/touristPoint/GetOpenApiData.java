@@ -28,12 +28,15 @@
 //    private NearTouristDataController nearTouristDataController;
 //
 //    int errorCat;
+//    int noMap;
 //
 //    @Override
 //    public void run(ApplicationArguments args) throws Exception {
 //        System.out.println("만오천개 받기");
 //
 //        //관광지 기본정보
+////        errorCat = 0;
+////        noMap = 0;
 ////        JSONArray tour_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=12", false); //관광 정보
 ////        for (Object o : tour_list) {
 ////            JSONObject item = (JSONObject) o;
@@ -46,9 +49,13 @@
 ////            cat3 = (String) item.get("cat3");
 ////            String addr1;
 ////            addr1 = (String) item.get("addr1");
+////            Object mapx = item.get("mapx");
 ////
 ////            if(cat1 == null || cat2 == null || cat3 == null || addr1 == null){
 ////                errorCat++;
+////            }
+////            else if(mapx ==null){
+////                noMap++;
 ////            }
 ////            else if ((cat1.equals("A01") || cat1.equals("A02")) && (cat2.equals("A0101") || cat2.equals("A0102") || cat2.equals("A0201") || cat2.equals("A0202") || cat2.equals("A0203") || cat2.equals("A0204") || cat2.equals("A0205"))){
 ////                TouristData touristData = getTouristData(item);
@@ -61,7 +68,7 @@
 ////                errorCat++;
 ////            }
 ////        }
-////        System.out.println("관광지 기본정보 완료 " + errorCat);
+////        System.out.println("관광지 기본정보 완료 " + " " + errorCat + " " + noMap);
 //
 //        //관광지 추가정보
 //        List<Long> touristPointId = touristDataController.getTouristPointId();
@@ -174,6 +181,7 @@
 //
 //        //음식 기본정보
 ////        errorCat = 0;
+////        noMap = 0;
 ////        JSONArray food_list = getJson("/areaBasedList", "&listYN=Y&arrange=A&contentTypeId=39", false); //관광 정보
 ////        for (Object o : food_list) {
 ////            JSONObject item = (JSONObject) o;
@@ -186,9 +194,13 @@
 ////            cat3 = (String) item.get("cat3");
 ////            String addr1;
 ////            addr1 = (String) item.get("addr1");
+////            Object mapx = item.get("mapx");
 ////
 ////            if(cat1 == null || cat2 == null || cat3 == null || addr1 == null){
 ////                errorCat++;
+////            }
+////            else if (mapx == null){
+////                noMap++;
 ////            }
 ////            else if (cat1.equals("A05") && cat2.equals("A0502")){
 ////                TouristData touristData = getTouristData(item);
@@ -200,7 +212,7 @@
 ////                errorCat++;
 ////            }
 ////        }
-////        System.out.println("음식 기본정보 완료 " + errorCat);
+////        System.out.println("음식 기본정보 완료 " + " " + errorCat + " " + noMap);
 //
 //        //음식 추가정보
 //        List<Long> foodId = touristDataController.getFoodId();
