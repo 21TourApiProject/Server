@@ -23,7 +23,18 @@ public class PostParams {
 
     private String postTitle;
 
-    private Long userId;
+    private String optionHashTag;
+    private String optionHashTag2;
+    private String optionHashTag3;
+    private String optionHashTag4;
+    private String optionHashTag5;
+    private String optionHashTag6;
+    private String optionHashTag7;
+    private String optionHashTag8;
+    private String optionHashTag9;
+    private String optionHashTag10;
 
-    private Long postObservePointId;
+    private String optionObservation;
+
+    private Long userId;
 }

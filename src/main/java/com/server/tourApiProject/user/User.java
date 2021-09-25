@@ -3,7 +3,7 @@ package com.server.tourApiProject.user;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.tourApiProject.myHashTag.MyHashTag;
-import com.server.tourApiProject.myWishPost.MyWishPost;
+import com.server.tourApiProject.myWish.MyWish;
 import com.server.tourApiProject.bigPost.post.Post;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -53,6 +53,12 @@ public class User{
     @Column
     private String ageRange; //연령대
 
+    @Column
+    private Boolean isMarketing; //마케팅 정보 수신 동의
+
+    @Column
+    private Boolean kakao;
+
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Post> myPosts = new ArrayList<>();
@@ -63,7 +69,7 @@ public class User{
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<MyWishPost> myWishPosts = new ArrayList<>();
+    private List<MyWish> myWishes = new ArrayList<>();
 
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")

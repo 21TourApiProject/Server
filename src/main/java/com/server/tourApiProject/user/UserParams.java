@@ -21,4 +21,8 @@ public class UserParams {
 
     private String password;
 
+    private Boolean isMarketing;
+
+    private Boolean kakao;
+
 }

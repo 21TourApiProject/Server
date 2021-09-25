@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.tourApiProject.bigPost.postHashTag.PostHashTag;
 import com.server.tourApiProject.bigPost.postImage.PostImage;
-import com.server.tourApiProject.bigPost.postObservePoint.PostObservePoint;
+import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.user.User;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,6 +34,31 @@ public class Post {
     @Column(length = 1000,nullable = false)
     private String postTitle;
 
+    @Column
+    private String optionHashTag;
+    @Column
+    private String optionHashTag2;
+    @Column
+    private String optionHashTag3;
+    @Column
+    private String optionHashTag4;
+    @Column
+    private String optionHashTag5;
+    @Column
+    private String optionHashTag6;
+    @Column
+    private String optionHashTag7;
+    @Column
+    private String optionHashTag8;
+    @Column
+    private String optionHashTag9;
+    @Column
+    private String optionHashTag10;
+
+
+    @Column
+    private String optionObservation;
+
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
@@ -44,10 +69,12 @@ public class Post {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Asia/Seoul")
     private LocalTime time;
 
-    @OneToMany(mappedBy = "post")
+    @JsonIgnore
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<PostHashTag> postHashTags=new ArrayList<>();
 
-    @OneToMany(mappedBy = "post")
+    @JsonIgnore
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<PostImage> postImages=new ArrayList<>();
 
     @JsonIgnore
@@ -60,10 +87,10 @@ public class Post {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "postObservePointId", insertable = false, updatable=false)
-    private PostObservePoint postObservePoint;
+    @JoinColumn(name = "observationId", insertable = false, updatable=false)
+    private Observation observation;
 
     @Column(nullable = false)
-    private Long postObservePointId;
+    private Long observationId;
 
 }

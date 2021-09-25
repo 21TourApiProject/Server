@@ -10,5 +10,4 @@ import lombok.*;
 public class PostParams2 {
     private String thumbnail;
     private String title;
-    private Long postId;
 }

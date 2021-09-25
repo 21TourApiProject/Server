@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
 
 @Slf4j
 @Service
@@ -16,10 +17,6 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-
-    public List<User> getAllUser(){
-        return userRepository.findAll();
-    }
 
     public User getUser(Long userId){
         User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
@@ -43,10 +40,34 @@ public class UserService {
         user.setMobilePhoneNumber(userParam.getMobilePhoneNumber());
         user.setEmail(userParam.getEmail());
         user.setPassword(userParam.getPassword());
-        user.setNickName(userParam.getEmail());
+
+        boolean isDuplicate = true;
+        while(isDuplicate){
+            String nickname = randomNickName();
+            if(userRepository.findByNickName(nickname) == null){
+                isDuplicate = false;
+                user.setNickName(nickname);
+            }
+        }
+        user.setIsMarketing(userParam.getIsMarketing());
+        user.setKakao(userParam.getKakao());
         user.setSignUpDt(LocalDateTime.now());
 
         userRepository.save(user);
+    }
+
+    private String randomNickName() {
+        String[] front = {"별헤는","별난","별이좋은","별을찾는","별보는","반짝이는","비몽사몽","여행하는","우주속의","졸린","별그리는","반짝반짝","하품하는","코고는",
+                "여행중인","별에서온","밤하늘의","여름밤의","겨울밤의","별빛속의","나른한","별똥별과","꾸벅꾸벅","야행성","배낭을멘","달빛속의","새벽감성","은하수속",
+                "자유로운","캠핑하는","낭만적인","느낌있는","은하수와","옥탑방","꿈속의","잠든","감성적인","잠오는","설레는","행복한","로맨틱한","감미로운","신비로운","꿈꾸는","새벽녘의"};
+        String[] back = {"너구리","뱁새","호랑이","햄스터","쿼카","미어캣","반달곰","칡","고영이","타조","낙타","라쿤","북극곰","막대사탕","보드카","위스키","막걸리",
+                "영혼","꼬마유령","대학원생","돌하르방","마법사","하모니카","도깨비","반딧불이","멍뭉이","호롱불","사막여우","고슴도치","다람쥐","수달","천문학자","별사탕",
+                "모닥불","히치하이커","벽난로","기타리스트","여행작가","몽상가","음유시인","고래","올빼미"};
+        Random random = new Random();
+        int f = random.nextInt(45);
+        int b = random.nextInt(42);
+        int n = random.nextInt(1000);
+        return front[f] + " " + back[b] + n;
     }
 
     public void createKakaoUser(KakaoUserParams userParam){
@@ -55,6 +76,7 @@ public class UserService {
         user.setNickName(userParam.getNickName());
         user.setProfileImage(userParam.getProfileImage());
         user.setSignUpDt(LocalDateTime.now());
+        user.setKakao(true);
         if(userParam.getMobilePhoneNumber()!=null)
             user.setMobilePhoneNumber(userParam.getMobilePhoneNumber());
         if(userParam.getSex()!=null)
@@ -65,15 +87,6 @@ public class UserService {
             user.setAgeRange(userParam.getAgeRange());
 
         userRepository.save(user);
-    }
-
-    public User updateUser(Long userId, UserParams userParam) {
-        User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
-//        if (!userParam.getEmail().isEmpty())
-//            user.setEmail(userParam.getEmail());
-//        쓸일이 있을지 모르겠음
-
-        return userRepository.save(user);
     }
 
     public Boolean checkDuplicateEmail(String email) {
@@ -129,9 +142,9 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void changeProfileImage(Long userId, UserParams2 profileImage) {
+    public void changeProfileImage(Long userId, String profileImageName) {
         User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
-        user.setProfileImage(profileImage.getProfileImage());
+        user.setProfileImage(profileImageName);
         userRepository.save(user);
     }
 
@@ -158,5 +171,10 @@ public class UserService {
     public void deleteUser2(String email) {
         User user = userRepository.findByEmail(email);
         userRepository.delete(user);
+    }
+
+    public boolean checkIsKakao(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
+        return user.getKakao();
     }
 }

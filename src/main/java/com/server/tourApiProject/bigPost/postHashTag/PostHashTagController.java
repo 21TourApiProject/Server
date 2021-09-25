@@ -18,7 +18,18 @@ public class PostHashTagController {
 
     @ApiOperation(value = "게시물 해시태그 리스트 입력", notes = "게시물 해시태그 정보를 입력한다")
     @PostMapping(value = "postHashTag/{postId}")
-    public void createPostHashTags(@PathVariable("postId")  Long postId, @RequestBody List<PostHashTagParams> postHashTagParams){
+    public void createPostHashTags(@PathVariable("postId") Long postId, @RequestBody List<PostHashTagParams> postHashTagParams){
         postHashTagService.createPostHashTags(postId,postHashTagParams);
+    }
+
+    @ApiOperation(value = "게시물 해시태그 리스트 이름 조회", notes = "게시물 id로 해시태그 이름을 조회한다.")
+    @GetMapping(value = "postHashTagName/{postId}")
+    public List<String> getPostHashTagName(@PathVariable("postId")Long postId){
+        return postHashTagService.getPostHashTagName(postId);
+    }
+    @ApiOperation(value = "게시물 해시태그 정보 삭제", notes = "모든 게시물 해시태그를 삭제한다")
+    @DeleteMapping(value = "postHashTag/")
+    public void deletePostHashTag(){
+        postHashTagService.deletePostHashTags();
     }
 }

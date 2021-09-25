@@ -3,6 +3,8 @@ package com.server.tourApiProject.touristPoint.nearTouristData;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeRepository;
 import com.server.tourApiProject.touristPoint.touristData.TouristData;
 import com.server.tourApiProject.touristPoint.touristData.TouristDataRepository;
+import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTag;
+import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTagRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class NearTouristDataService {
 
     private final NearTouristDataRepository nearTouristDataRepository;
     private final TouristDataRepository touristDataRepository;
+    private final TouristDataHashTagRepository touristDataHashTagRepository;
     private final ContentTypeRepository contentTypeRepository;
 
     public void createNearTouristData(Long contentId1, Long contentId2) {
@@ -36,16 +39,11 @@ public class NearTouristDataService {
         if (me.getFirstImage() != null){
             nearTouristData.setFirstImage(me.getFirstImage());
         }
-
-        if (me.getOverview() != null){
-            if (me.getOverview().length() > 15)
-                nearTouristData.setOverviewSimple(me.getOverview().substring(0,15)+"..."); //짧은 개요 나중에 제대로 수정
-            else
-                nearTouristData.setOverviewSimple(me.getOverview());
+        if (me.getOverviewSim() != null){
+            nearTouristData.setOverviewSim(me.getOverviewSim());
         }
-
         nearTouristData.setTitle(me.getTitle());
-        nearTouristData.setAddr1(me.getAddr1());
+        nearTouristData.setAddr(me.getAddr());
         nearTouristData.setCat3Name(contentTypeRepository.findByCat3Code(me.getCat3()).getCat3Name());
         nearTouristDataRepository.save(nearTouristData);
     }
@@ -58,9 +56,16 @@ public class NearTouristDataService {
             param.setContentId(data.getContentId());
             param.setFirstImage(data.getFirstImage());
             param.setTitle(data.getTitle());
-            param.setAddr1(data.getAddr1());
+            param.setAddr(data.getAddr());
             param.setCat3Name(data.getCat3Name());
-            param.setOverviewSimple(data.getOverviewSimple());
+            param.setOverviewSim(data.getOverviewSim());
+
+            List<String> hashTagNames= new ArrayList<>();
+            List<TouristDataHashTag> hashTagList = touristDataHashTagRepository.findByContentId(data.getContentId());
+            for(TouristDataHashTag hashTag : hashTagList){
+                hashTagNames.add(hashTag.getHashTagName());
+            }
+            param.setHashTagNames(hashTagNames);
             result.add(param);
         }
         return result;
@@ -68,5 +73,12 @@ public class NearTouristDataService {
 
     public void deleteNearTouristData() {
         nearTouristDataRepository.deleteAll();
+    }
+
+    public void deleteNearTouristPoint() {
+        List<TouristData> t12  = touristDataRepository.findByContentTypeId(12L);
+        for (TouristData touristData : t12) {
+            touristDataRepository.deleteById(touristData.getContentId());
+        }
     }
 }

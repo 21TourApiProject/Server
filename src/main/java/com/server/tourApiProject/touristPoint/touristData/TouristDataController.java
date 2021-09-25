@@ -1,5 +1,7 @@
 package com.server.tourApiProject.touristPoint.touristData;
 
+import com.server.tourApiProject.myWish.MyWishParams01;
+import com.server.tourApiProject.search.Filter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -18,15 +20,23 @@ public class TouristDataController {
     private final TouristDataService touristDataService;
 
     @ApiOperation(value = "관광 정보 입력", notes = "관광 정보를 입력한다")
-    @PostMapping(value = "touristData/touristSpot")
-    public List<Double> createTouristData(@RequestBody TouristData touristData){
-        return touristDataService.createTouristData(touristData);
+    @PostMapping(value = "touristData/touristPoint")
+    public void createTouristData(@RequestBody TouristData touristData){
+        touristDataService.createTouristData(touristData);
     }
 
-    @ApiOperation(value = "관광 정보 삭제", notes = "모든 관광 정보를 삭제한다")
+    //테스트용(나중에 삭제)
+    @ApiOperation(value = "12, 39 삭제", notes = "12, 39를 삭제한다")
     @DeleteMapping(value = "touristData/")
     public void deleteTouristData(){
         touristDataService.deleteTouristData();
+    }
+
+    //테스트용(나중에 삭제)
+    @ApiOperation(value = "12 삭제", notes = "12를 삭제한다")
+    @DeleteMapping(value = "touristData/touristPoint")
+    public void deleteTouristPoint(){
+        touristDataService.deleteTouristPoint();
     }
 
     @ApiOperation(value = "관광지 타입 조회", notes = "관광지 타입를 조회한다")
@@ -69,6 +79,42 @@ public class TouristDataController {
     @GetMapping(value = "touristData/food/map")
     public Double [][] getFoodMap(){
         return touristDataService.getFoodMap();
+    }
+
+    @ApiOperation(value = "관광지 좌표 조회 2", notes = "주변 정보가 없는 관광지의 좌표를 조회한다")
+    @GetMapping(value = "touristData/touristPoint/noNear/map")
+    public Double [][] getTouristPointMap2(){
+        return touristDataService.getTouristPointMap2();
+    }
+
+    @ApiOperation(value = "음식 좌표 조회 2", notes = "주변 정보가 없는 음식의 좌표를 조회한다")
+    @GetMapping(value = "touristData/food/noNear/map")
+    public Double [][] getFoodMap2(){
+        return touristDataService.getFoodMap2();
+    }
+
+    @ApiOperation(value = "관광지 아이디 조회 2", notes = "주변 정보가 없는 관광지의 아이디 정보를 조회한다")
+    @GetMapping(value = "touristData/touristPoint/noNear/contentId")
+    public List<Long> getTouristPointId2(){
+        return touristDataService.getTouristPointId2();
+    }
+
+    @ApiOperation(value = "음식 아이디 조회 2", notes = "주변 정보가 없는 음식의 아이디 정보를 조회한다")
+    @GetMapping(value = "touristData/food/noNear/contentId")
+    public List<Long> getFoodId2(){
+        return touristDataService.getFoodId2();
+    }
+
+    @ApiOperation(value = "이미지 없는 관광지 조회", notes = "이미지가 없는 관광지의 아이디 정보를 조회한다")
+    @GetMapping(value = "touristData/noFirstImage/contentId")
+    public List<Long> getId4Image(){
+        return touristDataService.getId4Image();
+    }
+
+    @ApiOperation(value = "필터로 관광지 조희", notes = "해당 필터에 해당되는 관광지 정보를 조희한다")
+    @PostMapping(value = "touristData/search")
+    public List<MyWishParams01> getTouristDataWithFilter(@RequestBody Filter filter){
+        return touristDataService.getTouristDataWithFilter(filter);
     }
 
 }

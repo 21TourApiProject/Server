@@ -1,5 +1,8 @@
 package com.server.tourApiProject.observation;
 
+import com.server.tourApiProject.bigPost.post.Post;
+import com.server.tourApiProject.observation.course.Course;
+import com.server.tourApiProject.observation.observeFee.ObserveFee;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTag;
 import com.server.tourApiProject.observation.observeImage.ObserveImage;
 import lombok.*;
@@ -26,11 +29,14 @@ public class Observation {
     @Column
     private String link;
 
-    @Column(nullable = false)
-    private double latitude;    //지도를 위한 위도
+    @Column
+    private String intro;   //한줄소개
 
     @Column(nullable = false)
-    private double longitude;    //지도를 위한 경도
+    private Double latitude;    //지도를 위한 위도
+
+    @Column(nullable = false)
+    private Double longitude;    //지도를 위한 경도
 
     @Column(nullable = false)
     private String address;
@@ -42,35 +48,44 @@ public class Observation {
     private String operatingHour;
 
     @Column
-    private String entranceFee;
-
-    @Column
     private String parking; //주차안내
 
     @Column
     private String observeType;    //관측지 타입(천문대,등등), 추후 enum으로 수정가능?
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String outline; //개요
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String guide;   //이용안내
 
     @Column
     private String closedDay;   //휴무일
 
     @Column
-    private double light;   //광공해
+    private Double light;   //광공해
 
     @Column
-    private boolean nature;   //자연관광지
+    private Boolean nature;   //자연관광지
+
+    @Column
+    private Integer courseOrder;   //코스내에서의 관측지 순서서
+
+    @Column
+    private Long areaCode;  //지역코드
 
     @OneToMany(mappedBy = "observation")
+    private List<ObserveFee> observeFees=new ArrayList<>();
+
+   @OneToMany(mappedBy = "observation")
     private List<ObserveHashTag> observeHashTags=new ArrayList<>();
 
     @OneToMany(mappedBy = "observation")
     private List<ObserveImage> observeImages = new ArrayList<>();
 
-    //코스 추가 필요함함
+    @OneToMany(mappedBy = "observation")
+    private List<Course> courses = new ArrayList<>();
 
+    @OneToMany(mappedBy = "observation", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Post> posts=new ArrayList<>();
 }
