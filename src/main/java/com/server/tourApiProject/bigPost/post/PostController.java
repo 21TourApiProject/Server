@@ -2,14 +2,17 @@ package com.server.tourApiProject.bigPost.post;
 
 import com.server.tourApiProject.bigPost.postHashTag.PostHashTag;
 import com.server.tourApiProject.bigPost.postHashTag.PostHashTagService;
+import com.server.tourApiProject.bigPost.postImage.PostImage;
 import com.server.tourApiProject.bigPost.postImage.PostImageService;
 import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.ObservationService;
+import com.server.tourApiProject.search.Filter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import retrofit2.http.POST;
 
 import java.util.List;
 
@@ -60,7 +63,7 @@ public class PostController {
     }
     @ApiOperation(value = "관련 게시물 이미지 검색", notes = "게시물 관측지 id로 이미지를 조회한다")
     @GetMapping(value = "postImage/{postObservePointId}")
-    public List<String> getRelatePostImageList(@PathVariable("postObservePointId") Long postObservePointId){
+    public List<PostImage> getRelatePostImageList(@PathVariable("postObservePointId") Long postObservePointId){
         return postImageService.getRelatePostImageList(postObservePointId);
     }
 
@@ -71,6 +74,18 @@ public class PostController {
     @ApiOperation(value = "내 게시물 정보 조회", notes = "해당 사용자의 게시물을 조회한다")
     @GetMapping(value = "post/user/{userId}")
     public List<PostParams3> getMyPost(@PathVariable("userId")Long userId){ return postService.getMyPost(userId); }
+
+    @ApiOperation(value = "관측지 게시물 정보 조회", notes = "해당 관측지의 게시물을 조회한다")
+    @GetMapping(value = "post/observation/{observationId}")
+    public List<PostParams5> getRelatePost(@PathVariable("observationId")Long observationId){ return postService.getRelatePost(observationId); }
+
+    @ApiOperation(value = "게시물 정보 필터로 조회", notes = "필터로 걸러진 게시물을 조회한다")
+    @PostMapping(value = "post/search")
+    public List<PostParams6> getPostWithFilter(@RequestBody Filter filter){ return postService.getPostDataWithFilter(filter); }
+
+    @ApiOperation(value = "메인페이지 게시물 정보 조회", notes = "메인페이지에 띄울 모든 게시물을 조회한다")
+    @PostMapping(value = "post/main")
+    public List<PostParams4> getMainPost(@RequestBody Filter filter){ return postService.getMainPost(filter); }
 
 }
 

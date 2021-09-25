@@ -26,14 +26,14 @@ public class TouristDataController {
     }
 
     //테스트용(나중에 삭제)
-    @ApiOperation(value = "관광 정보 삭제", notes = "모든 관광 정보를 삭제한다")
+    @ApiOperation(value = "12, 39 삭제", notes = "12, 39를 삭제한다")
     @DeleteMapping(value = "touristData/")
     public void deleteTouristData(){
         touristDataService.deleteTouristData();
     }
 
     //테스트용(나중에 삭제)
-    @ApiOperation(value = "관광지 삭제", notes = "모든 관광지를 삭제한다")
+    @ApiOperation(value = "12 삭제", notes = "12를 삭제한다")
     @DeleteMapping(value = "touristData/touristPoint")
     public void deleteTouristPoint(){
         touristDataService.deleteTouristPoint();
@@ -103,6 +103,12 @@ public class TouristDataController {
     @GetMapping(value = "touristData/food/noNear/contentId")
     public List<Long> getFoodId2(){
         return touristDataService.getFoodId2();
+    }
+
+    @ApiOperation(value = "이미지 없는 관광지 조회", notes = "이미지가 없는 관광지의 아이디 정보를 조회한다")
+    @GetMapping(value = "touristData/noFirstImage/contentId")
+    public List<Long> getId4Image(){
+        return touristDataService.getId4Image();
     }
 
     @ApiOperation(value = "필터로 관광지 조희", notes = "해당 필터에 해당되는 관광지 정보를 조희한다")

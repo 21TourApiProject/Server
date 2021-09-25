@@ -4,8 +4,11 @@ import com.server.tourApiProject.bigPost.postHashTag.PostHashTag;
 import com.server.tourApiProject.bigPost.postHashTag.PostHashTagRepository;
 import com.server.tourApiProject.bigPost.postImage.PostImage;
 import com.server.tourApiProject.bigPost.postImage.PostImageRepository;
+import com.server.tourApiProject.myHashTag.MyHashTag;
+import com.server.tourApiProject.myHashTag.MyHashTagRepository;
 import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.ObservationRepository;
+import com.server.tourApiProject.search.Filter;
 import com.server.tourApiProject.user.User;
 import com.server.tourApiProject.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +31,7 @@ public class PostService {
     private final ObservationRepository observationRepository;
     private final PostImageRepository postImageRepository;
     private final PostHashTagRepository postHashTagRepository;
+    private final MyHashTagRepository myHashTagRepository;
 
     public Post getPost(Long postId){
         Post post = postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
@@ -41,6 +45,15 @@ public class PostService {
         post.setPostContent(postParams.getPostContent());
         post.setPostTitle(postParams.getPostTitle());
         post.setOptionHashTag(postParams.getOptionHashTag());
+        post.setOptionHashTag2(postParams.getOptionHashTag2());
+        post.setOptionHashTag3(postParams.getOptionHashTag3());
+        post.setOptionHashTag4(postParams.getOptionHashTag4());
+        post.setOptionHashTag5(postParams.getOptionHashTag5());
+        post.setOptionHashTag6(postParams.getOptionHashTag6());
+        post.setOptionHashTag7(postParams.getOptionHashTag7());
+        post.setOptionHashTag8(postParams.getOptionHashTag8());
+        post.setOptionHashTag9(postParams.getOptionHashTag9());
+        post.setOptionHashTag10(postParams.getOptionHashTag10());
         post.setOptionObservation(postParams.getOptionObservation());
         post.setYearDate(postParams.getYearDate());
         post.setTime(postParams.getTime());
@@ -107,8 +120,12 @@ public class PostService {
             }
             List<String> hashTagName = new ArrayList<>();
             List<PostHashTag> list = postHashTagRepository.findByPostId(post.getPostId());
+            int i = 0;
             for(PostHashTag postHashTag : list){
+                if(i > 3)
+                    break;
                 hashTagName.add(postHashTag.getHashTagName());
+                i++;
             }
             postParams3.setHashTagNames(hashTagName);
 
@@ -117,4 +134,178 @@ public class PostService {
         return result;
     }
 
+    public List<PostParams5> getRelatePost(Long observationId) {
+        List<PostParams5> result1 = new ArrayList<>();
+        List<Post> relatePosts = postRepository.findByObservationId(observationId);
+        for (Post relatePost : relatePosts){
+            PostParams5 postParams5 = new PostParams5();
+            postParams5.setPostId(relatePost.getPostId());
+
+            List<PostImage> imageList = postImageRepository.findByPostId(relatePost.getPostId());
+            if (!imageList.isEmpty()) {
+                PostImage postImage = imageList.get(0);
+                postParams5.setThumbnail(postImage.getImageName());
+            } else{
+                postParams5.setThumbnail(null);
+            }
+            postParams5.setTitle(relatePost.getPostTitle());
+            Optional<User> userOp = userRepository.findById(relatePost.getUserId());
+            if (userOp.isPresent()){
+                User user = userOp.get();
+                postParams5.setNickName(user.getNickName());
+                postParams5.setProfileImage(user.getProfileImage());
+            }
+            List<String> hashTagName = new ArrayList<>();
+            List<PostHashTag> list = postHashTagRepository.findByPostId(relatePost.getPostId());
+            for(PostHashTag postHashTag : list){
+                hashTagName.add(postHashTag.getHashTagName());
+            }
+            postParams5.setHashTagNames(hashTagName);
+
+            result1.add(postParams5);
+        }
+        return result1;
+    }
+
+    public List<PostParams4>getMainPost(Filter filter) {
+        List<PostParams4> result = new ArrayList<>();
+        List<Long> mainHashTagIdList = filter.getHashTagIdList();
+        List<Long> mainPostIdList = new ArrayList<>();
+        for (Long hashTagId : mainHashTagIdList) {
+            List<PostHashTag> postHashTagList = postHashTagRepository.findByHashTagId(hashTagId);
+            for (PostHashTag postHashTag : postHashTagList) {
+                Long postId = postHashTag.getPostId();
+                if (!mainPostIdList.contains(postId)) {
+                    mainPostIdList.add(postId);
+                    if (mainPostIdList.size()>6)break;
+                }
+            }
+        }
+        //나머지 게시물
+        List<Post> posts = postRepository.findAll();
+        for (Post post : posts) {
+            if (!mainPostIdList.contains(post.getPostId())){
+                PostParams4 postParams4 = new PostParams4();
+                postParams4.setPostId(post.getPostId());
+                postParams4.setObservationId(post.getObservationId());
+                postParams4.setMainTitle(post.getPostTitle());
+                Optional<User> userOp = userRepository.findById(post.getUserId());
+                if (userOp.isPresent()) {
+                    User user = userOp.get();
+                    postParams4.setMainNickName(user.getNickName());
+                    postParams4.setProfileImage(user.getProfileImage());
+                }
+                postParams4.setMainObservation(post.getObservation().getObservationName());
+                postParams4.setOptionObservation(post.getOptionObservation());
+                List<PostImage> mainImageList = postImageRepository.findByPostId(post.getPostId());
+                if (!mainImageList.isEmpty()) {
+                    ArrayList<String> imageList = new ArrayList<>();
+                    for (int i = 0; i < mainImageList.size(); i++) {
+                        imageList.add("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + mainImageList.get(i).getImageName());
+                    }
+                    postParams4.setImages(imageList);
+                } else {
+                    postParams4.setImages(null);
+                }
+                List<String> mainHashTagName = new ArrayList<>();
+                List<PostHashTag> list = postHashTagRepository.findByPostId(post.getPostId());
+                if (!list.isEmpty()) {
+                    for (PostHashTag postHashTag : list) {
+                        mainHashTagName.add(postHashTag.getHashTagName());
+                    }
+                    postParams4.setHashTags(mainHashTagName);
+                } else {
+                    postParams4.setHashTags(null);
+                    postParams4.setOptionHashTag(post.getOptionHashTag());
+                    postParams4.setOptionHashTag2(post.getOptionHashTag2());
+                    postParams4.setOptionHashTag3(post.getOptionHashTag3());
+                }
+                result.add(postParams4);
+            }
+        }
+        for (Long postId : mainPostIdList){
+            Post hashPost = postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
+            PostParams4 hashPostParams = new PostParams4();
+            hashPostParams.setPostId(hashPost.getPostId());
+            hashPostParams.setMainTitle(hashPost.getPostTitle());
+            Optional<User> userOp = userRepository.findById(hashPost.getUserId());
+            if (userOp.isPresent()){
+                User user = userOp.get();
+                hashPostParams.setMainNickName(user.getNickName());
+                hashPostParams.setProfileImage(user.getProfileImage());
+            }
+            hashPostParams.setMainObservation(hashPost.getObservation().getObservationName());
+            hashPostParams.setOptionObservation(hashPost.getOptionObservation());
+            List<String> hashTagName = new ArrayList<>();
+            List<PostHashTag> list = postHashTagRepository.findByPostId(hashPost.getPostId());
+            if (!list.isEmpty()) {
+                for (PostHashTag postHashTag : list) {
+                    hashTagName.add(postHashTag.getHashTagName());
+                }
+                hashPostParams.setHashTags(hashTagName);
+            } else {
+                hashPostParams.setHashTags(null);
+                hashPostParams.setOptionHashTag(hashPost.getOptionHashTag());
+                hashPostParams.setOptionHashTag2(hashPost.getOptionHashTag2());
+                hashPostParams.setOptionHashTag3(hashPost.getOptionHashTag3());
+            }
+            hashPostParams.setHashTags(hashTagName);
+            List<PostImage> hashImageList = postImageRepository.findByPostId(hashPost.getPostId());
+            if (!hashImageList.isEmpty()) {
+                ArrayList<String> imageList = new ArrayList<>();
+                for (int i = 0; i < hashImageList.size(); i++) {
+                    imageList.add("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + hashImageList.get(i).getImageName());
+                }
+                hashPostParams.setImages(imageList);
+            } else {
+                hashPostParams.setImages(null);
+            }
+            result.add(hashPostParams);
+        }
+
+            return result;
+        }
+
+    public List<PostParams6>getPostDataWithFilter(Filter filter){
+        List<Long> areaCodeList = filter.getAreaCodeList();
+        List<Long> hashTagIdList= filter.getHashTagIdList();
+        List<PostParams6>result = new ArrayList<>();
+        List<Long>postIdList = new ArrayList<>();
+        for (Long hashTagId: hashTagIdList){
+            List<PostHashTag> postHashTagList= postHashTagRepository.findByHashTagId(hashTagId);
+            for (PostHashTag postHashTag : postHashTagList){
+                Long postId = postHashTag.getPostId();
+                if (!postIdList.contains(postId)){
+                    postIdList.add(postId);
+                }
+            }
+        }
+        for (Long postId : postIdList){
+            Post post = postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
+            PostParams6 postParams6 = new PostParams6();
+            postParams6.setPostId(post.getPostId());
+            postParams6.setTitle(post.getPostTitle());
+            Optional<User> userOp = userRepository.findById(post.getUserId());
+            if (userOp.isPresent()){
+                User user = userOp.get();
+                postParams6.setNickName(user.getNickName());
+                postParams6.setProfileImage(user.getProfileImage());
+            }
+            List<String> hashTagName = new ArrayList<>();
+            List<PostHashTag> list = postHashTagRepository.findByPostId(post.getPostId());
+            for(PostHashTag postHashTag : list){
+                hashTagName.add(postHashTag.getHashTagName());
+            }
+            postParams6.setHashTagNames(hashTagName);
+            List<PostImage> imageList = postImageRepository.findByPostId(post.getPostId());
+            if (!imageList.isEmpty()) {
+                PostImage postImage = imageList.get(0);
+                postParams6.setThumbnail(postImage.getImageName());
+            } else{
+                postParams6.setThumbnail(null);
+            }
+            result.add(postParams6);
+        }
+        return result;
+    }
 }

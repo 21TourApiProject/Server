@@ -21,8 +21,21 @@ public class MyHashTagController {
     public Long createMyHashTags(@PathVariable("email") String email, @RequestBody List<MyHashTagParams> myHashTagParams){
         return myHashTagService.createMyHashTags(email, myHashTagParams);
     }
+    @ApiOperation(value = "선호 해시태그 아이디 조회", notes = "사용자 id로 해당 사용자의 선호 해시태그 아이디를 조회한다")
+    @GetMapping(value = "user/{userId}/myHashTagId")
+    public List<Long> getMyHashTagIdList(@PathVariable("userId") Long userId){ return myHashTagService.getMyHashTagIdList(userId); }
 
     @ApiOperation(value = "선호 해시태그 조회", notes = "사용자 id로 해당 사용자의 선호 해시태그를 조회한다")
     @GetMapping(value = "user/{userId}/myHashTag")
     public List<String> getMyHashTag(@PathVariable("userId") Long userId){ return myHashTagService.getMyHashTag(userId); }
+
+    @ApiOperation(value = "선호 해시태그 3개 조회", notes = "사용자 id로 해당 사용자의 선호 해시태그 3개를 조회한다")
+    @GetMapping(value = "user/{userId}/myHashTag/three")
+    public List<String> getMyHashTag3(@PathVariable("userId") Long userId){ return myHashTagService.getMyHashTag3(userId); }
+
+    @ApiOperation(value = "선호 해시태그 변경", notes = "선호 해시태그를 변경한다")
+    @PostMapping(value = "myHashTag/change/{userId}")
+    public void changeMyHashTag(@PathVariable("userId") Long userId, @RequestBody List<MyHashTagParams> myHashTagParams){
+        myHashTagService.changeMyHashTag(userId, myHashTagParams);
+    }
 }

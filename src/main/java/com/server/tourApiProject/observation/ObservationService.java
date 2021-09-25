@@ -2,17 +2,26 @@ package com.server.tourApiProject.observation;
 
 import com.server.tourApiProject.hashTag.HashTag;
 import com.server.tourApiProject.hashTag.HashTagRepository;
+import com.server.tourApiProject.myWish.MyWishParams01;
+import com.server.tourApiProject.observation.observeImage.ObserveImage;
+import com.server.tourApiProject.observation.observeImage.ObserveImageRepository;
+import com.server.tourApiProject.search.SearchParams1;
 import com.server.tourApiProject.observation.observeFee.ObserveFee;
 import com.server.tourApiProject.observation.observeFee.ObserveFeeRepository;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTag;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTagParams;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTagRepository;
+import com.server.tourApiProject.search.Filter;
+import com.server.tourApiProject.touristPoint.touristData.TouristData;
+import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 @Slf4j
 @Service
@@ -23,6 +32,7 @@ public class ObservationService {
     private final ObserveHashTagRepository observeHashTagRepository;
     private final HashTagRepository hashTagRepository;
     private final ObserveFeeRepository observeFeeRepository;
+    private final ObserveImageRepository observeImageRepository;
 
     public List<Observation> getAllObservation() {
         return observationRepository.findAll();
@@ -69,7 +79,100 @@ public class ObservationService {
         Observation observation = observationRepository.findById(observationId).orElseThrow(IllegalAccessError::new);
         return observation;
     }
+//test
+
+    public List<SearchParams1> getObservationWithFilter(Filter filter, String searchKey) {
+        List<Long> areaCodeList = filter.getAreaCodeList();
+        List<Long> hashTagIdList= filter.getHashTagIdList();    //필터 해쉬태그 리스트
+
+        List<SearchParams1> resultParams = new ArrayList<>();   //최종결과 param 리스트
+        List<Long> hashtagResult = new ArrayList<>();   //해쉬태그 결과
+        List<Long> filterIdList = new ArrayList<>();    //필터결과(해쉬태그, 지도 포함)id 리스트
+        List<Observation> searchResult = new ArrayList<>(); //필터+검색어 결과 리스트
 
 
+        if (!hashTagIdList.isEmpty()) {
+            for(Long hashTagId : hashTagIdList){
+                List<ObserveHashTag> observeHashTags = observeHashTagRepository.findByHashTagId(hashTagId);
+                for (ObserveHashTag observeHashTag : observeHashTags) {
+                    Long observationId = observeHashTag.getObservationId();
+                    if (!hashtagResult.contains(observationId)) { //관광지 중복 제거
+                        hashtagResult.add(observationId);
+                    }
+                }
+            }
+        }
+
+        if (!areaCodeList.isEmpty()) {
+            for (Long areaCode : areaCodeList) {
+                List<Observation> observationList = observationRepository.findByAreaCode(areaCode);
+                //관측지에 아직 지역코드 추가 안해서 아래줄로 대체해 놓았음
+//                List<Observation> observationList = observationRepository.findAll();
+                if (hashTagIdList.isEmpty()) {
+                    //해쉬태그 없으면 지역결과 전부추가
+                    for (Observation observation : observationList) {
+                        filterIdList.add(observation.getObservationId());
+                    }
+                } else {
+                    //해쉬태그 있으면 필터 중첩
+                    for (Observation observation : observationList) {
+                        Long observationId = observation.getObservationId();
+                        if (hashtagResult.contains(observationId)) {
+                            //해시태그결과에서 지역 있으면 filter최종결과에 포함
+                            filterIdList.add(observationId);
+                        }
+                    }
+                }
+            }
+        } else {
+            //area 비어있으면
+            filterIdList = hashtagResult;
+        }
+
+        List<Observation> keyResult = new ArrayList<>();    //검색결과 받아올 리스트
+        searchResult = observationRepository.findByObservationNameContainingOrOutlineContaining(searchKey, searchKey);
+        keyResult = observationRepository.findByObservationNameContainingOrOutlineContaining(searchKey, searchKey);
+
+        if (!hashTagIdList.isEmpty()||!areaCodeList.isEmpty()) {
+            //필터 받은게 없으면 그냥 검색결과 전달, 있으면 중첩 검색
+            for (Observation observation : keyResult) {
+                //전체 검색어 결과 돌면서
+                if (!filterIdList.contains(observation.getObservationId())) {
+                    //필터결과에 검색어 결과 없으면 필터+검색어검색결과에서 삭제
+                    searchResult.remove(observation);
+                }
+            }
+        }
+        if (searchResult.get(0).getObservationId() == 0) {
+            //0번이면 나만의 관측지 더미데이터라서 삭제
+            searchResult.remove(0);
+        }
+
+        //결과 param에 넣음
+        for(Observation observation : searchResult){
+            SearchParams1 searchParams1 = new SearchParams1();
+            searchParams1.setItemId(observation.getObservationId());
+            searchParams1.setTitle(observation.getObservationName());
+            searchParams1.setAddress(observation.getAddress());
+            searchParams1.setLatitude(observation.getLatitude());
+            searchParams1.setLongitude(observation.getLongitude());
+            searchParams1.setIntro(observation.getIntro());
+            searchParams1.setContentType(observation.getObserveType());
+            if (!observeImageRepository.findByObservationId(observation.getObservationId()).isEmpty()) {
+                ObserveImage observeImage = observeImageRepository.findByObservationId(observation.getObservationId()).get(0);
+                searchParams1.setThumbnail(observeImage.getImage());
+            }
+            List<ObserveHashTag> hashTagList = observeHashTagRepository.findByObservationId(observation.getObservationId());
+            List<String> hashTagNames = new ArrayList<>();
+            for (ObserveHashTag hashTag : hashTagList){
+                hashTagNames.add(hashTag.getHashTagName());
+            }
+
+            searchParams1.setHashTagNames(hashTagNames);
+
+            resultParams.add(searchParams1);
+        }
+        return resultParams;
+    }
 
 }

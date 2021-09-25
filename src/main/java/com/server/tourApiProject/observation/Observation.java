@@ -53,10 +53,10 @@ public class Observation {
     @Column
     private String observeType;    //관측지 타입(천문대,등등), 추후 enum으로 수정가능?
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String outline; //개요
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String guide;   //이용안내
 
     @Column
@@ -70,6 +70,9 @@ public class Observation {
 
     @Column
     private Integer courseOrder;   //코스내에서의 관측지 순서서
+
+    @Column
+    private Long areaCode;  //지역코드
 
     @OneToMany(mappedBy = "observation")
     private List<ObserveFee> observeFees=new ArrayList<>();
