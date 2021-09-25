@@ -305,9 +305,13 @@ public class TouristDataService {
             searchParams1.setContentType(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
 
             List<TouristDataHashTag> hashTagList = touristDataHashTagRepository.findByContentId(touristData.getContentId());
+            int i = 0;
             List<String> hashTagNames = new ArrayList<>();
             for (TouristDataHashTag hashTag : hashTagList){
+                if (i > 2)
+                    break;
                 hashTagNames.add(hashTag.getHashTagName());
+                i++;
             }
             searchParams1.setHashTagNames(hashTagNames);
             resultParams.add(searchParams1);
