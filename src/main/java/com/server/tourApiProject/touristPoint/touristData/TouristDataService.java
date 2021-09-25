@@ -1,8 +1,10 @@
 package com.server.tourApiProject.touristPoint.touristData;
 
 import com.server.tourApiProject.myWish.MyWishParams01;
+import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.course.CourseRepository;
 import com.server.tourApiProject.search.Filter;
+import com.server.tourApiProject.search.SearchParams1;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeRepository;
 import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTag;
 import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTagRepository;
@@ -189,6 +191,7 @@ public class TouristDataService {
         return result;
     }
 
+    //삭제 예정
     public List<MyWishParams01> getTouristDataWithFilter(Filter filter) {
         List<Long> areaCodeList = filter.getAreaCodeList();
         List<Long> hashTagIdList= filter.getHashTagIdList();
@@ -243,5 +246,74 @@ public class TouristDataService {
             result.add(data.getContentId());
         }
         return result;
+    }
+
+    public List<SearchParams1> getTouristPointWithFilter(Filter filter, String keyword) {
+        List<Long> areaCodeList = filter.getAreaCodeList();    //지역 필터 리스트
+        List<Long> hashTagIdList= filter.getHashTagIdList();    //해시태그 필터 리스트
+
+        List<SearchParams1> resultParams = new ArrayList<>();   //최종결과 param 리스트
+        List<Long> filterIdList = new ArrayList<>();    //필터결과id 리스트
+        List<TouristData> searchResult = new ArrayList<>(); //필터+검색어 결과 리스트
+
+        for(Long areaCode : areaCodeList){
+            List<TouristData> touristDatas = touristDataRepository.findByAreaCode(areaCode);
+            for (TouristData touristData : touristDatas) {
+                Long contentId = touristData.getContentId();
+                if (!filterIdList.contains(contentId)) { //관광지 중복 제거
+                    filterIdList.add(contentId);
+                }
+            }
+        }
+        for(Long hashTagId : hashTagIdList){
+            List<TouristDataHashTag> touristDataHashTags = touristDataHashTagRepository.findByHashTagId(hashTagId);
+            for (TouristDataHashTag touristDataHashTag : touristDataHashTags) {
+                Long contentId = touristDataHashTag.getContentId();
+                if (!filterIdList.contains(contentId)) { //관광지 중복 제거
+                    filterIdList.add(contentId);
+                }
+            }
+        }
+        if (keyword == null){
+            for (Long contentId : filterIdList){
+                searchResult.add(touristDataRepository.findByContentId(contentId));
+            }
+
+        } else{searchResult = touristDataRepository.findByTitleContainingOrOverviewContaining(keyword, keyword);
+            List<TouristData> keyResult = touristDataRepository.findByTitleContainingOrOverviewContaining(keyword, keyword);
+
+            if (!hashTagIdList.isEmpty()||!areaCodeList.isEmpty()) {
+                //필터 받은게 없으면 그냥 검색결과 전달, 있으면 중첩 검색
+                for (TouristData touristData : keyResult) {
+                    //전체 검색어 결과 돌면서
+                    if (!filterIdList.contains(touristData.getContentId())) {
+                        //필터결과에 검색어 결과 없으면 필터+검색어검색결과에서 삭제
+                        searchResult.remove(touristData);
+                    }
+                }
+            }
+        }
+
+        for (TouristData touristData : searchResult){
+            SearchParams1 searchParams1 = new SearchParams1();
+            searchParams1.setItemId(touristData.getContentId());
+            searchParams1.setTitle(touristData.getTitle());
+            searchParams1.setAddress(touristData.getAddr());
+            searchParams1.setLatitude(touristData.getMapX());
+            searchParams1.setLongitude(touristData.getMapY());
+            searchParams1.setIntro(touristData.getOverviewSim());
+            searchParams1.setContentType(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
+
+            List<TouristDataHashTag> hashTagList = touristDataHashTagRepository.findByContentId(touristData.getContentId());
+            List<String> hashTagNames = new ArrayList<>();
+            for (TouristDataHashTag hashTag : hashTagList){
+                hashTagNames.add(hashTag.getHashTagName());
+            }
+            searchParams1.setHashTagNames(hashTagNames);
+            resultParams.add(searchParams1);
+        }
+
+        return resultParams;
+
     }
 }
