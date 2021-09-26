@@ -266,11 +266,14 @@ public class PostService {
             return result;
         }
 
-    public List<PostParams6>getPostDataWithFilter(Filter filter){
+    public List<PostParams6>getPostDataWithFilter(Filter filter, String searchKey){
         List<Long> areaCodeList = filter.getAreaCodeList();
-        List<Long> hashTagIdList= filter.getHashTagIdList();
+        List<Long> hashTagIdList= filter.getHashTagIdList();//해시태그 리스트
         List<PostParams6>result = new ArrayList<>();
         List<Long>postIdList = new ArrayList<>();
+        List<Long> filterIdList = new ArrayList<>();
+        List<Post> searchList = new ArrayList<>();
+        List<Post> keyList = new ArrayList<>();
         for (Long hashTagId: hashTagIdList){
             List<PostHashTag> postHashTagList= postHashTagRepository.findByHashTagId(hashTagId);
             for (PostHashTag postHashTag : postHashTagList){
@@ -280,8 +283,45 @@ public class PostService {
                 }
             }
         }
-        for (Long postId : postIdList){
-            Post post = postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
+        if (!areaCodeList.isEmpty()) {
+            for (Long areaCode : areaCodeList) {
+                List<Post> postList = postRepository.findByAreaCode(areaCode);
+                //관측지에 아직 지역코드 추가 안해서 아래줄로 대체해 놓았음
+//                List<Observation> observationList = observationRepository.findAll();
+                if (hashTagIdList.isEmpty()) {
+                    //해쉬태그 없으면 지역결과 전부추가
+                    for (Post post : postList) {
+                        filterIdList.add(post.getPostId());
+                    }
+                } else {
+                    //해쉬태그 있으면 필터 중첩
+                    for (Post post : postList) {
+                        Long postId = post.getPostId();
+                        if (postIdList.contains(postId)) {
+                            //해시태그결과에서 지역 있으면 filter최종결과에 포함
+                            filterIdList.add(postId);
+                        }
+                    }
+                }
+            }
+        } else {
+            //area 비어있으면
+            filterIdList = postIdList;
+        }
+
+        searchList = postRepository.findByPostTitleAndPostContent(searchKey,searchKey);
+        keyList = postRepository.findByPostTitleAndPostContent(searchKey,searchKey);
+        if (!hashTagIdList.isEmpty()||!areaCodeList.isEmpty()) {
+            //필터 받은게 없으면 그냥 검색결과 전달, 있으면 중첩 검색
+            for (Post post : keyList) {
+                //전체 검색어 결과 돌면서
+                if (!filterIdList.contains(post.getPostId())) {
+                    //필터결과에 검색어 결과 없으면 필터+검색어검색결과에서 삭제
+                    searchList.remove(post);
+                }
+            }
+        }
+        for (Post post : searchList){
             PostParams6 postParams6 = new PostParams6();
             postParams6.setPostId(post.getPostId());
             postParams6.setTitle(post.getPostTitle());

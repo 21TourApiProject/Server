@@ -1,11 +1,7 @@
 package com.server.tourApiProject.observation;
 
-import com.server.tourApiProject.touristPoint.touristData.TouristData;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
