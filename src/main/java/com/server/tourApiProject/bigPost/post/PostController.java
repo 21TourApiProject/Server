@@ -81,7 +81,7 @@ public class PostController {
     public List<PostParams5> getRelatePost(@PathVariable("observationId")Long observationId){ return postService.getRelatePost(observationId); }
 
     @ApiOperation(value = "게시물 정보 필터로 조회", notes = "필터로 걸러진 게시물을 조회한다")
-    @PostMapping(value = "post/search")
+    @PostMapping(value = "search/post")
     public List<PostParams6> getPostWithFilter(@RequestBody SearchKey searchKey){ return postService.getPostDataWithFilter(searchKey.getFilter(),searchKey.getKeyword()); }
 
     @ApiOperation(value = "메인페이지 게시물 정보 조회", notes = "메인페이지에 띄울 모든 게시물을 조회한다")
