@@ -309,8 +309,8 @@ public class PostService {
             filterIdList = postIdList;
         }
 
-        searchList = postRepository.findByPostTitleAndPostContent(searchKey,searchKey);
-        keyList = postRepository.findByPostTitleAndPostContent(searchKey,searchKey);
+        searchList = postRepository.findByPostTitleContainingOrPostContentContaining(searchKey,searchKey);
+        keyList = postRepository.findByPostTitleContainingOrPostContentContaining(searchKey,searchKey);
         if (!hashTagIdList.isEmpty()||!areaCodeList.isEmpty()) {
             //필터 받은게 없으면 그냥 검색결과 전달, 있으면 중첩 검색
             for (Post post : keyList) {
