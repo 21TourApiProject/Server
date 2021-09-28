@@ -1,7 +1,7 @@
 -- 초기화 스크립트, 매번 db구동시 변하지 않는 값을 등록
 
 -- 사용자
-INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_NUMBER, EMAIL, PASSWORD, NICK_NAME, SIGN_UP_DT, KAKAO, PROFILE_IMAGE) VALUES(1, '이세인', false , '2000-02-11', true, '01094069717', 'test1@gmail.com', 'dltpdls00*', '23in', '2021-08-01T15:41:20', false, '"PI1_2019-08-06-09-01-54.jpg"');
+INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_NUMBER, EMAIL, PASSWORD, NICK_NAME, SIGN_UP_DT, KAKAO, PROFILE_IMAGE) VALUES(1, '이세인', false , '2000-02-11', true, '01094069717', 'test1@gmail.com', 'dltpdls00*', '23in', '2021-08-01T15:41:20', false, 'PI1_2019-08-06-09-01-54.jpg');
 INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_NUMBER, EMAIL, PASSWORD, NICK_NAME, SIGN_UP_DT, KAKAO, PROFILE_IMAGE) VALUES(2, null, true, '2000-02-11', false, null, 'test2@gmail.com', 'dltpdls00*', '마로', '2021-08-01T15:41:20', true, 'http://tong.visitkorea.or.kr/cms/resource/21/2657021_image2_1.jpg');
 
 --사용자 해시태그
@@ -40,8 +40,8 @@ INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_
 
 --관측지
     INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, INTRO, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE, COURSE_ORDER ) VALUES (0, '나만의 관측지', 'https://www.yao.or.kr:451/', '한줄소개 어쩌구', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, false, 0 );
-    INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, INTRO, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE, COURSE_ORDER ) VALUES (1, '천문대1', 'https://www.yao.or.kr:451/', '한줄소개 어쩌구', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, false, 0 );
-    INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, INTRO, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE, COURSE_ORDER ) VALUES (2, '천문대2', 'https://www.yao.or.kr:451/', '한줄소개 어쩌구', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, true, 2 );
+--     INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, INTRO, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE, COURSE_ORDER ) VALUES (1, '천문대1', 'https://www.yao.or.kr:451/', '한줄소개 어쩌구', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, false, 0 );
+--     INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, INTRO, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE, COURSE_ORDER ) VALUES (2, '천문대2', 'https://www.yao.or.kr:451/', '한줄소개 어쩌구', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, true, 2 );
 
 
 --관측지 해시태그
@@ -105,6 +105,12 @@ INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_
     INSERT INTO ALARM(ALARM_TITLE,ALARM_CONTENT,YEAR_DATE) VALUES ('알림 제목2','알림 내용2','2021-09-16')
     INSERT INTO ALARM(ALARM_TITLE,ALARM_CONTENT,YEAR_DATE) VALUES ('알림 제목3','알림 내용3','2021-09-16')
     INSERT INTO ALARM(ALARM_TITLE,ALARM_CONTENT,YEAR_DATE) VALUES ('알림 제목4','알림 내용4','2021-09-16')
+
+--공지사항
+    INSERT INTO NOTICE(NOTICE_ID, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE) VALUES (1,'공지사항 제목1','공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용', '2021/09/26')
+    INSERT INTO NOTICE(NOTICE_ID, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE) VALUES (2,'공지사항 제목2','공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용', '2021/09/27')
+    INSERT INTO NOTICE(NOTICE_ID, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE) VALUES (3,'공지사항 제목3','공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용', '2021/09/28')
+    INSERT INTO NOTICE(NOTICE_ID, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE) VALUES (4,'공지사항 제목4','공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용 공지사항 내용', '2021/09/29')
 
 --관광지
     INSERT INTO TOURIST_DATA (CONTENT_ID, ADDR, AREA_CODE, CAT1, CAT2, CAT3, CHK_PET, CONTENT_TYPE_ID, EXP_GUIDE, FIRST_IMAGE, FIRST_MENU, HOME_PAGE, IS_COM, IS_IM, IS_JU, MAPX, MAPY, OPEN_TIME_FOOD, OVERVIEW, OVERVIEW_SIM, PACKING, PARKING, PARKING_FOOD, REST_DATE, REST_DATE_FOOD, SIGUNGU_CODE, TEL, TITLE, TREAT_MENU, USE_TIME) VALUES (125266, '강원도 횡성군 둔내면 청태산로 610', 32, 'A01', 'A0101', 'A01010600', '불가', 12, '생태미술, 야생화화분, 양초공예, 와이어공예, 부채 만들기, 목걸이 만들기, 열쇠고리 만들기, 솟대 만들기, 장승 만들기, 솔방울 만들기, 편백비누 만들기, 자연액자공예, 금강송도마 만들기, 오리엔티어링, 명품시계 만들기, 나무곤충 만들기, 참숯 매듭 만들기, 활 만들기, 한지뜨기체험, 한지공예체험, 천연염색체험, 궁중전통예복 입어보기 체험, 호패만들기, 나뭇잎 잎맥공예 체험, 부들공예 체험, 피톤치드 목걸이 만들기', 'http://tong.visitkorea.or.kr/cms/resource/21/2657021_image2_1.jpg', null, 'https://www.foresttrip.go.kr/indvz/main.do?hmpgId=0106', 1, 1, 1, 128.291911539, 37.5225141217, null, '해발 1,200m의 청태산을 주봉으로 하여 인공림과 천연림이 잘 조화된 울창한 산림을 바탕으로 한 국유림 경영 시범단지로서 숲속에는 온갖 야생 동식물이 고루 서식하고 있어 자연박물관을 찾은 기분을 느낄 수 있다. 영동고속도로 신갈기점 강릉방향 128km 지점에 위치하고 있어 여름철 동해안 피서객들이 잠시 쉬었다 가기에 편리하고, 청소년의 심신수련을 위한 숲속교실도 설치되어 있으며 울창한 잣나무 숲속의 산림욕장은 한번왔다간 사람은 누구나 매료되어 찾는 곳이기도 하다. * 구역면적 - 403 ha', '해발 1,200m의 청태산을...', null, '있음', null, '매주 화요일 (7,8월 제외)', null, 18, null, '국립 청태산자연휴양림', null, '[숙박시설] 당일 15:00~익일 12:00 [일일개장] 09:00~18:00');

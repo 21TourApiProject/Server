@@ -93,4 +93,7 @@ public class Post {
     @Column(nullable = false)
     private Long observationId;
 
+    @Column
+    private Long areaCode;  //지역코드
+
 }
