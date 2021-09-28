@@ -28,6 +28,13 @@ public class ConstellationService {
         return getConstellationParams(result, list);
     }
 
+    public List<ConstellationParams2> getConstNames(){
+        List<ConstellationParams2> result = new ArrayList<>();
+        List<Constellation> list = constellationRepository.findAll();
+
+        return getConstellationParams2(result, list);
+    }
+
     private List<ConstellationParams> getConstellationParams(List<ConstellationParams> result, List<Constellation> list) {
         for (Constellation cl : list) {
             Constellation constellation = constellationRepository.findById(cl.getConstId()).orElseThrow(IllegalAccessError::new);
@@ -37,6 +44,17 @@ public class ConstellationService {
             params.setConstImage(constellation.getConstImage());
             params.setConstName(constellation.getConstName());
             result.add(params);
+        }
+        return result;
+    }
+
+    public List<ConstellationParams2> getConstellationParams2(List<ConstellationParams2> result, List<Constellation> list) {
+        for (Constellation cl : list) {
+            Constellation constellation = constellationRepository.findById(cl.getConstId()).orElseThrow(IllegalAccessError::new);
+
+            ConstellationParams2 params2 = new ConstellationParams2();
+            params2.setConstName(constellation.getConstName());
+            result.add(params2);
         }
         return result;
     }
