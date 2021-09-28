@@ -1,11 +1,10 @@
-package com.server.tourApiProject.constellation;
+package com.server.tourApiProject.star.constellation;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 
 @Builder
