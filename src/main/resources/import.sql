@@ -1,7 +1,7 @@
 -- 초기화 스크립트, 매번 db구동시 변하지 않는 값을 등록
 
 -- 사용자
-INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_NUMBER, EMAIL, PASSWORD, NICK_NAME, SIGN_UP_DT, KAKAO, PROFILE_IMAGE) VALUES(1, '이세인', false , '2000-02-11', true, '01094069717', 'test1@gmail.com', 'dltpdls00*', '23in', '2021-08-01T15:41:20', false, 'PI1_2019-08-06-09-01-54.jpg');
+INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_NUMBER, EMAIL, PASSWORD, NICK_NAME, SIGN_UP_DT, KAKAO, PROFILE_IMAGE) VALUES(1, '이세인', false , '2000-02-11', true, '01094069717', 'test1@gmail.com', 'dltpdls00*', '23in', '2021-08-01T15:41:20', false, '"PI1_1632875360677.jpg"');
 INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_NUMBER, EMAIL, PASSWORD, NICK_NAME, SIGN_UP_DT, KAKAO, PROFILE_IMAGE) VALUES(2, null, true, '2000-02-11', false, null, 'test2@gmail.com', 'dltpdls00*', '마로', '2021-08-01T15:41:20', true, 'http://tong.visitkorea.or.kr/cms/resource/21/2657021_image2_1.jpg');
 
 --사용자 해시태그
@@ -142,4 +142,3 @@ INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_
     INSERT INTO NEAR_TOURIST_DATA (NEAR_TOURIST_DATA_ID, ADDR, CAT3NAME, CONTENT_ID, FIRST_IMAGE, OVERVIEW_SIM, TITLE, TOURIST_DATA_ID) VALUES (2, '대구광역시 달성군 유가읍 일연선사길 61', '자연휴양림', 125406, 'http://tong.visitkorea.or.kr/cms/resource/62/219162_image2_1.jpg', '비슬산 자연휴양림은 대견봉(...', '비슬산자연휴양림', 125266);
 
     INSERT INTO NEAR_TOURIST_DATA (NEAR_TOURIST_DATA_ID, ADDR, CAT3NAME, CONTENT_ID, FIRST_IMAGE, OVERVIEW_SIM, TITLE, TOURIST_DATA_ID) VALUES (3, '대구광역시 달성군 유가읍 일연선사길 61', '자연휴양림', 125406, 'http://tong.visitkorea.or.kr/cms/resource/62/219162_image2_1.jpg', '비슬산 자연휴양림은 대견봉(...', '비슬산자연휴양림', 125405);
-
