@@ -142,4 +142,3 @@ INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_
     INSERT INTO NEAR_TOURIST_DATA (NEAR_TOURIST_DATA_ID, ADDR, CAT3NAME, CONTENT_ID, FIRST_IMAGE, OVERVIEW_SIM, TITLE, TOURIST_DATA_ID) VALUES (2, '대구광역시 달성군 유가읍 일연선사길 61', '자연휴양림', 125406, 'http://tong.visitkorea.or.kr/cms/resource/62/219162_image2_1.jpg', '비슬산 자연휴양림은 대견봉(...', '비슬산자연휴양림', 125266);
 
     INSERT INTO NEAR_TOURIST_DATA (NEAR_TOURIST_DATA_ID, ADDR, CAT3NAME, CONTENT_ID, FIRST_IMAGE, OVERVIEW_SIM, TITLE, TOURIST_DATA_ID) VALUES (3, '대구광역시 달성군 유가읍 일연선사길 61', '자연휴양림', 125406, 'http://tong.visitkorea.or.kr/cms/resource/62/219162_image2_1.jpg', '비슬산 자연휴양림은 대견봉(...', '비슬산자연휴양림', 125405);
-
