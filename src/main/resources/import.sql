@@ -1,7 +1,7 @@
 -- 초기화 스크립트, 매번 db구동시 변하지 않는 값을 등록
 
 -- 사용자
-INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_NUMBER, EMAIL, PASSWORD, NICK_NAME, SIGN_UP_DT, KAKAO, PROFILE_IMAGE) VALUES(1, '이세인', false , '2000-02-11', true, '01094069717', 'test1@gmail.com', 'dltpdls00*', '23in', '2021-08-01T15:41:20', false, '"PI1_1632875360677.jpg"');
+INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_NUMBER, EMAIL, PASSWORD, NICK_NAME, SIGN_UP_DT, KAKAO, PROFILE_IMAGE) VALUES(1, '이세인', false , '2000-02-11', true, '01094069717', 'test1@gmail.com', 'dltpdls00*', '23in', '2021-08-01T15:41:20', false, 'PI1_2019-08-06-09-01-54.jpg');
 INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_NUMBER, EMAIL, PASSWORD, NICK_NAME, SIGN_UP_DT, KAKAO, PROFILE_IMAGE) VALUES(2, null, true, '2000-02-11', false, null, 'test2@gmail.com', 'dltpdls00*', '마로', '2021-08-01T15:41:20', true, 'http://tong.visitkorea.or.kr/cms/resource/21/2657021_image2_1.jpg');
 
 --사용자 해시태그
@@ -40,8 +40,8 @@ INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_
 
 --관측지
     INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, INTRO, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE, COURSE_ORDER ) VALUES (0, '나만의 관측지', 'https://www.yao.or.kr:451/', '한줄소개 어쩌구', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, false, 0 );
-    INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, INTRO, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE, COURSE_ORDER ) VALUES (1, '천문대1', 'https://www.yao.or.kr:451/', '한줄소개 어쩌구', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, false, 0 );
-    INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, INTRO, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE, COURSE_ORDER ) VALUES (2, '천문대2', 'https://www.yao.or.kr:451/', '한줄소개 어쩌구', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, true, 2 );
+--     INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, INTRO, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE, COURSE_ORDER ) VALUES (1, '천문대1', 'https://www.yao.or.kr:451/', '한줄소개 어쩌구', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, false, 0 );
+--     INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, INTRO, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE, COURSE_ORDER ) VALUES (2, '천문대2', 'https://www.yao.or.kr:451/', '한줄소개 어쩌구', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, true, 2 );
 
 
 --관측지 해시태그
@@ -72,7 +72,6 @@ INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_
     INSERT INTO COURSE (COURSE_ID, COURSE_ORDER, OBSERVATION_ID, TOURIST_POINT_ID) VALUES (5, 0, 2, 125405);
     INSERT INTO COURSE (COURSE_ID, COURSE_ORDER, OBSERVATION_ID, TOURIST_POINT_ID) VALUES (6, 1, 2, 132805);
 
-
 -- 별자리
     INSERT INTO CONSTELLATION (CONST_ID, CONST_BEST_MONTH, CONST_IMAGE, CONST_NAME, CONST_STORY, SPRING_CONST_MTD, SUMMER_CONST_MTD, FALL_CONST_MTD, WINTER_CONST_MTD, START_DATE, END_DATE, CONST_FEATURE ) VALUES (1, '1,3월에 잘보임', 'https://wallpapercave.com/wp/YVnW7ve.jpg', '물병자리', '물병자리 설화', '물병자리 봄 관측법', '물병자리 여름 관측법', '물병자리 가을 관측법', '물병자리 겨울 관측법',  '09-24', '10-01', 'https://wallpapercave.com/wp/YVnW7ve.jpg');
     INSERT INTO CONSTELLATION (CONST_ID, CONST_BEST_MONTH, CONST_IMAGE, CONST_NAME, CONST_PERSONALITY, CONST_STORY, SPRING_CONST_MTD, SUMMER_CONST_MTD, FALL_CONST_MTD, WINTER_CONST_MTD, CONST_PERIOD, START_DATE, END_DATE ) VALUES (2, '1,3월에 잘보임', 'https://cdn.pixabay.com/photo/2015/02/17/08/25/horoscope-639127_960_720.jpg', '물고기자리', '물고기자리 성격', '물고기자리 설화', '물고기자리 봄 관측법', '물고기자리 여름 관측법', '물고기자리 가을 관측법', '물고기자리 겨울 관측법', '02.22~08.15', '09-24', '10-01');
@@ -80,11 +79,15 @@ INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_
     INSERT INTO CONSTELLATION (CONST_ID, CONST_BEST_MONTH, CONST_IMAGE, CONST_NAME, CONST_PERSONALITY, CONST_STORY, SPRING_CONST_MTD, SUMMER_CONST_MTD, FALL_CONST_MTD, WINTER_CONST_MTD, CONST_PERIOD, START_DATE, END_DATE ) VALUES (4, '1,3월에 잘보임', 'https://cdn.pixabay.com/photo/2015/02/17/08/25/horoscope-639127_960_720.jpg', '황소자리', '황소자리 성격', '황소자리 설화', '황소자리 봄 관측법', '황소자리 여름 관측법', '황소자리 가을 관측법', '황소자리 겨울 관측법', '04.22~08.15', '09-24', '10-01');
     INSERT INTO CONSTELLATION (CONST_ID, CONST_BEST_MONTH, CONST_IMAGE, CONST_NAME, CONST_PERSONALITY, CONST_STORY, SPRING_CONST_MTD, SUMMER_CONST_MTD, FALL_CONST_MTD, WINTER_CONST_MTD, CONST_PERIOD, START_DATE, END_DATE ) VALUES (5, '1,3월에 잘보임', 'https://cdn.pixabay.com/photo/2015/02/17/08/25/horoscope-639127_960_720.jpg', '쌍둥이자리', '쌍둥이자리 성격', '쌍둥이자리 설화', '쌍둥이자리 봄 관측법', '쌍둥이자리 여름 관측법', '쌍둥이자리 가을 관측법', '물쌍둥이자리 겨울 관측법', '05.22~08.15', '09-24', '10-01');
 
+--별자리 운세
+    INSERT INTO HOROSCOPE (HOR_ID, HOR_IMAGE, HOR_ENG_TITLE, HOR_KR_TITLE, HOR_PERIOD, HOR_DESC1, HOR_DESC2, HOR_DESC3, HOR_DESC4, HOR_DESC5, HOR_DESC6, HOR_DESC7, HOR_DESC8, HOR_DESC9, HOR_DESC10, HOR_DESC11, HOR_DESC12) VALUES (0, 'https://cdn.pixabay.com/photo/2015/02/17/08/25/horoscope-639127_960_720.jpg', 'SAGITTARIUS', '물병자리', '1.20 ~ 2.18', '1월 별자리 운세', '2월 별자리 운세', '3월 별자리 운세', '4월 별자리 운세', '5월 별자리 운세', '6월 별자리 운세', '7월 별자리 운세', '8월 별자리 운세', '9월 별자리 운세1', '10월 별자리 운세', '11월 별자리 운세', '12월 별자리 운세');
+    INSERT INTO HOROSCOPE (HOR_ID, HOR_IMAGE, HOR_ENG_TITLE, HOR_KR_TITLE, HOR_PERIOD, HOR_DESC1, HOR_DESC2, HOR_DESC3, HOR_DESC4, HOR_DESC5, HOR_DESC6, HOR_DESC7, HOR_DESC8, HOR_DESC9, HOR_DESC10, HOR_DESC11, HOR_DESC12) VALUES (1, 'https://cdn.pixabay.com/photo/2015/02/17/08/25/horoscope-639127_960_720.jpg', 'SAGITTARIUS', '물고기자리', '2.20 ~ 3.18', '1월 별자리 운세', '2월 별자리 운세', '3월 별자리 운세', '4월 별자리 운세', '5월 별자리 운세', '6월 별자리 운세', '7월 별자리 운세', '8월 별자리 운세', '9월 별자리 운세', '10월 별자리 운세', '11월 별자리 운세', '12월 별자리 운세');
+
 --날씨 지역
     INSERT INTO WT_AREA (WT_AREA_ID, CITY_NAME, PROV_NAME, LATITUDE, LONGITUDE, MIN_LIGHT_POL, MAX_LIGHT_POL) VALUES (0, '서울', '강남구', 37.5006, 127.0508, 2.9, 2.2);
 
 --오늘의 날씨
-    INSERT INTO WT_TODAY (WT_TODAY_ID, TODAY_WT_ID, TODAY_WT_NAME1, TODAY_WT_NAME2) VALUES (0, '801', '천둥번개와', '비바람');
+    INSERT INTO WT_TODAY (WT_TODAY_ID, TODAY_WT_ID, TODAY_WT_NAME1, TODAY_WT_NAME2) VALUES (0, '804', '천둥번개와', '비바람');
 
 --게시글
     INSERT INTO POST (POST_ID,OBSERVATION_ID,POST_CONTENT,POST_TITLE,TIME,USER_ID,YEAR_DATE) VALUES (1,1,'내용입니다','게시글 제목입니다','15:24:00',1,'2021-09-06');
@@ -125,7 +128,7 @@ INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_
 
     INSERT INTO TOURIST_DATA_HASH_TAG (TOURIST_DATA_HASH_TAG_ID, CONTENT_ID, HASH_TAG_ID, HASH_TAG_NAME) VALUES (4, 125266, 11, '반려동물');
 
-    INSERT INTO TOURIST_DATA_HASH_TAG (TOURIST_DATA_HASH_TAG_ID, CONTENT_ID, HASH_TAG_ID, HASH_TAG_NAME) VALUES (5, 125266, 6, '전문적인');
+    INSERT INTO TOURIST_DATA_HASH_TAG (TOURIST_DATA_HASH_TAG_ID, CONTENT_ID, HASH_TAG_ID, HASH_TAG_NAME) VALUES (5, 125405, 6, '전문적인');
 
     INSERT INTO TOURIST_DATA_HASH_TAG (TOURIST_DATA_HASH_TAG_ID, CONTENT_ID, HASH_TAG_ID, HASH_TAG_NAME) VALUES (6, 125405, 8, '차박');
 
