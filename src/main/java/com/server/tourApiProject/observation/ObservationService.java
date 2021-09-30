@@ -153,7 +153,20 @@ public class ObservationService {
             SearchParams1 searchParams1 = new SearchParams1();
             searchParams1.setItemId(observation.getObservationId());
             searchParams1.setTitle(observation.getObservationName());
-            searchParams1.setAddress(observation.getAddress());
+            //주소를 두단어까지 줄임
+            String address = observation.getAddress();
+            int i = address.indexOf(' ');
+            if (i != -1){
+                int j = address.indexOf(' ', i+1);
+                if(j != -1){
+                    searchParams1.setAddress(observation.getAddress().substring(0, j));
+                } else{
+                    searchParams1.setAddress(observation.getAddress());
+                }
+            } else{
+                searchParams1.setAddress(observation.getAddress());
+            }
+//            searchParams1.setAddress(observation.getAddress());
             searchParams1.setLatitude(observation.getLatitude());
             searchParams1.setLongitude(observation.getLongitude());
             searchParams1.setIntro(observation.getIntro());
@@ -164,10 +177,13 @@ public class ObservationService {
             }
             List<ObserveHashTag> hashTagList = observeHashTagRepository.findByObservationId(observation.getObservationId());
             List<String> hashTagNames = new ArrayList<>();
+            int k = 0;
             for (ObserveHashTag hashTag : hashTagList){
+                if(k>2)
+                    break;
                 hashTagNames.add(hashTag.getHashTagName());
+                k++;
             }
-
             searchParams1.setHashTagNames(hashTagNames);
 
             resultParams.add(searchParams1);
