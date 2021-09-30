@@ -40,8 +40,8 @@ INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_
 
 --관측지
     INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, INTRO, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE, COURSE_ORDER ) VALUES (0, '나만의 관측지', 'https://www.yao.or.kr:451/', '한줄소개 어쩌구', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, false, 0 );
---     INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, INTRO, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE, COURSE_ORDER ) VALUES (1, '천문대1', 'https://www.yao.or.kr:451/', '한줄소개 어쩌구', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, false, 0 );
---     INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, INTRO, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE, COURSE_ORDER ) VALUES (2, '천문대2', 'https://www.yao.or.kr:451/', '한줄소개 어쩌구', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, true, 2 );
+    INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, INTRO, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE, COURSE_ORDER ) VALUES (1, '천문대1', 'https://www.yao.or.kr:451/', '한줄소개 어쩌구', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, false, 0 );
+    INSERT INTO OBSERVATION (OBSERVATION_ID, OBSERVATION_NAME, LINK, INTRO, LATITUDE, LONGITUDE, ADDRESS, PHONE_NUMBER, OPERATING_HOUR, PARKING, OBSERVE_TYPE, OUTLINE, GUIDE, CLOSED_DAY, LIGHT, NATURE, COURSE_ORDER ) VALUES (2, '천문대2', 'https://www.yao.or.kr:451/', '한줄소개 어쩌구', 37.54892296550104, 127.00557633, '강원 영월군 영월읍 천문대길 397', '010-1111-1111', '13:00~16:00', '주차는 여기에', '천문대', '개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 개애요가 너무길어 ', '이용안내', '월요일',36.66, true, 2 );
 
 
 --관측지 해시태그
@@ -60,9 +60,9 @@ INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_
     INSERT INTO OBSERVE_IMAGE (OBSERVE_IMAGE_LIST_ID, OBSERVATION_ID, IMAGE, IMAGE_SOURCE) VALUES (7, 2, 'https://images.unsplash.com/photo-1444080748397-f442aa95c3e5?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG5pZ2h0JTIwc2t5fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80', 'www.source.com');
 
 --관측지 입장료
-    INSERT INTO OBSERVE_FEE (OBSERVE_FEE_LIST_ID, OBSERVATION_ID, FEE_NAME, ENTRANCE_FEE) VALUES (1, 1, '청소년', '6000원');
-    INSERT INTO OBSERVE_FEE (OBSERVE_FEE_LIST_ID, OBSERVATION_ID, FEE_NAME, ENTRANCE_FEE) VALUES (2, 1, '어른', '6000원');
-    INSERT INTO OBSERVE_FEE (OBSERVE_FEE_LIST_ID, OBSERVATION_ID, FEE_NAME, ENTRANCE_FEE) VALUES (3, 1, '단체', '홈페이지 참고');
+    INSERT INTO OBSERVE_FEE (OBSERVE_FEE_LIST_ID, OBSERVATION_ID, FEE_NAME, ENTRANCE_FEE) VALUES (1, 1, '입장료가 몇글자가', '10,000원');
+    INSERT INTO OBSERVE_FEE (OBSERVE_FEE_LIST_ID, OBSERVATION_ID, FEE_NAME, ENTRANCE_FEE) VALUES (2, 1, '입장료가 몇글자', '10,000원');
+    INSERT INTO OBSERVE_FEE (OBSERVE_FEE_LIST_ID, OBSERVATION_ID, FEE_NAME, ENTRANCE_FEE) VALUES (3, 1, '입장료줄바꿈은 <br />이렇게', '10,000원');
 
 --관측지 코스
     INSERT INTO COURSE (COURSE_ID, COURSE_ORDER, OBSERVATION_ID, TOURIST_POINT_ID) VALUES (1, 4, 1, 125266);
