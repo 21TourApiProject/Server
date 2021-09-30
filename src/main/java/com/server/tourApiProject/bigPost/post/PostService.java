@@ -235,6 +235,7 @@ public class PostService {
                 hashPostParams.setProfileImage(user.getProfileImage());
             }
             hashPostParams.setMainObservation(hashPost.getObservation().getObservationName());
+            hashPostParams.setObservationId(hashPost.getObservationId());
             hashPostParams.setOptionObservation(hashPost.getOptionObservation());
             List<String> hashTagName = new ArrayList<>();
             List<PostHashTag> list = postHashTagRepository.findByPostId(hashPost.getPostId());
