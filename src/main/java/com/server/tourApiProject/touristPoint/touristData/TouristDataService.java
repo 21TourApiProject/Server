@@ -5,6 +5,7 @@ import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.course.CourseRepository;
 import com.server.tourApiProject.search.Filter;
 import com.server.tourApiProject.search.SearchParams1;
+import com.server.tourApiProject.search.SearchParams2;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeRepository;
 import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTag;
 import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTagRepository;
@@ -248,11 +249,11 @@ public class TouristDataService {
         return result;
     }
 
-    public List<SearchParams1> getTouristPointWithFilter(Filter filter, String keyword) {
+    public List<SearchParams2> getTouristPointWithFilter(Filter filter, String keyword) {
         List<Long> areaCodeList = filter.getAreaCodeList();    //지역 필터 리스트
         List<Long> hashTagIdList= filter.getHashTagIdList();    //해시태그 필터 리스트
 
-        List<SearchParams1> resultParams = new ArrayList<>();   //최종결과 param 리스트
+        List<SearchParams2> resultParams = new ArrayList<>();   //최종결과 param 리스트
         List<Long> filterIdList = new ArrayList<>();    //필터결과id 리스트
         List<TouristData> searchResult = new ArrayList<>(); //필터+검색어 결과 리스트
 
@@ -295,14 +296,15 @@ public class TouristDataService {
         }
 
         for (TouristData touristData : searchResult){
-            SearchParams1 searchParams1 = new SearchParams1();
-            searchParams1.setItemId(touristData.getContentId());
-            searchParams1.setTitle(touristData.getTitle());
-            searchParams1.setAddress(touristData.getAddr());
-            searchParams1.setLongitude(touristData.getMapX());
-            searchParams1.setLatitude(touristData.getMapY());
-            searchParams1.setIntro(touristData.getOverviewSim());
-            searchParams1.setContentType(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
+
+            SearchParams2 searchParams2 = new SearchParams2();
+            searchParams2.setItemId(touristData.getContentId());
+            searchParams2.setTitle(touristData.getTitle());
+            searchParams2.setAddress(touristData.getAddr());
+            searchParams2.setLatitude(touristData.getMapX());
+            searchParams2.setLongitude(touristData.getMapY());
+            searchParams2.setIntro(touristData.getOverviewSim());
+            searchParams2.setContentType(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
 
             List<TouristDataHashTag> hashTagList = touristDataHashTagRepository.findByContentId(touristData.getContentId());
             int i = 0;
@@ -313,8 +315,8 @@ public class TouristDataService {
                 hashTagNames.add(hashTag.getHashTagName());
                 i++;
             }
-            searchParams1.setHashTagNames(hashTagNames);
-            resultParams.add(searchParams1);
+            searchParams2.setHashTagNames(hashTagNames);
+            resultParams.add(searchParams2);
         }
 
         return resultParams;
