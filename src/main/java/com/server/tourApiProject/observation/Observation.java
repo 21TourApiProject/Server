@@ -44,7 +44,7 @@ public class Observation {
     @Column
     private String phoneNumber; //문의
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String operatingHour;
 
     @Column
