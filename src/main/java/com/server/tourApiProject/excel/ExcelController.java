@@ -2,6 +2,8 @@ package com.server.tourApiProject.excel;
 
 import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.ObservationRepository;
+import com.server.tourApiProject.observation.course.Course;
+import com.server.tourApiProject.observation.course.CourseRepository;
 import com.server.tourApiProject.observation.observeFee.ObserveFee;
 import com.server.tourApiProject.observation.observeFee.ObserveFeeRepository;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTag;
@@ -49,8 +51,9 @@ public class ExcelController {
     private final ObserveHashTagRepository observeHashTagRepository;
     private final ObserveImageRepository observeImageRepository;
     private final ObserveFeeRepository observeFeeRepository;
+    private final CourseRepository courseRepository;
 
-    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository) {
+    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository, CourseRepository courseRepository) {
         this.touristDataService = touristDataService;
         this.areaService = areaService;
         this.contentTypeService = contentTypeService;
@@ -61,6 +64,7 @@ public class ExcelController {
         this.observeHashTagRepository = observeHashTagRepository;
         this.observeImageRepository = observeImageRepository;
         this.observeFeeRepository = observeFeeRepository;
+        this.courseRepository = courseRepository;
     }
 
     @GetMapping("/excel")
@@ -428,6 +432,7 @@ public class ExcelController {
             else
                 data.setNature(false);
             data.setAreaCode((long)row.getCell(16).getNumericCellValue());
+            data.setCourseOrder((int)row.getCell(17).getNumericCellValue());
 
             observationRepository.save(data);
         }
@@ -535,6 +540,43 @@ public class ExcelController {
             data.setImageSource(row.getCell(3).getStringCellValue());
 
             observeImageRepository.save(data);
+        }
+        System.out.println("엑셀 완료");
+        return "excel";
+    }
+
+    @PostMapping("/excel/observationCourse/read")
+    public String readObservationCourseExcel(@RequestParam("file") MultipartFile file, Model model)
+            throws IOException {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (!extension.equals("xlsx") && !extension.equals("xls")) {
+            throw new IOException("엑셀파일만 업로드 해주세요.");
+        }
+        Workbook workbook = null;
+
+        if (extension.equals("xlsx")) {
+            workbook = new XSSFWorkbook(file.getInputStream());
+        } else if (extension.equals("xls")) {
+            workbook = new HSSFWorkbook(file.getInputStream());
+        }
+
+        Sheet worksheet = workbook.getSheetAt(0);
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            Row row = worksheet.getRow(i);
+            if(row.getCell(0) == null){
+                break;
+            } else if (row.getCell(2)==null) {
+                continue;
+            }
+            Course data = new Course();
+
+            data.setCourseId((long) row.getCell(0).getNumericCellValue());
+            data.setObservationId((long) row.getCell(1).getNumericCellValue());
+            data.setTouristPointId((long) row.getCell(2).getNumericCellValue());
+            data.setCourseOrder((int) row.getCell(3).getNumericCellValue());
+
+
+            courseRepository.save(data);
         }
         System.out.println("엑셀 완료");
         return "excel";

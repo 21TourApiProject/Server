@@ -296,6 +296,7 @@ public class TouristDataService {
         }
 
         for (TouristData touristData : searchResult){
+
             SearchParams2 searchParams2 = new SearchParams2();
             searchParams2.setItemId(touristData.getContentId());
             searchParams2.setTitle(touristData.getTitle());
