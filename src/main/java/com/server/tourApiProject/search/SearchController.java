@@ -31,7 +31,7 @@ public class SearchController {
 
     @ApiOperation(value = "관광지 검색결과 ", notes = "검색어와 필터로 관광지 검색결과를 조회한다")
     @PostMapping(value = "search/touristPoint")
-    public List<SearchParams1> getTouristPointWithFilter(@RequestBody SearchKey searchKey){
+    public List<SearchParams2> getTouristPointWithFilter(@RequestBody SearchKey searchKey){
         return touristDataService.getTouristPointWithFilter(searchKey.getFilter(), searchKey.getKeyword());
     }
 }
