@@ -115,6 +115,14 @@ public class UserService {
         return -1L;
     }
 
+    public Long kakaoLogIn(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return -1L;
+        }
+        return user.getUserId();
+    }
+
     public String getEmail(String realName, String mobilePhoneNumber) {
         User user = userRepository.findByMobilePhoneNumber(mobilePhoneNumber);
         if (user == null){
