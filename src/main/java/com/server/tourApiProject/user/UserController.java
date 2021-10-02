@@ -53,6 +53,10 @@ public class UserController {
     @GetMapping(value = "user/login/{email}/{password}")
     public Long logIn(@PathVariable("email") String email, @PathVariable("password") String password){ return userService.logIn(email, password); }
 
+    @ApiOperation(value = "카카오 사용자 로그인", notes = "사용자의 이메일과 비밀번호로 계정 여부를 확인한다")
+    @GetMapping(value = "user/kakaologin/{email}")
+    public Long logIn(@PathVariable("email") String email ){ return userService.kakaoLogIn(email); }
+
     @ApiOperation(value = "사용자 이메일 조회", notes = "사용자의 이름, 전화번호로 이메일을 조회한다")
     @GetMapping(value = "user/login/email/{realName}/{mobilePhoneNumber}")
     public String getEmail(@PathVariable("realName") String realName, @PathVariable("mobilePhoneNumber") String mobilePhoneNumber){ return userService.getEmail(realName, mobilePhoneNumber); }
