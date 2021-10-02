@@ -17,6 +17,7 @@ import com.server.tourApiProject.touristPoint.contentType.ContentTypeService;
 import com.server.tourApiProject.touristPoint.nearTouristData.NearTouristData;
 import com.server.tourApiProject.touristPoint.nearTouristData.NearTouristDataRepository;
 import com.server.tourApiProject.touristPoint.touristData.TouristData;
+import com.server.tourApiProject.touristPoint.touristData.TouristDataRepository;
 import com.server.tourApiProject.touristPoint.touristData.TouristDataService;
 import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTag;
 import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTagRepository;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 
 //일단 readTouristDataExcel함수 복사 붙여넣기하고 함수명 수정, 아까 action에 쓴 url로 수정 그리고 for문 안에 내용 수정하면 됨
 @Controller
@@ -44,6 +46,7 @@ public class ExcelController {
     private final TouristDataService touristDataService;
     private final AreaService areaService;
     private final ContentTypeService contentTypeService;
+    private final TouristDataRepository touristDataRepository;
     private final NearTouristDataRepository nearTouristDataRepository;
     private final TouristDataHashTagRepository touristDataHashTagRepository;
     private final WtAreaRepository wtAreaRepository;
@@ -53,10 +56,11 @@ public class ExcelController {
     private final ObserveFeeRepository observeFeeRepository;
     private final CourseRepository courseRepository;
 
-    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository, CourseRepository courseRepository) {
+    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, TouristDataRepository touristDataRepository, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository, CourseRepository courseRepository) {
         this.touristDataService = touristDataService;
         this.areaService = areaService;
         this.contentTypeService = contentTypeService;
+        this.touristDataRepository = touristDataRepository;
         this.nearTouristDataRepository = nearTouristDataRepository;
         this.touristDataHashTagRepository = touristDataHashTagRepository;
         this.wtAreaRepository = wtAreaRepository;
@@ -335,12 +339,16 @@ public class ExcelController {
             Row row = worksheet.getRow(i);
             TouristDataHashTag data = new TouristDataHashTag();
 
-            data.setTouristDataHashTagId((long) row.getCell(0).getNumericCellValue());
-            data.setContentId((long) row.getCell(1).getNumericCellValue());
-            data.setHashTagId((long) row.getCell(2).getNumericCellValue());
-            data.setHashTagName(row.getCell(3).getStringCellValue());
+            Long contentId = (long) row.getCell(1).getNumericCellValue();
+            Optional<TouristData> touristData = touristDataRepository.findById(contentId);
+            if (touristData.isPresent()){
+                data.setTouristDataHashTagId((long) row.getCell(0).getNumericCellValue());
+                data.setContentId(contentId);
+                data.setHashTagId((long) row.getCell(2).getNumericCellValue());
+                data.setHashTagName(row.getCell(3).getStringCellValue());
 
-            touristDataHashTagRepository.save(data);
+                touristDataHashTagRepository.save(data);
+            }
         }
         System.out.println("엑셀 완료");
         return "excel";

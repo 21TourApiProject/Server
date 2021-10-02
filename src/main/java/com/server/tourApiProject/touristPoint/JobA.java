@@ -42,7 +42,7 @@ public class JobA extends QuartzJobBean {
     @Autowired
     private NearTouristDataController nearTouristDataController;
 
-    Long criteria = Long.parseLong(LocalDateTime.now().minusDays(6).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))); //수정사항 기준 시간
+    Long criteria = Long.parseLong(LocalDateTime.now().minusDays(4).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))); //수정사항 기준 시간
 
     int reTour = 0;
     int realNewTour = 0;
