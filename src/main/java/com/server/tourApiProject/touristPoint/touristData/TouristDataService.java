@@ -64,6 +64,7 @@ public class TouristDataService {
         TouristDataParams2 result = new TouristDataParams2();
 
         result.setContentTypeId(touristData.getContentTypeId()); //39
+        result.setFirstImage(touristData.getFirstImage());
         result.setTitle(touristData.getTitle());
         result.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
         result.setOverview(touristData.getOverview());
