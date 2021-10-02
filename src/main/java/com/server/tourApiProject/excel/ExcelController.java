@@ -8,6 +8,8 @@ import com.server.tourApiProject.observation.observeHashTag.ObserveHashTag;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTagRepository;
 import com.server.tourApiProject.observation.observeImage.ObserveImage;
 import com.server.tourApiProject.observation.observeImage.ObserveImageRepository;
+import com.server.tourApiProject.star.constellation.Constellation;
+import com.server.tourApiProject.star.constellation.ConstellationRepository;
 import com.server.tourApiProject.touristPoint.area.AreaParams;
 import com.server.tourApiProject.touristPoint.area.AreaService;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeParams;
@@ -45,18 +47,20 @@ public class ExcelController {
     private final NearTouristDataRepository nearTouristDataRepository;
     private final TouristDataHashTagRepository touristDataHashTagRepository;
     private final WtAreaRepository wtAreaRepository;
+    private final ConstellationRepository constellationRepository;
     private final ObservationRepository observationRepository;
     private final ObserveHashTagRepository observeHashTagRepository;
     private final ObserveImageRepository observeImageRepository;
     private final ObserveFeeRepository observeFeeRepository;
 
-    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository) {
+    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, ConstellationRepository constellationRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository) {
         this.touristDataService = touristDataService;
         this.areaService = areaService;
         this.contentTypeService = contentTypeService;
         this.nearTouristDataRepository = nearTouristDataRepository;
         this.touristDataHashTagRepository = touristDataHashTagRepository;
         this.wtAreaRepository = wtAreaRepository;
+        this.constellationRepository = constellationRepository;
         this.observationRepository = observationRepository;
         this.observeHashTagRepository = observeHashTagRepository;
         this.observeImageRepository = observeImageRepository;
@@ -378,6 +382,68 @@ public class ExcelController {
         return "excel";
     }
 
+    @PostMapping("/excel/Constellation/read")
+    public String readConstellationExcel(@RequestParam("file") MultipartFile file, Model model)
+            throws IOException {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (!extension.equals("xlsx") && !extension.equals("xls")) {
+            throw new IOException("엑셀파일만 업로드 해주세요.");
+        }
+        Workbook workbook = null;
+
+        if (extension.equals("xlsx")) {
+            workbook = new XSSFWorkbook(file.getInputStream());
+        } else if (extension.equals("xls")) {
+            workbook = new HSSFWorkbook(file.getInputStream());
+        }
+
+        Sheet worksheet = workbook.getSheetAt(0);
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            Row row = worksheet.getRow(i);
+            Constellation data = new Constellation();
+
+            data.setConstId((long) row.getCell(0).getNumericCellValue());
+            data.setConstName(row.getCell(1).getStringCellValue());
+            data.setConstImage(row.getCell(2).getStringCellValue());
+            data.setConstStory(row.getCell(3).getStringCellValue());
+            data.setConstMtd(row.getCell(4).getStringCellValue());
+            data.setConstBestMonth(row.getCell(5).getStringCellValue());
+            data.setConstPersonality(row.getCell(6).getStringCellValue());
+            if (data.getConstPersonality().equals("null"))
+                data.setConstPersonality(null);
+            data.setConstTravel(row.getCell(7).getStringCellValue());
+            if (data.getConstTravel().equals("null"))
+                data.setConstTravel(null);
+            data.setConstPeriod(row.getCell(8).getStringCellValue());
+            if (data.getConstPeriod().equals("null"))
+                data.setConstPeriod(null);
+            data.setConstFeature1(row.getCell(9).getStringCellValue());
+            if (data.getConstFeature1().equals("null"))
+                data.setConstFeature1(null);
+            data.setConstFeature2(row.getCell(10).getStringCellValue());
+            if (data.getConstFeature2().equals("null"))
+                data.setConstFeature2(null);
+            data.setConstFeature3(row.getCell(11).getStringCellValue());
+            if (data.getConstFeature3().equals("null"))
+                data.setConstFeature3(null);
+            data.setConstGuard(row.getCell(12).getStringCellValue());
+            if (data.getConstGuard().equals("null"))
+                data.setConstGuard(null);
+            data.setStartDate1(row.getCell(13).getStringCellValue());
+            data.setEndDate1(row.getCell(14).getStringCellValue());
+            data.setStartDate2(row.getCell(15).getStringCellValue());
+            if (data.getStartDate2().equals("null"))
+                data.setStartDate2(null);
+            data.setEndDate2(row.getCell(16).getStringCellValue());
+            if (data.getEndDate2().equals("null"))
+                data.setEndDate2(null);
+
+            constellationRepository.save(data);
+        }
+        System.out.println("엑셀 완료");
+        return "excel";
+    }
+
     @PostMapping("/excel/observationData/read")
     public String readObservationDataExcel(@RequestParam("file") MultipartFile file, Model model)
             throws IOException {
@@ -397,7 +463,7 @@ public class ExcelController {
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
             Row row = worksheet.getRow(i);
             Observation data = new Observation();
-            if(row.getCell(0) == null){
+            if (row.getCell(0) == null) {
                 break;
             }
             data.setObservationId((long) row.getCell(0).getNumericCellValue());
@@ -420,20 +486,21 @@ public class ExcelController {
             if (data.getLink().equals("null"))
                 data.setLink(null);
             data.setObserveType(row.getCell(11).getStringCellValue());
-            data.setLatitude((double)row.getCell(12).getNumericCellValue());
-            data.setLongitude((double)row.getCell(13).getNumericCellValue());
-            data.setLight((double)row.getCell(14).getNumericCellValue());
-            if(row.getCell(15).getNumericCellValue()==1)
+            data.setLatitude((double) row.getCell(12).getNumericCellValue());
+            data.setLongitude((double) row.getCell(13).getNumericCellValue());
+            data.setLight((double) row.getCell(14).getNumericCellValue());
+            if (row.getCell(15).getNumericCellValue() == 1)
                 data.setNature(true);
             else
                 data.setNature(false);
-            data.setAreaCode((long)row.getCell(16).getNumericCellValue());
+            data.setAreaCode((long) row.getCell(16).getNumericCellValue());
 
             observationRepository.save(data);
         }
         System.out.println("엑셀 완료");
         return "excel";
     }
+
     @PostMapping("/excel/observationHashTag/read")
     public String readObservationHashTagExcel(@RequestParam("file") MultipartFile file, Model model)
             throws IOException {
@@ -452,7 +519,7 @@ public class ExcelController {
         Sheet worksheet = workbook.getSheetAt(0);
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
             Row row = worksheet.getRow(i);
-            if(row.getCell(0) == null){
+            if (row.getCell(0) == null) {
                 break;
             }
             ObserveHashTag data = new ObserveHashTag();
@@ -486,7 +553,7 @@ public class ExcelController {
         Sheet worksheet = workbook.getSheetAt(0);
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
             Row row = worksheet.getRow(i);
-            if(row.getCell(0) == null){
+            if (row.getCell(0) == null) {
                 break;
             }
             ObserveFee data = new ObserveFee();
@@ -495,7 +562,7 @@ public class ExcelController {
             data.setObservationId((long) row.getCell(1).getNumericCellValue());
             data.setFeeName(row.getCell(2).getStringCellValue());
             data.setEntranceFee(row.getCell(3).getStringCellValue());
-            if(data.getEntranceFee().equals("null"))
+            if (data.getEntranceFee().equals("null"))
                 data.setEntranceFee(null);
 
             observeFeeRepository.save(data);
@@ -522,9 +589,9 @@ public class ExcelController {
         Sheet worksheet = workbook.getSheetAt(0);
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
             Row row = worksheet.getRow(i);
-            if(row.getCell(0) == null){
+            if (row.getCell(0) == null) {
                 break;
-            } else if (row.getCell(2)==null) {
+            } else if (row.getCell(2) == null) {
                 continue;
             }
             ObserveImage data = new ObserveImage();
