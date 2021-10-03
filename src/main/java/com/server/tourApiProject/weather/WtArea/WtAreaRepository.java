@@ -1,6 +1,5 @@
 package com.server.tourApiProject.weather.WtArea;
 
-import com.server.tourApiProject.weather.WtArea.WtArea;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 

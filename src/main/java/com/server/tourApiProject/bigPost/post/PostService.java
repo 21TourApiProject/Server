@@ -4,7 +4,6 @@ import com.server.tourApiProject.bigPost.postHashTag.PostHashTag;
 import com.server.tourApiProject.bigPost.postHashTag.PostHashTagRepository;
 import com.server.tourApiProject.bigPost.postImage.PostImage;
 import com.server.tourApiProject.bigPost.postImage.PostImageRepository;
-import com.server.tourApiProject.myHashTag.MyHashTag;
 import com.server.tourApiProject.myHashTag.MyHashTagRepository;
 import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.ObservationRepository;
