@@ -64,6 +64,7 @@ public class TouristDataService {
         TouristDataParams2 result = new TouristDataParams2();
 
         result.setContentTypeId(touristData.getContentTypeId()); //39
+        result.setFirstImage(touristData.getFirstImage());
         result.setTitle(touristData.getTitle());
         result.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
         result.setOverview(touristData.getOverview());
@@ -294,12 +295,13 @@ public class TouristDataService {
         }
 
         for (TouristData touristData : searchResult){
+
             SearchParams1 searchParams1 = new SearchParams1();
             searchParams1.setItemId(touristData.getContentId());
             searchParams1.setTitle(touristData.getTitle());
             searchParams1.setAddress(touristData.getAddr());
-            searchParams1.setLongitude(touristData.getMapX());
-            searchParams1.setLatitude(touristData.getMapY());
+            searchParams1.setLatitude(touristData.getMapX());
+            searchParams1.setLongitude(touristData.getMapY());
             searchParams1.setIntro(touristData.getOverviewSim());
             searchParams1.setContentType(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
 
