@@ -58,7 +58,6 @@ public class JobA extends QuartzJobBean {
         jobKey = jobExecutionContext.getJobDetail().getKey();
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
 
-
         //관광지 기본정보
         List<Long> tourId = new ArrayList<>();
         List<Long> newTourId = new ArrayList<>();
@@ -80,12 +79,11 @@ public class JobA extends QuartzJobBean {
             addr = (String) item.get("addr1");
             Object mapx = item.get("mapx");
 
-            if(cat1 == null || cat2 == null || cat3 == null || addr == null || mapx ==null){
+            if(cat1 == null || cat2 == null || cat3 == null || addr == null || mapx == null){
                 continue;
             }
             else if ((cat1.equals("A01") || cat1.equals("A02")) && (cat2.equals("A0101") || cat2.equals("A0102") || cat2.equals("A0201") || cat2.equals("A0202") || cat2.equals("A0203") || cat2.equals("A0204") || cat2.equals("A0205"))){
                 tourId.add((Long) item.get("contentid"));
-                reTour++;
             }
             else {
                 continue;
@@ -96,11 +94,12 @@ public class JobA extends QuartzJobBean {
 
             if (optional.isPresent()){ //원래 있던 데이터면
                 isRealNew = false;
+                reTour++;
                 touristData = touristDataRepository.findByContentId((Long) item.get("contentid"));
                 touristData.setIsCom(0);
             } else{ //새로 들어온 데이터면
-                realNewTour++;
                 isRealNew = true;
+                realNewTour++;
                 newTourId.add((Long) item.get("contentid"));
                 touristData = new TouristData();
                 touristData.setIsCom(0);
@@ -211,7 +210,7 @@ public class JobA extends QuartzJobBean {
 
             touristDataRepository.save(touristData);
         }
-        System.out.println("수정 - 관광지 기본정보 완료 " + reTour + " " + realNewTour);
+        System.out.println("관광지 기본정보 업데이트 완료 " + reTour + " " + realNewTour);
 
         //관광지 추가정보
         for (Long contentId : tourId) {
