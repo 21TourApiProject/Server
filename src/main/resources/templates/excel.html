@@ -36,6 +36,16 @@
     <input th:type="submit" value="날씨 지역 제출" />
 </form>
 
+<form th:action="@{/excel/Constellation/read}" method="POST" enctype="multipart/form-data">
+    <input type="file" th:name="file">
+    <input th:type="submit" value="별자리 제출" />
+</form>
+
+<form th:action="@{/excel/Horoscope/read}" method="POST" enctype="multipart/form-data">
+    <input type="file" th:name="file">
+    <input th:type="submit" value="별자리 운세 제출" />
+</form>
+
 <form th:action="@{/excel/observationData/read}" method="POST" enctype="multipart/form-data">
     <input type="file" th:name="file">
     <input th:type="submit" value="관측지 정보 제출" />
