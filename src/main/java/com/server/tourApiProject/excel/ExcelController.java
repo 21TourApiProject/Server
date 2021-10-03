@@ -62,7 +62,7 @@ public class ExcelController {
     private final ObserveFeeRepository observeFeeRepository;
     private final CourseRepository courseRepository;
 
-    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, ConstellationRepository constellationRepository, HoroscopeRepository horoscopeRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository) {
+    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, TouristDataRepository touristDataRepository, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, ConstellationRepository constellationRepository, HoroscopeRepository horoscopeRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository, CourseRepository courseRepository) {
         this.touristDataService = touristDataService;
         this.areaService = areaService;
         this.contentTypeService = contentTypeService;
