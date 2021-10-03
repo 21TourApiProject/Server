@@ -2,8 +2,8 @@
 
 -- 사용자
 INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_NUMBER, EMAIL, PASSWORD, NICK_NAME, SIGN_UP_DT, KAKAO, PROFILE_IMAGE) VALUES(1, '이세인', false , '2000-02-11', true, '01094069717', 'test1@gmail.com', 'dltpdls00*', '23in', '2021-08-01T15:41:20', false, '"PI1_1632875360677.jpg"');
-INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_NUMBER, EMAIL, PASSWORD, NICK_NAME, SIGN_UP_DT, KAKAO, PROFILE_IMAGE) VALUES(2, null, true, '2000-02-11', false, null, 'test2@gmail.com', 'dltpdls00*', '마로', '2021-08-01T15:41:20', true, 'http://tong.visitkorea.or.kr/cms/resource/21/2657021_image2_1.jpg');
-INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_NUMBER, EMAIL, PASSWORD, NICK_NAME, SIGN_UP_DT, KAKAO, PROFILE_IMAGE) VALUES(6, null, true, '2000-02-11', false, null, 'test3@gmail.com', 'dltpdls00*', '마로3', '2021-08-01T15:41:20', true, 'http://tong.visitkorea.or.kr/cms/resource/21/2657021_image2_1.jpg');
+INSERT INTO USER(USER_ID, REAL_NAME, SEX, BIRTH_DAY, IS_MARKETING, MOBILE_PHONE_NUMBER, EMAIL, PASSWORD, NICK_NAME, SIGN_UP_DT, KAKAO, PROFILE_IMAGE) VALUES(2, null, true, '2000-02-11', false, null, 'test2@gmail.com', null, '마로', '2021-08-01T15:41:20', true, 'http://tong.visitkorea.or.kr/cms/resource/21/2657021_image2_1.jpg');
+
 
 --사용자 해시태그
     INSERT INTO MY_HASH_TAG(MY_HASH_TAG_LIST_ID, USER_ID, HASH_TAG_ID, HASH_TAG_NAME) VALUES(1, 1, 1, '공기 좋은');
