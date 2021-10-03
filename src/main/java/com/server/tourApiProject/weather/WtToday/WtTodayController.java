@@ -19,7 +19,7 @@ public class WtTodayController {
 
     @ApiOperation(value = "id로 날씨 이름 조회", notes = "id로 해당 날씨의 정보를 조회한다")
     @GetMapping(value = "wtToday/{todayWtId}")
-    public WtTodayParams getTodayWeatherInfo(@PathVariable("todayWtId") String todayWtId) {
+    public WtTodayParams getTodayWeatherInfo(@PathVariable("todayWtId") int todayWtId) {
         return wtTodayService.getTodayWeatherInfo(todayWtId);
     }
 }
