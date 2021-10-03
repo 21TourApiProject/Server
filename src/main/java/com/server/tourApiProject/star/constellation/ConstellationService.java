@@ -63,7 +63,7 @@ public class ConstellationService {
         List<ConstellationParams> result = new ArrayList<>();
         List<Constellation> resultAll = new ArrayList<>();
         String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MM-dd"));
-      
+
         List<Constellation> list1 = constellationRepository.findByStartDate1LessThanEqualAndEndDate1GreaterThanEqual(currentDate, currentDate);
         List<Constellation> list2 = constellationRepository.findByStartDate2LessThanEqualAndEndDate2GreaterThanEqual(currentDate, currentDate);
 

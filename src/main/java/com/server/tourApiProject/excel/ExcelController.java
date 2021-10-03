@@ -8,6 +8,8 @@ import com.server.tourApiProject.observation.observeHashTag.ObserveHashTag;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTagRepository;
 import com.server.tourApiProject.observation.observeImage.ObserveImage;
 import com.server.tourApiProject.observation.observeImage.ObserveImageRepository;
+import com.server.tourApiProject.star.Horoscope.Horoscope;
+import com.server.tourApiProject.star.Horoscope.HoroscopeRepository;
 import com.server.tourApiProject.star.constellation.Constellation;
 import com.server.tourApiProject.star.constellation.ConstellationRepository;
 import com.server.tourApiProject.touristPoint.area.AreaParams;
@@ -48,12 +50,13 @@ public class ExcelController {
     private final TouristDataHashTagRepository touristDataHashTagRepository;
     private final WtAreaRepository wtAreaRepository;
     private final ConstellationRepository constellationRepository;
+    private final HoroscopeRepository horoscopeRepository;
     private final ObservationRepository observationRepository;
     private final ObserveHashTagRepository observeHashTagRepository;
     private final ObserveImageRepository observeImageRepository;
     private final ObserveFeeRepository observeFeeRepository;
 
-    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, ConstellationRepository constellationRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository) {
+    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, ConstellationRepository constellationRepository, HoroscopeRepository horoscopeRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository) {
         this.touristDataService = touristDataService;
         this.areaService = areaService;
         this.contentTypeService = contentTypeService;
@@ -61,6 +64,7 @@ public class ExcelController {
         this.touristDataHashTagRepository = touristDataHashTagRepository;
         this.wtAreaRepository = wtAreaRepository;
         this.constellationRepository = constellationRepository;
+        this.horoscopeRepository = horoscopeRepository;
         this.observationRepository = observationRepository;
         this.observeHashTagRepository = observeHashTagRepository;
         this.observeImageRepository = observeImageRepository;
@@ -439,6 +443,50 @@ public class ExcelController {
                 data.setEndDate2(null);
 
             constellationRepository.save(data);
+        }
+        System.out.println("엑셀 완료");
+        return "excel";
+    }
+
+    @PostMapping("/excel/Horoscope/read")
+    public String readHoroscopeExcel(@RequestParam("file") MultipartFile file, Model model)
+            throws IOException {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (!extension.equals("xlsx") && !extension.equals("xls")) {
+            throw new IOException("엑셀파일만 업로드 해주세요.");
+        }
+        Workbook workbook = null;
+
+        if (extension.equals("xlsx")) {
+            workbook = new XSSFWorkbook(file.getInputStream());
+        } else if (extension.equals("xls")) {
+            workbook = new HSSFWorkbook(file.getInputStream());
+        }
+
+        Sheet worksheet = workbook.getSheetAt(0);
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            Row row = worksheet.getRow(i);
+            Horoscope data = new Horoscope();
+
+            data.setHorId((long) row.getCell(0).getNumericCellValue());
+            data.setHorImage(row.getCell(1).getStringCellValue());
+            data.setHorEngTitle(row.getCell(2).getStringCellValue());
+            data.setHorKrTitle(row.getCell(3).getStringCellValue());
+            data.setHorPeriod(row.getCell(4).getStringCellValue());
+            data.setHorDesc1(row.getCell(5).getStringCellValue());
+            data.setHorDesc2(row.getCell(6).getStringCellValue());
+            data.setHorDesc3(row.getCell(7).getStringCellValue());
+            data.setHorDesc4(row.getCell(8).getStringCellValue());
+            data.setHorDesc5(row.getCell(9).getStringCellValue());
+            data.setHorDesc6(row.getCell(10).getStringCellValue());
+            data.setHorDesc7(row.getCell(11).getStringCellValue());
+            data.setHorDesc8(row.getCell(12).getStringCellValue());
+            data.setHorDesc9(row.getCell(13).getStringCellValue());
+            data.setHorDesc10(row.getCell(14).getStringCellValue());
+            data.setHorDesc11(row.getCell(15).getStringCellValue());
+            data.setHorDesc12(row.getCell(16).getStringCellValue());
+
+            horoscopeRepository.save(data);
         }
         System.out.println("엑셀 완료");
         return "excel";
