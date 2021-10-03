@@ -27,7 +27,7 @@ public class NearTouristDataService {
 
     public void createNearTouristData(Long contentId1, Long contentId2) {
         Optional<TouristData> data = touristDataRepository.findById(contentId2);
-        if (!data.isPresent())
+        if (data.isEmpty())
             return;
 
         NearTouristData nearTouristData = new NearTouristData();

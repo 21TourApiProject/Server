@@ -1,4 +1,4 @@
-package com.server.tourApiProject.constellation;
+package com.server.tourApiProject.star.constellation;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +28,13 @@ public class ConstellationService {
         return getConstellationParams(result, list);
     }
 
+    public List<ConstellationParams2> getConstNames() {
+        List<ConstellationParams2> result = new ArrayList<>();
+        List<Constellation> list = constellationRepository.findAll();
+
+        return getConstellationParams2(result, list);
+    }
+
     private List<ConstellationParams> getConstellationParams(List<ConstellationParams> result, List<Constellation> list) {
         for (Constellation cl : list) {
             Constellation constellation = constellationRepository.findById(cl.getConstId()).orElseThrow(IllegalAccessError::new);
@@ -41,14 +48,29 @@ public class ConstellationService {
         return result;
     }
 
-    public List<ConstellationParams> getTodayConst() {
-        // startDate, endDate 12-30 ~ 01-22 인 경우 어떻게 할건지 고려
-        List<ConstellationParams> result = new ArrayList<>();
-        String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MM-dd"));
-        //String currentDate = LocalDate.of(2021,01,22).format(DateTimeFormatter.ofPattern("MM-dd"));
-        List<Constellation> list = constellationRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqual(currentDate, currentDate);
+    public List<ConstellationParams2> getConstellationParams2(List<ConstellationParams2> result, List<Constellation> list) {
+        for (Constellation cl : list) {
+            Constellation constellation = constellationRepository.findById(cl.getConstId()).orElseThrow(IllegalAccessError::new);
 
-        return getConstellationParams(result, list);
+            ConstellationParams2 params2 = new ConstellationParams2();
+            params2.setConstName(constellation.getConstName());
+            result.add(params2);
+        }
+        return result;
+    }
+
+    public List<ConstellationParams> getTodayConst() {
+        List<ConstellationParams> result = new ArrayList<>();
+        List<Constellation> resultAll = new ArrayList<>();
+        String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MM-dd"));
+
+        List<Constellation> list1 = constellationRepository.findByStartDate1LessThanEqualAndEndDate1GreaterThanEqual(currentDate, currentDate);
+        List<Constellation> list2 = constellationRepository.findByStartDate2LessThanEqualAndEndDate2GreaterThanEqual(currentDate, currentDate);
+
+        resultAll.addAll(list1);
+        resultAll.addAll(list2);
+
+        return getConstellationParams(result, resultAll);
     }
 
     public Constellation getDetailConst(Long constId) {

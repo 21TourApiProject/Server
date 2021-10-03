@@ -1,7 +1,6 @@
 package com.server.tourApiProject.touristPoint.touristData;
 
 import com.server.tourApiProject.myWish.MyWishParams01;
-import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.course.CourseRepository;
 import com.server.tourApiProject.search.Filter;
 import com.server.tourApiProject.search.SearchParams1;
@@ -65,6 +64,7 @@ public class TouristDataService {
         TouristDataParams2 result = new TouristDataParams2();
 
         result.setContentTypeId(touristData.getContentTypeId()); //39
+        result.setFirstImage(touristData.getFirstImage());
         result.setTitle(touristData.getTitle());
         result.setCat3Name(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
         result.setOverview(touristData.getOverview());
@@ -295,6 +295,7 @@ public class TouristDataService {
         }
 
         for (TouristData touristData : searchResult){
+
             SearchParams1 searchParams1 = new SearchParams1();
             searchParams1.setItemId(touristData.getContentId());
             searchParams1.setTitle(touristData.getTitle());

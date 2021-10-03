@@ -2,12 +2,18 @@ package com.server.tourApiProject.excel;
 
 import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.ObservationRepository;
+import com.server.tourApiProject.observation.course.Course;
+import com.server.tourApiProject.observation.course.CourseRepository;
 import com.server.tourApiProject.observation.observeFee.ObserveFee;
 import com.server.tourApiProject.observation.observeFee.ObserveFeeRepository;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTag;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTagRepository;
 import com.server.tourApiProject.observation.observeImage.ObserveImage;
 import com.server.tourApiProject.observation.observeImage.ObserveImageRepository;
+import com.server.tourApiProject.star.Horoscope.Horoscope;
+import com.server.tourApiProject.star.Horoscope.HoroscopeRepository;
+import com.server.tourApiProject.star.constellation.Constellation;
+import com.server.tourApiProject.star.constellation.ConstellationRepository;
 import com.server.tourApiProject.touristPoint.area.AreaParams;
 import com.server.tourApiProject.touristPoint.area.AreaService;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeParams;
@@ -15,6 +21,7 @@ import com.server.tourApiProject.touristPoint.contentType.ContentTypeService;
 import com.server.tourApiProject.touristPoint.nearTouristData.NearTouristData;
 import com.server.tourApiProject.touristPoint.nearTouristData.NearTouristDataRepository;
 import com.server.tourApiProject.touristPoint.touristData.TouristData;
+import com.server.tourApiProject.touristPoint.touristData.TouristDataRepository;
 import com.server.tourApiProject.touristPoint.touristData.TouristDataService;
 import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTag;
 import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTagRepository;
@@ -35,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 
 //일단 readTouristDataExcel함수 복사 붙여넣기하고 함수명 수정, 아까 action에 쓴 url로 수정 그리고 for문 안에 내용 수정하면 됨
 @Controller
@@ -42,25 +50,33 @@ public class ExcelController {
     private final TouristDataService touristDataService;
     private final AreaService areaService;
     private final ContentTypeService contentTypeService;
+    private final TouristDataRepository touristDataRepository;
     private final NearTouristDataRepository nearTouristDataRepository;
     private final TouristDataHashTagRepository touristDataHashTagRepository;
     private final WtAreaRepository wtAreaRepository;
+    private final ConstellationRepository constellationRepository;
+    private final HoroscopeRepository horoscopeRepository;
     private final ObservationRepository observationRepository;
     private final ObserveHashTagRepository observeHashTagRepository;
     private final ObserveImageRepository observeImageRepository;
     private final ObserveFeeRepository observeFeeRepository;
+    private final CourseRepository courseRepository;
 
-    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository) {
+    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, ConstellationRepository constellationRepository, HoroscopeRepository horoscopeRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository) {
         this.touristDataService = touristDataService;
         this.areaService = areaService;
         this.contentTypeService = contentTypeService;
+        this.touristDataRepository = touristDataRepository;
         this.nearTouristDataRepository = nearTouristDataRepository;
         this.touristDataHashTagRepository = touristDataHashTagRepository;
         this.wtAreaRepository = wtAreaRepository;
+        this.constellationRepository = constellationRepository;
+        this.horoscopeRepository = horoscopeRepository;
         this.observationRepository = observationRepository;
         this.observeHashTagRepository = observeHashTagRepository;
         this.observeImageRepository = observeImageRepository;
         this.observeFeeRepository = observeFeeRepository;
+        this.courseRepository = courseRepository;
     }
 
     @GetMapping("/excel")
@@ -331,12 +347,16 @@ public class ExcelController {
             Row row = worksheet.getRow(i);
             TouristDataHashTag data = new TouristDataHashTag();
 
-            data.setTouristDataHashTagId((long) row.getCell(0).getNumericCellValue());
-            data.setContentId((long) row.getCell(1).getNumericCellValue());
-            data.setHashTagId((long) row.getCell(2).getNumericCellValue());
-            data.setHashTagName(row.getCell(3).getStringCellValue());
+            Long contentId = (long) row.getCell(1).getNumericCellValue();
+            Optional<TouristData> touristData = touristDataRepository.findById(contentId);
+            if (touristData.isPresent()){
+                data.setTouristDataHashTagId((long) row.getCell(0).getNumericCellValue());
+                data.setContentId(contentId);
+                data.setHashTagId((long) row.getCell(2).getNumericCellValue());
+                data.setHashTagName(row.getCell(3).getStringCellValue());
 
-            touristDataHashTagRepository.save(data);
+                touristDataHashTagRepository.save(data);
+            }
         }
         System.out.println("엑셀 완료");
         return "excel";
@@ -378,6 +398,112 @@ public class ExcelController {
         return "excel";
     }
 
+    @PostMapping("/excel/Constellation/read")
+    public String readConstellationExcel(@RequestParam("file") MultipartFile file, Model model)
+            throws IOException {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (!extension.equals("xlsx") && !extension.equals("xls")) {
+            throw new IOException("엑셀파일만 업로드 해주세요.");
+        }
+        Workbook workbook = null;
+
+        if (extension.equals("xlsx")) {
+            workbook = new XSSFWorkbook(file.getInputStream());
+        } else if (extension.equals("xls")) {
+            workbook = new HSSFWorkbook(file.getInputStream());
+        }
+
+        Sheet worksheet = workbook.getSheetAt(0);
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            Row row = worksheet.getRow(i);
+            Constellation data = new Constellation();
+
+            data.setConstId((long) row.getCell(0).getNumericCellValue());
+            data.setConstName(row.getCell(1).getStringCellValue());
+            data.setConstImage(row.getCell(2).getStringCellValue());
+            data.setConstStory(row.getCell(3).getStringCellValue());
+            data.setConstMtd(row.getCell(4).getStringCellValue());
+            data.setConstBestMonth(row.getCell(5).getStringCellValue());
+            data.setConstPersonality(row.getCell(6).getStringCellValue());
+            if (data.getConstPersonality().equals("null"))
+                data.setConstPersonality(null);
+            data.setConstTravel(row.getCell(7).getStringCellValue());
+            if (data.getConstTravel().equals("null"))
+                data.setConstTravel(null);
+            data.setConstPeriod(row.getCell(8).getStringCellValue());
+            if (data.getConstPeriod().equals("null"))
+                data.setConstPeriod(null);
+            data.setConstFeature1(row.getCell(9).getStringCellValue());
+            if (data.getConstFeature1().equals("null"))
+                data.setConstFeature1(null);
+            data.setConstFeature2(row.getCell(10).getStringCellValue());
+            if (data.getConstFeature2().equals("null"))
+                data.setConstFeature2(null);
+            data.setConstFeature3(row.getCell(11).getStringCellValue());
+            if (data.getConstFeature3().equals("null"))
+                data.setConstFeature3(null);
+            data.setConstGuard(row.getCell(12).getStringCellValue());
+            if (data.getConstGuard().equals("null"))
+                data.setConstGuard(null);
+            data.setStartDate1(row.getCell(13).getStringCellValue());
+            data.setEndDate1(row.getCell(14).getStringCellValue());
+            data.setStartDate2(row.getCell(15).getStringCellValue());
+            if (data.getStartDate2().equals("null"))
+                data.setStartDate2(null);
+            data.setEndDate2(row.getCell(16).getStringCellValue());
+            if (data.getEndDate2().equals("null"))
+                data.setEndDate2(null);
+
+            constellationRepository.save(data);
+        }
+        System.out.println("엑셀 완료");
+        return "excel";
+    }
+
+    @PostMapping("/excel/Horoscope/read")
+    public String readHoroscopeExcel(@RequestParam("file") MultipartFile file, Model model)
+            throws IOException {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (!extension.equals("xlsx") && !extension.equals("xls")) {
+            throw new IOException("엑셀파일만 업로드 해주세요.");
+        }
+        Workbook workbook = null;
+
+        if (extension.equals("xlsx")) {
+            workbook = new XSSFWorkbook(file.getInputStream());
+        } else if (extension.equals("xls")) {
+            workbook = new HSSFWorkbook(file.getInputStream());
+        }
+
+        Sheet worksheet = workbook.getSheetAt(0);
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            Row row = worksheet.getRow(i);
+            Horoscope data = new Horoscope();
+
+            data.setHorId((long) row.getCell(0).getNumericCellValue());
+            data.setHorImage(row.getCell(1).getStringCellValue());
+            data.setHorEngTitle(row.getCell(2).getStringCellValue());
+            data.setHorKrTitle(row.getCell(3).getStringCellValue());
+            data.setHorPeriod(row.getCell(4).getStringCellValue());
+            data.setHorDesc1(row.getCell(5).getStringCellValue());
+            data.setHorDesc2(row.getCell(6).getStringCellValue());
+            data.setHorDesc3(row.getCell(7).getStringCellValue());
+            data.setHorDesc4(row.getCell(8).getStringCellValue());
+            data.setHorDesc5(row.getCell(9).getStringCellValue());
+            data.setHorDesc6(row.getCell(10).getStringCellValue());
+            data.setHorDesc7(row.getCell(11).getStringCellValue());
+            data.setHorDesc8(row.getCell(12).getStringCellValue());
+            data.setHorDesc9(row.getCell(13).getStringCellValue());
+            data.setHorDesc10(row.getCell(14).getStringCellValue());
+            data.setHorDesc11(row.getCell(15).getStringCellValue());
+            data.setHorDesc12(row.getCell(16).getStringCellValue());
+
+            horoscopeRepository.save(data);
+        }
+        System.out.println("엑셀 완료");
+        return "excel";
+    }
+
     @PostMapping("/excel/observationData/read")
     public String readObservationDataExcel(@RequestParam("file") MultipartFile file, Model model)
             throws IOException {
@@ -397,7 +523,7 @@ public class ExcelController {
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
             Row row = worksheet.getRow(i);
             Observation data = new Observation();
-            if(row.getCell(0) == null){
+            if (row.getCell(0) == null) {
                 break;
             }
             data.setObservationId((long) row.getCell(0).getNumericCellValue());
@@ -420,20 +546,21 @@ public class ExcelController {
             if (data.getLink().equals("null"))
                 data.setLink(null);
             data.setObserveType(row.getCell(11).getStringCellValue());
-            data.setLatitude((double)row.getCell(12).getNumericCellValue());
-            data.setLongitude((double)row.getCell(13).getNumericCellValue());
-            data.setLight((double)row.getCell(14).getNumericCellValue());
-            if(row.getCell(15).getNumericCellValue()==1)
+            data.setLatitude((double) row.getCell(12).getNumericCellValue());
+            data.setLongitude((double) row.getCell(13).getNumericCellValue());
+            data.setLight((double) row.getCell(14).getNumericCellValue());
+            if (row.getCell(15).getNumericCellValue() == 1)
                 data.setNature(true);
             else
                 data.setNature(false);
-            data.setAreaCode((long)row.getCell(16).getNumericCellValue());
+            data.setAreaCode((long) row.getCell(16).getNumericCellValue());
 
             observationRepository.save(data);
         }
         System.out.println("엑셀 완료");
         return "excel";
     }
+
     @PostMapping("/excel/observationHashTag/read")
     public String readObservationHashTagExcel(@RequestParam("file") MultipartFile file, Model model)
             throws IOException {
@@ -452,7 +579,7 @@ public class ExcelController {
         Sheet worksheet = workbook.getSheetAt(0);
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
             Row row = worksheet.getRow(i);
-            if(row.getCell(0) == null){
+            if (row.getCell(0) == null) {
                 break;
             }
             ObserveHashTag data = new ObserveHashTag();
@@ -486,7 +613,7 @@ public class ExcelController {
         Sheet worksheet = workbook.getSheetAt(0);
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
             Row row = worksheet.getRow(i);
-            if(row.getCell(0) == null){
+            if (row.getCell(0) == null) {
                 break;
             }
             ObserveFee data = new ObserveFee();
@@ -495,7 +622,7 @@ public class ExcelController {
             data.setObservationId((long) row.getCell(1).getNumericCellValue());
             data.setFeeName(row.getCell(2).getStringCellValue());
             data.setEntranceFee(row.getCell(3).getStringCellValue());
-            if(data.getEntranceFee().equals("null"))
+            if (data.getEntranceFee().equals("null"))
                 data.setEntranceFee(null);
 
             observeFeeRepository.save(data);
@@ -522,9 +649,9 @@ public class ExcelController {
         Sheet worksheet = workbook.getSheetAt(0);
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
             Row row = worksheet.getRow(i);
-            if(row.getCell(0) == null){
+            if (row.getCell(0) == null) {
                 break;
-            } else if (row.getCell(2)==null) {
+            } else if (row.getCell(2) == null) {
                 continue;
             }
             ObserveImage data = new ObserveImage();
@@ -535,6 +662,43 @@ public class ExcelController {
             data.setImageSource(row.getCell(3).getStringCellValue());
 
             observeImageRepository.save(data);
+        }
+        System.out.println("엑셀 완료");
+        return "excel";
+    }
+
+    @PostMapping("/excel/observationCourse/read")
+    public String readObservationCourseExcel(@RequestParam("file") MultipartFile file, Model model)
+            throws IOException {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (!extension.equals("xlsx") && !extension.equals("xls")) {
+            throw new IOException("엑셀파일만 업로드 해주세요.");
+        }
+        Workbook workbook = null;
+
+        if (extension.equals("xlsx")) {
+            workbook = new XSSFWorkbook(file.getInputStream());
+        } else if (extension.equals("xls")) {
+            workbook = new HSSFWorkbook(file.getInputStream());
+        }
+
+        Sheet worksheet = workbook.getSheetAt(0);
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            Row row = worksheet.getRow(i);
+            if(row.getCell(0) == null){
+                break;
+            } else if (row.getCell(2)==null) {
+                continue;
+            }
+            Course data = new Course();
+
+            data.setCourseId((long) row.getCell(0).getNumericCellValue());
+            data.setObservationId((long) row.getCell(1).getNumericCellValue());
+            data.setTouristPointId((long) row.getCell(2).getNumericCellValue());
+            data.setCourseOrder((int) row.getCell(3).getNumericCellValue());
+
+
+            courseRepository.save(data);
         }
         System.out.println("엑셀 완료");
         return "excel";
