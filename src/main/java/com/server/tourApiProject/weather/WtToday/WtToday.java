@@ -1,6 +1,7 @@
 package com.server.tourApiProject.weather.WtToday;
 
 import lombok.*;
+
 import javax.persistence.*;
 
 @Builder
