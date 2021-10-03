@@ -17,7 +17,7 @@ public class WtToday {
     private Long wtTodayId;
 
     @Column(nullable = false)
-    private String todayWtId;    //오늘의 날씨 아이디
+    private int todayWtId;    //오늘의 날씨 아이디
 
     @Column(nullable = false)
     private String todayWtName1;    //오늘의 날씨 이름
