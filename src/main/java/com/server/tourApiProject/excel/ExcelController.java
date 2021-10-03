@@ -1,5 +1,7 @@
 package com.server.tourApiProject.excel;
 
+import com.server.tourApiProject.hashTag.HashTag;
+import com.server.tourApiProject.hashTag.HashTagRepository;
 import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.ObservationRepository;
 import com.server.tourApiProject.observation.course.Course;
@@ -52,8 +54,9 @@ public class ExcelController {
     private final ObserveImageRepository observeImageRepository;
     private final ObserveFeeRepository observeFeeRepository;
     private final CourseRepository courseRepository;
+    private final HashTagRepository hashTagRepository;
 
-    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository, CourseRepository courseRepository) {
+    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository, CourseRepository courseRepository, HashTagRepository hashTagRepository) {
         this.touristDataService = touristDataService;
         this.areaService = areaService;
         this.contentTypeService = contentTypeService;
@@ -65,6 +68,7 @@ public class ExcelController {
         this.observeImageRepository = observeImageRepository;
         this.observeFeeRepository = observeFeeRepository;
         this.courseRepository = courseRepository;
+        this.hashTagRepository = hashTagRepository;
     }
 
     @GetMapping("/excel")
@@ -577,6 +581,38 @@ public class ExcelController {
 
 
             courseRepository.save(data);
+        }
+        System.out.println("엑셀 완료");
+        return "excel";
+    }
+
+    @PostMapping("/excel/hashtags/read")
+    public String readHashTagsExcel(@RequestParam("file") MultipartFile file, Model model)
+            throws IOException {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (!extension.equals("xlsx") && !extension.equals("xls")) {
+            throw new IOException("엑셀파일만 업로드 해주세요.");
+        }
+        Workbook workbook = null;
+
+        if (extension.equals("xlsx")) {
+            workbook = new XSSFWorkbook(file.getInputStream());
+        } else if (extension.equals("xls")) {
+            workbook = new HSSFWorkbook(file.getInputStream());
+        }
+
+        Sheet worksheet = workbook.getSheetAt(0);
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            Row row = worksheet.getRow(i);
+            if(row.getCell(0) == null){
+                break;
+            }
+            HashTag data = new HashTag();
+
+            data.setHashTagId((long) row.getCell(0).getNumericCellValue());
+            data.setHashTagName(row.getCell(1).getStringCellValue());
+
+            hashTagRepository.save(data);
         }
         System.out.println("엑셀 완료");
         return "excel";
