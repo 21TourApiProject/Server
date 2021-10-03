@@ -52,7 +52,7 @@ public class ExcelController {
     private final TouristDataService touristDataService;
     private final AreaService areaService;
     private final ContentTypeService contentTypeService;
-    private final TouristDataRepository touristDataRepository = null;
+    private final TouristDataRepository touristDataRepository;
     private final NearTouristDataRepository nearTouristDataRepository;
     private final TouristDataHashTagRepository touristDataHashTagRepository;
     private final WtAreaRepository wtAreaRepository;
@@ -63,12 +63,13 @@ public class ExcelController {
     private final ObserveHashTagRepository observeHashTagRepository;
     private final ObserveImageRepository observeImageRepository;
     private final ObserveFeeRepository observeFeeRepository;
-    private final CourseRepository courseRepository = null;
+    private final CourseRepository courseRepository;
 
-    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, WtTodayRepository wtTodayRepository, ConstellationRepository constellationRepository, HoroscopeRepository horoscopeRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository) {
+    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, TouristDataRepository touristDataRepository, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, WtTodayRepository wtTodayRepository, ConstellationRepository constellationRepository, HoroscopeRepository horoscopeRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository, CourseRepository courseRepository) {
         this.touristDataService = touristDataService;
         this.areaService = areaService;
         this.contentTypeService = contentTypeService;
+        this.touristDataRepository = touristDataRepository;
         this.wtTodayRepository = wtTodayRepository;
         this.nearTouristDataRepository = nearTouristDataRepository;
         this.touristDataHashTagRepository = touristDataHashTagRepository;
@@ -79,7 +80,7 @@ public class ExcelController {
         this.observeHashTagRepository = observeHashTagRepository;
         this.observeImageRepository = observeImageRepository;
         this.observeFeeRepository = observeFeeRepository;
-//        this.courseRepository = courseRepository;
+        this.courseRepository = courseRepository;
     }
 
     @GetMapping("/excel")

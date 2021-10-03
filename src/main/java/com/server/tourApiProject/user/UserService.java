@@ -109,6 +109,9 @@ public class UserService {
         if (user == null) {
             return -1L;
         }
+        if (user.getKakao()){
+            return -2L;
+        }
         if (user.getPassword().equals(password)) {
             return user.getUserId();
         }
