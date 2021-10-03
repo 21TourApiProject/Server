@@ -1,7 +1,6 @@
 package com.server.tourApiProject.touristPoint.touristData;
 
 import com.server.tourApiProject.myWish.MyWishParams01;
-import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.course.CourseRepository;
 import com.server.tourApiProject.search.Filter;
 import com.server.tourApiProject.search.SearchParams1;

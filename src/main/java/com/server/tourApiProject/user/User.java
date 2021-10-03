@@ -2,9 +2,9 @@ package com.server.tourApiProject.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.server.tourApiProject.bigPost.post.Post;
 import com.server.tourApiProject.myHashTag.MyHashTag;
 import com.server.tourApiProject.myWish.MyWish;
-import com.server.tourApiProject.bigPost.post.Post;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 

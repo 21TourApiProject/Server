@@ -1,10 +1,9 @@
 package com.server.tourApiProject.bigPost.postHashTag;
 
-import com.server.tourApiProject.bigPost.postImage.PostImage;
-import com.server.tourApiProject.hashTag.HashTag;
-import com.server.tourApiProject.hashTag.HashTagRepository;
 import com.server.tourApiProject.bigPost.post.Post;
 import com.server.tourApiProject.bigPost.post.PostRepository;
+import com.server.tourApiProject.hashTag.HashTag;
+import com.server.tourApiProject.hashTag.HashTagRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
