@@ -111,17 +111,16 @@ public class PostService {
                 postParams3.setThumbnail(null);
             }
             postParams3.setTitle(post.getPostTitle());
-            Optional<User> userOp = userRepository.findById(post.getUserId());
-            if (userOp.isPresent()){
-                User user = userOp.get();
-                postParams3.setNickName(user.getNickName());
-                postParams3.setProfileImage(user.getProfileImage());
-            }
+
+            User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
+            postParams3.setNickName(user.getNickName());
+            postParams3.setProfileImage(user.getProfileImage());
+
             List<String> hashTagName = new ArrayList<>();
             List<PostHashTag> list = postHashTagRepository.findByPostId(post.getPostId());
             int i = 0;
             for(PostHashTag postHashTag : list){
-                if(i > 3)
+                if(i > 2)
                     break;
                 hashTagName.add(postHashTag.getHashTagName());
                 i++;
