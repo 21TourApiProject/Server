@@ -191,7 +191,7 @@ public class MyWishService {
 
             myWishParams2.setTitle(post.getPostTitle());
 
-            myWishParams2.setWriter(post.getUser().getNickName());
+            myWishParams2.setNickName(post.getUser().getNickName());
             myWishParams2.setProfileImage(post.getUser().getProfileImage());
 
             List<PostHashTag> hashTagList = postHashTagRepository.findByPostId(postId);
