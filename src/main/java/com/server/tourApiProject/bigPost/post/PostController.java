@@ -42,7 +42,7 @@ public class PostController {
     @ApiOperation(value = "게시물정보 삭제", notes = "게시물 정보를 삭제한다")
     @DeleteMapping(value = "post/{userId}")
     public void deletePost(@PathVariable("userId") Long userId){
-//        postService.deletePost(userId);
+        postService.deletePost(userId);
     }
 
     @ApiOperation(value = "게시물 해시태그 조회", notes = "게시물 id로 해당 게시물의 게시물 해시태그를 조회한다")
