@@ -311,7 +311,7 @@ public class ExcelController {
             Row row = worksheet.getRow(i);
             NearTouristData data = new NearTouristData();
 
-            data.setNearTouristDataId((long) row.getCell(0).getNumericCellValue());
+            //data.setNearTouristDataId((long) row.getCell(0).getNumericCellValue());
             data.setAddr(row.getCell(1).getStringCellValue());
             if (data.getAddr().equals("null"))
                 data.setAddr(null);
