@@ -298,8 +298,8 @@ public class TouristDataService {
             searchParams1.setItemId(touristData.getContentId());
             searchParams1.setTitle(touristData.getTitle());
             searchParams1.setAddress(touristData.getAddr());
-            searchParams1.setLatitude(touristData.getMapX());
-            searchParams1.setLongitude(touristData.getMapY());
+            searchParams1.setLatitude(touristData.getMapY());
+            searchParams1.setLongitude(touristData.getMapX());
             searchParams1.setIntro(touristData.getOverviewSim());
             searchParams1.setContentType(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
             searchParams1.setThumbnail(touristData.getFirstImage());
