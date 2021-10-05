@@ -1,7 +1,6 @@
 package com.server.tourApiProject.touristPoint.touristData;
 
 import com.server.tourApiProject.myWish.MyWishParams01;
-import com.server.tourApiProject.observation.course.CourseRepository;
 import com.server.tourApiProject.search.Filter;
 import com.server.tourApiProject.search.SearchParams1;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeRepository;
@@ -24,7 +23,6 @@ public class TouristDataService {
 
     private final TouristDataRepository touristDataRepository;
     private final ContentTypeRepository contentTypeRepository;
-    private final CourseRepository courseRepository;
     private final TouristDataHashTagRepository touristDataHashTagRepository;
 
     public void createTouristData(TouristData touristData) {
@@ -304,6 +302,7 @@ public class TouristDataService {
             searchParams1.setLongitude(touristData.getMapY());
             searchParams1.setIntro(touristData.getOverviewSim());
             searchParams1.setContentType(contentTypeRepository.findByCat3Code(touristData.getCat3()).getCat3Name());
+            searchParams1.setThumbnail(touristData.getFirstImage());
 
             List<TouristDataHashTag> hashTagList = touristDataHashTagRepository.findByContentId(touristData.getContentId());
             int i = 0;
