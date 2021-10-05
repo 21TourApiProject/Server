@@ -612,7 +612,7 @@ public class ExcelController {
             else
                 data.setNature(false);
             data.setAreaCode((long) row.getCell(16).getNumericCellValue());
-
+            data.setCourseOrder((int) row.getCell(17).getNumericCellValue());
             observationRepository.save(data);
         }
         System.out.println("엑셀 완료");
