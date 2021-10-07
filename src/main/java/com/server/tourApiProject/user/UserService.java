@@ -67,7 +67,7 @@ public class UserService {
         int f = random.nextInt(45);
         int b = random.nextInt(42);
         int n = random.nextInt(1000);
-        return front[f] + " " + back[b] + n;
+        return front[f] + " " + back[b] + " " + n;
     }
 
     public void createKakaoUser(KakaoUserParams userParam){
