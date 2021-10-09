@@ -19,5 +19,5 @@ public class SearchFirstController {
 
     @ApiOperation(value = "검색 기본 조회", notes = "해당 타입의 검색 기본 정보를 입력한다")
     @GetMapping(value = "searchFirst/{typeName}")
-    public List<SearchFirst> getSearchFirst(@PathVariable("typeName") String typeName){ return searchFirstService.getSearchFirst(typeName); }
+    public List<SearchFirstParams> getSearchFirst(@PathVariable("typeName") String typeName){ return searchFirstService.getSearchFirst(typeName); }
 }
