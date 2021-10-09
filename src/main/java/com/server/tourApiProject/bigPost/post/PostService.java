@@ -101,7 +101,7 @@ public class PostService {
         List<Post> posts = postRepository.findByUserId(userId);
         for (Post post : posts){
             PostParams3 postParams3 = new PostParams3();
-            postParams3.setPostId(post.getPostId());
+            postParams3.setItemId(post.getPostId());
 
             List<PostImage> imageList = postImageRepository.findByPostId(post.getPostId());
             if (!imageList.isEmpty()) {
@@ -308,6 +308,7 @@ public class PostService {
             filterIdList = postIdList;
         }
 
+        if (searchKey!=null){
         searchList = postRepository.findByPostTitleContainingOrPostContentContaining(searchKey,searchKey);
         keyList = postRepository.findByPostTitleContainingOrPostContentContaining(searchKey,searchKey);
         if (!hashTagIdList.isEmpty()||!areaCodeList.isEmpty()) {
@@ -318,6 +319,11 @@ public class PostService {
                     //필터결과에 검색어 결과 없으면 필터+검색어검색결과에서 삭제
                     searchList.remove(post);
                 }
+            }
+        }
+        }else{
+            for (Long id: filterIdList){
+                searchList.add(getPost(id));
             }
         }
         for (Post post : searchList){
