@@ -328,7 +328,7 @@ public class PostService {
         }
         for (Post post : searchList){
             PostParams6 postParams6 = new PostParams6();
-            postParams6.setPostId(post.getPostId());
+            postParams6.setItemId(post.getPostId());
             postParams6.setTitle(post.getPostTitle());
             Optional<User> userOp = userRepository.findById(post.getUserId());
             if (userOp.isPresent()){
