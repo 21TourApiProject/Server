@@ -182,6 +182,8 @@ public class ObservationService {
             if (!observeImageRepository.findByObservationId(observation.getObservationId()).isEmpty()) {
                 ObserveImage observeImage = observeImageRepository.findByObservationId(observation.getObservationId()).get(0);
                 searchParams1.setThumbnail(observeImage.getImage());
+            } else {
+                searchParams1.setThumbnail(null);
             }
             List<ObserveHashTag> hashTagList = observeHashTagRepository.findByObservationId(observation.getObservationId());
             List<String> hashTagNames = new ArrayList<>();
