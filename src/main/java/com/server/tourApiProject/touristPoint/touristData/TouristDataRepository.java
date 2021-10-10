@@ -16,6 +16,6 @@ public interface TouristDataRepository extends JpaRepository<TouristData, Long> 
 
     List<TouristData> findByFirstImage(@Param("firstImage") String firstImage);
 
-    List<TouristData> findByTitleContainingOrOverviewContaining(@Param("title") String title, @Param("overview") String overview);
+    List<TouristData> findByTitleContaining(@Param("title") String title);
 
 }
