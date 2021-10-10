@@ -277,8 +277,8 @@ public class TouristDataService {
                 searchResult.add(touristDataRepository.findByContentId(contentId));
             }
 
-        } else{searchResult = touristDataRepository.findByTitleContainingOrOverviewContaining(keyword, keyword);
-            List<TouristData> keyResult = touristDataRepository.findByTitleContainingOrOverviewContaining(keyword, keyword);
+        } else{searchResult = touristDataRepository.findByTitleContaining(keyword);
+            List<TouristData> keyResult = touristDataRepository.findByTitleContaining(keyword);
 
             if (!hashTagIdList.isEmpty()||!areaCodeList.isEmpty()) {
                 //필터 받은게 없으면 그냥 검색결과 전달, 있으면 중첩 검색
