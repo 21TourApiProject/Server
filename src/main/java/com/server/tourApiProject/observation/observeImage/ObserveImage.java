@@ -26,7 +26,7 @@ public class ObserveImage {
     @Column(nullable = false)
     private Long observationId;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String image;   // 이미지 경로
 
     @Column(columnDefinition = "TEXT")
