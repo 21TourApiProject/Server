@@ -722,10 +722,8 @@ public class ExcelController {
             data.setObserveImageListId((long) row.getCell(0).getNumericCellValue());
             data.setObservationId((long) row.getCell(1).getNumericCellValue());
             data.setImage(row.getCell(2).getStringCellValue());
-            if (data.getImage() == "null")
-                data.setImage(null);
             data.setImageSource(row.getCell(3).getStringCellValue());
-            if (data.getImageSource() == "null")
+            if (data.getImageSource().equals("null"))
                 data.setImageSource(null);
             observeImageRepository.save(data);
         }
