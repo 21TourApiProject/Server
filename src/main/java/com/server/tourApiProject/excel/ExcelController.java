@@ -722,7 +722,8 @@ public class ExcelController {
             data.setObservationId((long) row.getCell(1).getNumericCellValue());
             data.setImage(row.getCell(2).getStringCellValue());
             data.setImageSource(row.getCell(3).getStringCellValue());
-
+            if (data.getImageSource().equals("null"))
+                data.setImageSource(null);
             observeImageRepository.save(data);
         }
         System.out.println("엑셀 완료");
