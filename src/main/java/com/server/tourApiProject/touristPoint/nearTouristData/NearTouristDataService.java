@@ -62,17 +62,17 @@ public class NearTouristDataService {
 
             List<String> hashTagNames= new ArrayList<>();
             List<TouristDataHashTag> hashTagList = touristDataHashTagRepository.findByContentId(data.getContentId());
+            int i = 0;
             for(TouristDataHashTag hashTag : hashTagList){
+                if(i >2)
+                    break;
                 hashTagNames.add(hashTag.getHashTagName());
+                i++;
             }
             param.setHashTagNames(hashTagNames);
             result.add(param);
         }
         return result;
-    }
-
-    public void deleteNearTouristData() {
-        nearTouristDataRepository.deleteAll();
     }
 
     public void deleteNearTouristPoint() {

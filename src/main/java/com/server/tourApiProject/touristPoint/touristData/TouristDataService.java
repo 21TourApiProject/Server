@@ -1,6 +1,5 @@
 package com.server.tourApiProject.touristPoint.touristData;
 
-import com.server.tourApiProject.myWish.MyWishParams01;
 import com.server.tourApiProject.search.Filter;
 import com.server.tourApiProject.search.SearchParams1;
 import com.server.tourApiProject.touristPoint.contentType.ContentType;
@@ -9,11 +8,13 @@ import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHash
 import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTagRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -23,7 +24,6 @@ public class TouristDataService {
 
     private final TouristDataRepository touristDataRepository;
     private final ContentTypeRepository contentTypeRepository;
-    private final TouristDataHashTagRepository touristDataHashTagRepository;
 
     public void createTouristData(TouristData touristData) {
         touristDataRepository.save(touristData);
