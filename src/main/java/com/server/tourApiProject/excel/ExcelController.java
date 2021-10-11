@@ -13,7 +13,6 @@ import com.server.tourApiProject.observation.observeHashTag.ObserveHashTagReposi
 import com.server.tourApiProject.observation.observeImage.ObserveImage;
 import com.server.tourApiProject.observation.observeImage.ObserveImageRepository;
 import com.server.tourApiProject.searchFirst.SearchFirst;
-import com.server.tourApiProject.searchFirst.SearchFirstController;
 import com.server.tourApiProject.searchFirst.SearchFirstRepository;
 import com.server.tourApiProject.star.Horoscope.Horoscope;
 import com.server.tourApiProject.star.Horoscope.HoroscopeRepository;
@@ -21,7 +20,7 @@ import com.server.tourApiProject.star.constellation.Constellation;
 import com.server.tourApiProject.star.constellation.ConstellationRepository;
 import com.server.tourApiProject.touristPoint.area.AreaParams;
 import com.server.tourApiProject.touristPoint.area.AreaService;
-import com.server.tourApiProject.touristPoint.contentType.ContentTypeParams;
+import com.server.tourApiProject.touristPoint.contentType.ContentType;
 import com.server.tourApiProject.touristPoint.contentType.ContentTypeService;
 import com.server.tourApiProject.touristPoint.nearTouristData.NearTouristData;
 import com.server.tourApiProject.touristPoint.nearTouristData.NearTouristDataRepository;
@@ -129,7 +128,7 @@ public class ExcelController {
         return "excel";
     }
 
-    @PostMapping("/excel/contentType1/read")
+    @PostMapping("/excel/contentType/read")
     public String readContentType1Excel(@RequestParam("file") MultipartFile file, Model model)
             throws IOException {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
@@ -147,49 +146,17 @@ public class ExcelController {
         Sheet worksheet = workbook.getSheetAt(0);
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
             Row row = worksheet.getRow(i);
-            ContentTypeParams data = new ContentTypeParams();
+            ContentType data = new ContentType();
 
-            data.setCode1(row.getCell(1).getStringCellValue());
-            data.setName1(row.getCell(2).getStringCellValue());
-            data.setCode2(row.getCell(3).getStringCellValue());
-            data.setName2(row.getCell(4).getStringCellValue());
-            data.setCode3(row.getCell(5).getStringCellValue());
-            data.setName3(row.getCell(6).getStringCellValue());
-
-            contentTypeService.createContentType1(data);
-        }
-        System.out.println("엑셀 완료");
-        return "excel";
-    }
-
-    @PostMapping("/excel/contentType2/read")
-    public String readContentType2Excel(@RequestParam("file") MultipartFile file, Model model)
-            throws IOException {
-        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-        if (!extension.equals("xlsx") && !extension.equals("xls")) {
-            throw new IOException("엑셀파일만 업로드 해주세요.");
-        }
-        Workbook workbook = null;
-
-        if (extension.equals("xlsx")) {
-            workbook = new XSSFWorkbook(file.getInputStream());
-        } else if (extension.equals("xls")) {
-            workbook = new HSSFWorkbook(file.getInputStream());
-        }
-
-        Sheet worksheet = workbook.getSheetAt(0);
-        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
-            Row row = worksheet.getRow(i);
-            ContentTypeParams data = new ContentTypeParams();
-
-            data.setCode1(row.getCell(1).getStringCellValue());
-            data.setName1(row.getCell(2).getStringCellValue());
-            data.setCode2(row.getCell(3).getStringCellValue());
-            data.setName2(row.getCell(4).getStringCellValue());
-            data.setCode3(row.getCell(5).getStringCellValue());
-            data.setName3(row.getCell(6).getStringCellValue());
-
-            contentTypeService.createContentType2(data);
+            data.setCat1Code(row.getCell(1).getStringCellValue());
+            data.setCat1Name(row.getCell(2).getStringCellValue());
+            data.setCat2Code(row.getCell(3).getStringCellValue());
+            data.setCat2Name(row.getCell(4).getStringCellValue());
+            data.setCat3Code(row.getCell(5).getStringCellValue());
+            data.setCat3Name(row.getCell(6).getStringCellValue());
+            data.setContentName(row.getCell(7).getStringCellValue());
+            data.setContentType((int) row.getCell(8).getNumericCellValue());
+            contentTypeService.createContentType(data);
         }
         System.out.println("엑셀 완료");
         return "excel";
