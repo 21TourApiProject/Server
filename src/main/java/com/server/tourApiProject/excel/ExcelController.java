@@ -364,7 +364,6 @@ public class ExcelController {
             Long contentId = (long) row.getCell(1).getNumericCellValue();
             Optional<TouristData> touristData = touristDataRepository.findById(contentId);
             if (touristData.isPresent()) {
-                data.setTouristDataHashTagId((long) row.getCell(0).getNumericCellValue());
                 data.setContentId(contentId);
                 data.setHashTagId((long) row.getCell(2).getNumericCellValue());
                 data.setHashTagName(row.getCell(3).getStringCellValue());

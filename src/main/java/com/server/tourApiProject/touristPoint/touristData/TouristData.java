@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.tourApiProject.touristPoint.nearTouristData.NearTouristData;
 import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTag;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.ArrayList;
