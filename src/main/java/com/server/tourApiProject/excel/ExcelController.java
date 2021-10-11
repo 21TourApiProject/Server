@@ -504,7 +504,9 @@ public class ExcelController {
             Row row = worksheet.getRow(i);
             Horoscope data = new Horoscope();
 
-            if (row.getCell(0).getNumericCellValue() == 13) break;
+            if (row.getCell(0) == null) {
+                break;
+            }
 
             data.setHorId((long) row.getCell(0).getNumericCellValue());
             data.setHorImage(row.getCell(1).getStringCellValue());
