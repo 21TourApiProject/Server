@@ -40,10 +40,10 @@ public class ConstellationController {
         return constellationService.getTodayConst();
     }
 
-    @ApiOperation(value = "별자리 상세 정보 조회", notes = "별자리 id로 별자리 상세 정보를 조회한다.")
-    @GetMapping(value = "constellation/{constId}")
-    public Constellation getDetailConst(@PathVariable("constId") Long constId) {
-        return constellationService.getDetailConst(constId);
+    @ApiOperation(value = "별자리 상세 정보 조회", notes = "별자리 이름으로 별자리 상세 정보를 조회한다.")
+    @GetMapping(value = "constellation/{constName}")
+    public Constellation getDetailConst(@PathVariable("constName") String constName) {
+        return constellationService.getDetailConst(constName);
     }
 
 }

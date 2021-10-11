@@ -10,5 +10,6 @@ public interface ConstellationRepository extends JpaRepository<Constellation, Lo
 
     List<Constellation> findByStartDate2LessThanEqualAndEndDate2GreaterThanEqual(@Param("startDate2") String startDate2, @Param("endDate2") String endDate2);
 
+    Constellation findByConstName(@Param("constName") String constName);
 }
 
