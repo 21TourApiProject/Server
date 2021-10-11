@@ -34,13 +34,13 @@ public class Constellation {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String constMtd;    // 별자리 관측법
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String constTravel; // 여행 취향
 
     @Column(nullable = false)
     private String constBestMonth; // 가장 보기 좋은 달
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String constPersonality; // 별자리 성격
     private String constPeriod; // 별자리 기간(성격에 포함됨)
 
