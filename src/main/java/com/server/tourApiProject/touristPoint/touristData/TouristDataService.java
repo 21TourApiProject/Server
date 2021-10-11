@@ -202,6 +202,9 @@ public class TouristDataService {
         List<Long> areaCodeList = filter.getAreaCodeList();    //지역 필터 리스트
         List<Long> hashTagIdList= filter.getHashTagIdList();    //해시태그 필터 리스트
 
+        if (keyword == null)
+            keyword = "";
+
         HashMap<String, String> cat3Map = new HashMap<>();
         List<ContentType> all = contentTypeRepository.findAll();
         for(ContentType contentType : all){
@@ -214,6 +217,7 @@ public class TouristDataService {
                 hashMap.put(id, true);
             }
         }
+        System.out.println(hashMap.size());
 
         List<TouristData> result = new ArrayList<>();
         List<SearchParams1> resultParams = new ArrayList<>();   //결과
