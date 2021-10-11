@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Slf4j
 @Api(tags = {"6.2 별자리 운세"})
 @RestController
@@ -21,5 +23,11 @@ public class HoroscopeController {
     @GetMapping(value = "horoscope/{horId}")
     public Horoscope getHoroscopes(@PathVariable("horId") Long horId) {
         return horoscopeService.getHoroscope(horId);
+    }
+
+    @ApiOperation(value = "모든 별자리 운세 조회", notes = "모든 별자리 운세를 조회한다")
+    @GetMapping(value = "horoscopes")
+    public List<Horoscope> getAllHoroscope() {
+        return horoscopeService.getAllHoroscopes();
     }
 }
