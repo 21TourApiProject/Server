@@ -445,40 +445,39 @@ public class ExcelController {
 
             data.setConstId((long) row.getCell(0).getNumericCellValue());
             data.setConstName(row.getCell(1).getStringCellValue());
-            data.setConstImage(row.getCell(2).getStringCellValue());
-            data.setConstStory(row.getCell(3).getStringCellValue());
-            data.setConstMtd(row.getCell(4).getStringCellValue());
-            data.setConstBestMonth(row.getCell(5).getStringCellValue());
-            data.setConstPersonality(row.getCell(6).getStringCellValue());
+            data.setConstStory(row.getCell(2).getStringCellValue());
+            data.setConstMtd(row.getCell(3).getStringCellValue());
+            data.setConstBestMonth(row.getCell(4).getStringCellValue());
+            data.setConstPersonality(row.getCell(5).getStringCellValue());
             if (data.getConstPersonality().equals("null"))
                 data.setConstPersonality(null);
-            data.setConstTravel(row.getCell(7).getStringCellValue());
+            data.setConstTravel(row.getCell(6).getStringCellValue());
             if (data.getConstTravel().equals("null"))
                 data.setConstTravel(null);
-            data.setConstPeriod(row.getCell(8).getStringCellValue());
+            data.setConstPeriod(row.getCell(7).getStringCellValue());
             if (data.getConstPeriod().equals("null"))
                 data.setConstPeriod(null);
-            data.setConstFeature1(row.getCell(9).getStringCellValue());
+            data.setConstFeature1(row.getCell(8).getStringCellValue());
             if (data.getConstFeature1().equals("null"))
                 data.setConstFeature1(null);
-            data.setConstFeature2(row.getCell(10).getStringCellValue());
+            data.setConstFeature2(row.getCell(9).getStringCellValue());
             if (data.getConstFeature2().equals("null"))
                 data.setConstFeature2(null);
-            data.setConstFeature3(row.getCell(11).getStringCellValue());
+            data.setConstFeature3(row.getCell(10).getStringCellValue());
             if (data.getConstFeature3().equals("null"))
                 data.setConstFeature3(null);
-            data.setConstGuard(row.getCell(12).getStringCellValue());
+            data.setConstGuard(row.getCell(11).getStringCellValue());
             if (data.getConstGuard().equals("null"))
                 data.setConstGuard(null);
-            data.setStartDate1(row.getCell(13).getStringCellValue());
-            data.setEndDate1(row.getCell(14).getStringCellValue());
-            data.setStartDate2(row.getCell(15).getStringCellValue());
+            data.setStartDate1(row.getCell(12).getStringCellValue());
+            data.setEndDate1(row.getCell(13).getStringCellValue());
+            data.setStartDate2(row.getCell(14).getStringCellValue());
             if (data.getStartDate2().equals("null"))
                 data.setStartDate2(null);
-            data.setEndDate2(row.getCell(16).getStringCellValue());
+            data.setEndDate2(row.getCell(15).getStringCellValue());
             if (data.getEndDate2().equals("null"))
                 data.setEndDate2(null);
-
+            data.setConstEng(row.getCell(16).getStringCellValue());
             constellationRepository.save(data);
         }
         System.out.println("엑셀 완료");
@@ -752,7 +751,7 @@ public class ExcelController {
         Sheet worksheet = workbook.getSheetAt(0);
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
             Row row = worksheet.getRow(i);
-            if(row.getCell(0) == null){
+            if (row.getCell(0) == null) {
                 break;
             }
             HashTag data = new HashTag();
@@ -785,13 +784,13 @@ public class ExcelController {
         System.out.println(worksheet.getPhysicalNumberOfRows());
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
             Row row = worksheet.getRow(i);
-            if(row.getCell(0) == null){
+            if (row.getCell(0) == null) {
                 break;
             }
             SearchFirst data = new SearchFirst();
 
             data.setTypeName(row.getCell(0).getStringCellValue());
-            data.setObservationId((long)row.getCell(1).getNumericCellValue());
+            data.setObservationId((long) row.getCell(1).getNumericCellValue());
             data.setObservationName(row.getCell(2).getStringCellValue());
 
             searchFirstRepository.save(data);

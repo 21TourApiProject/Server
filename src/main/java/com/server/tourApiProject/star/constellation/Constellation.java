@@ -22,22 +22,25 @@ public class Constellation {
     @Column(nullable = false)
     private String constName;  //별자리 이름
 
-    @Column(nullable = false)
-    private String constImage;  //별자리 이미지
+//    @Column(nullable = false)
+//    private String constBigImage;  //별자리 큰 이미지
+//
+//    @Column(nullable = false)
+//    private String constSmallImage;  //별자리 작은 이미지
 
-    @Column(length = 1000, nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String constStory;    // 별자리 설화
 
-    @Column(length = 1000, nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String constMtd;    // 별자리 관측법
 
-    @Column(length = 1000)
+    @Column(columnDefinition = "TEXT")
     private String constTravel; // 여행 취향
 
     @Column(nullable = false)
     private String constBestMonth; // 가장 보기 좋은 달
 
-    @Column(length = 1000)
+    @Column(columnDefinition = "TEXT")
     private String constPersonality; // 별자리 성격
     private String constPeriod; // 별자리 기간(성격에 포함됨)
 
@@ -66,6 +69,10 @@ public class Constellation {
     @DateTimeFormat(pattern = "MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd", timezone = "Asia/Seoul")
     private String endDate2;    // 별자리가 보이기 끝나는 날짜
+
+    @Column(nullable = false)
+    private String constEng;  //별자리 이름
+
 
 //    @DateTimeFormat(pattern = "MM-dd")
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd", timezone = "Asia/Seoul")

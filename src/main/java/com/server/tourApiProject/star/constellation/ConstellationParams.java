@@ -9,6 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 public class ConstellationParams {
     private String constName;
-    private String constImage;
     private Long constId;
+    private String constEng;
 }
