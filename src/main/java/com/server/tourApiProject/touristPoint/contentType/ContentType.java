@@ -1,6 +1,5 @@
 package com.server.tourApiProject.touristPoint.contentType;
 
-import io.swagger.models.auth.In;
 import lombok.*;
 
 import javax.persistence.*;

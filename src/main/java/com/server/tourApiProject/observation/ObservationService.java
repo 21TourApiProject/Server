@@ -129,20 +129,28 @@ public class ObservationService {
             filterIdList = hashtagResult;
         }
 
-        List<Observation> keyResult = new ArrayList<>();    //검색결과 받아올 리스트
-        searchResult = observationRepository.findByObservationNameContainingOrOutlineContaining(searchKey, searchKey);
-        keyResult = observationRepository.findByObservationNameContainingOrOutlineContaining(searchKey, searchKey);
+        if (searchKey != null) {
+            List<Observation> keyResult = new ArrayList<>();    //검색결과 받아올 리스트
+            searchResult = observationRepository.findByObservationNameContainingOrOutlineContaining(searchKey, searchKey);
+            keyResult = observationRepository.findByObservationNameContainingOrOutlineContaining(searchKey, searchKey);
 
-        if (!hashTagIdList.isEmpty()||!areaCodeList.isEmpty()) {
-            //필터 받은게 없으면 그냥 검색결과 전달, 있으면 중첩 검색
-            for (Observation observation : keyResult) {
-                //전체 검색어 결과 돌면서
-                if (!filterIdList.contains(observation.getObservationId())) {
-                    //필터결과에 검색어 결과 없으면 필터+검색어검색결과에서 삭제
-                    searchResult.remove(observation);
+            if (!hashTagIdList.isEmpty()||!areaCodeList.isEmpty()) {
+                //필터 받은게 없으면 그냥 검색결과 전달, 있으면 중첩 검색
+                for (Observation observation : keyResult) {
+                    //전체 검색어 결과 돌면서
+                    if (!filterIdList.contains(observation.getObservationId())) {
+                        //필터결과에 검색어 결과 없으면 필터+검색어검색결과에서 삭제
+                        searchResult.remove(observation);
+                    }
                 }
             }
         }
+        else{
+            for (Long id : filterIdList) {
+                searchResult.add(getObservation(id));
+            }
+        }
+
         if (searchResult.get(0).getObservationId() == 0) {
             //0번이면 나만의 관측지 더미데이터라서 삭제
             searchResult.remove(0);
@@ -174,6 +182,8 @@ public class ObservationService {
             if (!observeImageRepository.findByObservationId(observation.getObservationId()).isEmpty()) {
                 ObserveImage observeImage = observeImageRepository.findByObservationId(observation.getObservationId()).get(0);
                 searchParams1.setThumbnail(observeImage.getImage());
+            } else {
+                searchParams1.setThumbnail(null);
             }
             List<ObserveHashTag> hashTagList = observeHashTagRepository.findByObservationId(observation.getObservationId());
             List<String> hashTagNames = new ArrayList<>();

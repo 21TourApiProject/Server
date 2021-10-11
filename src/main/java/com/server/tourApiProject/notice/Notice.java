@@ -1,11 +1,8 @@
 package com.server.tourApiProject.notice;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Builder
 @Getter

@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostParams3 {
-    private Long postId;
+    private Long itemId;
     private String thumbnail;
     private String title;
     private String nickName;

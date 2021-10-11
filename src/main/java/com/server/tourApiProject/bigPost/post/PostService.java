@@ -4,7 +4,6 @@ import com.server.tourApiProject.bigPost.postHashTag.PostHashTag;
 import com.server.tourApiProject.bigPost.postHashTag.PostHashTagRepository;
 import com.server.tourApiProject.bigPost.postImage.PostImage;
 import com.server.tourApiProject.bigPost.postImage.PostImageRepository;
-import com.server.tourApiProject.myHashTag.MyHashTag;
 import com.server.tourApiProject.myHashTag.MyHashTagRepository;
 import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.ObservationRepository;
@@ -102,7 +101,7 @@ public class PostService {
         List<Post> posts = postRepository.findByUserId(userId);
         for (Post post : posts){
             PostParams3 postParams3 = new PostParams3();
-            postParams3.setPostId(post.getPostId());
+            postParams3.setItemId(post.getPostId());
 
             List<PostImage> imageList = postImageRepository.findByPostId(post.getPostId());
             if (!imageList.isEmpty()) {
@@ -112,17 +111,16 @@ public class PostService {
                 postParams3.setThumbnail(null);
             }
             postParams3.setTitle(post.getPostTitle());
-            Optional<User> userOp = userRepository.findById(post.getUserId());
-            if (userOp.isPresent()){
-                User user = userOp.get();
-                postParams3.setNickName(user.getNickName());
-                postParams3.setProfileImage(user.getProfileImage());
-            }
+
+            User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
+            postParams3.setNickName(user.getNickName());
+            postParams3.setProfileImage(user.getProfileImage());
+
             List<String> hashTagName = new ArrayList<>();
             List<PostHashTag> list = postHashTagRepository.findByPostId(post.getPostId());
             int i = 0;
             for(PostHashTag postHashTag : list){
-                if(i > 3)
+                if(i > 2)
                     break;
                 hashTagName.add(postHashTag.getHashTagName());
                 i++;
@@ -310,6 +308,7 @@ public class PostService {
             filterIdList = postIdList;
         }
 
+        if (searchKey!=null){
         searchList = postRepository.findByPostTitleContainingOrPostContentContaining(searchKey,searchKey);
         keyList = postRepository.findByPostTitleContainingOrPostContentContaining(searchKey,searchKey);
         if (!hashTagIdList.isEmpty()||!areaCodeList.isEmpty()) {
@@ -322,9 +321,14 @@ public class PostService {
                 }
             }
         }
+        }else{
+            for (Long id: filterIdList){
+                searchList.add(getPost(id));
+            }
+        }
         for (Post post : searchList){
             PostParams6 postParams6 = new PostParams6();
-            postParams6.setPostId(post.getPostId());
+            postParams6.setItemId(post.getPostId());
             postParams6.setTitle(post.getPostTitle());
             Optional<User> userOp = userRepository.findById(post.getUserId());
             if (userOp.isPresent()){

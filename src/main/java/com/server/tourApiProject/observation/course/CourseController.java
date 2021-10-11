@@ -1,9 +1,5 @@
 package com.server.tourApiProject.observation.course;
 
-import com.server.tourApiProject.observation.ObservationService;
-import com.server.tourApiProject.observation.observeFee.ObserveFeeService;
-import com.server.tourApiProject.observation.observeHashTag.ObserveHashTagService;
-import com.server.tourApiProject.observation.observeImage.ObserveImageService;
 import com.server.tourApiProject.touristPoint.touristData.TouristDataCourseParams;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

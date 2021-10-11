@@ -13,7 +13,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import retrofit2.http.POST;
 
 import java.util.List;
 
@@ -43,7 +42,7 @@ public class PostController {
     @ApiOperation(value = "게시물정보 삭제", notes = "게시물 정보를 삭제한다")
     @DeleteMapping(value = "post/{userId}")
     public void deletePost(@PathVariable("userId") Long userId){
-//        postService.deletePost(userId);
+        postService.deletePost(userId);
     }
 
     @ApiOperation(value = "게시물 해시태그 조회", notes = "게시물 id로 해당 게시물의 게시물 해시태그를 조회한다")
@@ -79,10 +78,6 @@ public class PostController {
     @ApiOperation(value = "관측지 게시물 정보 조회", notes = "해당 관측지의 게시물을 조회한다")
     @GetMapping(value = "post/observation/{observationId}")
     public List<PostParams5> getRelatePost(@PathVariable("observationId")Long observationId){ return postService.getRelatePost(observationId); }
-
-    @ApiOperation(value = "게시물 정보 필터로 조회", notes = "필터로 걸러진 게시물을 조회한다")
-    @PostMapping(value = "search/post")
-    public List<PostParams6> getPostWithFilter(@RequestBody SearchKey searchKey){ return postService.getPostDataWithFilter(searchKey.getFilter(),searchKey.getKeyword()); }
 
     @ApiOperation(value = "메인페이지 게시물 정보 조회", notes = "메인페이지에 띄울 모든 게시물을 조회한다")
     @PostMapping(value = "post/main")

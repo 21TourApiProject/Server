@@ -191,9 +191,8 @@ public class MyWishService {
 
             myWishParams2.setTitle(post.getPostTitle());
 
-            User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
-            myWishParams2.setWriter(user.getNickName());
-            myWishParams2.setProfileImage(user.getProfileImage());
+            myWishParams2.setNickName(post.getUser().getNickName());
+            myWishParams2.setProfileImage(post.getUser().getProfileImage());
 
             List<PostHashTag> hashTagList = postHashTagRepository.findByPostId(postId);
             int i = 0;

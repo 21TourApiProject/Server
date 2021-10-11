@@ -1,7 +1,6 @@
 package com.server.tourApiProject.notice;
 
 import lombok.*;
-import java.time.LocalDate;
 
 @Builder
 @Getter
