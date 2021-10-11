@@ -111,10 +111,4 @@ public class TouristDataController {
         return touristDataService.getId4Image();
     }
 
-    @ApiOperation(value = "필터로 관광지 조희", notes = "해당 필터에 해당되는 관광지 정보를 조희한다")
-    @PostMapping(value = "touristData/search")
-    public List<MyWishParams01> getTouristDataWithFilter(@RequestBody Filter filter){
-        return touristDataService.getTouristDataWithFilter(filter);
-    }
-
 }
