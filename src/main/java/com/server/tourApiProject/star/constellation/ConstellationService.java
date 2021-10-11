@@ -41,8 +41,8 @@ public class ConstellationService {
 
             ConstellationParams params = new ConstellationParams();
             params.setConstId(constellation.getConstId());
-            params.setConstImage(constellation.getConstImage());
             params.setConstName(constellation.getConstName());
+            params.setConstEng(constellation.getConstEng());
             result.add(params);
         }
         return result;
