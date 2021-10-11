@@ -202,7 +202,7 @@ public class TouristDataService {
         List<Long> areaCodeList = filter.getAreaCodeList();    //지역 필터 리스트
         List<Long> hashTagIdList= filter.getHashTagIdList();    //해시태그 필터 리스트
 
-        if (keyword.isEmpty())
+        if (keyword == null)
             keyword = "";
 
         HashMap<String, String> cat3Map = new HashMap<>();
