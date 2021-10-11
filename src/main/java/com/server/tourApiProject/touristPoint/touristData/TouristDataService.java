@@ -1,6 +1,5 @@
 package com.server.tourApiProject.touristPoint.touristData;
 
-import com.server.tourApiProject.myWish.MyWishParams01;
 import com.server.tourApiProject.search.Filter;
 import com.server.tourApiProject.search.SearchParams1;
 import com.server.tourApiProject.touristPoint.contentType.ContentType;
@@ -9,11 +8,13 @@ import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHash
 import com.server.tourApiProject.touristPoint.touristDataHashTag.TouristDataHashTagRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -23,7 +24,6 @@ public class TouristDataService {
 
     private final TouristDataRepository touristDataRepository;
     private final ContentTypeRepository contentTypeRepository;
-    private final TouristDataHashTagRepository touristDataHashTagRepository;
 
     public void createTouristData(TouristData touristData) {
         touristDataRepository.save(touristData);
@@ -230,7 +230,21 @@ public class TouristDataService {
             SearchParams1 searchParams1 = new SearchParams1();
             searchParams1.setItemId(touristData.getContentId());
             searchParams1.setTitle(touristData.getTitle());
-            searchParams1.setAddress(touristData.getAddr());
+
+            //주소를 두단어까지 줄임
+            String address = touristData.getAddr();
+            int i = address.indexOf(' ');
+            if (i != -1){
+                int j = address.indexOf(' ', i+1);
+                if(j != -1){
+                    searchParams1.setAddress(touristData.getAddr().substring(0, j));
+                } else{
+                    searchParams1.setAddress(touristData.getAddr());
+                }
+            } else{
+                searchParams1.setAddress(touristData.getAddr());
+            }
+
             searchParams1.setLatitude(touristData.getMapY());
             searchParams1.setLongitude(touristData.getMapX());
             searchParams1.setIntro(touristData.getOverviewSim());
@@ -253,13 +267,13 @@ public class TouristDataService {
             if(hashTagIdList.size() != 0 && isHashTagNoMatch)
                 continue;
 
-            int i = 0;
+            int j = 0;
             List<String> hashTagNames = new ArrayList<>();
             for (TouristDataHashTag hashTag : touristDataHashTags){
-                if (i > 2)
+                if (j > 2)
                     break;
                 hashTagNames.add(hashTag.getHashTagName());
-                i++;
+                j++;
             }
             searchParams1.setHashTagNames(hashTagNames);
             resultParams.add(searchParams1);
