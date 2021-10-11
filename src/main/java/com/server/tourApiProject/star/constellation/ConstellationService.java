@@ -73,8 +73,8 @@ public class ConstellationService {
         return getConstellationParams(result, resultAll);
     }
 
-    public Constellation getDetailConst(Long constId) {
-        Constellation constellation = constellationRepository.findById(constId).orElseThrow(IllegalAccessError::new);
+    public Constellation getDetailConst(String constName) {
+        Constellation constellation = constellationRepository.findByConstName(constName);
         return constellation;
     }
 }
