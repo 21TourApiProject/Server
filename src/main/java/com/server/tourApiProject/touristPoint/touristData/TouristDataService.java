@@ -228,9 +228,11 @@ public class TouristDataService {
         else{
             result = touristDataRepository.findByAreaCodesTitle(keyword, areaCodeList);
         }
-
+        int num = 0;
+        int max = 200;
         for (TouristData touristData : result){
-
+            if (num >= max)
+                break;
             SearchParams1 searchParams1 = new SearchParams1();
             searchParams1.setItemId(touristData.getContentId());
             searchParams1.setTitle(touristData.getTitle());
@@ -270,6 +272,8 @@ public class TouristDataService {
             }
             if(hashTagIdList.size() != 0 && isHashTagNoMatch)
                 continue;
+
+            num ++;
 
             int j = 0;
             List<String> hashTagNames = new ArrayList<>();
