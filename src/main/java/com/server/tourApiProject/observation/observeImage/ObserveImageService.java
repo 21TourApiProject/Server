@@ -26,6 +26,18 @@ public class ObserveImageService {
         return observeImagePathList;
     }
 
+    public List<ObserveImageParams2> getObserveImageInfo(Long observationId) {
+        List<ObserveImageParams2> observeImageInfos =new ArrayList<>();
+        List<ObserveImage> observeImageList = observeImageRepository.findByObservationId(observationId);
+        for(ObserveImage p : observeImageList) {
+            ObserveImageParams2 info = new ObserveImageParams2();
+            info.setImage(p.getImage());
+            info.setImageSource(p.getImageSource());
+            observeImageInfos.add(info);
+        }
+        return observeImageInfos;
+    }
+
 
 
 }
