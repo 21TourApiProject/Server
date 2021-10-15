@@ -4,7 +4,7 @@ import com.server.tourApiProject.bigPost.postHashTag.PostHashTag;
 import com.server.tourApiProject.bigPost.postHashTag.PostHashTagRepository;
 import com.server.tourApiProject.bigPost.postImage.PostImage;
 import com.server.tourApiProject.bigPost.postImage.PostImageRepository;
-import com.server.tourApiProject.myHashTag.MyHashTagRepository;
+import com.server.tourApiProject.myWish.MyWishRepository;
 import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.ObservationRepository;
 import com.server.tourApiProject.search.Filter;
@@ -30,7 +30,7 @@ public class PostService {
     private final ObservationRepository observationRepository;
     private final PostImageRepository postImageRepository;
     private final PostHashTagRepository postHashTagRepository;
-    private final MyHashTagRepository myHashTagRepository;
+    private final MyWishRepository myWishRepository;
 
     public Post getPost(Long postId){
         Post post = postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
@@ -92,8 +92,9 @@ public class PostService {
         }
         return result;
     }
-    public void deletePost(Long userId){
-        postRepository.deleteById(userId);
+    public void deletePost(Long postId){
+        postRepository.deleteById(postId);
+        myWishRepository.findByItemIdAndWishType(postId,2);
     }
 
     public List<PostParams3> getMyPost(Long userId) {

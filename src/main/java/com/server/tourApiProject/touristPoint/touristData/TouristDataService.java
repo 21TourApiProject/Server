@@ -229,7 +229,7 @@ public class TouristDataService {
             result = touristDataRepository.findByAreaCodesTitle(keyword, areaCodeList);
         }
         int num = 0;
-        int max = 200;
+        int max = 100;
         for (TouristData touristData : result){
             if (num >= max)
                 break;
