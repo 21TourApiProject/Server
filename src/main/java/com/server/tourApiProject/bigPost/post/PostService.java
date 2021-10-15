@@ -213,6 +213,9 @@ public class PostService {
                         mainHashTagName.add(postHashTag.getHashTagName());
                     }
                     postParams4.setHashTags(mainHashTagName);
+                    if(post.getOptionHashTag()!=null){ postParams4.setOptionHashTag(post.getOptionHashTag());}
+                    if(post.getOptionHashTag2()!=null){ postParams4.setOptionHashTag2(post.getOptionHashTag2());}
+                    if(post.getOptionHashTag3()!=null){ postParams4.setOptionHashTag3(post.getOptionHashTag3());}
                 } else {
                     postParams4.setHashTags(null);
                     postParams4.setOptionHashTag(post.getOptionHashTag());
@@ -243,6 +246,9 @@ public class PostService {
                     hashTagName.add(postHashTag.getHashTagName());
                 }
                 hashPostParams.setHashTags(hashTagName);
+                if(hashPost.getOptionHashTag()!=null){ hashPostParams.setOptionHashTag(hashPost.getOptionHashTag());}
+                if(hashPost.getOptionHashTag2()!=null){ hashPostParams.setOptionHashTag2(hashPost.getOptionHashTag2());}
+                if(hashPost.getOptionHashTag3()!=null){ hashPostParams.setOptionHashTag3(hashPost.getOptionHashTag3());}
             } else {
                 hashPostParams.setHashTags(null);
                 hashPostParams.setOptionHashTag(hashPost.getOptionHashTag());
