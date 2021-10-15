@@ -4,6 +4,7 @@ import com.server.tourApiProject.bigPost.postHashTag.PostHashTag;
 import com.server.tourApiProject.bigPost.postHashTag.PostHashTagRepository;
 import com.server.tourApiProject.bigPost.postImage.PostImage;
 import com.server.tourApiProject.bigPost.postImage.PostImageRepository;
+import com.server.tourApiProject.myWish.MyWish;
 import com.server.tourApiProject.myWish.MyWishRepository;
 import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.ObservationRepository;
@@ -94,7 +95,7 @@ public class PostService {
     }
     public void deletePost(Long postId){
         postRepository.deleteById(postId);
-        myWishRepository.findByItemIdAndWishType(postId,2);
+        myWishRepository.deleteByItemIdAndWishType(postId, 2);
     }
 
     public List<PostParams3> getMyPost(Long userId) {

@@ -14,5 +14,5 @@ public interface MyWishRepository extends JpaRepository<MyWish, Long> {
 
     Optional<MyWish> findByUserIdAndItemIdAndWishType(@Param("userId") Long userId, @Param("itemId") Long itemId, @Param("wishType") Integer wishType);
 
-    List<MyWish> findByItemIdAndWishType(@Param("itemId") Long itemId, @Param("wishType") Integer wishType);
+    void deleteByItemIdAndWishType(@Param("itemId") Long itemId, @Param("wishType") Integer wishType);
 }
