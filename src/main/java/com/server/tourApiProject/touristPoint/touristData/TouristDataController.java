@@ -1,7 +1,5 @@
 package com.server.tourApiProject.touristPoint.touristData;
 
-import com.server.tourApiProject.myWish.MyWishParams01;
-import com.server.tourApiProject.search.Filter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

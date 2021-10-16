@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -217,9 +218,9 @@ public class TouristDataService {
                 hashMap.put(id, true);
             }
         }
-        System.out.println(hashMap.size());
 
-        List<TouristData> result = new ArrayList<>();
+
+        List<TouristData> result;
         List<SearchParams1> resultParams = new ArrayList<>();   //결과
 
         if (areaCodeList.size() == 0){
@@ -288,5 +289,11 @@ public class TouristDataService {
         }
 
         return resultParams;
+    }
+
+    public List<SearchParams1> getTouristPointWithFilterTest(Filter filter, String keyword) {
+        List<SearchParams1> result = new ArrayList<>();
+        return result;
+
     }
 }
