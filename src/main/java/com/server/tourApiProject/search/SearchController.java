@@ -43,10 +43,4 @@ public class SearchController {
         return postService.getPostDataWithFilter(searchKey.getFilter(),searchKey.getKeyword());
     }
 
-    @ApiOperation(value = "관광지 test ", notes = "test")
-    @PostMapping(value = "search/touristPointTest")
-    public List<SearchParams1> getTouristPointWithFilterTest(@RequestBody SearchKey searchKey){
-        return touristDataService.getTouristPointWithFilterTest(searchKey.getFilter(), searchKey.getKeyword());
-    }
-
 }
