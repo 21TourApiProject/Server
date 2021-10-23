@@ -13,4 +13,7 @@ public class HoroscopeParams {
     private String horKrTitle;
     private String horPeriod;
     private String horDesc;
+    private String horGuard;
+    private String horPersonality;
+    private String horTravel;
 }

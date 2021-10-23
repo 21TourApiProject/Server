@@ -448,36 +448,24 @@ public class ExcelController {
             data.setConstStory(row.getCell(2).getStringCellValue());
             data.setConstMtd(row.getCell(3).getStringCellValue());
             data.setConstBestMonth(row.getCell(4).getStringCellValue());
-            data.setConstPersonality(row.getCell(5).getStringCellValue());
-            if (data.getConstPersonality().equals("null"))
-                data.setConstPersonality(null);
-            data.setConstTravel(row.getCell(6).getStringCellValue());
-            if (data.getConstTravel().equals("null"))
-                data.setConstTravel(null);
-            data.setConstPeriod(row.getCell(7).getStringCellValue());
-            if (data.getConstPeriod().equals("null"))
-                data.setConstPeriod(null);
-            data.setConstFeature1(row.getCell(8).getStringCellValue());
+            data.setConstFeature1(row.getCell(5).getStringCellValue());
             if (data.getConstFeature1().equals("null"))
                 data.setConstFeature1(null);
-            data.setConstFeature2(row.getCell(9).getStringCellValue());
+            data.setConstFeature2(row.getCell(6).getStringCellValue());
             if (data.getConstFeature2().equals("null"))
                 data.setConstFeature2(null);
-            data.setConstFeature3(row.getCell(10).getStringCellValue());
+            data.setConstFeature3(row.getCell(7).getStringCellValue());
             if (data.getConstFeature3().equals("null"))
                 data.setConstFeature3(null);
-            data.setConstGuard(row.getCell(11).getStringCellValue());
-            if (data.getConstGuard().equals("null"))
-                data.setConstGuard(null);
-            data.setStartDate1(row.getCell(12).getStringCellValue());
-            data.setEndDate1(row.getCell(13).getStringCellValue());
-            data.setStartDate2(row.getCell(14).getStringCellValue());
+            data.setStartDate1(row.getCell(8).getStringCellValue());
+            data.setEndDate1(row.getCell(9).getStringCellValue());
+            data.setStartDate2(row.getCell(10).getStringCellValue());
             if (data.getStartDate2().equals("null"))
                 data.setStartDate2(null);
-            data.setEndDate2(row.getCell(15).getStringCellValue());
+            data.setEndDate2(row.getCell(11).getStringCellValue());
             if (data.getEndDate2().equals("null"))
                 data.setEndDate2(null);
-            data.setConstEng(row.getCell(16).getStringCellValue());
+            data.setConstEng(row.getCell(12).getStringCellValue());
             constellationRepository.save(data);
         }
         System.out.println("엑셀 완료");
@@ -525,6 +513,9 @@ public class ExcelController {
             data.setHorDesc10(row.getCell(14).getStringCellValue());
             data.setHorDesc11(row.getCell(15).getStringCellValue());
             data.setHorDesc12(row.getCell(16).getStringCellValue());
+            data.setHorGuard(row.getCell(17).getStringCellValue());
+            data.setHorPersonality(row.getCell(18).getStringCellValue());
+            data.setHorTravel(row.getCell(19).getStringCellValue());
 
             horoscopeRepository.save(data);
         }

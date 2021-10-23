@@ -63,4 +63,13 @@ public class Horoscope {
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String horDesc12;   //12월 별자리 운세
+
+    private String horGuard; // 수호성
+
+    @Column(columnDefinition = "TEXT")
+    private String horPersonality; // 별자리 성격
+
+    @Column(columnDefinition = "TEXT")
+    private String horTravel; // 여행 취향
+
 }
