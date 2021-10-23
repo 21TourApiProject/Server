@@ -4,6 +4,7 @@ import com.server.tourApiProject.observation.course.CourseService;
 import com.server.tourApiProject.observation.observeFee.ObserveFee;
 import com.server.tourApiProject.observation.observeFee.ObserveFeeService;
 import com.server.tourApiProject.observation.observeHashTag.ObserveHashTagService;
+import com.server.tourApiProject.observation.observeImage.ObserveImageParams2;
 import com.server.tourApiProject.observation.observeImage.ObserveImageService;
 import com.server.tourApiProject.touristPoint.touristData.TouristDataCourseParams;
 import io.swagger.annotations.Api;
@@ -46,6 +47,12 @@ public class ObservationController {
     @GetMapping(value = "observation/{observationId}/observeImage")
     public List<String> getObserveImagePath(@PathVariable("observationId") Long observationId){
         return observeImageService.getObserveImage(observationId);
+    }
+
+    @ApiOperation(value = "관측지 이미지 정보 조회", notes = "관측지 이미지경로와 출처를 id로 조회한다")
+    @GetMapping(value = "observation/{observationId}/observeImageInfo")
+    public List<ObserveImageParams2> getObserveImageInfo(@PathVariable("observationId") Long observationId){
+        return observeImageService.getObserveImageInfo(observationId);
     }
 
     @ApiOperation(value = "관측지 해쉬태그 조회 ", notes = "관측지id로 해쉬태그를 조회한다")

@@ -106,8 +106,6 @@ public class ObservationService {
         if (!areaCodeList.isEmpty()) {
             for (Long areaCode : areaCodeList) {
                 List<Observation> observationList = observationRepository.findByAreaCode(areaCode);
-                //관측지에 아직 지역코드 추가 안해서 아래줄로 대체해 놓았음
-//                List<Observation> observationList = observationRepository.findAll();
                 if (hashTagIdList.isEmpty()) {
                     //해쉬태그 없으면 지역결과 전부추가
                     for (Observation observation : observationList) {
@@ -145,19 +143,13 @@ public class ObservationService {
                 }
             }
         }
-        else{
-            for (Long id : filterIdList) {
-                searchResult.add(getObservation(id));
-            }
-        }
 
-        if (searchResult.get(0).getObservationId() == 0) {
-            //0번이면 나만의 관측지 더미데이터라서 삭제
-            searchResult.remove(0);
-        }
 
         //결과 param에 넣음
         for(Observation observation : searchResult){
+
+            if(observation.getObservationId()==999)
+                continue;
             SearchParams1 searchParams1 = new SearchParams1();
             searchParams1.setItemId(observation.getObservationId());
             searchParams1.setTitle(observation.getObservationName());

@@ -40,9 +40,9 @@ public class PostController {
         return postService.createPost(observePointName,postParams);
     }
     @ApiOperation(value = "게시물정보 삭제", notes = "게시물 정보를 삭제한다")
-    @DeleteMapping(value = "post/{userId}")
-    public void deletePost(@PathVariable("userId") Long userId){
-        postService.deletePost(userId);
+    @DeleteMapping(value = "post/{postId}")
+    public void deletePost(@PathVariable("postId") Long postId){
+        postService.deletePost(postId);
     }
 
     @ApiOperation(value = "게시물 해시태그 조회", notes = "게시물 id로 해당 게시물의 게시물 해시태그를 조회한다")

@@ -18,15 +18,9 @@ public class ContentTypeController {
 
     private final ContentTypeService contentTypeService;
 
-    @ApiOperation(value = "서비스 정보 입력(관광지)", notes = "관광지 서비스 정보를 입력한다")
-    @PostMapping(value = "contentType/touristSpot")
-    public void createContentType1(@RequestBody ContentTypeParams contentTypeParams){
-        contentTypeService.createContentType1(contentTypeParams);
-    }
-
-    @ApiOperation(value = "서비스 정보 입력(음식)", notes = "음식 서비스 정보를 입력한다")
-    @PostMapping(value = "contentType/food")
-    public void createContentType2(@RequestBody ContentTypeParams contentTypeParams){
-        contentTypeService.createContentType2(contentTypeParams);
+    @ApiOperation(value = "서비스 정보 입력", notes = "관광지 서비스 정보를 입력한다")
+    @PostMapping(value = "contentType")
+    public void createContentType(@RequestBody ContentType contentType){
+        contentTypeService.createContentType(contentType);
     }
 }

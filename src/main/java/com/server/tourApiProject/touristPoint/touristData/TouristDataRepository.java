@@ -18,6 +18,9 @@ public interface TouristDataRepository extends JpaRepository<TouristData, Long> 
 
     List<TouristData> findByTitleContaining(@Param("title") String title);
 
+    @Query(value = "select DISTINCT h from TouristData h join fetch h.touristDataHashTags")
+    List<TouristData> findAllJoinFetch();
+
     List<TouristData> findByFirstImage(@Param("firstImage") String firstImage);
 
 }
