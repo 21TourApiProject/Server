@@ -171,6 +171,7 @@ public class ObservationService {
             searchParams1.setLongitude(observation.getLongitude());
             searchParams1.setIntro(observation.getIntro());
             searchParams1.setContentType(observation.getObserveType());
+            searchParams1.setLight(observation.getLight());
             if (!observeImageRepository.findByObservationId(observation.getObservationId()).isEmpty()) {
                 ObserveImage observeImage = observeImageRepository.findByObservationId(observation.getObservationId()).get(0);
                 searchParams1.setThumbnail(observeImage.getImage());
