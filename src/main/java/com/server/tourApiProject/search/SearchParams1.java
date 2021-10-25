@@ -19,5 +19,6 @@ public class SearchParams1 {
     private String intro; //짧은 개요
     private Double longitude;  //경도
     private Double latitude; //위도
+    private Double light;   //관공해
     private List<String> hashTagNames; //해시태그 배열
 }
