@@ -132,7 +132,7 @@ public class ObservationService {
             searchResult = observationRepository.findByObservationNameContainingOrOutlineContaining(searchKey, searchKey);
             keyResult = observationRepository.findByObservationNameContainingOrOutlineContaining(searchKey, searchKey);
 
-            if (!hashTagIdList.isEmpty()||!areaCodeList.isEmpty()) {
+            if (!hashTagIdList.isEmpty() || !areaCodeList.isEmpty()) {
                 //필터 받은게 없으면 그냥 검색결과 전달, 있으면 중첩 검색
                 for (Observation observation : keyResult) {
                     //전체 검색어 결과 돌면서
@@ -142,6 +142,9 @@ public class ObservationService {
                     }
                 }
             }
+        } else {
+            for(Long p : filterIdList)
+                searchResult.add(getObservation(p));
         }
 
 
