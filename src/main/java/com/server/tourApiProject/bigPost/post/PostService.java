@@ -61,6 +61,7 @@ public class PostService {
         post.setUserId(postParams.getUserId());
         post.setObservation(observation);
         post.setObservationId(observationId);
+        post.setAreaCode(observation.getAreaCode());
         postRepository.save(post);
         return post.getPostId();
     }
@@ -181,6 +182,49 @@ public class PostService {
                 }
             }
         }
+        for (Long postId : mainPostIdList){
+            Post hashPost = postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
+            PostParams4 hashPostParams = new PostParams4();
+            hashPostParams.setPostId(hashPost.getPostId());
+            hashPostParams.setMainTitle(hashPost.getPostTitle());
+            Optional<User> userOp = userRepository.findById(hashPost.getUserId());
+            if (userOp.isPresent()){
+                User user = userOp.get();
+                hashPostParams.setMainNickName(user.getNickName());
+                hashPostParams.setProfileImage(user.getProfileImage());
+            }
+            hashPostParams.setMainObservation(hashPost.getObservation().getObservationName());
+            hashPostParams.setObservationId(hashPost.getObservationId());
+            hashPostParams.setOptionObservation(hashPost.getOptionObservation());
+            List<String> hashTagName = new ArrayList<>();
+            List<PostHashTag> list = postHashTagRepository.findByPostId(hashPost.getPostId());
+            if (!list.isEmpty()) {
+                for (PostHashTag postHashTag : list) {
+                    hashTagName.add(postHashTag.getHashTagName());
+                }
+                hashPostParams.setHashTags(hashTagName);
+                if(hashPost.getOptionHashTag()!=null){ hashPostParams.setOptionHashTag(hashPost.getOptionHashTag());}
+                if(hashPost.getOptionHashTag2()!=null){ hashPostParams.setOptionHashTag2(hashPost.getOptionHashTag2());}
+                if(hashPost.getOptionHashTag3()!=null){ hashPostParams.setOptionHashTag3(hashPost.getOptionHashTag3());}
+            } else {
+                hashPostParams.setHashTags(null);
+                hashPostParams.setOptionHashTag(hashPost.getOptionHashTag());
+                hashPostParams.setOptionHashTag2(hashPost.getOptionHashTag2());
+                hashPostParams.setOptionHashTag3(hashPost.getOptionHashTag3());
+            }
+            hashPostParams.setHashTags(hashTagName);
+            List<PostImage> hashImageList = postImageRepository.findByPostId(hashPost.getPostId());
+            if (!hashImageList.isEmpty()) {
+                ArrayList<String> imageList = new ArrayList<>();
+                for (int i = 0; i < hashImageList.size(); i++) {
+                    imageList.add("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + hashImageList.get(i).getImageName());
+                }
+                hashPostParams.setImages(imageList);
+            } else {
+                hashPostParams.setImages(null);
+            }
+            result.add(hashPostParams);
+        }
         //나머지 게시물
         List<Post> posts = postRepository.findAll();
         for (Post post : posts) {
@@ -226,50 +270,6 @@ public class PostService {
                 result.add(postParams4);
             }
         }
-        for (Long postId : mainPostIdList){
-            Post hashPost = postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
-            PostParams4 hashPostParams = new PostParams4();
-            hashPostParams.setPostId(hashPost.getPostId());
-            hashPostParams.setMainTitle(hashPost.getPostTitle());
-            Optional<User> userOp = userRepository.findById(hashPost.getUserId());
-            if (userOp.isPresent()){
-                User user = userOp.get();
-                hashPostParams.setMainNickName(user.getNickName());
-                hashPostParams.setProfileImage(user.getProfileImage());
-            }
-            hashPostParams.setMainObservation(hashPost.getObservation().getObservationName());
-            hashPostParams.setObservationId(hashPost.getObservationId());
-            hashPostParams.setOptionObservation(hashPost.getOptionObservation());
-            List<String> hashTagName = new ArrayList<>();
-            List<PostHashTag> list = postHashTagRepository.findByPostId(hashPost.getPostId());
-            if (!list.isEmpty()) {
-                for (PostHashTag postHashTag : list) {
-                    hashTagName.add(postHashTag.getHashTagName());
-                }
-                hashPostParams.setHashTags(hashTagName);
-                if(hashPost.getOptionHashTag()!=null){ hashPostParams.setOptionHashTag(hashPost.getOptionHashTag());}
-                if(hashPost.getOptionHashTag2()!=null){ hashPostParams.setOptionHashTag2(hashPost.getOptionHashTag2());}
-                if(hashPost.getOptionHashTag3()!=null){ hashPostParams.setOptionHashTag3(hashPost.getOptionHashTag3());}
-            } else {
-                hashPostParams.setHashTags(null);
-                hashPostParams.setOptionHashTag(hashPost.getOptionHashTag());
-                hashPostParams.setOptionHashTag2(hashPost.getOptionHashTag2());
-                hashPostParams.setOptionHashTag3(hashPost.getOptionHashTag3());
-            }
-            hashPostParams.setHashTags(hashTagName);
-            List<PostImage> hashImageList = postImageRepository.findByPostId(hashPost.getPostId());
-            if (!hashImageList.isEmpty()) {
-                ArrayList<String> imageList = new ArrayList<>();
-                for (int i = 0; i < hashImageList.size(); i++) {
-                    imageList.add("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + hashImageList.get(i).getImageName());
-                }
-                hashPostParams.setImages(imageList);
-            } else {
-                hashPostParams.setImages(null);
-            }
-            result.add(hashPostParams);
-        }
-
             return result;
         }
 
