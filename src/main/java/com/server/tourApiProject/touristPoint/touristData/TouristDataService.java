@@ -234,7 +234,7 @@ public class TouristDataService {
         }
 
         int num = 0;
-        int max = 100;
+        int max = 1000;
         if (onlyHT){
             for (TouristData touristData : result){
                 if (num >= max)
