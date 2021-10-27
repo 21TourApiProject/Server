@@ -73,6 +73,20 @@ public class ConstellationService {
         return getConstellationParams(result, resultAll);
     }
 
+    public List<ConstellationParams2> getTodayConstName() {
+        List<ConstellationParams2> result = new ArrayList<>();
+        List<Constellation> resultAll = new ArrayList<>();
+        String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MM-dd"));
+
+        List<Constellation> list1 = constellationRepository.findByStartDate1LessThanEqualAndEndDate1GreaterThanEqual(currentDate, currentDate);
+        List<Constellation> list2 = constellationRepository.findByStartDate2LessThanEqualAndEndDate2GreaterThanEqual(currentDate, currentDate);
+
+        resultAll.addAll(list1);
+        resultAll.addAll(list2);
+
+        return getConstellationParams2(result, resultAll);
+    }
+
     public Constellation getDetailConst(String constName) {
         Constellation constellation = constellationRepository.findByConstName(constName);
         return constellation;
