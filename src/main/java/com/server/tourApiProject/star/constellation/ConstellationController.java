@@ -40,6 +40,12 @@ public class ConstellationController {
         return constellationService.getTodayConst();
     }
 
+    @ApiOperation(value = "당일 날짜에 보이는 별자리 이름 조회", notes = "당일 날짜에 보이는 별자리의 이름을 조회한다")
+    @GetMapping(value = "constellation/todayConstName")
+    public List<ConstellationParams2> getTodayConstName() {
+        return constellationService.getTodayConstName();
+    }
+
     @ApiOperation(value = "별자리 상세 정보 조회", notes = "별자리 이름으로 별자리 상세 정보를 조회한다.")
     @GetMapping(value = "constellation/{constName}")
     public Constellation getDetailConst(@PathVariable("constName") String constName) {
