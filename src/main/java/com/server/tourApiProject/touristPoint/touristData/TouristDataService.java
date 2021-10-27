@@ -356,4 +356,163 @@ public class TouristDataService {
         return resultParams;
     }
 
+    public List<SearchParams1> getTouristPointWithFilterForMap(Filter filter, String keyword) {
+        List<Long> areaCodeList = filter.getAreaCodeList();    //지역 필터 리스트
+        List<Long> hashTagIdList= filter.getHashTagIdList();    //해시태그 필터 리스트
+
+        if (keyword == null)
+            keyword = "";
+
+        HashMap<String, String> cat3Map = new HashMap<>();
+        List<ContentType> all = contentTypeRepository.findAll();
+        for(ContentType contentType : all){
+            cat3Map.put(contentType.getCat3Code(), contentType.getCat3Name());
+        }
+
+        HashMap<Long, Boolean> hashMap = new HashMap<>();
+        if(hashTagIdList.size() != 0){
+            for(Long id : hashTagIdList){
+                hashMap.put(id, true);
+            }
+        }
+
+        List<TouristData> result;
+        List<SearchParams1> resultParams = new ArrayList<>();   //결과
+        boolean onlyHT = false;
+
+        if (areaCodeList.size() == 0){
+            if(keyword.equals("")){
+                onlyHT = true;
+                result = touristDataRepository.findAllJoinFetch();
+            }
+            else
+                result = touristDataRepository.findByTitleContaining(keyword);
+        }
+        else{
+            result = touristDataRepository.findByAreaCodesTitle(keyword, areaCodeList);
+        }
+
+        int num = 0;
+        int max = 50;
+        if (onlyHT){
+            for (TouristData touristData : result){
+                if (num >= max)
+                    break;
+
+                List<TouristDataHashTag> touristDataHashTags = touristData.getTouristDataHashTags();
+
+                if(touristDataHashTags.size() == 0)
+                    continue;
+
+                boolean isHashTagNoMatch = true;
+
+                for(TouristDataHashTag hashTag : touristDataHashTags){
+                    if(hashMap.get(hashTag.getHashTagId()) != null && hashMap.get(hashTag.getHashTagId())) {
+                        isHashTagNoMatch = false;
+                        break;
+                    }
+                }
+                if(isHashTagNoMatch)
+                    continue;
+
+                num++;
+
+                int h = 0;
+                List<String> hashTagNames = new ArrayList<>();
+                for (TouristDataHashTag hashTag : touristDataHashTags){
+                    if (h > 2)
+                        break;
+                    hashTagNames.add(hashTag.getHashTagName());
+                    h++;
+                }
+
+                SearchParams1 searchParams1 = new SearchParams1();
+                searchParams1.setHashTagNames(hashTagNames);
+
+                searchParams1.setItemId(touristData.getContentId());
+                searchParams1.setTitle(touristData.getTitle());
+                //주소를 두단어까지 줄임
+                String address = touristData.getAddr();
+                int i = address.indexOf(' ');
+                if (i != -1){
+                    int j = address.indexOf(' ', i+1);
+                    if(j != -1){
+                        searchParams1.setAddress(touristData.getAddr().substring(0, j));
+                    } else{
+                        searchParams1.setAddress(touristData.getAddr());
+                    }
+                } else{
+                    searchParams1.setAddress(touristData.getAddr());
+                }
+
+                searchParams1.setLatitude(touristData.getMapY());
+                searchParams1.setLongitude(touristData.getMapX());
+                searchParams1.setIntro(touristData.getOverviewSim());
+                searchParams1.setContentType(cat3Map.get(touristData.getCat3()));
+                searchParams1.setThumbnail(touristData.getFirstImage());
+                resultParams.add(searchParams1);
+                num ++;
+            }
+        }
+        else{
+            for (TouristData touristData : result){
+                if (num >= max)
+                    break;
+                SearchParams1 searchParams1 = new SearchParams1();
+                searchParams1.setItemId(touristData.getContentId());
+                searchParams1.setTitle(touristData.getTitle());
+
+                //주소를 두단어까지 줄임
+                String address = touristData.getAddr();
+                int i = address.indexOf(' ');
+                if (i != -1){
+                    int j = address.indexOf(' ', i+1);
+                    if(j != -1){
+                        searchParams1.setAddress(touristData.getAddr().substring(0, j));
+                    } else{
+                        searchParams1.setAddress(touristData.getAddr());
+                    }
+                } else{
+                    searchParams1.setAddress(touristData.getAddr());
+                }
+
+                searchParams1.setLatitude(touristData.getMapY());
+                searchParams1.setLongitude(touristData.getMapX());
+                searchParams1.setIntro(touristData.getOverviewSim());
+                searchParams1.setContentType(cat3Map.get(touristData.getCat3()));
+                searchParams1.setThumbnail(touristData.getFirstImage());
+
+                List<TouristDataHashTag> touristDataHashTags = touristData.getTouristDataHashTags();
+                Boolean isHashTagNoMatch = true;
+                if(hashTagIdList.size() != 0){
+                    if(touristDataHashTags.size() == 0) {
+                        continue;
+                    }
+                    for(TouristDataHashTag hashTag : touristDataHashTags){
+                        if(hashMap.get(hashTag.getHashTagId()) != null && hashMap.get(hashTag.getHashTagId())) {
+                            isHashTagNoMatch = false;
+                            break;
+                        }
+                    }
+                }
+                if(hashTagIdList.size() != 0 && isHashTagNoMatch)
+                    continue;
+
+                num ++;
+
+                int j = 0;
+                List<String> hashTagNames = new ArrayList<>();
+                for (TouristDataHashTag hashTag : touristDataHashTags){
+                    if (j > 2)
+                        break;
+                    hashTagNames.add(hashTag.getHashTagName());
+                    j++;
+                }
+                searchParams1.setHashTagNames(hashTagNames);
+                resultParams.add(searchParams1);
+            }
+        }
+        return resultParams;
+    }
+
 }
