@@ -2,6 +2,9 @@ package com.server.tourApiProject.excel;
 
 import com.server.tourApiProject.hashTag.HashTag;
 import com.server.tourApiProject.hashTag.HashTagRepository;
+import com.server.tourApiProject.notice.Notice;
+import com.server.tourApiProject.notice.NoticeController;
+import com.server.tourApiProject.notice.NoticeRepository;
 import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.ObservationRepository;
 import com.server.tourApiProject.observation.course.Course;
@@ -70,9 +73,10 @@ public class ExcelController {
     private final CourseRepository courseRepository;
     private final HashTagRepository hashTagRepository;
     private final SearchFirstRepository searchFirstRepository;
+    private final NoticeRepository noticeRepository;
 
 
-    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, TouristDataRepository touristDataRepository, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, WtTodayRepository wtTodayRepository, ConstellationRepository constellationRepository, HoroscopeRepository horoscopeRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository, CourseRepository courseRepository, HashTagRepository hashTagRepository, SearchFirstRepository searchFirstRepository) {
+    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, TouristDataRepository touristDataRepository, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, WtTodayRepository wtTodayRepository, ConstellationRepository constellationRepository, HoroscopeRepository horoscopeRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository, CourseRepository courseRepository, HashTagRepository hashTagRepository, SearchFirstRepository searchFirstRepository, NoticeRepository noticeRepository) {
         this.touristDataService = touristDataService;
         this.areaService = areaService;
         this.contentTypeService = contentTypeService;
@@ -90,6 +94,7 @@ public class ExcelController {
         this.courseRepository = courseRepository;
         this.hashTagRepository = hashTagRepository;
         this.searchFirstRepository = searchFirstRepository;
+        this.noticeRepository = noticeRepository;
     }
 
     @GetMapping("/excel")
@@ -785,6 +790,36 @@ public class ExcelController {
             data.setObservationName(row.getCell(2).getStringCellValue());
 
             searchFirstRepository.save(data);
+        }
+        System.out.println("엑셀 완료");
+        return "excel";
+    }
+
+    @PostMapping("/excel/notice/read")
+    public String readNoticeExcel(@RequestParam("file") MultipartFile file, Model model)
+            throws IOException {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (!extension.equals("xlsx") && !extension.equals("xls")) {
+            throw new IOException("엑셀파일만 업로드 해주세요.");
+        }
+        Workbook workbook = null;
+
+        if (extension.equals("xlsx")) {
+            workbook = new XSSFWorkbook(file.getInputStream());
+        } else if (extension.equals("xls")) {
+            workbook = new HSSFWorkbook(file.getInputStream());
+        }
+
+        Sheet worksheet = workbook.getSheetAt(0);
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            Row row = worksheet.getRow(i);
+            Notice notice = new Notice();
+
+            notice.setNoticeTitle(row.getCell(1).getStringCellValue());
+            notice.setNoticeContent(row.getCell(2).getStringCellValue());
+            notice.setNoticeDate(row.getCell(3).getStringCellValue());
+
+            noticeRepository.save(notice);
         }
         System.out.println("엑셀 완료");
         return "excel";
