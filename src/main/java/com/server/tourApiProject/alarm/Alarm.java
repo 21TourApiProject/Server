@@ -27,7 +27,5 @@ public class Alarm {
     private String alarmContent;
 
     @Column(nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDate yearDate;
+    private String alarmDate;
 }
