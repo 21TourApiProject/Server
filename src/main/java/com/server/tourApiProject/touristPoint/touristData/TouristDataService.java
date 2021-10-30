@@ -33,6 +33,18 @@ public class TouristDataService {
         return touristData.getContentTypeId();
     }
 
+    public void increaseOverviewSim() {
+        List<TouristData> all = touristDataRepository.findAll();
+        for (TouristData touristData : all){
+            if (touristData.getOverview() != null){
+                if (touristData.getOverview().length() > 25){
+                    touristData.setOverviewSim(touristData.getOverview().substring(0,25) + "...");
+                    touristDataRepository.save(touristData);
+                }
+            }
+        }
+    }
+
     public TouristDataParams getTouristPointData(Long contentId) {
         TouristData touristData = touristDataRepository.findByContentId(contentId);
         TouristDataParams result = new TouristDataParams();
