@@ -248,8 +248,8 @@ public class JobA extends QuartzJobBean {
                 if(isRealNew){
                     if (overview == null)
                         touristData.setOverviewSim(null);
-                    else if (overview.length() > 15)
-                        touristData.setOverviewSim(overview.substring(0,15)+"...");
+                    else if (overview.length() > 25)
+                        touristData.setOverviewSim(overview.substring(0,25)+"...");
                     else
                         touristData.setOverviewSim(overview);
                 }
@@ -534,8 +534,8 @@ public class JobA extends QuartzJobBean {
                 if (isRealNew) {
                     if (overview == null)
                         touristData.setOverviewSim(null);
-                    else if (overview.length() > 15)
-                        touristData.setOverviewSim(overview.substring(0, 15) + "...");
+                    else if (overview.length() > 25)
+                        touristData.setOverviewSim(overview.substring(0, 25) + "...");
                     else
                         touristData.setOverviewSim(overview);
                 }

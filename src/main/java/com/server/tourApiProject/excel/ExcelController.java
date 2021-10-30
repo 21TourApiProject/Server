@@ -856,4 +856,12 @@ public class ExcelController {
         System.out.println("엑셀 완료");
         return "excel";
     }
+
+    @PostMapping("/excel/increaseOverviewSim/read")
+    public String increaseOverviewSim(@RequestParam("file") MultipartFile file, Model model)
+            throws IOException {
+        touristDataService.increaseOverviewSim();
+        System.out.println("완료");
+        return "excel";
+    }
 }
