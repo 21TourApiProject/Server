@@ -1,9 +1,10 @@
 package com.server.tourApiProject.excel;
 
+import com.server.tourApiProject.alarm.Alarm;
+import com.server.tourApiProject.alarm.AlarmRepository;
 import com.server.tourApiProject.hashTag.HashTag;
 import com.server.tourApiProject.hashTag.HashTagRepository;
 import com.server.tourApiProject.notice.Notice;
-import com.server.tourApiProject.notice.NoticeController;
 import com.server.tourApiProject.notice.NoticeRepository;
 import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.ObservationRepository;
@@ -74,9 +75,10 @@ public class ExcelController {
     private final HashTagRepository hashTagRepository;
     private final SearchFirstRepository searchFirstRepository;
     private final NoticeRepository noticeRepository;
+    private final AlarmRepository alarmRepository;
 
 
-    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, TouristDataRepository touristDataRepository, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, WtTodayRepository wtTodayRepository, ConstellationRepository constellationRepository, HoroscopeRepository horoscopeRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository, CourseRepository courseRepository, HashTagRepository hashTagRepository, SearchFirstRepository searchFirstRepository, NoticeRepository noticeRepository) {
+    public ExcelController(TouristDataService touristDataService, AreaService areaService, ContentTypeService contentTypeService, TouristDataRepository touristDataRepository, NearTouristDataRepository nearTouristDataRepository, TouristDataHashTagRepository touristDataHashTagRepository, WtAreaService wtAreaService, WtAreaRepository wtAreaRepository, WtTodayRepository wtTodayRepository, ConstellationRepository constellationRepository, HoroscopeRepository horoscopeRepository, ObservationRepository observationRepository, ObserveHashTagRepository observeHashTagRepository, ObserveImageRepository observeImageRepository, ObserveFeeRepository observeFeeRepository, CourseRepository courseRepository, HashTagRepository hashTagRepository, SearchFirstRepository searchFirstRepository, NoticeRepository noticeRepository, AlarmRepository alarmRepository) {
         this.touristDataService = touristDataService;
         this.areaService = areaService;
         this.contentTypeService = contentTypeService;
@@ -95,6 +97,7 @@ public class ExcelController {
         this.hashTagRepository = hashTagRepository;
         this.searchFirstRepository = searchFirstRepository;
         this.noticeRepository = noticeRepository;
+        this.alarmRepository = alarmRepository;
     }
 
     @GetMapping("/excel")
@@ -824,6 +827,35 @@ public class ExcelController {
         System.out.println("엑셀 완료");
         return "excel";
     }
+    @PostMapping("/excel/alarm/read")
+    public String readAlarmExcel(@RequestParam("file") MultipartFile file, Model model)
+            throws IOException {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (!extension.equals("xlsx") && !extension.equals("xls")) {
+            throw new IOException("엑셀파일만 업로드 해주세요.");
+        }
+        Workbook workbook = null;
+
+        if (extension.equals("xlsx")) {
+            workbook = new XSSFWorkbook(file.getInputStream());
+        } else if (extension.equals("xls")) {
+            workbook = new HSSFWorkbook(file.getInputStream());
+        }
+
+        Sheet worksheet = workbook.getSheetAt(0);
+        for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            Row row = worksheet.getRow(i);
+            Alarm alarm = new Alarm();
+
+            alarm.setAlarmTitle(row.getCell(1).getStringCellValue());
+            alarm.setAlarmContent(row.getCell(2).getStringCellValue());
+            alarm.setAlarmDate(row.getCell(3).getStringCellValue());
+
+            alarmRepository.save(alarm);
+        }
+        System.out.println("엑셀 완료");
+        return "excel";
+    }
 
     @PostMapping("/excel/increaseOverviewSim/read")
     public String increaseOverviewSim(@RequestParam("file") MultipartFile file, Model model)
@@ -832,5 +864,4 @@ public class ExcelController {
         System.out.println("완료");
         return "excel";
     }
-
 }
