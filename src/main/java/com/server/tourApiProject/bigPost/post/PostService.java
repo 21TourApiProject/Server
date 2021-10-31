@@ -180,7 +180,7 @@ public class PostService {
             }
         }
         Collections.sort(mainPostIdList, new OrderComparator());
-        List<Long>realMainPostList = mainPostIdList.subList(0,3);
+        List<Long>realMainPostList = mainPostIdList.subList(0,4);
         for (Long postId : realMainPostList){
             Post hashPost = postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
             PostParams4 hashPostParams = new PostParams4();
@@ -227,7 +227,7 @@ public class PostService {
         //나머지 게시물
         List<Post> posts = postRepository.findAll(Sort.by(Sort.Order.desc("postId")));
         for (Post post : posts) {
-            if (!mainPostIdList.contains(post.getPostId())){
+            if (!realMainPostList.contains(post.getPostId())){
                 PostParams4 postParams4 = new PostParams4();
                 postParams4.setPostId(post.getPostId());
                 postParams4.setObservationId(post.getObservationId());
