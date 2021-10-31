@@ -177,8 +177,8 @@ public class PostService {
             for (PostHashTag postHashTag : postHashTagList) {
                 Long postId = postHashTag.getPostId();
                 if (!mainPostIdList.contains(postId)) {
-                    mainPostIdList.add(postId);
                     if (mainPostIdList.size()>3)break;
+                    mainPostIdList.add(postId);
                 }
             }
         }
