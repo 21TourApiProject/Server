@@ -346,8 +346,12 @@ public class PostService {
             }
             List<String> hashTagName = new ArrayList<>();
             List<PostHashTag> list = postHashTagRepository.findByPostId(post.getPostId());
+            int k = 0;
             for(PostHashTag postHashTag : list){
+                if(k>2)
+                    break;
                 hashTagName.add(postHashTag.getHashTagName());
+                k++;
             }
             postParams6.setHashTagNames(hashTagName);
             List<PostImage> imageList = postImageRepository.findByPostId(post.getPostId());
