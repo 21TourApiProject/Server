@@ -180,8 +180,8 @@ public class PostService {
             }
         }
         Collections.sort(mainPostIdList, new OrderComparator());
-        mainPostIdList.subList(0,3);
-        for (Long postId : mainPostIdList){
+        List<Long>realMainPostList = mainPostIdList.subList(0,3);
+        for (Long postId : realMainPostList){
             Post hashPost = postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
             PostParams4 hashPostParams = new PostParams4();
             hashPostParams.setPostId(hashPost.getPostId());
