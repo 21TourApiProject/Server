@@ -16,9 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -177,11 +175,12 @@ public class PostService {
             for (PostHashTag postHashTag : postHashTagList) {
                 Long postId = postHashTag.getPostId();
                 if (!mainPostIdList.contains(postId)) {
-                    if (mainPostIdList.size()>3)break;
                     mainPostIdList.add(postId);
                 }
             }
         }
+        Collections.sort(mainPostIdList, new OrderComparator());
+        mainPostIdList.subList(0,3);
         for (Long postId : mainPostIdList){
             Post hashPost = postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
             PostParams4 hashPostParams = new PostParams4();
@@ -364,5 +363,16 @@ public class PostService {
             result.add(postParams6);
         }
         return result;
+    }
+    class OrderComparator implements Comparator<Long> {
+        @Override
+        public int compare(Long o1, Long o2) {
+            if (o1 < o2) {
+                return 1;
+            } else if (o1 > o2) {
+                return -1;
+            }
+            return 0;
+        }
     }
 }
