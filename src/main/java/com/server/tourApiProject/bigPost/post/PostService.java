@@ -4,7 +4,6 @@ import com.server.tourApiProject.bigPost.postHashTag.PostHashTag;
 import com.server.tourApiProject.bigPost.postHashTag.PostHashTagRepository;
 import com.server.tourApiProject.bigPost.postImage.PostImage;
 import com.server.tourApiProject.bigPost.postImage.PostImageRepository;
-import com.server.tourApiProject.myWish.MyWish;
 import com.server.tourApiProject.myWish.MyWishRepository;
 import com.server.tourApiProject.observation.Observation;
 import com.server.tourApiProject.observation.ObservationRepository;
@@ -13,11 +12,11 @@ import com.server.tourApiProject.user.User;
 import com.server.tourApiProject.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -227,7 +226,7 @@ public class PostService {
             result.add(hashPostParams);
         }
         //나머지 게시물
-        List<Post> posts = postRepository.findAll();
+        List<Post> posts = postRepository.findAll(Sort.by(Sort.Order.desc("postId")));
         for (Post post : posts) {
             if (!mainPostIdList.contains(post.getPostId())){
                 PostParams4 postParams4 = new PostParams4();
