@@ -271,8 +271,7 @@ public class PostService {
                 result.add(postParams4);
             }
         }
-        result.sort(Collections.reverseOrder());
-            return result;
+        return result;
         }
 
     public List<PostParams6>getPostDataWithFilter(Filter filter, String searchKey){
