@@ -22,6 +22,20 @@ import java.util.*;
 @Service
 @Transactional
 @RequiredArgsConstructor
+
+/**
+* @className : PostService.java
+* @description : 게시물 Service 입니다.(게시물 이미지,해시태그 가져오기, 클릭 시 기능, 게시물 삭제 등 구현)
+* @modification : 2022-08-05(jinhyeok) 주석 수정
+* @author : jinhyeok
+* @date : 2022-08-05
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   2022-08-05       jinhyeok       주석 수정
+
+ */
 public class PostService {
 
     private final PostRepository postRepository;
@@ -31,11 +45,24 @@ public class PostService {
     private final PostHashTagRepository postHashTagRepository;
     private final MyWishRepository myWishRepository;
 
+    /**
+     * description: 게시물 id를 통해 게시물 가져옴.
+     *
+     * @param postId -the post id
+     * @return the post
+     */
     public Post getPost(Long postId){
         Post post = postRepository.findById(postId).orElseThrow(IllegalAccessError::new);
         return post;
     }
 
+    /**
+     * description: 새로운 게시물 작성.
+     *
+     * @param observePointName - the observe point name
+     * @param postParams - the post params
+     * @return the post.getPostId()
+     */
     public Long createPost(String observePointName, PostParams postParams) {
         Post post = new Post();
         Observation observation = observationRepository.findByObservationName(observePointName);
@@ -64,6 +91,12 @@ public class PostService {
         return post.getPostId();
     }
 
+    /**
+     * description: 프로필 페이지에서 내가 쓴 게시물 가져오는 메소드.
+     *
+     * @param userId - the userId
+     * @return the my post 3
+     */
     public List<PostParams2> getMyPost3(Long userId) {
         List<PostParams2> result = new ArrayList<>();
         List<Post> list = postRepository.findByUserId(userId);
@@ -92,11 +125,23 @@ public class PostService {
         }
         return result;
     }
+
+    /**
+     * description: 게시물 삭제 메소드.
+     *
+     * @param postId the post id
+     */
     public void deletePost(Long postId){
         postRepository.deleteById(postId);
         myWishRepository.deleteByItemIdAndWishType(postId, 2);
     }
 
+    /**
+     * description: 내 게시물 페이지에서 내가 쓴 게시물 가져오는 메소드.
+     *
+     * @param userId - the user id
+     * @return the my post
+     */
     public List<PostParams3> getMyPost(Long userId) {
         List<PostParams3> result = new ArrayList<>();
         List<Post> posts = postRepository.findByUserId(userId);
@@ -133,6 +178,12 @@ public class PostService {
         return result;
     }
 
+    /**
+     * description: 관측지 페이지에서 관련 게시물 가져오는 메소드.
+     *
+     * @param observationId - the observation id
+     * @return the relate post
+     */
     public List<PostParams5> getRelatePost(Long observationId) {
         List<PostParams5> result1 = new ArrayList<>();
         List<Post> relatePosts = postRepository.findByObservationId(observationId);
@@ -166,7 +217,14 @@ public class PostService {
         return result1;
     }
 
+    /**
+     * description: 메인 페이지 게시물 리스트 가져오는 메소드.
+     *
+     * @param filter the filter
+     * @return the list
+     */
     public List<PostParams4>getMainPost(Filter filter) {
+        // 유저의 희망 해시태그에 따라 우선적 필터로 거르고 가져옴)
         List<PostParams4> result = new ArrayList<>();
         List<Long> mainHashTagIdList = filter.getHashTagIdList();
         List<Long> mainPostIdList = new ArrayList<>();
@@ -224,6 +282,7 @@ public class PostService {
             }
             result.add(hashPostParams);
         }
+
         //나머지 게시물
         List<Post> posts = postRepository.findAll(Sort.by(Sort.Order.desc("postId")));
         for (Post post : posts) {
@@ -272,6 +331,13 @@ public class PostService {
         return result;
         }
 
+    /**
+     * description: 검색어, 해시태그 필터로 게시물 검색 메소드 입니다.
+     *
+     * @param filter    the filter
+     * @param searchKey the search key
+     * @return List<PostParams6>
+     */
     public List<PostParams6>getPostDataWithFilter(Filter filter, String searchKey){
         List<Long> areaCodeList = filter.getAreaCodeList();
         List<Long> hashTagIdList= filter.getHashTagIdList();//해시태그 리스트
