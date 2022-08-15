@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 /**
 * @className : PostParams5.java
-* @description : 찜 목록의 게시물 Param 입니다.
+* @description : 관측지 페이지 관련 게시물 Param 입니다.
 * @modification : 2022-08-08(jinhyeok) 주석 수정
 * @author : jinhyeok
 * @date : 2022-08-08
@@ -22,7 +22,7 @@ import java.util.List;
 
  */
 public class PostParams5 {
-        private Long postId;
+        private Long itemId;
         private String thumbnail;
         private String title;
         private String nickName;
