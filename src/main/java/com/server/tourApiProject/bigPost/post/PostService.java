@@ -137,7 +137,7 @@ public class PostService {
     }
 
     /**
-     * description: 내 게시물 페이지에서 내가 쓴 게시물 가져오는 메소드.
+     * description: 내 게시물 페이지에서 내가 쓴 게시물, 북마크 페이지에서 내가 찜하 게시물 가져오는 메소드.
      *
      * @param userId - the user id
      * @return the my post
@@ -189,7 +189,7 @@ public class PostService {
         List<Post> relatePosts = postRepository.findByObservationId(observationId);
         for (Post relatePost : relatePosts){
             PostParams5 postParams5 = new PostParams5();
-            postParams5.setPostId(relatePost.getPostId());
+            postParams5.setItemId(relatePost.getPostId());
 
             List<PostImage> imageList = postImageRepository.findByPostId(relatePost.getPostId());
             if (!imageList.isEmpty()) {
