@@ -15,6 +15,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+* @className : ObservationController.java
+* @description : 관측지 컨트롤러
+* @modification : 2022-08-27 (gyul chyoung)
+* @author : gyul chyoung
+* @date : 2022-08-27  
+* @version : 1.0 
+     ====개정이력(Modification Information)====      
+  수정일        수정자        수정내용    ----------------------------------------- 
+   2022-08-27       gyul chyoung       주석최초생성
+ */
+
 @Slf4j
 @Api(tags = {"4.1 관측지"})
 @RestController

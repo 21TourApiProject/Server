@@ -11,6 +11,18 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+* @className : Observation.java
+* @description : 관측지 엔티티
+* @modification : 2022-08-27 (gyul chyoung) 주석생성
+* @author : gyul chyoung
+* @date : 2022-08-27  
+* @version : 1.0 
+     ====개정이력(Modification Information)====      
+  수정일        수정자        수정내용    ----------------------------------------- 
+   2022-08-27       gyul chyoung       주석최초생성
+ */
+
 @Builder
 @Getter
 @Setter
@@ -18,6 +30,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="observation")
+
 public class Observation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

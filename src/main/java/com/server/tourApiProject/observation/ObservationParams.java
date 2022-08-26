@@ -2,6 +2,17 @@ package com.server.tourApiProject.observation;
 
 import lombok.*;
 
+/**
+* @className : ObservationParams.java
+* @description : 관측지 생성에 사용하는 DTO
+* @modification : 2022-08-27 (gyul chyoung) 주석생성
+* @author : gyul chyoung
+* @date : 2022-08-27
+* @version : 1.0
+     ====개정이력(Modification Information)====
+  수정일        수정자        수정내용    -----------------------------------------
+   2022-08-27       gyul chyoung       최초생성
+ */
 @Builder
 @Getter
 @Setter
