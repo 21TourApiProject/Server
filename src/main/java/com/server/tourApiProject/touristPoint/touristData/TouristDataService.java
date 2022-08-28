@@ -39,15 +39,30 @@ public class TouristDataService {
     private final TouristDataRepository touristDataRepository;
     private final ContentTypeRepository contentTypeRepository;
 
+    /**
+     * description: 관광지 정보 입력
+     *
+     * @param touristData - 관광지 id
+     */
     public void createTouristData(TouristData touristData) {
         touristDataRepository.save(touristData);
     }
 
     public Long getContentType(Long contentId) {
+        /**
+         * description: 관광지 컨텐츠 타입 id 조회
+         *
+         * @param contentId - 컨텐츠 id
+         * @return 컨텐츠 타입 id
+         */
         TouristData touristData = touristDataRepository.findByContentId(contentId);
         return touristData.getContentTypeId();
     }
 
+    /**
+     * description: 관광지의 한줄 개요가 25자를 초과하면 25자 + ...로 수정
+     *
+     */
     public void increaseOverviewSim() {
         List<TouristData> all = touristDataRepository.findAll();
         for (TouristData touristData : all){
@@ -60,6 +75,12 @@ public class TouristDataService {
         }
     }
 
+    /**
+     * description: 관광지 정보 조회
+     *
+     * @param contentId - 컨텐츠 id
+     * @return TouristData param
+     */
     public TouristDataParams getTouristPointData(Long contentId) {
         TouristData touristData = touristDataRepository.findByContentId(contentId);
         TouristDataParams result = new TouristDataParams();
@@ -83,6 +104,12 @@ public class TouristDataService {
         return result;
     }
 
+    /**
+     * description: 관광지의 음식 정보 조회
+     *
+     * @param contentId - 컨텐츠 id
+     * @return TouristData param2
+     */
     public TouristDataParams2 getFoodData(Long contentId) {
         TouristData touristData = touristDataRepository.findByContentId(contentId);
         TouristDataParams2 result = new TouristDataParams2();
@@ -110,6 +137,11 @@ public class TouristDataService {
         touristDataRepository.deleteAll();
     }
 
+    /**
+     * description: 모든 관광지 id 조회
+     *
+     * @return 관광지 id list
+     */
     public List<Long> getTouristPointId() {
         List<TouristData> list = touristDataRepository.findByContentTypeId(12L);
         List<Long> result = new ArrayList<>();
@@ -119,6 +151,11 @@ public class TouristDataService {
         return result;
     }
 
+    /**
+     * description: 모든 음식 id 조회
+     *
+     * @return 음식 id list
+     */
     public List<Long> getFoodId() {
         List<TouristData> list = touristDataRepository.findByContentTypeId(39L);
         List<Long> result = new ArrayList<>();
@@ -133,6 +170,11 @@ public class TouristDataService {
         return data.isPresent();
     }
 
+    /**
+     * description: 모든 관광지 좌표 조회
+     *
+     * @return 관광지 좌표 list
+     */
     public Double [][] getTouristPointMap() {
         List<TouristData> list = touristDataRepository.findByContentTypeId(12L);
         Double [][] result = new Double[10000][2];
@@ -145,6 +187,11 @@ public class TouristDataService {
         return result;
     }
 
+    /**
+     * description: 모든 음식 좌표 조회
+     *
+     * @return 음식 좌표 list
+     */
     public Double[][] getFoodMap() {
         List<TouristData> list = touristDataRepository.findByContentTypeId(39L);
         Double [][] result = new Double[7000][2];
@@ -165,6 +212,11 @@ public class TouristDataService {
         }
     }
 
+    /**
+     * description: 주변 정보가 없는 관광지 좌표 조회
+     *
+     * @return 관광지 좌표 list
+     */
     public Double[][] getTouristPointMap2() {
         List<TouristData> list = touristDataRepository.findByIsJu(0);
         Double [][] result = new Double[1000][2];
@@ -179,6 +231,11 @@ public class TouristDataService {
         return result;
     }
 
+    /**
+     * description: 주변 정보가 없는 음식 좌표 조회
+     *
+     * @return 음식 좌표 list
+     */
     public Double[][] getFoodMap2() {
         List<TouristData> list = touristDataRepository.findByIsJu(0);
         Double [][] result = new Double[700][2];
@@ -193,6 +250,11 @@ public class TouristDataService {
         return result;
     }
 
+    /**
+     * description: 주변 정보가 없는 관광지 id 조회
+     *
+     * @return 관광지 id list
+     */
     public List<Long> getTouristPointId2() {
         List<TouristData> list = touristDataRepository.findByIsJu(0);
         List<Long> result = new ArrayList<>();
@@ -204,6 +266,11 @@ public class TouristDataService {
         return result;
     }
 
+    /**
+     * description: 주변 정보가 없는 음식 id 조회
+     *
+     * @return 음식 id list
+     */
     public List<Long> getFoodId2() {
         List<TouristData> list = touristDataRepository.findByIsJu(0);
         List<Long> result = new ArrayList<>();
@@ -215,6 +282,11 @@ public class TouristDataService {
         return result;
     }
 
+    /**
+     * description: 이미지가 없는 관광지 id 조회
+     *
+     * @return 관광지 id list
+     */
     public List<Long> getId4Image() {
         List<TouristData> list = touristDataRepository.findByFirstImage(null);
         List<Long> result = new ArrayList<>();
@@ -224,6 +296,13 @@ public class TouristDataService {
         return result;
     }
 
+    /**
+     * description: 검색어와 필터로 관광지 조회
+     *
+     * @param filter - 필터
+     * @param keyword - 검색어
+     * @return 검색결과 list
+     */
     public List<SearchParams1> getTouristPointWithFilter(Filter filter, String keyword) {
         List<Long> areaCodeList = filter.getAreaCodeList();    //지역 필터 리스트
         List<Long> hashTagIdList= filter.getHashTagIdList();    //해시태그 필터 리스트

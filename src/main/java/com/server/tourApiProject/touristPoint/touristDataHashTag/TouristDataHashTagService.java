@@ -32,6 +32,12 @@ public class TouristDataHashTagService {
     private final TouristDataHashTagRepository touristDataHashTagRepository;
 
     public List<String> getTouristDataHashTag(Long contentId) {
+        /**
+         * description: 관광지 해시태그 정보 조회
+         *
+         * @param contentId - 컨텐츠 id
+         * @return 해시태그 list
+         */
         List<TouristDataHashTag> list = touristDataHashTagRepository.findByContentId(contentId);
         List<String> result = new ArrayList<>();
         for(TouristDataHashTag dataHashTag : list){

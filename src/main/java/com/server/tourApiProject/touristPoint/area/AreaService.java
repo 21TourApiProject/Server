@@ -29,6 +29,11 @@ public class AreaService {
 
     private final AreaRepository areaRepository;
 
+    /**
+     * description: 지역의 시군구 정보 입력
+     *
+     * @param areaParams - Are param
+     */
     public void createArea(AreaParams areaParams) {
         Area area = new Area();
         area.setAreaCode(areaParams.getCode1());

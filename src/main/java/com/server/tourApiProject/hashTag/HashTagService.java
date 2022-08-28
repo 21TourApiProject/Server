@@ -29,10 +29,20 @@ import java.util.List;
 public class HashTagService {
     private final HashTagRepository hashTagRepository;
 
+    /**
+     * description: 모든 해시태그 조회
+     *
+     * @return HashTag list
+     */
     public List<HashTag> getAllHashTag() {
         return hashTagRepository.findAll();
     }
 
+    /**
+     * description: 새로운 해시태그 작성
+     *
+     * @param hashTag - HashTag Entity
+     */
     public void createHashTag(HashTag hashTag) {
         hashTagRepository.save(hashTag);
     }

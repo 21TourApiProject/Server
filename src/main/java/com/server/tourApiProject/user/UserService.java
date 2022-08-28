@@ -33,11 +33,23 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    /**
+     * description: 사용자 id로 사용자의 모든 정보 조회
+     *
+     * @param userId - 사용자 id
+     * @return User entity
+     */
     public User getUser(Long userId){
         User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
         return user;
     }
 
+    /**
+     * description: 사용자 id로 사용자의 닉네임, 프로필 사진을 조회
+     *
+     * @param userId - 사용자 id
+     * @return User param2
+     */
     public UserParams2 getUser2(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
         UserParams2 userParams2 = new UserParams2();
@@ -47,6 +59,11 @@ public class UserService {
         return userParams2;
     }
 
+    /**
+     * description: 사용자 생성
+     *
+     * @param userParam
+     */
     public void createUser(UserParams userParam){
         User user = new User();
         user.setRealName(userParam.getRealName());
@@ -71,6 +88,11 @@ public class UserService {
         userRepository.save(user);
     }
 
+    /**
+     * description: 랜덤 닉네임 생성
+     *
+     * @return nickname
+     */
     private String randomNickName() {
         String[] front = {"별헤는","별난","별이좋은","별을찾는","별보는","반짝이는","비몽사몽","여행하는","우주속의","졸린","별그리는","반짝반짝","하품하는","코고는",
                 "여행중인","별에서온","밤하늘의","여름밤의","겨울밤의","별빛속의","나른한","별똥별과","꾸벅꾸벅","야행성","배낭을멘","달빛속의","새벽감성","은하수속",
@@ -104,21 +126,46 @@ public class UserService {
         userRepository.save(user);
     }
 
+    /**
+     * description: 이메일 중복 체크
+     *
+     * @param email - 사용자가 요청한 이메일
+     * @return true - 중복 아님, false - 중복
+     */
     public Boolean checkDuplicateEmail(String email) {
         User user = userRepository.findByEmail(email);
         return user == null;
     }
 
+    /**
+     * description: 전화번호 중복 체크
+     *
+     * @param mobilePhoneNumber - 사용자가 요청한 전화번호
+     * @return true - 중복 아님, false - 중복
+     */
     public Boolean checkDuplicateMobilePhoneNumber(String mobilePhoneNumber) {
         User user = userRepository.findByMobilePhoneNumber(mobilePhoneNumber);
         return user == null;
     }
 
+    /**
+     * description: 닉네임 중복 체크
+     *
+     * @param nickName - 사용자가 요청한 닉네임
+     * @return true - 중복 아님, false - 중복
+     */
     public Boolean checkDuplicateNickName(String nickName) {
         User user = userRepository.findByNickName(nickName);
         return user == null;
     }
 
+    /**
+     * description: 사용자의 이메일과 비밀번호로 계정 여부를 확인
+     *
+     * @param email - 이메일
+     * @param password - 비밀번호
+     * @return long (-1 - 계정 없음, -2 - 카카오 로그인 계정, 나머지 - userid)
+     */
     public Long logIn(String email, String password) {
         User user = userRepository.findByEmail(email);
         if (user == null) {
@@ -141,6 +188,13 @@ public class UserService {
         return user.getUserId();
     }
 
+    /**
+     * description: 사용자의 이름, 전화번호로 이메일 조회
+     *
+     * @param realName - 이름
+     * @param mobilePhoneNumber - 전화번호
+     * @return string ("none" - 해당 사용자 없음, 나머지 - 이메일)
+    */
     public String getEmail(String realName, String mobilePhoneNumber) {
         User user = userRepository.findByMobilePhoneNumber(mobilePhoneNumber);
         if (user == null){
@@ -151,6 +205,14 @@ public class UserService {
         }return "none";
     }
 
+    /**
+     * description: 사용자의 이메일, 이름, 전화번호로 비밀번호 조회
+     *
+     * @param email - 이메일
+     * @param realName - 이름
+     * @param mobilePhoneNumber - 전화번호
+     * @return string ("none" - 해당 사용자 없음, 나머지 - 비밀번호)
+     */
     public String getPassword(String email, String realName, String mobilePhoneNumber) {
         User user = userRepository.findByEmail(email);
         if (user == null){
@@ -162,18 +224,38 @@ public class UserService {
         return "none";
     }
 
+    /**
+     * description: 사용자의 닉네임 수정
+     *
+     * @param userId - 사용자 id
+     * @param nickName - 사용자 닉네임
+     */
     public void changeNickName(Long userId, String nickName) {
         User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
         user.setNickName(nickName);
         userRepository.save(user);
     }
 
+    /**
+     * description: 사용자의 프로필 사진 수정
+     *
+     * @param userId - 사용자 id
+     * @param profileImageName - 사용자 프로필 이미지
+     */
     public void changeProfileImage(Long userId, String profileImageName) {
         User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
         user.setProfileImage(profileImageName);
         userRepository.save(user);
     }
 
+    /**
+     * description: 사용자의 비밀번호 수정
+     *
+     * @param userId - 사용자 id
+     * @param originPwd - 기존 비밀번호
+     * @param newPwd - 새로운 비밀번호
+     * @return boolean (true - 비밀번호 정상 변경, false - 기존 비밀번호 맞지 않음)
+     */
     public Boolean changePassword(Long userId, String originPwd, String newPwd) {
         User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
         if (!user.getPassword().equals(originPwd)){
@@ -184,16 +266,32 @@ public class UserService {
         return true;
     }
 
+    /**
+     * description: 사용자가 작성한 모든 게시물 조회
+     *
+     * @param userId - 사용자 id
+     * @return 게시물 list
+     */
     public List<Post> getMyPosts(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
         List<Post> myPosts = user.getMyPosts();
         return myPosts;
     }
 
+    /**
+     * description: 사용자 정보 삭제
+     *
+     * @param userId - 사용자 id
+     */
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
     }
 
+    /**
+     * description: 사용자 이메일로 사용자 정보 삭제
+     *
+     * @param email - 사용자 이메일
+     */
     public void deleteUser2(String email) {
         User user = userRepository.findByEmail(email);
         userRepository.delete(user);

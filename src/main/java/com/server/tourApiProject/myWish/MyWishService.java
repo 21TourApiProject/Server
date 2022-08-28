@@ -64,7 +64,15 @@ public class MyWishService {
     private final PostImageRepository postImageRepository;
     private final PostHashTagRepository postHashTagRepository;
 
+    /**
+     * description: 사용자 찜 추가
+     *
+     * @param userId - 사용자 id
+     * @param itemId - 컨텐츠 id
+     * @param wishType - 컨텐츠 타입 (0 - 관측지, 1 - 관광지, 2 - 게시물)
+     */
     public void createMyWish(Long userId, Long itemId, Integer wishType) {
+
         MyWish myWish = new MyWish();
 
         switch(wishType) {
@@ -102,21 +110,42 @@ public class MyWishService {
         }
     }
 
-    //이전에 이미 찜을 해놓았는지 확인하기
+    /**
+     * description: 해당 컨텐츠가 찜한 상태인지 확인
+     *
+     * @param userId - 사용자 id
+     * @param itemId - 컨텐츠 id
+     * @param wishType - 컨텐츠 타입 (0 - 관측지, 1 - 관광지, 2 - 게시물)
+     * @return true - 이미 찜 되어 있음 / false - 찜 되어 있지 않음
+     */
     public Boolean isThereMyWish(Long userId, Long itemId, Integer wishType) {
+
         Optional<MyWish> myWish = myWishRepository.findByUserIdAndItemIdAndWishType(userId, itemId, wishType);
         return myWish.isPresent();
     }
 
-    //찜해 놓은거 삭제
+    /**
+     * description: 찜 제거
+     *
+     * @param userId - 사용자 id
+     * @param itemId - 컨텐츠 id
+     * @param wishType - 컨텐츠 타입 (0 - 관측지, 1 - 관광지, 2 - 게시물)
+     */
     public void deleteMyWish(Long userId, Long itemId, Integer wishType) {
+
         Optional<MyWish> myWishOp = myWishRepository.findByUserIdAndItemIdAndWishType(userId, itemId, wishType);
         MyWish myWish = myWishOp.get();
         myWishRepository.delete(myWish);
     }
 
-    //찜한 관측지 목록 불러오기
+    /**
+     * description: 사용자가 찜한 관측지 목록 조회
+     *
+     * @param userId - 사용자 id
+     * @return 찜한 관측지 목록
+     */
     public List<MyWishParams01> getMyWishObservation(Long userId) {
+
         List<MyWishParams01> result= new ArrayList<>();
         List<MyWish> wish = myWishRepository.findByUserIdAndWishType(userId, 0);
         for (MyWish myWish: wish){
@@ -154,7 +183,12 @@ public class MyWishService {
         return result;
     }
 
-    //찜한 관광지 목록 불러오기
+    /**
+     * description: 사용자가 찜한 관광지 목록 조회
+     *
+     * @param userId - 사용자 id
+     * @return 찜한 관광지 목록
+     */
     public List<MyWishParams01> getMyWishTouristPoint(Long userId) {
         List<MyWishParams01> result= new ArrayList<>();
         List<MyWish> wish = myWishRepository.findByUserIdAndWishType(userId, 1);
@@ -185,8 +219,12 @@ public class MyWishService {
         return result;
     }
 
-
-    //찜한 게시물 목록 불러오기
+    /**
+     * description: 사용자가 찜한 게시물 목록 조회
+     *
+     * @param userId - 사용자 id
+     * @return 찜한 게시물 목록
+     */
     public List<MyWishParams2> getMyWishPost(Long userId) {
         List<MyWishParams2> result= new ArrayList<>();
         List<MyWish> wish = myWishRepository.findByUserIdAndWishType(userId, 2);
@@ -225,6 +263,12 @@ public class MyWishService {
         return result;
     }
 
+    /**
+     * description: 사용자가 최근에 찜한 컨텐츠 3개 조회
+     *
+     * @param userId - 사용자 id
+     * @return 최근에 찜한 컨텐츠 3개 list
+     */
     public List<MyWishParams3> getMyWish3(Long userId) {
         List<MyWishParams3> result = new ArrayList<>();
         List<MyWish> list = myWishRepository.findByUserId(userId);

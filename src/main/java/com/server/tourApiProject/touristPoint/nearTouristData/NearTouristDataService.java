@@ -40,6 +40,12 @@ public class NearTouristDataService {
     private final TouristDataHashTagRepository touristDataHashTagRepository;
     private final ContentTypeRepository contentTypeRepository;
 
+    /**
+     * description: 주변 관광지 정보 입력
+     *
+     * @param contentId1 - 관광지 id
+     * @param contentId2 - 컨텐츠 id
+     */
     public void createNearTouristData(Long contentId1, Long contentId2) {
         Optional<TouristData> data = touristDataRepository.findById(contentId2);
         if (data.isEmpty())
@@ -63,6 +69,12 @@ public class NearTouristDataService {
         nearTouristDataRepository.save(nearTouristData);
     }
 
+    /**
+     * description: 주변 관광지 조회
+     *
+     * @param contentId - 관광지 id
+     * @return 주변 관광지 list
+     */
     public List<NearTouristDataParams> getNearTouristData(Long contentId) {
         List<NearTouristData> dataList = nearTouristDataRepository.findByTouristDataId(contentId);
         List<NearTouristDataParams> result = new ArrayList<>();
@@ -90,6 +102,9 @@ public class NearTouristDataService {
         return result;
     }
 
+    /**
+     * description: 모든 주변 관광지 삭제
+     */
     public void deleteNearTouristPoint() {
         List<TouristData> t12  = touristDataRepository.findByContentTypeId(12L);
         for (TouristData touristData : t12) {

@@ -29,6 +29,11 @@ public class ContentTypeService {
 
     private final ContentTypeRepository contentTypeRepository;
 
+    /**
+     * description: 관광지 타입 정보 입력
+     *
+     * @param contentType - 관광지 타입
+     */
     public void createContentType(ContentType contentType) {
         contentTypeRepository.save(contentType);
     }
