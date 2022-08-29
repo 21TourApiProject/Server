@@ -18,6 +18,21 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
+
+/**
+ * @className : NearTouristDataService.java
+ * @description : NearTouristData Service 입니다.
+ * @modification : 2022-08-28(sein) 수정
+ * @author : sein
+ * @date : 2022-08-28
+ * @version : 1.0
+
+    ====개정이력(Modification Information)====
+        수정일        수정자        수정내용
+    -----------------------------------------
+      2022-08-28     sein        주석 생성
+
+ */
 public class NearTouristDataService {
 
     private final NearTouristDataRepository nearTouristDataRepository;
@@ -25,6 +40,12 @@ public class NearTouristDataService {
     private final TouristDataHashTagRepository touristDataHashTagRepository;
     private final ContentTypeRepository contentTypeRepository;
 
+    /**
+     * description: 주변 관광지 정보 입력
+     *
+     * @param contentId1 - 관광지 id
+     * @param contentId2 - 컨텐츠 id
+     */
     public void createNearTouristData(Long contentId1, Long contentId2) {
         Optional<TouristData> data = touristDataRepository.findById(contentId2);
         if (data.isEmpty())
@@ -48,6 +69,12 @@ public class NearTouristDataService {
         nearTouristDataRepository.save(nearTouristData);
     }
 
+    /**
+     * description: 주변 관광지 조회
+     *
+     * @param contentId - 관광지 id
+     * @return 주변 관광지 list
+     */
     public List<NearTouristDataParams> getNearTouristData(Long contentId) {
         List<NearTouristData> dataList = nearTouristDataRepository.findByTouristDataId(contentId);
         List<NearTouristDataParams> result = new ArrayList<>();
@@ -75,6 +102,9 @@ public class NearTouristDataService {
         return result;
     }
 
+    /**
+     * description: 모든 주변 관광지 삭제
+     */
     public void deleteNearTouristPoint() {
         List<TouristData> t12  = touristDataRepository.findByContentTypeId(12L);
         for (TouristData touristData : t12) {

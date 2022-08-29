@@ -16,6 +16,21 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
+
+/**
+ * @className : MyHashTagService.java
+ * @description : MyHashTag service 입니다.
+ * @modification : 2022-08-28(sein) 수정
+ * @author : sein
+ * @date : 2022-08-28
+ * @version : 1.0
+
+    ====개정이력(Modification Information)====
+        수정일        수정자        수정내용
+    -----------------------------------------
+      2022-08-28     sein        주석 생성
+
+ */
 public class MyHashTagService {
     private final MyHashTagRepository myHashTagRepository;
     private final UserRepository userRepository;
@@ -28,7 +43,12 @@ public class MyHashTagService {
             myHashTagIdList.add(p.getHashTagId());
         }return  myHashTagIdList;
     }
-
+    /**
+     * description: 사용자 선호 해시태그 조회
+     *
+     * @param userId - 사용자 id
+     * @return 선호 해시태그 이름 list
+     */
     public List<String> getMyHashTag(Long userId) {
         List<String> myHashTagNameList = new ArrayList<>();
         List<MyHashTag> myHashTagList = myHashTagRepository.findByUserId(userId);
@@ -38,7 +58,15 @@ public class MyHashTagService {
         return myHashTagNameList;
     }
 
+    /**
+     * description: 작성
+     *
+     * @param email - 사용자 email
+     * @param myHashTagParams - 사용자가 선택한 선호 해시태그 list
+     * @return userid
+     */
     public Long createMyHashTags(String email, List<MyHashTagParams> myHashTagParams) {
+
         User user = userRepository.findByEmail(email);
         Long userId = user.getUserId();
 
@@ -54,7 +82,14 @@ public class MyHashTagService {
         return userId;
     }
 
+    /**
+     * description: 선호 해시태그 변경
+     *
+     * @param userId - 사용자 id
+     * @param myHashTagParams - 사용자가 선택한 선호 해시태그 list
+     */
     public void changeMyHashTag(Long userId, List<MyHashTagParams> myHashTagParams) {
+
         User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
         List<MyHashTag> origin = myHashTagRepository.findByUserId(userId);
         myHashTagRepository.deleteAll(origin);
@@ -69,7 +104,14 @@ public class MyHashTagService {
         }
     }
 
+    /**
+     * description: 사용자의 선호 해시태그 3개 조회
+     *
+     * @param userId - 사용자 id
+     * @return 사용자의 선호 해시태그 3개 이름 list
+     */
     public List<String> getMyHashTag3(Long userId) {
+
         List<String> myHashTagNameList = new ArrayList<>();
         List<MyHashTag> myHashTagList = myHashTagRepository.findByUserId(userId);
         int i = 0;

@@ -55,6 +55,21 @@ import java.io.IOException;
 import java.util.Optional;
 
 //일단 readTouristDataExcel함수 복사 붙여넣기하고 함수명 수정, 아까 action에 쓴 url로 수정 그리고 for문 안에 내용 수정하면 됨
+
+/**
+ * @className : ExcelController.java
+ * @description : 엑셀 controller 입니다.
+ * @modification : 2022-08-28(sein) 수정
+ * @author : sein
+ * @date : 2022-08-28
+ * @version : 1.0
+
+    ====개정이력(Modification Information)====
+        수정일        수정자        수정내용
+    -----------------------------------------
+      2022-08-28     sein        주석 생성
+
+ */
 @Controller
 public class ExcelController {
     private final TouristDataService touristDataService;
