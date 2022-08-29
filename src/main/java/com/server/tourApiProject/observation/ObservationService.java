@@ -23,6 +23,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+/**
+* @className : ObservationService.java
+* @description : 관측지 서비스
+* @modification : 2022-08-27 (gyul chyoung) 주석입력
+* @author : gyul chyoung
+* @date : 2022-08-27
+* @version : 1.0
+     ====개정이력(Modification Information)====
+  수정일        수정자        수정내용    -----------------------------------------
+   2022-08-27       gyul chyoung       주석최초생성
+ */
+
 @Slf4j
 @Service
 @Transactional
@@ -38,6 +50,11 @@ public class ObservationService {
         return observationRepository.findAll();
     }
 
+    /**
+     * TODO 관측지 생성
+     * @param  observationParams - 관측지 입력값
+     * @return void
+     */
     public void createObservation(ObservationParams observationParams) {
         Observation observation = new Observation();
         observation.setObservationName(observationParams.getObservationName());
@@ -53,9 +70,15 @@ public class ObservationService {
         observationRepository.save(observation);
     }
 
+    /**
+     * TODO 관측지에 해당 해시태그 입력
+     * @param  observationId - 관측지ID로 검색
+     * @param observeHashTagParams - 관측지 해시태그 값
+     * @return void
+     * @throws
+     */
     public void createObserveHashTags(Long observationId, List<ObserveHashTagParams> observeHashTagParams) {
         Observation observation = observationRepository.findById(observationId).orElseThrow(IllegalAccessError::new);
-
         for(ObserveHashTagParams p : observeHashTagParams) {
             ObserveHashTag observeHashTag = new ObserveHashTag();
             HashTag hashTag = hashTagRepository.findByHashTagName(p.getHashTagName());
@@ -68,6 +91,13 @@ public class ObservationService {
 
     }
 
+    /**
+     * TODO 관측지에 요금입력
+     * @param  observationId - 관측지ID
+     * @param  feeList - 관측지 요금 List
+     * @return void
+     * @throws
+     */
     public void createObserveFees(Long observationId, List<ObserveFee> feeList) {
         Observation observation = observationRepository.findById(observationId).orElseThrow(IllegalAccessError::new);
         for (ObserveFee p : feeList) {
@@ -75,12 +105,25 @@ public class ObservationService {
         }
     }
 
+    /**
+     * TODO 관측지ID로 관측지 조회
+     * @param  observationId - 관측지ID
+     * @return com.server.tourApiProject.observation.Observation
+     * @throws
+     */
     public Observation getObservation(Long observationId){
         Observation observation = observationRepository.findById(observationId).orElseThrow(IllegalAccessError::new);
         return observation;
     }
 //test
 
+    /**
+     * TODO 필터와 검색어로 관측지 조회
+     * @param  filter - 검색필터
+     * @param  searchKey - 검색어
+     * @return java.util.List<com.server.tourApiProject.search.SearchParams1> - 검색결과
+     * @throws
+     */
     public List<SearchParams1> getObservationWithFilter(Filter filter, String searchKey) {
         List<Long> areaCodeList = filter.getAreaCodeList();
         List<Long> hashTagIdList= filter.getHashTagIdList();    //필터 해쉬태그 리스트
