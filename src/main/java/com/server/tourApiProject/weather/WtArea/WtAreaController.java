@@ -14,6 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/v1")
 @RequiredArgsConstructor
+
+/**
+* @className : WtAreaController.java
+* @description : 날씨 controller 입니다.
+* @modification : 2022-08-29 (hyeonz) 주석 추가
+* @author : hyeonz
+* @date : 2022-08-29
+* @version : 1.0
+
+    ====개정이력(Modification Information)====
+        수정일        수정자        수정내용
+    -----------------------------------------
+      2022-08-29     hyeonz       주석 추가
+ */
 public class WtAreaController {
     private final WtAreaService wtAreaService;
 

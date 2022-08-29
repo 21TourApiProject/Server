@@ -16,6 +16,20 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/v1")
 @RequiredArgsConstructor
+
+/**
+* @className : HoroscopeController.java
+* @description : 별자리 운세 controller 입니다.
+* @modification : 2022-08-29 (hyeonz) 주석 추가
+* @author : hyeonz
+* @date : 2022-08-29
+* @version : 1.0
+
+    ====개정이력(Modification Information)====
+        수정일        수정자        수정내용
+    -----------------------------------------
+      2022-08-29     hyeonz       주석 추가
+ */
 public class HoroscopeController {
     private final HoroscopeService horoscopeService;
 
