@@ -16,6 +16,18 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+* @className : CourseService.java
+* @description : 관측지 코스 서비스
+* @modification : 2022-08-29 (gyul chyoung) 주석추가
+* @author : gyul chyoung
+* @date : 2022-08-29
+* @version : 1.0
+     ====개정이력(Modification Information)====
+  수정일        수정자        수정내용    -----------------------------------------
+   2022-08-29       gyul chyoung       주석추가
+ */
+
 @Slf4j
 @Service
 @Transactional
@@ -26,6 +38,12 @@ public class CourseService {
     private final ContentTypeRepository contentTypeRepository;
     private final ObservationRepository observationRepository;
 
+    /**
+     * TODO 관측지 코스인 관광지정보 반환
+     * @param  observationId -
+     * @return java.util.List<touristData.TouristDataCourseParams>
+     * @throws
+     */
     public List<TouristDataCourseParams> getCourseTPList(Long observationId) {
         //코스 받아서 순서대로 정리후 관광지Id 리스트반환
 
@@ -40,6 +58,12 @@ public class CourseService {
         return courseTPList;
     }
 
+    /**
+     * TODO 관측지 코스 관광지 이름 조회
+     * @param  observationId -
+     * @return java.util.List<java.lang.String>
+     * @throws
+     */
     public List<String> getCourseNameList(Long observationId) {
         //코스 받아서 관측지와 합쳐서 순서대로 이름제공 (이름인디케이터에 이용)
         List<TouristDataCourseParams> tpList = getCourseTPList(observationId);
@@ -55,6 +79,12 @@ public class CourseService {
         return nameList;
     }
 
+    /**
+     * TODO 코스에 포함된 관광지 정보 조회
+     * @param  contentId - 관광지 ID
+     * @return com.server.tourApiProject.touristPoint.touristData.TouristDataCourseParams
+     * @throws
+     */
     public TouristDataCourseParams getCourseTouristPointData(Long contentId) {
         TouristData touristData = touristDataRepository.findByContentId(contentId);
         TouristDataCourseParams result = new TouristDataCourseParams();
@@ -81,7 +111,12 @@ public class CourseService {
         return result;
     }
 
-
+    /**
+         * TODO 코스 순서 정리용 Comparator
+         * @param   -
+         * @return
+         * @throws
+     */
     class CourseOrderComparator implements Comparator<Course> {
         //코스 순서대로 오름차순 정리
         @Override

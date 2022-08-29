@@ -12,6 +12,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+* @className : CourseController.java
+* @description : 관측지 코스 컨트롤러
+* @modification : 2022-08-29 (gyul chyoung) 즈석추가
+* @author : gyul chyoung
+* @date : 2022-08-29
+* @version : 1.0
+     ====개정이력(Modification Information)====
+  수정일        수정자        수정내용    -----------------------------------------
+   2022-08-29       gyul chyoung       주석추가
+ */
+
 @Slf4j
 @Api(tags = {"4.2 관측지 코스"})
 @RestController

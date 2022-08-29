@@ -15,6 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+* @className : SearchController.java
+* @description : 검색결과 컨트롤러
+* @modification : 2022-08-29 (gyul chyoung) 주석추가
+* @author : gyul chyoung
+* @date : 2022-08-29
+* @version : 1.0
+     ====개정이력(Modification Information)====
+  수정일        수정자        수정내용    -----------------------------------------
+   2022-08-29       gyul chyoung       주석추가
+ */
+
 @Slf4j
 @Api(tags = {"8.1 검색결과"})
 @RestController
