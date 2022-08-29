@@ -27,6 +27,11 @@ import javax.transaction.Transactional;
 public class WtTodayService {
     private final WtTodayRepository wtTodayRepository;
 
+    /**
+     * TODO 오늘의 날씨 조회
+     * @param todayWtId - 오늘의 날씨 id
+     * @return WtTodayParams
+     */
     public WtTodayParams getTodayWeatherInfo(int todayWtId) {
         WtToday wtToday = wtTodayRepository.findByTodayWtId(todayWtId);
 

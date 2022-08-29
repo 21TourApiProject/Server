@@ -29,6 +29,11 @@ import java.util.List;
 public class HoroscopeService {
     private final HoroscopeRepository horoscopeRepository;
 
+    /**
+     * TODO 현재 달의 별자리 운세 정보 조회
+     * @param todayMonth - 현재 달
+     * @return List<HoroscopeParams>
+     */
     public List<HoroscopeParams> getHoroscopes(int todayMonth) {
         List<HoroscopeParams> result = new ArrayList<>();
         List<Horoscope> list = horoscopeRepository.findAll();
@@ -60,6 +65,13 @@ public class HoroscopeService {
         }
     }
 
+    /**
+     * TODO 현재 달의 별자리 운세 정보 조회
+     * @param todayMonth - 현재 달
+     * @param result - 별자리 운세 param list
+     * @param list - 별자리 운세 lists
+     * @return List<HoroscopeParams>
+     */
     private List<HoroscopeParams> getHoroscopeParams(int todayMonth, List<HoroscopeParams> result, List<Horoscope> list) {
         for (Horoscope hr : list) {
             Horoscope horoscope = horoscopeRepository.findById(hr.getHorId()).orElseThrow(IllegalAccessError::new);
@@ -104,6 +116,10 @@ public class HoroscopeService {
         return result;
     }
 
+    /**
+     * TODO 모든 별자리 운세 정보 조회
+     * @return List<Horoscope>
+     */
     public List<Horoscope> getAllHoroscopes() {
         return horoscopeRepository.findAll();
     }

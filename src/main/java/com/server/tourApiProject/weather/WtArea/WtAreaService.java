@@ -27,6 +27,12 @@ import javax.transaction.Transactional;
 public class WtAreaService {
     private final WtAreaRepository wtAreaRepository;
 
+    /**
+     * TODO 날씨 정보 조회
+     * @param cityName - 시 이름
+     * @param provName - 구 이름
+     * @return WtAreaParams
+     */
     public WtAreaParams getAreaInfo(String cityName, String provName) {
         WtArea wtArea = wtAreaRepository.findByCityNameAndProvName(cityName, provName);
 
