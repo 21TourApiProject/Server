@@ -7,6 +7,7 @@ import com.server.tourApiProject.myHashTag.MyHashTag;
 import com.server.tourApiProject.myWish.MyWish;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -58,6 +59,9 @@ public class User{
 
     @Column
     private String password;
+
+    @Column
+    private String encryptedPassword; //암호화한 password 값
 
     @Column(nullable = false, unique = true, length = 20)
     private String nickName;

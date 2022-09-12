@@ -30,6 +30,7 @@ import java.util.List;
 
  */
 public class UserController {
+
     private final UserService userService;
 
     @ApiOperation(value = "사용자정보 입력", notes = "사용자 정보를 입력한다")
@@ -117,4 +118,8 @@ public class UserController {
     @ApiOperation(value = "사용자가 타입 조회", notes = "사용자가 카카오 가입인지 확인한다")
     @GetMapping(value = "user/{userId}/isKakao")
     public Boolean checkIsKakao(@PathVariable("userId") Long userId){ return userService.checkIsKakao(userId); }
+
+    @ApiOperation(value = "임시 비밀번호 전송", notes = "사용자 이메일로 임시 비밀번호를 전송한다")
+    @GetMapping(value = "user/tmpPassword/{email}/{tmpPassword}")
+    public void sendTmpPassword(@PathVariable("email") String email, @PathVariable("tmpPassword") String tmpPassword){ userService.sendTmpPassword(email, tmpPassword); }
 }
