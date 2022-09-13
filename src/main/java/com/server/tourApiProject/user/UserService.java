@@ -8,6 +8,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -218,22 +219,62 @@ public class UserService {
     }
 
     /**
-     * description: 사용자의 이메일, 이름, 전화번호로 비밀번호 조회
+     * description: 비밀번호 찾기
      *
      * @param email             - 이메일
      * @param realName          - 이름
      * @param mobilePhoneNumber - 전화번호
-     * @return string ("none" - 해당 사용자 없음, 나머지 - 비밀번호)
+     * @return Boolean (true - 성공, false - 실패)
      */
-    public String getPassword(String email, String realName, String mobilePhoneNumber) {
+    public Boolean getPassword(String email, String realName, String mobilePhoneNumber) {
         User user = userRepository.findByEmail(email);
-        if (user == null) {
-            return "none";
+        if (user == null || !user.getRealName().equals(realName) || !user.getMobilePhoneNumber().equals(mobilePhoneNumber)) {
+            return false;
         }
-        if (user.getRealName().equals(realName) && user.getMobilePhoneNumber().equals(mobilePhoneNumber)) {
-            return user.getEncryptedPassword();
+
+        String tmpPassword = getTmpPassword(8);
+        user.setEncryptedPassword(userPasswordService.hashPassword(bCryptPasswordEncoder, tmpPassword));
+        userRepository.save(user);
+        return sendTmpPassword(email, tmpPassword);
+    }
+
+    /**
+     * description : 사용자 이메일로 임시 비밀번호 전송
+     *
+     * @param email       - 이메일
+     * @param tmpPassword - 임시 비밀번호
+     * @return Boolean (true - 전송 성공, false - 전송 실패)
+     */
+    public Boolean sendTmpPassword(String email, String tmpPassword) {
+
+        String fromMail = "starsufers@gmail.com";
+        String title = "[별헤는밤] 임시 비밀번호 입니다.";
+        String content = "임시 비밀번호: " + tmpPassword +
+                "\n\n위 임시 비밀번호로 로그인 후, 마이페이지에서 비밀번호를 변경해주세요.\n";
+
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(email);
+            message.setFrom(fromMail);
+            message.setSubject(title);
+            message.setText(content);
+            javaMailSender.send(message);
+            return true;
+        } catch (MailException e) {
+            log.error("임시 비밀번호 전송 오류 " + e.getMessage());
+            return false;
         }
-        return "none";
+
+    }
+
+    /**
+     * description : 임시 비밀번호 생성
+     *
+     * @param size - 임시 비밀번호 길이 
+     * @return String 임시 비밀번호
+     */
+    public String getTmpPassword(int size) {
+        return RandomStringUtils.randomAlphanumeric(size);
     }
 
     /**
@@ -316,47 +357,4 @@ public class UserService {
         return user.getKakao();
     }
 
-    public void sendTmpPassword(String email, String tmpPassword) {
-
-        String fromMail = "starsufers@gmail.com";
-        String title = "[별헤는밤] 임시 비밀번호 입니다.";
-        String content = "임시 비밀번호: " + tmpPassword +
-                "\n\n위 임시 비밀번호로 로그인 후, 마이페이지에서 비밀번호를 변경해주세요.\n";
-
-        try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo(email);
-            message.setFrom(fromMail);
-            message.setText(content);
-            message.setSubject(title);
-            javaMailSender.send(message);
-        } catch (MailException e) {
-            log.error("임시 비밀번호 전송 오류 " + e.getMessage());
-        }
-
-    }
-
-    public String makeTmpPassword(){
-
-        Random random = new Random();
-
-        StringBuilder password = new StringBuilder();
-        for (int i = 0; i < 8; i++) {
-            int choice = random.nextInt(3);
-            switch(choice) {
-                case 0:
-                    password.append((char)(random.nextInt(25) +97));
-                    break;
-                case 1:
-                    password.append((char)(random.nextInt(25) +65));
-                    break;
-                case 2:
-                    password.append((char)(random.nextInt(10) +48));
-                    break;
-                default:
-                    break;
-            }
-        }
-        return password.toString();
-    }
 }
