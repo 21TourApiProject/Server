@@ -3,12 +3,12 @@ package com.server.tourApiProject.user;
 import com.server.tourApiProject.bigPost.post.Post;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -80,6 +80,31 @@ public class UserService {
         user.setEmail(userParam.getEmail());
 //        user.setPassword(userParam.getPassword());
         user.setEncryptedPassword(userPasswordService.hashPassword(bCryptPasswordEncoder, userParam.getPassword()));
+
+        boolean isDuplicate = true;
+        while (isDuplicate) {
+            String nickname = randomNickName();
+            if (userRepository.findByNickName(nickname) == null) {
+                isDuplicate = false;
+                user.setNickName(nickname);
+            }
+        }
+        user.setIsMarketing(userParam.getIsMarketing());
+        user.setKakao(userParam.getKakao());
+        user.setSignUpDt(LocalDateTime.now());
+
+        userRepository.save(user);
+    }
+
+    //테스트용
+    public void createUser2(UserParams userParam) {
+        User user = new User();
+        user.setRealName(userParam.getRealName());
+        user.setSex(userParam.getSex());
+        user.setBirthDay(userParam.getBirthDay());
+        user.setMobilePhoneNumber(userParam.getMobilePhoneNumber());
+        user.setEmail(userParam.getEmail());
+        user.setPassword(userParam.getPassword());
 
         boolean isDuplicate = true;
         while (isDuplicate) {
@@ -269,7 +294,7 @@ public class UserService {
     /**
      * description : 임시 비밀번호 생성
      *
-     * @param size - 임시 비밀번호 길이 
+     * @param size - 임시 비밀번호 길이
      * @return String 임시 비밀번호
      */
     public String getTmpPassword(int size) {
@@ -358,12 +383,11 @@ public class UserService {
 
     /**
      * description : 암호화되지 않은 사용자의 비밀번호를 암호화한다.
-     *
      */
     public void encodePassword() {
         List<User> all = userRepository.findAll();
         for (User user : all) {
-            if(user.getPassword() != null){
+            if (user.getPassword() != null && user.getEncryptedPassword() == null) {
                 user.setEncryptedPassword(userPasswordService.hashPassword(bCryptPasswordEncoder, user.getPassword()));
                 userRepository.save(user);
             }
