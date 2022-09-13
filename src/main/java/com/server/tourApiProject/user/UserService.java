@@ -182,9 +182,9 @@ public class UserService {
         if (user.getKakao()) {
             return -2L;
         }
-//        if (user.getPassword().equals(password)) {
-//            return user.getUserId();
-//        }
+        if (user.getEncryptedPassword() == null && user.getPassword().equals(password)) { //비밀번호 암호화가 완료되면 지우기
+            return user.getUserId();
+        }
         if (userPasswordService.checkPassword(bCryptPasswordEncoder, password, user.getEncryptedPassword())) {
             return user.getUserId();
         }
