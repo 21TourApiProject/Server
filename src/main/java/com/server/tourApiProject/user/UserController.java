@@ -30,6 +30,7 @@ import java.util.List;
 
  */
 public class UserController {
+
     private final UserService userService;
 
     @ApiOperation(value = "사용자정보 입력", notes = "사용자 정보를 입력한다")
@@ -76,9 +77,15 @@ public class UserController {
     @GetMapping(value = "user/login/email/{realName}/{mobilePhoneNumber}")
     public String getEmail(@PathVariable("realName") String realName, @PathVariable("mobilePhoneNumber") String mobilePhoneNumber){ return userService.getEmail(realName, mobilePhoneNumber); }
 
-    @ApiOperation(value = "사용자 비밀번호 조회", notes = "사용자의 이메일, 이름, 전화번호로 비밀번호를 조회한다")
+    @ApiOperation(value = "사용자 비밀번호 조회", notes = "사용자의 이메일, 이름, 전화번호로 계정 여부를 확인 후 이메일로 임시 비밀번호를 전송한다")
     @GetMapping(value = "user/login/password/{email}/{realName}/{mobilePhoneNumber}")
-    public String getPassword(@PathVariable("email") String email, @PathVariable("realName") String realName, @PathVariable("mobilePhoneNumber") String mobilePhoneNumber){ return userService.getPassword(email, realName, mobilePhoneNumber); }
+    public Boolean getPassword(@PathVariable("email") String email, @PathVariable("realName") String realName, @PathVariable("mobilePhoneNumber") String mobilePhoneNumber){
+        return userService.getPassword(email, realName, mobilePhoneNumber);
+    }
+
+    @ApiOperation(value = "사용자 비밀번호 암호화", notes = "사용자의 비밀번호를 암호화한다. (처리 후 제거용)")
+    @PostMapping(value = "user/password/encode")
+    public void encodePassword(){ userService.encodePassword(); }
 
     @ApiOperation(value = "중복 이메일 조회", notes = "중복된 이메일이 있는지 조회한다")
     @GetMapping(value = "user/duplicate/email/{email}")
@@ -117,4 +124,5 @@ public class UserController {
     @ApiOperation(value = "사용자가 타입 조회", notes = "사용자가 카카오 가입인지 확인한다")
     @GetMapping(value = "user/{userId}/isKakao")
     public Boolean checkIsKakao(@PathVariable("userId") Long userId){ return userService.checkIsKakao(userId); }
+
 }
