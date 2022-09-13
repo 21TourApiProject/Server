@@ -83,6 +83,10 @@ public class UserController {
         return userService.getPassword(email, realName, mobilePhoneNumber);
     }
 
+    @ApiOperation(value = "사용자 비밀번호 암호화", notes = "사용자의 비밀번호를 암호화한다. (처리 후 제거용)")
+    @PostMapping(value = "user/password/encode")
+    public void encodePassword(){ userService.encodePassword(); }
+
     @ApiOperation(value = "중복 이메일 조회", notes = "중복된 이메일이 있는지 조회한다")
     @GetMapping(value = "user/duplicate/email/{email}")
     public Boolean checkDuplicateLoginId(@PathVariable("email") String email){ return userService.checkDuplicateEmail(email); }

@@ -48,8 +48,7 @@ public class UserService {
      * @return User entity
      */
     public User getUser(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
-        return user;
+        return userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
     }
 
     /**
@@ -357,4 +356,17 @@ public class UserService {
         return user.getKakao();
     }
 
+    /**
+     * description : 암호화되지 않은 사용자의 비밀번호를 암호화한다.
+     *
+     */
+    public void encodePassword() {
+        List<User> all = userRepository.findAll();
+        for (User user : all) {
+            if(user.getPassword() != null){
+                user.setEncryptedPassword(userPasswordService.hashPassword(bCryptPasswordEncoder, user.getPassword()));
+                userRepository.save(user);
+            }
+        }
+    }
 }
