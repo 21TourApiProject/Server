@@ -1,0 +1,78 @@
+spring:
+  profiles:
+    group:
+      "local": "localdb,common,localLog"
+      "prod":  "proddb,common,prodLog"
+---
+
+spring: #prod DB??
+  config:
+    activate:
+      on-profile: "proddb"
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    url: jdbc:mysql://starry-night.csv2gdzb0f5o.ap-northeast-2.rds.amazonaws.com:3306/starrynight?serverTimezone=UTC&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
+    password: tour0000
+  jpa:
+    show-sql: 'false'
+    hibernate:
+      ddl-auto: update
+
+---
+spring: #local DB??
+  config:
+    activate:
+      on-profile: "localdb"
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: 'sa'
+    password: '0000'
+    url: jdbc:h2:tcp://localhost/~/tourApiProject
+  jpa:
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: create
+
+---
+spring: #공통
+  config:
+    activate:
+      on-profile: "common"
+  sql:
+    init:
+      mode: always
+  servlet:
+    multipart:
+      maxFileSize: 100MB
+      maxRequestSize: 100MB
+server:
+  tomcat:
+    connection-timeout: 5000
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "localLog"
+logging:
+  file:
+    path: ./logs
+    name: app-local
+  logback:
+    rollingpolicy:
+      max-history: 7
+      total-size-cap: 10MB
+---
+spring:
+  config:
+    activate:
+      on-profile: "prodLog"
+logging:
+  file:
+    path: ./logs
+    name: app-prod
+  logback:
+    rollingpolicy:
+      max-history: 60
+      total-size-cap: 3GB
