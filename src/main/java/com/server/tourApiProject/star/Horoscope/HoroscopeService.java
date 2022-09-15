@@ -12,9 +12,28 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
+
+/**
+* @className : HoroscopeService.java
+* @description : 별자리 운세 service 입니다.
+* @modification : 2022-08-29 (hyeonz) 주석 추가
+* @author : hyeonz
+* @date : 2022-08-29
+* @version : 1.0
+
+    ====개정이력(Modification Information)====
+        수정일        수정자        수정내용
+    -----------------------------------------
+      2022-08-29     hyeonz       주석 추가
+ */
 public class HoroscopeService {
     private final HoroscopeRepository horoscopeRepository;
 
+    /**
+     * TODO 현재 달의 별자리 운세 정보 조회
+     * @param todayMonth - 현재 달
+     * @return List<HoroscopeParams>
+     */
     public List<HoroscopeParams> getHoroscopes(int todayMonth) {
         List<HoroscopeParams> result = new ArrayList<>();
         List<Horoscope> list = horoscopeRepository.findAll();
@@ -46,6 +65,13 @@ public class HoroscopeService {
         }
     }
 
+    /**
+     * TODO 현재 달의 별자리 운세 정보 조회
+     * @param todayMonth - 현재 달
+     * @param result - 별자리 운세 param list
+     * @param list - 별자리 운세 lists
+     * @return List<HoroscopeParams>
+     */
     private List<HoroscopeParams> getHoroscopeParams(int todayMonth, List<HoroscopeParams> result, List<Horoscope> list) {
         for (Horoscope hr : list) {
             Horoscope horoscope = horoscopeRepository.findById(hr.getHorId()).orElseThrow(IllegalAccessError::new);
@@ -90,6 +116,10 @@ public class HoroscopeService {
         return result;
     }
 
+    /**
+     * TODO 모든 별자리 운세 정보 조회
+     * @return List<Horoscope>
+     */
     public List<Horoscope> getAllHoroscopes() {
         return horoscopeRepository.findAll();
     }
