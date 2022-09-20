@@ -16,8 +16,8 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).select()
-                .apis(RequestHandlerSelectors.basePackage("com.server.tourApiProject.v1"))
-                .paths(PathSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.server.tourApiProject"))
+                .paths(PathSelectors.ant("/v1/**"))
                 .build()
                 .useDefaultResponseMessages(false);
     }

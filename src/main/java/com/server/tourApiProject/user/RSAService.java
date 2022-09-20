@@ -30,7 +30,7 @@ public class RSAService {
 
     private final String PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4veKCtvjMbdACgTDS0EXveDgVHSndOkJWj6Qt1Bq6g4z8SVFraQ0LADFeosvaaasZgVs2ny5cLmAG1HmiHvU4HJrcsPb4jxUEm+VUJCNHxb6G4BQ11sJlZn3hyphfWApaSzKodzoTz0qgR4XMkoZYqgyxP7wABuDPLQLTnr44PQIDAQAB";
 
-    @Value("${rsa.private-key}")
+//    @Value("${rsa.private-key}")
     private String PRIVATE_KEY;
 
     public String getPRIVATE_KEY(){
