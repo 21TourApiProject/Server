@@ -55,7 +55,7 @@ spring: #prod로깅
       on-profile: "prodLog"
 logging:
   file:
-    path: logs
+    path: ./logs
     name: app-prod
   logback:
     rollingpolicy:
