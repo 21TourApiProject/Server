@@ -37,4 +37,3 @@ out/
 .vscode/
 
 application-RSA-KEY.properties
-/src/main/resources-prod/application-proddb.yml
